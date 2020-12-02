@@ -163,8 +163,9 @@
             <%}%>
         }
 
-        #amadeus{
-            width:43px;
+        #amadeus-logo-home{
+            width:73px;
+            height:73px;
         }
     </style>
 
@@ -172,11 +173,13 @@
     <div id="guest-content-container">
 
         <div id="guest-content-left" style="padding:3% 5%; width:46%;">
-            <span style="display:inline-block;background:#FDFE03; padding:53px;">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 134 134" id="amadeus">
-                    <path d="M49 1L21 88L57 88L42 134L84 134L113 47L92 47L79 47L75 47L91 1L49 1Z" />
-                </svg>
-            </span>
+            <a href="/o/uno">
+                <span style="display:inline-block;background:#FDFE03; padding:53px;">
+                    <svg id="amadeus-logo-home" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
+                        <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>
+                    </svg>
+                </span>
+            </a>
 
             <p style="font-weight: normal; font-size:32px;font-family:Georgia !important;">Amadeus</p>
 

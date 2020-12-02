@@ -207,16 +207,9 @@ body{
     color:#07a4ed;
 }
 
-#amadeus-logo-deg{
-    color:#12ADFD;;
-    -webkit-animation-name: logo-logo; /* Safari 4.0 - 8.0 */
-    -webkit-animation-duration: 29s; /* Safari 4.0 - 8.0 */
-    animation-name: logo-logo;
-    animation-iteration-count: infinite;
-    animation-duration: 29s;
-}
 
-#amadeus-logo{
+#amadeus-logo,
+#amadeus-logo-home{
     -webkit-animation-name: logo-logo; /* Safari 4.0 - 8.0 */
     -webkit-animation-duration: 13s; /* Safari 4.0 - 8.0 */
 
@@ -229,15 +222,15 @@ body{
 /* Safari 4.0 - 8.0 */
 @-webkit-keyframes logo-logo {
     0%  {margin-top: 0px;fill:#000}
-    1%  {margin-top: 2px;fill:#5AB2FF}
-    2%  {margin-top: 0px;fill:#000}
+    1%  {margin-top: 0px;fill:#5AB2FF}
+    3%  {margin-top: 0px;fill:#000}
    100% {margin-top:0px;fill:#000}
 }
 
 @keyframes logo-logo {
     0%  {margin-top: 0px;fill:#000}
-    1%  {margin-top: 2px;fill:#54afff}
-    2%  {margin-top: 0px;fill:#000}
+    1%  {margin-top: 0px;fill:#54afff}
+    3%  {margin-top: 0px;fill:#000}
     100%{margin-top:0px;fill:#000}
 }
 
@@ -479,6 +472,7 @@ input[type="password"]::placeholder {
     background:#657d84 !important;
     background:#f8f8f8 !important;
     background:#f9f9f9 !important;
+    border:solid 1px #54afff !important;
 }
 #search-box:hover{
     -webkit-box-shadow: 1px 2px 3px 0px rgba(0,0,0,.09);
@@ -487,7 +481,7 @@ input[type="password"]::placeholder {
 	border:solid 1px #c0cdd0 !important;
     border:solid 1px #FD7300 !important;
     border:none !important;
-    border:solid 1px #17161b !important;
+    border:solid 1px #54afff !important;
 }
 
 
@@ -1032,12 +1026,16 @@ input[type="submit"].button.small{
 	background:#c2175a;
 	background:#ca2062;
 	background:#cf2668;
+    background:#FF844C;
+    border:solid 1px #FF844C;
 }
 
 .button.beauty-light{
 	background:#e24682;
     background:#D954A0;
 	border:solid 1px #D954A0;
+    background:#FF844C;
+    border:solid 1px #FF844C;
 }
 .button.beauty-light:hover{
     color:#fff !important;
@@ -1057,6 +1055,8 @@ input[type="submit"].beauty-light{
     color:#fff;
 	background:#D954A0;
 	border:solid 1px #D954A0;
+    background:#FF844C;
+    border:solid 1px #FF844C;
 }
 
 .button.yella{
@@ -1282,7 +1282,7 @@ input[type="submit"].button.black{
     width:943px;
     width:848px;
     width:860px;
-    width:845px;
+    width:825px;
 }
 
 #no-activity-discovered{
@@ -2897,7 +2897,7 @@ input[type="password"]:focus{
     background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #FDFE01 !important;
     background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #5AB2FF !important;
     background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #D955A0 !important;
-    background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #54afff !important;
+    background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #0D8BFB !important;
 	-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.27) !important;
 	-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.26) !important;
 	box-shadow: 0px 2px 3px 0px rgba(0,0,0,.27) !important;
@@ -3351,21 +3351,20 @@ a.information{
     background:#5AB2FF;
     background:#2b2b34;
     background:#54AFFF;
-    background:#17161b;
 }
 .post-sep-dos{
-    width:70%;
+    width:50%;
     background:#9EED01;
     background:#5AB2FF;
     background:#19ff93;
     background:#D955A0;
     background:#54AFFF;
-    background:#D955A0;
 }
 .post-sep-tres{
-    width:10%;
+    width:30%;
     background:#ffff2b;
     background:#54AFFF;
+    background:#D955A0;
 }
 
 #accounts-results-table{

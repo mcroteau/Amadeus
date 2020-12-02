@@ -26,9 +26,6 @@
 
             <div id="logo-container" style="position:absolute;">
                 <a ng-click="reloadActivities()" href="javascript:" id="logo-logo">
-<%--                    <svg id="amadeus-logo">--%>
-<%--                        <use xlink:href="#amadeus-icon" />--%>
-<%--                    </svg>--%>
                     <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
                         <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>
                     </svg>
@@ -36,7 +33,6 @@
             </div>
 
 			<div id="top-inner-container">
-
                 <div id="search-label">Search:</div>
 
                 <div id="search-container" class="float-left" style="z-index:100">
@@ -49,8 +45,6 @@
 	                <img src="/o/images/processing-dos.gif" style="height:50px; width:50px; position:absolute; right:240px; top:3px;"/>
                     <span class="information" id="processing-message"></span>
                 </div>
-
-
 			</div>
 
             <div id="navigation-container" class="float-right">

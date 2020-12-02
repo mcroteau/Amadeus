@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <decorators defaultdir="/jsp/layouts">
-    <decorator name="mobile" page="mobile.jsp">
-        <pattern>*/mobile</pattern>
-    </decorator>
     <decorator name="home" page="home.jsp">
         <pattern>*/uno</pattern>
         <pattern>*/signup</pattern>
