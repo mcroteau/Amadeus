@@ -189,7 +189,7 @@ body{
     animation-iteration-count: infinite;
     animation-duration: 19s;
 
-    background:#54afff !important;
+    background:#FDFE03 !important;
 }
 
 #logo-logo:hover{
@@ -242,20 +242,20 @@ body{
 }
 
 
-/* Safari 4.0 - 8.0 */
-@-webkit-keyframes logo-logo {
-    0%  {margin-top: 0px;fill:#fff}
-    1%  {margin-top: 2px;fill:#ffffb2}
-    2%  {margin-top: 0px;fill:#fff}
-    100% {margin-top:0px;fill:#fff}
-}
+/*@-webkit-keyframes logo-logo {*/
+/*    0%  {margin-top: 0px;fill:#fff}*/
+/*    1%  {margin-top: 2px;fill:#ffffb2}*/
+/*    2%  {margin-top: 0px;fill:#fff}*/
+/*    100% {margin-top:0px;fill:#fff}*/
+/*}*/
 
-@keyframes logo-logo {
-    0%  {margin-top: 0px;fill:#fff}
-    1%  {margin-top: 2px;fill:#ffffb2}
-    2%  {margin-top: 0px;fill:#fff}
-    100%{margin-top:0px;fill:#fff}
-}
+/*@keyframes logo-logo {*/
+/*    0%  {margin-top: 0px;fill:#fff}*/
+/*    1%  {margin-top: 2px;fill:#ffffb2}*/
+/*    2%  {margin-top: 0px;fill:#fff}*/
+/*    100%{margin-top:0px;fill:#fff}*/
+/*}*/
+
 /* Safari 4.0 - 8.0 */
 @-webkit-keyframes logo-logo-down {
     30% {background:#d953a0;}
@@ -1282,7 +1282,7 @@ input[type="submit"].button.black{
     width:943px;
     width:848px;
     width:860px;
-    width:856px;
+    width:845px;
 }
 
 #no-activity-discovered{
@@ -1611,7 +1611,7 @@ h3#share-something span{
 
 .like-actions-count-container{
     position:absolute;
-    right:34px;
+    right:41px;
     top:5px;
 }
 
@@ -1918,7 +1918,8 @@ p{
 }
 
 #latest-feed-total{
-    color:#fff;
+    color:#17161b;
+    bottom:7px !important;
 }
 
 /*.feed-content.maroon{*/
@@ -3269,13 +3270,13 @@ a.information{
     padding:0px 0px 0px 4px;
 }
 #logo-logo{
-    height:32px;
+    height:37px;
     margin-top:0px !important;
     display:block;
     background:#768fa5;
     background:#fff;
     background:#FDFE01;
-    padding:19px 17px 0px 29px;
+    padding:14px 17px 0px 29px;
     line-height:1.0;
     vertical-align:middle;
     text-decoration:none;
@@ -3283,11 +3284,9 @@ a.information{
 }
 #amadeus-logo{
     padding:0px;
-    border-radius:32px;
-    border:solid 0px #5AB2FF;
     display:block !important;
-    width: 14px;
-    height: 14px;
+    width: 20px;
+    height: 20px;
     fill:#FD7300;
     fill:#43a7fb;
     fill:#ff821c;
@@ -3306,14 +3305,14 @@ a.information{
     z-index: 101;
     vertical-align: middle;
     height: 15px;
-    padding: 12px 17px 12px 12px;
+    padding: 13px 17px 12px 12px;
     background: #ff9844;
     background: #5AB2FF;
     background: #ef62b2;
     background: #D955A0;
     background: #1e1d23;/** retro **/
     background: #54AFFF;
-    background: #17161b;
+    /*background: #17161b;*/
     /*background: #d953a0;*/
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
@@ -3633,7 +3632,7 @@ h1.gray span{
 #navigation-container{
     position:absolute;
     top:0px;
-    left:1067px;
+    left:1046px;
 }
 
 #posts-fellows-fems-container{
@@ -3913,7 +3912,7 @@ h1.gray span{
 .thunder{
     height:11px;
     width:11px;
-    padding:6px;
+    padding:8px;
     fill:#17161b;
     border-radius: 20px;
 }

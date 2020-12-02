@@ -26,12 +26,12 @@
 
             <div id="logo-container" style="position:absolute;">
                 <a ng-click="reloadActivities()" href="javascript:" id="logo-logo">
-                    <svg id="amadeus-logo">
-                        <use xlink:href="#amadeus-icon" />
-                    </svg>
-<%--                    <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">--%>
-<%--                        <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>--%>
+<%--                    <svg id="amadeus-logo">--%>
+<%--                        <use xlink:href="#amadeus-icon" />--%>
 <%--                    </svg>--%>
+                    <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
+                        <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>
+                    </svg>
                     <span id="latest-feed-total" class="notifications-count" style="display:inline-block; position:absolute;bottom:3px;left:54px;">{{data.latestPosts.length}}</span></a>
             </div>
 
