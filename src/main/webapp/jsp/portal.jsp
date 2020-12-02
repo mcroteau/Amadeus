@@ -20,7 +20,51 @@
 
 <body ng-app="app" ng-controller="baseController">
 
-	<div id="layout-container">
+    <style>
+        .linear-activity {
+            overflow: hidden;
+            width: 100%;
+            height: 2px;
+            background-color: #B3E5FC;
+            margin: 0px auto;
+            position:absolute;
+            left:0px;
+            right:0px;
+            top:0px;
+            z-index:1201;
+        }
+
+        .indeterminate {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .indeterminate:before {
+            content: '';
+            position: absolute;
+            height: 100%;
+            background-color: #03A9F4;
+            animation: indeterminate_first 1.7s infinite ease-out;
+        }
+
+        @keyframes indeterminate_first {
+            0% {
+                left: -100%;
+                width: 100%;
+            }
+            100% {
+                left: 100%;
+                width: 10%;
+            }
+        }
+    </style>
+
+    <div id="linear-indicator">
+        <div class="indeterminate" style="width: 100%"></div>
+    </div>
+
+	<div id="layout-container" style="position:relative;">
 
 		<div id="top-outer-container" ng-init="init()">
 
@@ -41,10 +85,11 @@
 
 				<br class="clear"/>
 
-                <div id="page-processing">
-	                <img src="/o/images/processing-dos.gif" style="height:50px; width:50px; position:absolute; right:240px; top:3px;"/>
-                    <span class="information" id="processing-message"></span>
-                </div>
+<%--                <div id="page-processing">--%>
+<%--	                <img src="/o/images/processing-dos.gif" style="height:50px; width:50px; position:absolute; right:240px; top:3px;"/>--%>
+<%--                    <span class="information" id="processing-message"></span>--%>
+<%--                </div>--%>
+
 			</div>
 
             <div id="navigation-container" class="float-right">
@@ -62,7 +107,7 @@
 
 		</div>
 
-        <div id="content-container" ng-view></div>
+        <div id="content-container" ng-view autoscroll="true"></div>
 
 	</div>
 
@@ -124,7 +169,7 @@
     });
 
     app.run(function ($rootScope) {
-        $rootScope.indicator = document.querySelector("#page-processing")
+        $rootScope.indicator = document.querySelector("#linear-indicator")
 
         $rootScope.$on("$routeChangeStart", function () {
             $rootScope.indicator.style.display = 'block'
@@ -132,7 +177,6 @@
 
         $rootScope.$on("$routeChangeSuccess", function () {
             $rootScope.indicator.style.display = 'none'
-
         });
     })
 
@@ -170,7 +214,6 @@
         $scope.chatInput = document.querySelector("#chat-input")
         $scope.chatSession = document.querySelector("#chat-session")
 
-
         $scope.navigateSearch = function($event){
             if($event.key == "Enter") {
                 var q = document.querySelector("#search-box").value
@@ -199,8 +242,6 @@
         $scope.reloadActivities = function(){
             if($route.current.loadedTemplateUrl != "pages/activity.html"){
                 $location.path("/")
-                $location.hash('layout-container');
-                $anchorScroll();
             }else{
                 $route.reload()
             }
@@ -273,6 +314,8 @@
 
     app.controller('activityController', function($scope, $http, $route, $interval, $timeout, $location, $anchorScroll, $sce, dataService) {
 
+        $scope.layout = document.querySelector("#layout-container")
+
         var navigatePost = function(id){
             console.log('navigate post', id)
             $location.hash('post-' + id);
@@ -284,13 +327,8 @@
         }
 
         var setData = function(response){
-            console.log(response.data.activities)
             $scope.activities = response.data.activities
             $scope.femsfellas = response.data.femsfellas
-            angular.forEach($scope.activities, function(activity){
-                console.log(activity.content)
-                $sce.trustAsResourceUrl(activity.content);
-            })
             $timeout(setAnchors, 1300)
         }
 

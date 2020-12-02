@@ -106,7 +106,7 @@ public class AppStartup implements ApplicationListener<ContextRefreshedEvent>{
 	private void generateAppData(){
 		generateMockAccounts();
 //		generateMockFriendInvites();
-//		generateMockConnections();
+		generateMockConnections();
 		generateMockPosts();
 		generateMockMessages();
 		//generateMockViewData();

@@ -404,7 +404,7 @@ public class PostController extends BaseController {
 
 			PostLike postLike = new PostLike();
 			postLike.setPostId(post.getId());
-			postLike.setAccountId(postAccount.getId());
+			postLike.setAccountId(authenticatedAccount.getId());
 			boolean existingPostLike = postDao.liked(postLike);
 			if (existingPostLike) {
 				post.setLiked(true);

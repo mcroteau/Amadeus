@@ -5,7 +5,7 @@
 	<artifactId>amadeus</artifactId>
 	<packaging>war</packaging>
 	<version>0.1</version>
-	<name>Amadeus</name>
+	<name>Amadeus!</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
