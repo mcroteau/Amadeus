@@ -41,7 +41,6 @@ public class AppStartup implements ApplicationListener<ContextRefreshedEvent>{
 		createApplicationRoles();
 		createApplicationAdministrator();
 		createApplicationGuest();
-		generateAppData();
 	}
 
 	private void createApplicationRoles(){
@@ -105,11 +104,10 @@ public class AppStartup implements ApplicationListener<ContextRefreshedEvent>{
 
 	private void generateAppData(){
 		generateMockAccounts();
-//		generateMockFriendInvites();
+		generateMockFriendInvites();
 		generateMockConnections();
 		generateMockPosts();
 		generateMockMessages();
-		//generateMockViewData();
 	}
 
 
