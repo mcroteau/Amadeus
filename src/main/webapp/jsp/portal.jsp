@@ -161,7 +161,6 @@
 
 <script>
 
-
     var app = angular.module("app", ['ngRoute', 'ngAnimate', 'ngSanitize'])
 
     app.config(function($sceProvider) {
@@ -256,8 +255,6 @@
         }
 
         $scope.startChat = function(friendId){
-
-
             $scope.friendId = friendId
             $http.get('/o/messages/' + friendId).then(function(response){
                 $scope.messages = response.data.messages
@@ -314,7 +311,7 @@
 
     app.controller('activityController', function($scope, $http, $route, $interval, $timeout, $location, $anchorScroll, $sce, dataService) {
 
-        $scope.layout = document.querySelector("#layout-container")
+        $scope.postButton = document.querySelector("#share-button")
 
         var navigatePost = function(id){
             console.log('navigate post', id)
@@ -333,6 +330,7 @@
         }
 
         $scope.shareWhatsup = function(){
+            $scope.postButton.value = "Amadeus!"
             var content = document.querySelector("#whatsup").value
             var images = document.querySelector("#post-upload-image-files").files
             var videos = document.querySelector("#post-upload-video-files").files
@@ -362,6 +360,7 @@
         document.querySelector("#whatsup").focus()
 
         getData()
+
     })
 
     app.controller('searchController', function($scope, $http, $location, $route, $window) {

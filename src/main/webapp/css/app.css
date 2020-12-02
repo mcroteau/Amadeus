@@ -399,7 +399,7 @@ input[type="password"]::placeholder {
     background:#FDFE03;
     background:#f9f9f9;
     background:#FDFE03;
-    background:#fff;
+    background:#f9f9f9;
     /*background:#fff;*/
 	margin:0px auto;
 	width:100%;
@@ -437,7 +437,7 @@ input[type="password"]::placeholder {
 	width:491px;
 	width:447px;
     width:390px;
-	height:38px;
+	height:41px;
 	line-height:1.0;
 	z-index:1;
 	padding: 0px 20px 0px 76px !important;
@@ -2902,9 +2902,9 @@ input[type="password"]:focus{
 	-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.26) !important;
 	box-shadow: 0px 2px 3px 0px rgba(0,0,0,.27) !important;
     border:none !important;
-    /*-webkit-border-radius: 23px !important;*/
-    /*-moz-border-radius: 23px !important;*/
-    /*border-radius: 23px !important;*/
+    -webkit-border-radius: 4px !important;
+    -moz-border-radius: 4px !important;
+    border-radius: 4px !important;
 }
 
 .post-button:hover{
@@ -2922,6 +2922,10 @@ input[type="password"]:focus{
 	-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.37) !important;
 	-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.36) !important;
 	box-shadow: 0px 2px 3px 0px rgba(0,0,0,.37) !important;
+}
+
+.post-button.beautiful{
+    background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #FF844C !important;
 }
 
 .post-button:active{
@@ -3303,8 +3307,8 @@ a.information{
     left: 0px;
     z-index: 101;
     vertical-align: middle;
-    height: 15px;
-    padding: 13px 17px 12px 12px;
+    height: 16px;
+    padding: 15px 17px 12px 12px;
     background: #ff9844;
     background: #5AB2FF;
     background: #ef62b2;
@@ -3438,8 +3442,8 @@ h1.gray span{
     -webkit-box-shadow: 1px 2px 3px 0px rgba(0,0,0,.17);
     -moz-box-shadow: 1px 2px 3px 0px rgba(0,0,0,.17);
     box-shadow: 1px 2px 3px 0px rgba(0,0,0,.17);
-    border-top-right-radius:3px;
-    border-top-left-radius:3px;
+    border-top-right-radius:13px;
+    border-top-left-radius:13px;
 }
 
 #chat-launcher-popup.opened{
