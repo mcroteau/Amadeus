@@ -1,0 +1,12 @@
+*.DS_Store
+*.log
+*.iml
+.idea
+.classpath
+.project
+.settings
+output
+memory
+List.md
+Notes.md
+src/main/resources/application.properties

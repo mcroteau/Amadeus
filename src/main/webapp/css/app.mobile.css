@@ -1,0 +1,69 @@
+
+@media screen and (max-width: 690px) {
+
+    #top-inner-container{
+        margin-left:67px;
+    }
+
+    #navigation-container{
+        left:0px;
+        right:0px !important;
+    }
+
+    #profile-actions-href{
+        margin-right:0px !important;
+    }
+
+    .render-desktop{
+        display:none;
+    }
+
+    #search-box{
+        width:135px;
+    }
+
+    #content-container{
+        width:100%;
+        margin: 5px auto 119px auto;
+    }
+    #activities-wrapper{
+        width:100%;
+        float:none;
+    }
+    #posts-right-container{
+        float:none;
+        width:100% !important;
+    }
+    #post-right{
+        padding-left:0px;
+        padding-right:0px;
+    }
+    #whatsup{
+        width:100%;
+        height:90px;
+    }
+    #latest-posts-header{
+        display:block;
+    }
+    #posts-fellows-fems-outer-container{
+        display:none;
+    }
+    #advertisement-container{
+        display:none;
+    }
+    #profile-posts-container{
+        float:none;
+        width:100%;
+    }
+    #profile-left-container{
+        float:none;
+        width:100%;
+    }
+
+    #chat-session-outer-wrapper{
+        display:none;
+    }
+    #chat-launcher-popup{
+        display: none;
+    }
+}

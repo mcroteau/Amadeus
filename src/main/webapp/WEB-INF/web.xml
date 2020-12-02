@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                             http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+  	<servlet>
+  		<servlet-name>o</servlet-name>
+    	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    	<load-on-startup>1</load-on-startup>  
+    </servlet>
+
+  	<servlet-mapping>
+    	<servlet-name>o</servlet-name>
+    	<url-pattern>/</url-pattern>
+  	</servlet-mapping>
+
+	<filter>
+		<filter-name>Parakeet</filter-name>
+		<filter-class>io.github.mcroteau.resources.filters.CacheFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>Parakeet</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>sitemesh</filter-name>
+		<filter-class>com.opensymphony.sitemesh.webapp.SiteMeshFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>sitemesh</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+			/WEB-INF/o-db-dev.xml,
+			/WEB-INF/o-context.xml,
+			/WEB-INF/o-servlet.xml
+		</param-value>
+    </context-param>
+
+	<session-config>
+		<tracking-mode>COOKIE</tracking-mode>
+		<!--<cookie-config>
+			<name>Parakeet</name>
+			<secure>true</secure>
+		</cookie-config>-->
+	</session-config>
+
+</web-app>

@@ -1,0 +1,350 @@
+<div>
+    <div id="profile-outer-container">
+
+        <div id="profile-container">
+            <div ng-if="!profile.isOwnersAccount" id="profile-actions-container">
+
+                <a ng-click="unfriend(profile.id)" ng-if="profile.isFriend" href="javascript:" class="button light small" data-id="{{id}}" data-action="remove" id="profile-friend-button">Unfriend</a>
+                <a ng-click="sendFriendRequest(profile.id)" ng-if="!profile.isFriend" href="javascript:" class="button retro small" data-action="invite" id="profile-friend-button">Send Friend Request</a>
+
+                <br class="clear"/>
+            </div>
+
+            <br class="clear"/>
+
+            <img ng-src="/o/{{profile.imageUri}}" id="profile-profile-image"/>
+
+            <div id="profile-profile-details">
+                <h1 id="profile-profile-name" style="word-break: break-all;">{{profile.name}}</h1>
+                <h3 class="light" style="width:fit-content;">{{profile.age}} {{profile.location}}</h3>
+
+                <span ng-if="profile.isOwnersAccount" class="tiny" style="display:block;margin:20px auto 10px auto;">Only you can see # of likes and profile views data</span>
+
+    <!--            <div ng-if="!profile.isOwnersAccount && !profile.liked">-->
+    <!--                <a href="javascript:" class="button yella small profile-like" id="profile-like-button" data-id="{{id}}" data-liked="false">-->
+    <!--                    Like &nbsp;-->
+    <!--                    <svg class="amadeus-like">-->
+    <!--                        <use xlink:href="#amadeus" />-->
+    <!--                    </svg>-->
+    <!--                </a>-->
+    <!--                <span id="love-it" style="display:none">-->
+    <!--                <svg class="amadeus-like">-->
+    <!--                    <use xlink:href="#amadeus" />-->
+    <!--                </svg>-->
+    <!--                <span>Love you!</span>-->
+    <!--            </span>-->
+    <!--            </div>-->
+
+    <!--            <div ng-if="profile.liked">-->
+    <!--                <a href="javascript:" class="button light small profile-like" id="profile-like-button" data-id="{{id}}" data-liked="true">-->
+    <!--                    Liked!-->
+    <!--                </a>-->
+    <!--                <span id="love-it">-->
+    <!--                <svg class="amadeus-like">-->
+    <!--                    <use xlink:href="#amadeus" />-->
+    <!--                </svg>-->
+    <!--                <span>Love you!</span>-->
+    <!--            </span>-->
+    <!--            </div>-->
+
+                <span ng-if="profile.isOwnersAccount" style="font-size:21px; display:inline-block;"><span style="font-size:21px;" id="num-likes">{{profile.likes}}</span> Likes</span>
+
+                <br class="clear"/>
+            </div>
+
+            <a ng-if="profile.isOwnersAccount" href="/o/account/edit/{{id}}" class="href-dotted right-float">Edit</a>
+
+            <br class="clear"/>
+        </div>
+
+        <div id="profile-posts-container">
+            <div id="profile-posts" ng-controller="mixController">
+                <div class="feed-content-container" ng-repeat="post in activities" id="post-{{post.id}}" ng-if="!post.hidden && !post.flagged">
+
+                    <span ng-if="post.postEditable && post.content != null" class="edit-click tiny yella edit-fade-in">Click inside<br/> Post to Edit</span>
+                    <span ng-if="post.postEditable && post.content != null"  class="author-ref tiny">Author</span>
+
+                    <div ng-if="post.shared" class="shared-post-container" >
+
+                        <a ng-href="#!/profile/{{post.sharedAccountId}}" class="shared-post-whois" data-id="{{post.sharedAccountId}}">
+                            <img ng-src="/o/{{post.sharedImageUri}}" style="width:40px; height:40px;"/>
+                        </a>
+
+                        <div class="shared-account-container">
+                            <span class="shared-account">{{post.sharedAccount}}</span>
+                            <span class="shared-time-ago">{{post.timeSharedAgo}}</span>
+                        </div>
+
+                        <span class="shared-descriptor">Shared</span>
+
+                        <br class="clear"/>
+
+                        <div class="shared-comment-container">
+                            <span class="shared-comment">{{post.sharedComment}}</span>
+                        </div>
+                    </div>
+
+                    <div ng-class="{'shared': post.shared}" class="feed-content">
+
+                        <div class="post-content">
+
+                            <div ng-repeat="imageUri in post.imageFileUris" class="image-post-container" data-image-uri="{{imageUri}}" style="position:relative;">
+                                <a ng-click="deleteImage(post.id, imageUri)" ng-href="javascript:" ng-if="post.postEditable" class="delete-image beauty-light edit-fade-in" data-uri="{{imageUri}}" data-id="{{post.id}}">x</a>
+                                <a href="/o/{{imageUri}}" target="_blank">
+                                    <img ng-src="/o/{{imageUri}}" style="width:100%"/>
+                                </a>
+                            </div>
+
+                            <video controls ng-if="post.videoFileUri" ng-src="/o/{{post.videoFileUri}}" style="width:100%" data-video-uri="{{post.videoFileUri}}"></video>
+
+                            <div ng-if="post.content && post.postEditable" style="white-space: pre-line;" class="post-comment" contenteditable="true" id="post-content-{{post.id}}" ng-bind-html="post.content"></div>
+
+                            <div ng-if="post.content && !post.postEditable" style="white-space: pre-line;" class="post-comment" ng-bind-html="post.content"></div>
+
+                        </div>
+
+                        <div class="post-meta" style="position: relative">
+                            <p class="edit-status tiny float-right" id="edit-status-{{id}}">Updating...</p>
+
+                            <div ng-if="!post.shared && post.deletable">
+                                <a ng-click="updatePost(post.id)" href="javascript:" class="button small retro edit-update-button edit-fade-in">Update</a>
+                                <div class="image-edit edit-fade-in">
+                                    <a href="javascript:" class="button small yella" id="edit-image-button-{{post.id}}">+ Images</a>
+                                    <input ng-upload-change="uploadImages(post.id, $event)" type="file" name="imageFiles" id="edit-image-select-{{post.id}}" class="edit-image-input" multiple="multiple" data-id="{{post.id}}"/>
+                                </div>
+                            </div>
+
+                            <a ng-href="#!/profile/{{post.accountId}}" href="javascript:" class="post-whois" data-id="{{post.accountId}}">
+                                <img ng-src="/o/{{post.imageUri}}"/>
+                            </a>
+                            <a ng-href="#!/profile/{{post.accountId}}" class="posted-by" data-id="{{post.accountId}}">{{post.name}}</a><br/>
+                            <span class="post-date">{{post.timeAgo}}</span>
+
+                            <br class="clear"/>
+                        </div>
+
+                        <div class="content-actions">
+
+                            <div class="like-container float-right">
+                                <div class="like-actions-count-container">
+                                    <span class="actions-count like-container-{{post.id}}" id="likes-{{post.id}}" ng-bind="post.likes"></span> <span class="actions-label">Likes</span>
+                                </div>
+                                <svg ng-click="likePost(post.id)" ng-class="{'liked': post.liked}" class="thunder like-button">
+                                    <use xlink:href="#amadeus" data-id="{{id}}"/>
+                                </svg>
+                            </div>
+
+
+                            <div ng-if="post.shared" class="share-container float-left">
+                                <div>
+                                    <div class="share-actions-count-container">
+                                        <span class="actions-count">{{post.shares}} </span>
+                                    </div>
+                                    <a ng-click="toggleShare($index)" href="javascript:" class="share-button" data-id="{{id}}"><img ng-src="/o/images/share.png" style="width:32px;" data-id="{{id}}"/></a>
+                                </div>
+                            </div>
+                            <div ng-if="!post.shared" class="share-container float-left">
+                                <div>
+                                    <div class="share-actions-count-container">
+                                        <span class="actions-count">{{post.shares}} </span>
+                                    </div>
+                                    <a ng-click="toggleShare($index)" href="javascript:" class="share-button" data-id="{{id}}"><img ng-src="/o/images/share.png" style="width:32px;" data-id="{{id}}"/></a>
+                                </div>
+                            </div>
+
+                            <br class="clear"/>
+
+                        </div>
+
+                        <div class="post-separators">
+                            <div class="post-sep post-sep-uno"></div>
+                            <div class="post-sep post-sep-dos"></div>
+                            <div class="post-sep post-sep-tres"></div>
+                        </div>
+
+                        <div ng-if="post.shared" ng-show="toggle[$index]" class="share-comment-container">
+                            <span class="share-comment-header">Share Post</span>
+                            <textarea name="comment" id="share-comment-{{post.postShareId}}"></textarea>
+                            <a ng-click="sharePost(post.postShareId, $event)" href="javascript:" class="button yella small light-shadow float-right share-post-button" data-id="{{post.id}}">Share Post</a>
+                            <br class="clear"/>
+                        </div>
+
+                        <div ng-if="!post.shared" ng-show="toggle[$index]" class="share-comment-container">
+                            <span class="share-comment-header">Share Post</span>
+                            <textarea name="comment" id="share-comment-{{post.id}}"></textarea>
+                            <a ng-click="sharePost(post.id, $event)" href="javascript:" class="button yella small light-shadow float-right share-post-button" data-id="{{post.id}}">Share Post</a>
+                            <br class="clear"/>
+                        </div>
+
+                        <div class="comments-container" style="margin-left:62px;">
+
+                            <div ng-if="post.commentsOrShareComments" class="comments-header-spacer"></div>
+
+                            <div ng-if="post.shareComments" class="post-comment-wrapper">
+
+                                <div class="post-comment-meta" ng-repeat="comment in post.shareComments">
+                                    <a href="javascript:" class="post-comment-whois left-float">
+                                        <img ng-src="/o/{{comment.accountImageUri}}" style="height:30px; width:30px;"/>
+                                    </a>
+                                    <div class="left-float" style="margin-left:10px;width:79%;">
+                                        <p>
+                                            <a href="javascript:" class="post-comment-whois" style="text-decoration:none; color:#222; font-family:Roboto-Bold !important">{{comment.accountName}}</a>
+                                            <span class="comment-comment">{{comment.comment}}</span>
+                                            <a ng-if="comment.commentDeletable" ng-click="deleteShareComment(comment.id)" href="javascript:" class="comment-delete href-dotted" style="display:none">Delete</a>
+                                        </p>
+                                    </div>
+                                    <br class="clear"/>
+                                </div>
+                            </div>
+
+                            <div ng-if="post.comments" class="post-comment-wrapper">
+
+                                <div class="post-comment-meta" ng-repeat="comment in post.comments">
+                                    <a href="javascript:" class="post-comment-whois left-float">
+                                        <img ng-src="/o/{{comment.accountImageUri}}" style="height:30px; width:30px;"/>
+                                    </a>
+                                    <div class="left-float" style="margin-left:10px;width:79%;">
+                                        <p>
+                                            <a href="javascript:" class="post-comment-whois" style="text-decoration:none; color:#222; font-family:Roboto-Bold !important">{{comment.accountName}}</a>
+                                            <span class="comment-comment">{{comment.comment}}</span>
+                                            <a ng-if="comment.commentDeletable" ng-click="deleteComment(comment.id)" href="javascript:" class="comment-delete href-dotted" style="display:none">Delete</a>
+                                        </p>
+                                    </div>
+                                    <br class="clear"/>
+                                </div>
+                            </div>
+
+                            <div class="comment-container" class="clear">
+
+                                <div ng-if="post.shared" class="comment-shared-form">
+                                    <span class="comments-header information">Comment</span>
+                                    <input ng-keyup="$event.keyCode == 13 && saveShareComment(post.postShareId)" type="text" id="post-share-comment-{{post.postShareId}}" class="comment-input" value=""/>
+                                    <span class="enter" style="display:none">Enter Key</span>
+                                </div>
+
+                                <div ng-if="!post.shared" class="comment-form">
+                                    <span class="comments-header information">Comment</span>
+                                    <input ng-keyup="$event.keyCode == 13 && saveComment(post.id)" type="text" id="post-comment-{{post.id}}" class="comment-input" value=""/>
+                                    <span class="enter" style="display:none">Enter Key</span>
+                                </div>
+                            </div>
+
+                            <br class="clear"/>
+                        </div>
+                    </div>
+
+                    <div class="post-admin-actions-wrapper" ng-if="post.shared">&Xi;
+                        <div class="post-admin-actions-inner" style="position:relative;">
+                            <div class="post-admin-actions">
+                                <a ng-click="unsharePost(post.postShareId)" ng-if="post.deletable"  href="javascript:" class="delete-post-share" data-id="{{post.postShareId}}">Delete Post</a>
+                                <a ng-click="flagPost(post.id, true)" href="javascript:" class="flag-post" data-id="{{post.id}}" data-shared="true">Flag Post</a>
+                                <a ng-click="hidePost(post.id)" href="javascript:" class="hide-post" data-id="{{post.id}}">Hide Post</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-admin-actions-wrapper" ng-if="!post.shared">&Xi;
+                        <div class="post-admin-actions-inner" style="position:relative;">
+                            <div class="post-admin-actions">
+                                <a ng-click="deletePost(post.id)" ng-if="post.deletable" href="javascript:" class="delete-post" data-id="{{post.id}}">Delete Post</a>
+                                <a ng-click="flagPost(post.id, false)" href="javascript:" class="flag-post" data-id="{{post.id}}" data-shared="false">Flag Post</a>
+                                <a ng-click="hidePost(post.id)" href="javascript:" class="hide-post" data-id="{{post.id}}">Hide Post</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="profile-left-container">
+            <div id="profile-friends-outer-container">
+                <h2 class="gray no-border yella">Friends</h2>
+                <div id="profile-friends-container">
+                    <a ng-href="#!/profile/{{friend.friendId}}" ng-repeat="friend in friends" href="javascript:" class="profile-friend-ref">
+                        <div class="profile-friend-container">
+                            <img ng-src="/o/{{friend.imageUri}}"/>
+                            <span class="profile-friend-name">{{friend.name}}</span>
+                        </div>
+                    </a>
+                </div>
+                <br class="clear"/>
+            </div>
+        </div>
+
+    </div>
+
+    <br class="clear"/>
+
+    <div ng-if="!profile.isOwnersAccount">
+        <a ng-show="!personBlocked" ng-click="toggeBlock(profile.id)" href="javascript:" id="block-profile-btn" class="button light small">Block Person</a>
+        <a ng-show="personBlocked" ng-click="toggeBlock(profile.id)" href="javascript:" id="block-profile-btn" class="button small yella">Unblock Person</a>
+        <p class="information">Blocking an individual means <br/>
+            he/she will not be able to see your profile and you will <br/>
+            not show up in search results for them</p>
+    </div>
+
+</div>
+
+<!--<div ng-if="personBlocked">-->
+<!--    <p class="notify">Profile hidden ...-->
+<!--    what did you do? Don't worry, she'll/he'll come back! <br/><br/>Until then...</p>-->
+
+<!--    <iframe width="560" height="315" src="https://www.youtube.com/embed/LatorN4P9aA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>-->
+<!--</div>-->
+
+<div style="text-align:center;margin-top:191px;">
+    <a href="${pageContext.request.contextPath}/get_code" class="page-ref href-dotted" >Get Code</a>
+    <a href="javascript:" class="page-ref href-dotted" data-ref="about">About</a>
+    <a href="${pageContext.request.contextPath}/invite" class="href-dotted" id="invite-people">Invite</a>
+</div>
+
+<p style="text-align:center;"><a href="mailto:support@amadeus.social" style="color:#17161b" class="href-dotted">support@amadeus.social</a>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 134 134" id="amadeus">
+        <path d="M49 1L21 88L57 88L42 134L84 134L113 47L92 47L79 47L75 47L91 1L49 1Z" />
+    </svg>
+</p>
+
+
+<div style="text-align:center;margin:20px auto 560px auto">
+    <p style="text-align: center; font-size:12px;">&copy; 2020 Amadeus</p>
+    <a href="http://tomcat.apache.org/" target="_blank" class="information">Powered by<br/>Tomcat</a>
+</div>
+
+
+<script type="text/template" id="profile-template">
+
+    {{#isOwnersAccount}}
+
+    <div id="profile-stats-container" style="width:100%">
+
+        <br class="clear"/>
+
+        <div class="profile-stat">
+            <h2 id="profile-stat-tres"></h2>
+            <span class="information">Previous Week</span>
+            <span class="information">Visits</span>
+        </div>
+
+        <div class="profile-stat">
+            <h2 id="profile-stat-dos"></h2>
+            <span class="information">Previous Month</span>
+            <span class="information">Visits</span>
+        </div>
+
+        <div class="profile-stat">
+            <h2 id="profile-stat-uno"></h2>
+            <span class="information">All Time</span>
+            <span class="information">Visits</span>
+        </div>
+
+
+        <br class="clear"/>
+
+        <div id="chart" width="890" height="400"></div>
+
+        <a href="http://apexcharts.com" class="tiny" style="color:#212121; text-decoration:none;" target="_blank">Apex.</a>
+    </div>
+
+    {{/isOwnersAccount}}
+
+
+</script>

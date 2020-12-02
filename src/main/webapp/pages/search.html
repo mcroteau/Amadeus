@@ -1,0 +1,38 @@
+<div id="search-results-container">
+
+    <div id="search-accounts-results-container">
+
+        <h1 class="no-border" style="margin-bottom:20px;">Results</h1>
+
+        <table ng-if="accounts.length > 0" id="accounts-results-table">
+            <thead class="render-desktop">
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Location</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody id="accounts-search-results-container">
+                <tr ng-repeat="account in accounts" ng-if="!account.blocked">
+                    <td><a ng-href="#!/profile/{{account.id}}" href="javascript:" class="profile-href"><img ng-src="/o/{{account.imageUri}}" class="profile-href search-profile-image"/></a></td>
+                    <td>
+                        <a ng-href="#!/profile/{{account.id}}" href="javascript:" class="profile-href href-dotted" data-id="{{id}}">{{account.name}}
+                            <span ng-if="!account.isFriend && account.invited" class="invite-sent-span">(Invite sent)</span>
+                        </a>
+                    </td>
+                    <td class="render-desktop">{{account.location}}</td>
+                    <td class="align-right">
+                        <span ng-if="!account.isOwnersAccount && account.isFriend" class="is-friend information">Connected</span>
+                        <button ng-click="sendInvite(account.id)" ng-if="!account.isOwnersAccount && !account.isFriend && account.invited" class="button beauty-light small friend-invite">+ Resend Invite</button>
+                        <button ng-click="sendInvite(account.id)" ng-if="!account.isOwnersAccount && !account.isFriend && !account.invited" class="button retro small friend-invite">+ Friend</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<p ng-if="accounts.length == 0" class="notify" >No results found... please try again!</p>
+

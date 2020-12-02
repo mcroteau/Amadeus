@@ -1,0 +1,38 @@
+
+<div ng-if="invitations" id="friend-invites-container">
+
+    <h1 class="no-border" style="margin-bottom:40px;">Invitations</h1>
+
+    <br class="clear"/>
+
+    <table class="table" id="invites-results-table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>City</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody id="friend-invite-rows-container">
+            <tr ng-repeat="invitation in invitations" ng-show="!invitation.isOwnersAccount">
+                <td>{{invitation.inviteeId}}</td>
+                <!--<td>{{invitedId}}</td>-->
+                <td>
+                    <a ng-href="#!/profile/{{invitation.inviteeId}}" href="javascript:" class="friend-invite-profile-href href-dotted">{{invitation.name}}</a>
+                </td>
+                <td>{{invitation.age}}</td>
+                <td>{{invitation.location}}</td>
+                <td class="align-right">
+                    <button ng-click="ignoreInvitation(invitation.inviteeId)" class="button sky ignore-button small">Ignore</button>
+                    <button ng-click="acceptInvitation(invitation.inviteeId)" class="button retro accept-button small">+ Accept</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<p ng-if="!invitations" id="no-friend-invites" style="display:none; margin-top:40px;" class="notify">No friend pending friend invites... have no fear, invites are on their way</p>
+
