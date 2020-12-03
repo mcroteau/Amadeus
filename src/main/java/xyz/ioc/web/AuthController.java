@@ -45,6 +45,8 @@ public class AuthController extends BaseController {
 
 		try{
 
+			log.info("password : " + account.getPassword());
+
 			if(!parakeet.login(account.getUsername(), account.getPassword())){
 				request.getSession().setAttribute("message", "Wrong username and password");
 				return "redirect:/";

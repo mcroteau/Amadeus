@@ -32,10 +32,10 @@
 
         <br class="clear"/>
 
-        <textarea placeholder="The Lazy Fox jumped over the yellow dog and laughed." id="whatsup" name="content"></textarea>
+        <textarea placeholder="The Lazy Fox jumped over the yellow dog." id="whatsup" name="content"></textarea>
 
         <br class="clear"/>
-        <input ng-click="shareWhatsup()" type="button" class="post-button" id="share-button" value="Share!"/>
+        <input ng-click="shareWhatsup()" ng-class="{'beautiful' : beautiful }" class="post-button" id="share-button" type="button" value="Share!"/>
 
         <br class="clear"/>
         <div id="actions-container" class="float-right">

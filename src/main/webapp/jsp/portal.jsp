@@ -77,9 +77,9 @@
             </div>
 
 			<div id="top-inner-container">
-                <div id="search-label">Search:</div>
+                <div ng-if="!$root.profilePage" id="search-label">Search:</div>
 
-                <div id="search-container" class="float-left" style="z-index:100">
+                <div ng-if="!$root.profilePage" id="search-container" class="float-left" style="z-index:100">
                     <input ng-keyup="navigateSearch($event)" type="text" class="search-input" id="search-box" placeholder=""/>
 				</div>
 
@@ -167,7 +167,7 @@
         $sceProvider.enabled(false);
     });
 
-    app.run(function ($rootScope, $timeout) {
+    app.run(function ($rootScope, $location) {
         $rootScope.indicator = document.querySelector("#linear-indicator")
 
         $rootScope.$on("$routeChangeStart", function () {
@@ -176,6 +176,14 @@
 
         $rootScope.$on("$routeChangeSuccess", function () {
             $rootScope.indicator.style.display = 'none'
+            console.log($location.path());
+
+            if($location.path().includes('/profile')){
+                console.log("profile page")
+                $rootScope.profilePage = true;
+            }else{
+                $rootScope.profilePage = false;
+            }
         });
     })
 
@@ -303,11 +311,10 @@
             $scope.chatStarted = $scope.chatStarted ? false : true
             if(!$scope.chatStarted)$interval.cancel($scope.chatInterval)
         }
-
     });
 
 
-    app.controller('activityController', function($scope, $http, $route, $interval, $timeout, $location, $anchorScroll, $sce, dataService) {
+    app.controller('activityController', function($scope, $http, $route, $interval, $timeout, $location, $anchorScroll, $sce, $window, dataService) {
 
         $scope.postButton = document.querySelector("#share-button")
 
@@ -347,7 +354,10 @@
                 url: '/o/post/share',
                 data: fd,
                 headers: {'Content-Type': undefined},
-            }).then($route.reload)
+            }).then(function(){
+                $scope.beautiful = $scope.beautiful ? false : true
+                $window.location.reload()
+            })
         }
 
         $scope.clearNotifications = function(){
@@ -517,7 +527,6 @@
     app.controller('profileController', function($scope, $http, $route, $timeout, dataService) {
         var self = this
 
-
         $scope.unfriend = function(id){
             $http.post('/o/friend/remove/' + id).then($route.reload)
         }
@@ -538,7 +547,6 @@
         }
 
         var setData = function(response){
-
             $scope.personBlocked = response.data.profile.blocked
             $scope.profile = response.data.profile
             $scope.friends = response.data.friends
@@ -546,6 +554,11 @@
             $http.get("/o/posts/" + self.id).then(function(response){
                 $scope.activities = response.data
                 $timeout(setAnchors, 1300)
+            })
+            $http.get("/o/profile/data/views").then(function(response){
+                $scope.week = response.data.week
+                $scope.month = response.data.month
+                $scope.all = response.data.all
             })
         }
 

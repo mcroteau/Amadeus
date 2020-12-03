@@ -18,7 +18,7 @@
                 <h1 id="profile-profile-name" style="word-break: break-all;">{{profile.name}}</h1>
                 <h3 class="light" style="width:fit-content;">{{profile.age}} {{profile.location}}</h3>
 
-                <span ng-if="profile.isOwnersAccount" class="tiny" style="display:block;margin:20px auto 10px auto;">Only you can see # of likes and profile views data</span>
+                <span ng-if="profile.isOwnersAccount" class="tiny" >Only you can see profile views data</span>
 
     <!--            <div ng-if="!profile.isOwnersAccount && !profile.liked">-->
     <!--                <a href="javascript:" class="button yella small profile-like" id="profile-like-button" data-id="{{id}}" data-liked="false">-->
@@ -47,12 +47,42 @@
     <!--            </span>-->
     <!--            </div>-->
 
-                <span ng-if="profile.isOwnersAccount" style="font-size:21px; display:inline-block;"><span style="font-size:21px;" id="num-likes">{{profile.likes}}</span> Likes</span>
+<!--                <span ng-if="profile.isOwnersAccount" style="font-size:21px; display:inline-block;"><span style="font-size:21px;" id="num-likes">{{profile.likes}}</span> Likes</span>-->
+
+                <div id="profile-stats-container" style="width:100%">
+
+                    <br class="clear"/>
+
+                    <div class="profile-stat">
+                        <h2 id="profile-stat-tres">{{week}}</h2>
+                        <span class="information">Previous Week</span>
+                        <span class="information">Visits</span>
+                    </div>
+
+                    <div class="profile-stat">
+                        <h2 id="profile-stat-dos">{{month}}</h2>
+                        <span class="information">Previous Month</span>
+                        <span class="information">Visits</span>
+                    </div>
+
+                    <div class="profile-stat">
+                        <h2 id="profile-stat-uno">{{all}}</h2>
+                        <span class="information">All Time</span>
+                        <span class="information">Visits</span>
+                    </div>
+
+
+                    <br class="clear"/>
+
+                    <div id="chart" width="890" height="400"></div>
+
+                    <a href="http://apexcharts.com" class="tiny" style="color:#212121; text-decoration:none;" target="_blank">Apex.</a>
+                </div>
 
                 <br class="clear"/>
             </div>
 
-            <a ng-if="profile.isOwnersAccount" href="/o/account/edit/{{id}}" class="href-dotted right-float">Edit</a>
+            <a ng-if="profile.isOwnersAccount" href="/o/account/edit/{{id}}" class="href-dotted right-float" id="edit-button">Edit</a>
 
             <br class="clear"/>
         </div>

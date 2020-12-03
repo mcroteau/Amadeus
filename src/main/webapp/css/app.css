@@ -400,16 +400,15 @@ input[type="password"]::placeholder {
     background:#f9f9f9;
     background:#FDFE03;
     background:#f9f9f9;
-    background:#fff;
 	margin:0px auto;
 	width:100%;
 	z-index:2001;
 	/*-webkit-box-shadow: 0px 4px 17px 0px rgba(0,0,0,.91);*/
 	/*-moz-box-shadow: 0px 4px 17px 0px rgba(0,0,0,.9);*/
 	/*box-shadow: 0px 4px 17px 0px rgba(0,0,0,.9);*/
-    -webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);
-    -moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);
-    box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);
+    /*-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);*/
+    /*-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);*/
+    /*box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);*/
 }
 
 #top-inner-container{
@@ -458,7 +457,7 @@ input[type="password"]::placeholder {
 
     box-shadow: 0px 2px 7px 0px rgba(0,0,0,.17);
 
-	background:#f9f9f9 !important;
+	background:#fff !important;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
@@ -474,7 +473,7 @@ input[type="password"]::placeholder {
     background:#FD7300 !important;
     background:#657d84 !important;
     background:#f8f8f8 !important;
-    background:#f9f9f9 !important;
+    background:#fff !important;
     border:solid 1px #54afff !important;
 }
 #search-box:hover{
@@ -732,8 +731,8 @@ input[type="submit"]#search-button,
 
 #profile-ref-image{
     z-index:1;
-    height:42px;
-    width:42px;
+    height:52px;
+    width:52px;
     margin-top:-6px;
     border-radius: 30px;
     -moz-border-radius: 30px;
@@ -779,7 +778,7 @@ input[type="submit"]#search-button,
 
 
 #actions-container{
-	margin-top: 20px;
+	margin-top: 15px;
 }
 
 #actions-container input{
@@ -1263,10 +1262,6 @@ input[type="submit"].button.black{
     box-shadow: 0px 3px 7px 0px rgba(209,209,209,.4);
 
 
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-	box-shadow: none;
-
     -webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.02);
     -moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.02);
     box-shadow: 0px 2px 3px 0px rgba(0,0,0,.02);
@@ -1275,6 +1270,10 @@ input[type="submit"].button.black{
     -webkit-box-shadow: 0px 4px 7px 0px rgba(0,0,0,.04);
     -moz-box-shadow: 0px 4px 7px 0px rgba(0,0,0,.04);
     box-shadow: 0px 4px 7px 0px rgba(0,0,0,.04);
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
 
 	/*-webkit-box-shadow: 0px 4px 7px 0px rgba(0,0,0,.07);*/
 	/*-moz-box-shadow: 0px 4px 7px 0px rgba(0,0,0,.07);*/
@@ -1337,7 +1336,7 @@ h3#share-something span{
     width: 313px;
     width: 321px;
     height: 244px;
-    width:230px;
+    width:240px;
     height:90px;
     font-size: 27px !important;
     font-size:21px !important;
@@ -2229,7 +2228,7 @@ p{
     background:#f1f1f1;
     /*background:#ffffd3;*/
     /*background:#FCFFEE;*/
-    padding:10px 14px 9px 14px;
+    padding:9px 9px 9px 9px;
     border-radius: 4px !important;
     -moz-border-radius: 4px !important;
     -webkit-border-radius: 4px !important;
@@ -2761,6 +2760,10 @@ h2.yella{
     fill:#000;
 }
 
+#edit-button{
+    margin-right:20px;
+}
+
 
 .fifty{
     width:50px;
@@ -2883,6 +2886,7 @@ input[type="password"]:focus{
     right: 61px;
     width:100%;
     z-index:10;
+    margin-top:6px;
     color:#fff !important;
     font-size:14px !important;
     text-transform: none !important;
@@ -2934,7 +2938,7 @@ input[type="password"]:focus{
 }
 
 .post-button.beautiful{
-    background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #FF844C !important;
+    background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #70bcff !important;
 }
 
 .post-button:active{
@@ -3328,6 +3332,7 @@ a.information{
     background: #d953a0;
     background: #7D0047;
     background: #9E0059;
+    background: #54AFFF;
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
     font-family: Roboto-Light !important;
