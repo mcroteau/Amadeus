@@ -49,7 +49,7 @@
 
 <!--                <span ng-if="profile.isOwnersAccount" style="font-size:21px; display:inline-block;"><span style="font-size:21px;" id="num-likes">{{profile.likes}}</span> Likes</span>-->
 
-                <div id="profile-stats-container" style="width:100%">
+                <div ng-if="profile.isOwnersAccount" id="profile-stats-container" style="width:100%">
 
                     <br class="clear"/>
 

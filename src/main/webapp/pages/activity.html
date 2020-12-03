@@ -59,7 +59,7 @@
     </div>
 
     <div ng-if="femsfellas" id="posts-fellows-fems-outer-container" style="margin-top:4px;float:right;width:inherit;text-align:left;">
-        <span class="modern tiny" style="display:inline-block;margin:20px 0px 5px 20px;">Who's posted!</span>
+        <span class="modern tiny" style="display:inline-block;margin:20px 0px 5px 20px;">Who's Posted!</span>
         <div id="posts-fellows-fems-container">
             <span ng-repeat="femfella in femsfellas" class="profile-post-container" data-title="{{femfella.count}} New Posts">
                 <a ng-click="filterActivities(femfella.id)" href="javascript:" data-id="{{femfella.accountId}}" class="profile-ref"><img ng-src="/o/{{femfella.imageUri}}" style="width:46px; height:46px; margin:5px;" class="profile-image-posted main-shadow" alt="{{femfella.name}}" title="{{femfella.name}}"/></a>
@@ -137,7 +137,7 @@
                 <div class="post-content">
 
                     <div ng-repeat="imageUri in post.imageFileUris" class="image-post-container" data-image-uri="{{imageUri}}" style="position:relative;">
-                        <a ng-click="deleteImage(post.id, imageUri)" ng-href="javascript:" ng-if="post.postEditable" class="delete-image beauty-light edit-fade-in" data-uri="{{imageUri}}" data-id="{{post.id}}">x</a>
+                        <a ng-click="deleteImage(post.id, imageUri)" ng-href="javascript:" ng-if="post.postEditable" class="delete-image modern edit-fade-in" data-uri="{{imageUri}}" data-id="{{post.id}}">x</a>
                         <a href="/o/{{imageUri}}" target="_blank">
                             <img ng-src="/o/{{imageUri}}" style="width:100%"/>
                         </a>

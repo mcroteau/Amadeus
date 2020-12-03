@@ -222,15 +222,15 @@ body{
 /* Safari 4.0 - 8.0 */
 @-webkit-keyframes logo-logo {
     0%  {margin-top: 0px;fill:#000}
-    1%  {margin-top: 0px;fill:#5AB2FF}
-    3%  {margin-top: 0px;fill:#000}
+    1%  {margin-top: 0px;fill:#fff}
+    9%  {margin-top: 0px;fill:#000}
    100% {margin-top:0px;fill:#000}
 }
 
 @keyframes logo-logo {
     0%  {margin-top: 0px;fill:#000}
-    1%  {margin-top: 0px;fill:#54afff}
-    3%  {margin-top: 0px;fill:#000}
+    1%  {margin-top: 0px;fill:#fff}
+    9%  {margin-top: 0px;fill:#000}
     100%{margin-top:0px;fill:#000}
 }
 
@@ -389,8 +389,8 @@ input[type="password"]::placeholder {
 
 #top-outer-container{
 	color:#fff;
-	height:60px;
 	height:52px;
+    height:60px;
 	background:#c2175a;
 	background:#79c0ff;
     background:#54afff;/** retro **/
@@ -437,10 +437,9 @@ input[type="password"]::placeholder {
 	width:402px;
 	width:352px;
 	width:399px;
-	width:491px;
 	width:447px;
-    width:390px;
-	height:41px;
+    width:392px;
+	height:45px;
 	line-height:1.0;
 	z-index:1;
 	padding: 0px 20px 0px 76px !important;
@@ -499,7 +498,7 @@ input[type="password"]::placeholder {
 	left:93px;
 	left:0px;
 	position:absolute;
-	top:4px;
+	top:6px;
 }
 
 
@@ -744,7 +743,7 @@ input[type="submit"]#search-button,
 
 #base-notifications-count{
     color:#fff;
-    top:24px;
+    top:37px;
     right:0px;
     font-size:13px;
     position:absolute;
@@ -760,7 +759,7 @@ input[type="submit"]#search-button,
 #content-container{
 	text-align: left;
 	position:relative;
-	margin:5px auto 119px 194px;
+	margin:4px auto 119px 194px;
 }
 
 
@@ -1254,6 +1253,7 @@ input[type="submit"].button.black{
 
 #top-outer-container{
     z-index:100;
+
     -webkit-box-shadow: 0px 4px 17px 0px rgba(209,209,209,.4);
     -moz-box-shadow: 0px 4px 17px 0px rgba(209,209,209,.4);
     box-shadow: 0px 4px 17px 0px rgba(209,209,209,.4);
@@ -1337,12 +1337,12 @@ h3#share-something span{
     width: 313px;
     width: 321px;
     height: 244px;
-    width:240px;
+    width:248px;
     height:90px;
     font-size: 27px !important;
-    font-size:21px !important;
+    font-size:20px !important;
     font-family: Roboto-Light !important;
-    padding: 17px 47px 27px 19px;
+    padding: 9px 47px 27px 11px;
     padding-bottom:81px;
     border:solid 2px #efefef;
     border-radius: 4px;
@@ -1894,7 +1894,7 @@ p{
     -moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);
     box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);
 
-    border-top: solid 3px #17161b;
+    border-top: solid 3px #54afff;
 
     -moz-border-radius-topleft: 4px !important;
     -moz-border-radius-topright: 4px !important;
@@ -1929,6 +1929,8 @@ p{
 #latest-feed-total{
     color:#17161b;
     bottom:7px !important;
+    bottom:11px !important;
+    left: 65px !important;
 }
 
 /*.feed-content.maroon{*/
@@ -1977,6 +1979,7 @@ p{
     float:left;
     display:inline-block;
 }
+
 .posted-by,
 .post-date{
     font-size:17px;
@@ -1989,6 +1992,7 @@ p{
     margin-top:1px;
     margin-bottom:4px;
     display:inline-block;
+    color:#54afff !important;
 }
 .post-date{
     font-family:Roboto-Thin !important;
@@ -3008,6 +3012,10 @@ textarea{
     width:369px !important;
     width:348px !important;
     width:327px !important;
+    /*border-radius: 9px;*/
+    /*-moz-border-radius: 9px;*/
+    /*-webkit-border-radius: 9px;*/
+    /*background:#f1f1f1;*/
 }
 #posts-right{
     width:inherit !important;
@@ -3288,6 +3296,7 @@ a.information{
 }
 #logo-logo{
     height:37px;
+    height:45px;
     margin-top:0px !important;
     display:block;
     background:#768fa5;
@@ -3302,8 +3311,8 @@ a.information{
 #amadeus-logo{
     padding:0px;
     display:block !important;
-    width: 20px;
-    height: 20px;
+    width: 26px;
+    height: 26px;
     fill:#FD7300;
     fill:#43a7fb;
     fill:#ff821c;
@@ -3317,12 +3326,12 @@ a.information{
 #search-label{
     color: #fff;
     position: absolute;
-    top: 4px;
+    top: 6px;
     left: 0px;
     z-index: 101;
     vertical-align: middle;
-    height: 16px;
-    padding: 15px 17px 12px 12px;
+    height: 18px;
+    padding: 17px 17px 12px 12px;
     background: #ff9844;
     background: #5AB2FF;
     background: #ef62b2;
@@ -3881,10 +3890,6 @@ h1.gray span{
     padding:0px 9px;
     z-index:1002;
     border-radius:25px;
-    background: #54AFFF;
-    border:solid 1px #54AFFF;
-    background: #d953a0;
-    border:solid 1px #d953a0;
     font-family:Roboto-Bold !important;
     border-radius:15px;
     -moz-border-radius:15px;
