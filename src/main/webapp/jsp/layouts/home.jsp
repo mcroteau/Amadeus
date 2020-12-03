@@ -164,8 +164,8 @@
         }
 
         #amadeus-logo-home{
-            width:73px;
-            height:73px;
+            width:173px;
+            height:173px;
         }
     </style>
 
