@@ -291,9 +291,7 @@
         }
 
         var getChatMessages = function(){
-            console.log("twak ery 2300")
             dataService.getChatMessages($scope.friendId, function(response){
-                console.log('here..', response)
                 $scope.messages = response.data.messages
                 $scope.recipientId = response.data.recipientId
                 $scope.imageUri = response.data.recipientImageUri
@@ -314,7 +312,6 @@
         $scope.postButton = document.querySelector("#share-button")
 
         var navigatePost = function(id){
-            console.log('navigate post', id)
             $location.hash('post-' + id);
             $anchorScroll();
         }
@@ -364,8 +361,6 @@
     })
 
     app.controller('searchController', function($scope, $http, $location, $route, $window) {
-        console.log("in search controller")
-
         var searchData = function(){
             var q = $route.current.params.q
 
@@ -543,7 +538,7 @@
         }
 
         var setData = function(response){
-            console.log(response)
+
             $scope.personBlocked = response.data.profile.blocked
             $scope.profile = response.data.profile
             $scope.friends = response.data.friends
