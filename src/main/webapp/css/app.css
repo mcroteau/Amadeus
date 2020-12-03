@@ -98,18 +98,7 @@ h3{
 }
 
 body{
-    background: rgb(2,0,36);
-    background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(255,255,255,1) 0%, rgba(238,245,247,1) 100%);
-    background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(255,255,255,1) 0%, rgba(239,239,239,1) 100%);
-    background:#f3f3f3;
-    animation-name: background-d;
-    animation-iteration-count: infinite;
-    animation-duration: 29s;
-    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(255,255,255,1) 0%, rgba(239,239,239,1) 100%);
-    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 67%, rgba(239,239,239,1) 100%);
-    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 67%, rgba(248,248,248,1) 100%);
-    background:#f9f9f9;
-    background:#fff;
+    background:#fff
 }
 
 #uno{
@@ -395,12 +384,7 @@ input[type="password"]::placeholder {
 	background:#79c0ff;
     background:#54afff;/** retro **/
     background:#FDFE03;
-    background: #D955A0;
-    background:#FDFE03;
-    background:#f9f9f9;
-    background:#FDFE03;
-    background:#f9f9f9;
-    background:#fff;
+    background: #FDFE03;
 	margin:0px auto;
 	width:100%;
 	z-index:2001;
@@ -2890,33 +2874,20 @@ input[type="password"]:focus{
     /*position:absolute;*/
     bottom:69px;
     right: 61px;
-    width:100%;
     z-index:10;
     margin-top:6px;
     color:#fff !important;
-    font-size:14px !important;
+    font-size:17px !important;
     text-transform: none !important;
     font-family:Roboto-Black !important;
     outline: none !important;
     cursor: pointer;
     cursor: hand;
     padding:13px 23px;
-    background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #617078 !important;
-    background: url("/o/images/glif-quatro.png") no-repeat scroll 176px 39px #02b1ff !important;
-    background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #13B1FF !important;
-    background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #F3F3F7 !important;
-    background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #13B1FF !important;
-    background: url("/o/images/glif-quatro.png") no-repeat scroll 176px 39px #02b1ff !important;
-    background: url("/o/images/glif-quatro.png") no-repeat scroll 176px 39px #0672A6 !important;
-    background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #13B1FF !important;
-    background: url("/o/images/glif-quatro.png") no-repeat scroll 176px 39px #5e5f60 !important;
-    background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #FDFE01 !important;
-    background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #000 !important;
-    background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #3891e0 !important;
-    background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #FDFE01 !important;
-    background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #D955A0 !important;
-    background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #0D8BFB !important;
-    background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #5AB2FF !important;
+    display:block;
+    text-decoration:none;
+    text-align: center;
+    background: url("/o/images/glif-uno-d.png") no-repeat scroll 176px 51px #54afff !important;
 	-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.27) !important;
 	-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.26) !important;
 	box-shadow: 0px 2px 3px 0px rgba(0,0,0,.27) !important;
@@ -2927,24 +2898,14 @@ input[type="password"]:focus{
 }
 
 .post-button:hover{
-    color:#fff !important;
-    background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #389ced !important;
-    background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #fff !important;
-    background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #F3F3F7 !important;
-    background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #13B1FF !important;
-    background: url("/o/images/glif-quatro.png") no-repeat scroll 176px 39px #0672A6 !important;
-    background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #13B1FF !important;
-    background: url("/o/images/glif-quatro.png") no-repeat scroll 176px 39px #5e5f60 !important;
-    background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #5AB2FF !important;
-    background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #D955A0 !important;
-    background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #5AB2FF !important;
+    background: url("/o/images/glif-uno-d.png") no-repeat scroll 176px 51px #d953a0 !important;
 	-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.37) !important;
 	-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.36) !important;
 	box-shadow: 0px 2px 3px 0px rgba(0,0,0,.37) !important;
 }
 
 .post-button.beautiful{
-    background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #70bcff !important;
+    background: url("/o/images/glif-uno-d.png") no-repeat scroll 176px 51px #d953a0 !important;
 }
 
 .post-button:active{
@@ -3343,7 +3304,7 @@ a.information{
     background: #d953a0;
     background: #7D0047;
     background: #9E0059;
-    background: #54AFFF;
+    background: #54afff;
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
     font-family: Roboto-Light !important;

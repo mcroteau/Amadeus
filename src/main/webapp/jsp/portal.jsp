@@ -335,7 +335,7 @@
         }
 
         $scope.shareWhatsup = function(){
-            $scope.postButton.value = "Amadeus!"
+            $scope.postButton.innerHtml = "Amadeus!"
             var content = document.querySelector("#whatsup").value
             var images = document.querySelector("#post-upload-image-files").files
             var videos = document.querySelector("#post-upload-video-files").files
