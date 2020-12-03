@@ -21,7 +21,7 @@
 <body ng-app="app" ng-controller="baseController">
 
     <style>
-        .linear-activity {
+        #linear-indicator {
             overflow: hidden;
             width: 100%;
             height: 2px;
@@ -100,7 +100,7 @@
 
                 <div ng-show="showProfile" id="profile-picture-actions-container" class="global-shadow">
                     <a href="#!/profile/${sessionScope.account.id}" id="profile-href"  class="profile-popup-action"><span class="space"></span> Profile</a>
-                    <a href="javascript:" id="messages-href"  class="profile-popup-action" ng-click="renderMessages(${sessionScope.account.id})"><span id="latest-messages-total" class="space">{{data.messagesCount}}</span> Unread</a>
+                    <a ng-click="openChat()" href="javascript:" id="messages-href" class="profile-popup-action" ng-click="renderMessages(${sessionScope.account.id})"><span id="latest-messages-total" class="space">{{data.messagesCount}}</span> Unread</a>
                     <a href="/o/signout" class="profile-popup-action" ><span class="space"></span> Logout</a>
                 </div>
             </div>
@@ -167,7 +167,7 @@
         $sceProvider.enabled(false);
     });
 
-    app.run(function ($rootScope) {
+    app.run(function ($rootScope, $timeout) {
         $rootScope.indicator = document.querySelector("#linear-indicator")
 
         $rootScope.$on("$routeChangeStart", function () {

@@ -390,7 +390,7 @@ input[type="password"]::placeholder {
 #top-outer-container{
 	color:#fff;
 	height:60px;
-	height:49px;
+	height:52px;
 	background:#c2175a;
 	background:#79c0ff;
     background:#54afff;/** retro **/
@@ -400,13 +400,16 @@ input[type="password"]::placeholder {
     background:#f9f9f9;
     background:#FDFE03;
     background:#f9f9f9;
-    /*background:#fff;*/
+    background:#fff;
 	margin:0px auto;
 	width:100%;
 	z-index:2001;
 	/*-webkit-box-shadow: 0px 4px 17px 0px rgba(0,0,0,.91);*/
 	/*-moz-box-shadow: 0px 4px 17px 0px rgba(0,0,0,.9);*/
 	/*box-shadow: 0px 4px 17px 0px rgba(0,0,0,.9);*/
+    -webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);
+    -moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);
+    box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);
 }
 
 #top-inner-container{
@@ -729,12 +732,12 @@ input[type="submit"]#search-button,
 
 #profile-ref-image{
     z-index:1;
-    height:39px;
-    width:39px;
-    margin-top:-5px;
-    border-radius: 23px;
-    -moz-border-radius: 23px;
-    -webkit-border-radius: 23px;
+    height:42px;
+    width:42px;
+    margin-top:-6px;
+    border-radius: 30px;
+    -moz-border-radius: 30px;
+    -webkit-border-radius: 30px;
     border:solid 3px #f2f306;
     border:solid 3px #f1f1f1;
 }
@@ -1259,13 +1262,19 @@ input[type="submit"].button.black{
     -moz-box-shadow: 0px 3px 7px 0px rgba(209,209,209,.4);
     box-shadow: 0px 3px 7px 0px rgba(209,209,209,.4);
 
-	-webkit-box-shadow: 0px 4px 7px 0px rgba(0,0,0,..04);
-	-moz-box-shadow: 0px 4px 7px 0px rgba(0,0,0,..04);
-	box-shadow: 0px 4px 7px 0px rgba(0,0,0,.04);
 
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 	box-shadow: none;
+
+    -webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.02);
+    -moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.02);
+    box-shadow: 0px 2px 3px 0px rgba(0,0,0,.02);
+
+
+    -webkit-box-shadow: 0px 4px 7px 0px rgba(0,0,0,.04);
+    -moz-box-shadow: 0px 4px 7px 0px rgba(0,0,0,.04);
+    box-shadow: 0px 4px 7px 0px rgba(0,0,0,.04);
 
 	/*-webkit-box-shadow: 0px 4px 7px 0px rgba(0,0,0,.07);*/
 	/*-moz-box-shadow: 0px 4px 7px 0px rgba(0,0,0,.07);*/
@@ -2057,7 +2066,7 @@ p{
 .content-actions{
 	height:40px;
 	padding-bottom:3px;
-    padding:0px 30px 9px 30px;
+    padding:0px 20px 9px 30px;
     margin-top:10px;
     /**background:url("/b/images/colors-symmetric.png");
     background-position:-41px 47px;
@@ -2688,7 +2697,7 @@ a:hover{
 }
 
 #profile-left-container{
-    width:352px;
+    width:329px;
     float:left;
     margin-top:30px;
 }
@@ -2713,7 +2722,7 @@ a:hover{
 }
 #profile-posts-container{
     float:right;
-    width:461px;
+    width:490px;
 }
 #profile-profile-image{
     padding: 5px;
@@ -2895,9 +2904,9 @@ input[type="password"]:focus{
     background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #000 !important;
     background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #3891e0 !important;
     background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #FDFE01 !important;
-    background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #5AB2FF !important;
     background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #D955A0 !important;
     background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #0D8BFB !important;
+    background: url("/o/images/glif-uno.png") no-repeat scroll 176px 39px #5AB2FF !important;
 	-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.27) !important;
 	-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.26) !important;
 	box-shadow: 0px 2px 3px 0px rgba(0,0,0,.27) !important;
@@ -3279,7 +3288,7 @@ a.information{
     background:#768fa5;
     background:#fff;
     background:#FDFE01;
-    padding:14px 17px 0px 29px;
+    padding:15px 17px 0px 29px;
     line-height:1.0;
     vertical-align:middle;
     text-decoration:none;
@@ -3316,7 +3325,9 @@ a.information{
     background: #1e1d23;/** retro **/
     background: #54AFFF;
     /*background: #17161b;*/
-    /*background: #d953a0;*/
+    background: #d953a0;
+    background: #7D0047;
+    background: #9E0059;
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
     font-family: Roboto-Light !important;
