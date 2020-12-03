@@ -235,12 +235,12 @@
                     <div ng-if="post.shareComments" class="post-comment-wrapper">
 
                         <div class="post-comment-meta" ng-repeat="comment in post.shareComments">
-                            <a href="javascript:" class="post-comment-whois left-float">
+                            <a ng-href="#!/profile/{{comment.accountId}}" class="post-comment-whois left-float">
                                 <img ng-src="/o/{{comment.accountImageUri}}" style="height:30px; width:30px;"/>
                             </a>
                             <div class="left-float" style="margin-left:10px;width:79%;">
                                 <p>
-                                    <a href="javascript:" class="post-comment-whois" style="text-decoration:none; color:#222; font-family:Roboto-Bold !important">{{comment.accountName}}</a>
+                                    <a ng-href="#!/profile/{{comment.accountId}}" class="post-comment-whois" style="text-decoration:none; color:#222; font-family:Roboto-Bold !important">{{comment.accountName}}</a>
                                     <span class="comment-comment">{{comment.comment}}</span>
                                     <a ng-if="comment.commentDeletable" ng-click="deleteShareComment(comment.id)" href="javascript:" class="comment-delete href-dotted" style="display:none">Delete</a>
                                 </p>
@@ -252,12 +252,12 @@
                     <div ng-if="post.comments" class="post-comment-wrapper">
 
                         <div class="post-comment-meta" ng-repeat="comment in post.comments">
-                            <a href="javascript:" class="post-comment-whois left-float">
+                            <a ng-href="#!/profile/{{comment.accountId}}" class="post-comment-whois left-float">
                                 <img ng-src="/o/{{comment.accountImageUri}}" style="height:30px; width:30px;"/>
                             </a>
                             <div class="left-float" style="margin-left:10px;width:79%;">
                                 <p>
-                                    <a href="javascript:" class="post-comment-whois" style="text-decoration:none; color:#222; font-family:Roboto-Bold !important">{{comment.accountName}}</a>
+                                    <a ng-href="#!/profile/{{comment.accountId}}" class="post-comment-whois" style="text-decoration:none; color:#222; font-family:Roboto-Bold !important">{{comment.accountName}}</a>
                                     <span class="comment-comment">{{comment.comment}}</span>
                                     <a ng-if="comment.commentDeletable" ng-click="deleteComment(comment.id)" href="javascript:" class="comment-delete href-dotted" style="display:none">Delete</a>
                                 </p>
