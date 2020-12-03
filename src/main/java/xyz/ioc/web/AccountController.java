@@ -351,12 +351,6 @@ public class AccountController extends BaseController {
 			return "redirect:/signup?uri=" + uri;
 		}
 
-		if(account.getUsername().contains(" ")){
-			redirect.addFlashAttribute("account", account);
-			redirect.addFlashAttribute("error", "Username contains spaces, no spaces are allowed");
-			return "redirect:/signup?uri=" + uri;
-		}
-
 		if(account.getName().equals("")){
 			redirect.addFlashAttribute("account", account);
 			redirect.addFlashAttribute("error", "Name must not be blank.");
