@@ -62,7 +62,7 @@
         <span class="modern tiny" style="display:inline-block;margin:20px 0px 5px 20px;">Who's posted!</span>
         <div id="posts-fellows-fems-container">
             <span ng-repeat="femfella in femsfellas" class="profile-post-container" data-title="{{femfella.count}} New Posts">
-                <a href="#!/profile/{{femfella.id}}" data-id="{{femfella.accountId}}" class="profile-ref"><img ng-src="/o/{{femfella.imageUri}}" style="width:46px; height:46px; margin:5px;" class="profile-image-posted main-shadow" alt="{{femfella.name}}" title="{{femfella.name}}"/></a>
+                <a ng-click="filterActivities(femfella.id)" href="javascript:" data-id="{{femfella.accountId}}" class="profile-ref"><img ng-src="/o/{{femfella.imageUri}}" style="width:46px; height:46px; margin:5px;" class="profile-image-posted main-shadow" alt="{{femfella.name}}" title="{{femfella.name}}"/></a>
                 <span class="activity-status {{femfella.status}}"></span>
                 <span class="tooltiptext">{{femfella.name}}<br/> {{femfella.count}} New Posts</span>
             </span>

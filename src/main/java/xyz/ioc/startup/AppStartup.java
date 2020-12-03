@@ -41,6 +41,7 @@ public class AppStartup implements ApplicationListener<ContextRefreshedEvent>{
 		createApplicationRoles();
 		createApplicationAdministrator();
 		createApplicationGuest();
+		generateAppData();
 	}
 
 	private void createApplicationRoles(){

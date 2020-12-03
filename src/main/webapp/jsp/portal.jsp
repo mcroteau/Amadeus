@@ -330,6 +330,7 @@
         var setData = function(response){
             $scope.activities = response.data.activities
             $scope.femsfellas = response.data.femsfellas
+            $scope.memory = $scope.activities
             $timeout(setAnchors, 1300)
         }
 
@@ -357,6 +358,15 @@
             }).then(function(){
                 $scope.beautiful = $scope.beautiful ? false : true
                 $window.location.reload()
+            })
+        }
+
+        $scope.filterActivities = function(id){
+            $scope.activities = []
+            angular.forEach($scope.memory, function(activity){
+                if(activity.accountId == id){
+                    $scope.activities.push(activity)
+                }
             })
         }
 

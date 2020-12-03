@@ -108,8 +108,8 @@ body{
     background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(255,255,255,1) 0%, rgba(239,239,239,1) 100%);
     background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 67%, rgba(239,239,239,1) 100%);
     background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 67%, rgba(248,248,248,1) 100%);
-    background:#fff;
     background:#f9f9f9;
+    background:#fff;
 }
 
 #uno{
@@ -400,6 +400,7 @@ input[type="password"]::placeholder {
     background:#f9f9f9;
     background:#FDFE03;
     background:#f9f9f9;
+    background:#fff;
 	margin:0px auto;
 	width:100%;
 	z-index:2001;
