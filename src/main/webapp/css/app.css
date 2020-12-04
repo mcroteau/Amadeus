@@ -2922,7 +2922,7 @@ input[type="password"]:focus{
     display:block;
     text-decoration:none;
     text-align: center;
-    background: url("/o/images/glif-uno-d.png") no-repeat scroll 176px 51px #54afff !important;
+    background: #54afff !important;
 	-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.27) !important;
 	-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.26) !important;
 	box-shadow: 0px 2px 3px 0px rgba(0,0,0,.27) !important;
@@ -2933,14 +2933,14 @@ input[type="password"]:focus{
 }
 
 .post-button:hover{
-    background: url("/o/images/glif-uno-d.png") no-repeat scroll 176px 51px #54afff !important;
+    background: #54afff !important;
 	-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.37) !important;
 	-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.36) !important;
 	box-shadow: 0px 2px 3px 0px rgba(0,0,0,.37) !important;
 }
 
 .post-button.beautiful{
-    background: url("/o/images/glif-uno-d.png") no-repeat scroll 176px 51px #d953a0 !important;
+    background: #d953a0 !important;
 }
 
 .post-button:active{

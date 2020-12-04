@@ -165,7 +165,18 @@
 
     app.config(function($sceProvider) {
         $sceProvider.enabled(false);
-    });
+    }).factory('activityModel', function () {
+        var factory = {};
+        var model = {};
+
+        factory.set = function (key, value) {
+            model[key] = value;
+        }
+        factory.get = function (key) {
+            return model[key];
+        };
+        return factory;
+    })
 
     app.run(function ($rootScope, $location) {
         $rootScope.indicator = document.querySelector("#linear-indicator")
@@ -310,8 +321,9 @@
     });
 
 
-    app.controller('activityController', function($scope, $http, $route, $interval, $timeout, $location, $anchorScroll, $sce, $window, dataService) {
+    app.controller('activityController', function($scope, $http, $route, $interval, $timeout, $location, $anchorScroll, $sce, $window, activityModel, dataService) {
 
+        $scope.whatsup = document.querySelector("#whatsup")
         $scope.postButton = document.querySelector("#share-button")
 
         var navigatePost = function(id){
@@ -327,12 +339,16 @@
             $scope.activities = response.data.activities
             $scope.femsfellas = response.data.femsfellas
             $scope.memory = $scope.activities
+
+            activityModel.set('memory', $scope.memory)
+            activityModel.set('activities', $scope.activities)
+
             $timeout(setAnchors, 1300)
         }
 
         $scope.shareWhatsup = function(){
             $scope.postButton.innerHtml = "Amadeus!"
-            var content = document.querySelector("#whatsup").value
+            var content = $scope.whatsup.value
             var images = document.querySelector("#post-upload-image-files").files
             var videos = document.querySelector("#post-upload-video-files").files
 
@@ -351,9 +367,14 @@
                 url: '/o/post/share',
                 data: fd,
                 headers: {'Content-Type': undefined},
-            }).then(function(){
+            }).then(function(resp){
+                $scope.whatsup.value = ''
                 $scope.beautiful = $scope.beautiful ? false : true
-                $window.location.reload()
+                $scope.activities.unshift(resp.data)
+                // $window.location.reload()
+                $timeout(function(){
+                    $scope.beautiful = $scope.beautiful ? false : true
+                }, 1300)
             })
         }
 
@@ -418,7 +439,7 @@
         $scope.pageClass = 'page-contact';
     });
 
-    app.controller('mixController', function($scope, $sce, $route, $http, $location, $anchorScroll, dataService){
+    app.controller('mixController', function($scope, $sce, $route, $http, $location, $anchorScroll, activityModel, dataService){
 
         $scope.navigatePost = function(id){
             $location.hash('post-' + id);
@@ -440,11 +461,28 @@
             dataService.sharePost(postId, comment, $route.reload)
         }
 
-        $scope.deletePost = function(id){
+        $scope.deletePost = function(id) {
             var confirmed = confirm("Are you sure you want to delete this post?")
-            if(confirmed)
-                $http.delete("/o/post/remove/" + id).then($route.reload);
+
+            if(confirmed){
+                $http.delete("/o/post/remove/" + id).then(function (response) {
+                    console.log(response)
+                    var id = response.data.post.id
+                    $scope.removePost(id, activityModel.get('memory'))
+                    $scope.removePost(id, activityModel.get('activities'))
+                });
+            }
         }
+
+        $scope.removePost = function(id, list){
+            angular.forEach(list, function(element, index){
+                console.log(element.id, id)
+                if(element.id === id){
+                    list.splice(index, 1)
+                }
+            })
+        }
+
 
         $scope.unsharePost = function(shareId){
             var confirmed = confirm("Are you sure you want to unshare this post?")

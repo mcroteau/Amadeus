@@ -638,7 +638,6 @@ public class PostController extends BaseController {
 			postDao.saveImage(postImage);
 		}
 		savedPost.setImageFileUris(imageUris);
-
 		postDao.update(savedPost);
 
         return gson.toJson(savedPost);
@@ -722,7 +721,7 @@ public class PostController extends BaseController {
 
 		data.put("success", success);
 		data.put("likes", likes);
-		data.put("id", Long.parseLong(id));
+		data.put("id", id);
 
 		String json = gson.toJson(data);
 		return json;
@@ -798,7 +797,7 @@ public class PostController extends BaseController {
 			Post post = postDao.get(Long.parseLong(id));
 			postDao.hide(Long.parseLong(id));
 
-			data.put("success", true);
+			data.put("post", post);
 
 		}else{
 			data.put("error", "user doesn't have permission");
