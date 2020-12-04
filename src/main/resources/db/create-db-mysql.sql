@@ -4,7 +4,7 @@ CREATE TABLE account (
 	name varchar(55),
 	age varchar(155),
 	location varchar(155),
-	image_uri varchar(75),
+	image_uri text,
 	username varchar(55) NOT NULL,
 	password varchar(155) NOT NULL,
 	disabled boolean,
@@ -32,9 +32,9 @@ CREATE TABLE posts (
 	id bigint PRIMARY KEY AUTO_INCREMENT,
 	account_id bigint NOT NULL REFERENCES account(id),
 	content text,
-	image_file_uri varchar(75),
-	music_file_uri varchar(75),
-	video_file_uri varchar(75),
+	image_file_uri text,
+	music_file_uri text,
+	video_file_uri text,
 	hidden boolean,
 	flagged boolean,
 	date_posted bigint NOT NULL
@@ -51,7 +51,7 @@ CREATE TABLE friends (
 CREATE TABLE musics (
 	id bigint PRIMARY KEY AUTO_INCREMENT,
 	account_id bigint NOT NULL REFERENCES account(id),
-	uri varchar(155) NOT NULL,
+	uri text NOT NULL,
 	title varchar(155) NOT NULL,
 	artist varchar(155) NOT NULL,
 	release_date varchar(55),
@@ -109,7 +109,7 @@ create table post_comments(
 	post_id bigint NOT NULL REFERENCES posts(id),
 	account_id bigint NOT NULL REFERENCES account(id),
 	account_name varchar(155),
-	account_image_uri varchar(75),
+	account_image_uri text,
     date_created bigint NOT NULL,
 	comment text
 );
@@ -120,7 +120,7 @@ create table post_share_comments(
 	post_share_id bigint NOT NULL REFERENCES post_shares(id),
 	account_id bigint NOT NULL REFERENCES account(id),
 	account_name varchar(155),
-	account_image_uri varchar(75),
+	account_image_uri text,
     date_created bigint NOT NULL,
 	comment text
 );
@@ -128,7 +128,7 @@ create table post_share_comments(
 create table post_images(
 	id bigint PRIMARY KEY AUTO_INCREMENT,
 	post_id bigint NOT NULL REFERENCES posts(id),
-	uri varchar(155),
+	uri text,
     date_uploaded bigint NOT NULL
 );
 
