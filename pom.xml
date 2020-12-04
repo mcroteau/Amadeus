@@ -333,6 +333,16 @@
         	        </webApp>
         	    </configuration>
         	</plugin>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<url>http://144.202.111.162:8080/manager/text</url>
+					<server>tomcat</server>
+					<path>/o</path>
+				</configuration>
+			</plugin>
 		</plugins>
     </build>
   	
