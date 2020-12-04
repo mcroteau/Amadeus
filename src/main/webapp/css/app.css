@@ -414,6 +414,7 @@ input[type="password"]::placeholder {
 	margin:0px auto;
 	width:100%;
 	z-index:2001;
+    position:relative;
 	/*-webkit-box-shadow: 0px 4px 17px 0px rgba(0,0,0,.91);*/
 	/*-moz-box-shadow: 0px 4px 17px 0px rgba(0,0,0,.9);*/
 	/*box-shadow: 0px 4px 17px 0px rgba(0,0,0,.9);*/
@@ -715,6 +716,13 @@ input[type="submit"]#search-button,
     background:#fff;
 }
 
+#mobile-outer-container{
+    clear:both;
+    height:73px;
+    display:none;
+}
+
+
 .notifications-count{
 	font-size:11px;
     font-family:Roboto !important;
@@ -980,15 +988,14 @@ input[type="submit"].button{
 
 .image-edit{
     z-index: 23;
-    right:101px;
+    left:21px;
     display: none;
     position:absolute;
 }
 
 .edit-update-button{
     z-index: 23;
-    right:74px;
-    right:21px;
+    left:101px;
     display: none;
     position:absolute;
     -webkit-box-shadow: 0px 3px 5px 0px rgba(179,179,179,0.23) !important;

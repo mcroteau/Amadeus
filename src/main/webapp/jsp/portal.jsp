@@ -77,9 +77,9 @@
             </div>
 
 			<div id="top-inner-container">
-                <div ng-if="!$root.profilePage" id="search-label">Search:</div>
 
                 <div ng-if="!$root.profilePage" id="search-container" class="float-left" style="z-index:100">
+                    <div id="search-label">Search:</div>
                     <input ng-keyup="navigateSearch($event)" type="text" class="search-input" id="search-box" placeholder=""/>
 				</div>
 
@@ -107,9 +107,38 @@
 
 		</div>
 
-        <div id="content-container" ng-view autoscroll="true"></div>
-
 	</div>
+
+    <div id="mobile-outer-container">
+
+        <div id="mobile-search-outer-container" style="position:relative;">
+
+            <div id="mobile-search-container" class="float-left">
+                <div id="search-label">Search:</div>
+                <input ng-keyup="navigateSearch($event)" type="text" class="search-input" id="search-box" placeholder=""/>
+                <br class="clear"/>
+            </div>
+        </div>
+
+        <div id="navigation-outer-container">
+            <a ng-click="toggleProfile()" href="javascript:" id="profile-actions-href" style="margin-right:37px;">
+                <img src="/o/${sessionScope.imageUri}" id="profile-ref-image" style="z-index:1"/>
+                <span ng-show="data.messagesCount" id="base-notifications-count">{{data.messagesCount}}</span>
+            </a>
+
+            <div ng-show="showProfile" id="profile-picture-actions-container" class="global-shadow">
+                <a href="#!/profile/${sessionScope.account.id}" id="profile-href"  class="profile-popup-action"><span class="space"></span> Profile</a>
+                <a ng-click="openChat()" href="javascript:" id="messages-href" class="profile-popup-action render-desktop" ng-click="renderMessages(${sessionScope.account.id})"><span id="latest-messages-total" class="space">{{data.messagesCount}}</span> Unread</a>
+                <a href="/o/signout" class="profile-popup-action" ><span class="space"></span> Logout</a>
+            </div>
+        </div>
+        <br class="clear"/>
+    </div>
+
+
+
+    <div id="content-container" ng-view autoscroll="true"></div>
+
 
 
     <div ng-show="chatStarted" id="chat-session-outer-wrapper" class="global-shadow">
