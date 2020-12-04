@@ -427,9 +427,7 @@ input[type="password"]::placeholder {
     background: rgb(253,254,3);
     background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 32%, rgba(106,185,255,1) 73%, rgba(196,228,255,1) 100%);
     background: rgb(253,254,3);
-    background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 30%, rgba(106,185,255,1) 58%, rgba(196,228,255,1) 100%);
-    /*background: rgb(253,254,3);*/
-    /*background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 30%, rgba(106,185,255,1) 58%, rgba(229,243,255,1) 100%);*/
+    background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 50%, rgba(106,185,255,1) 68%, rgba(196,228,255,1) 100%);
     margin:0px auto;
 	width:100%;
 	z-index:2001;

@@ -382,7 +382,8 @@
         }
 
         $scope.shareWhatsup = function(){
-            if($scope.whatsup.value == ''){
+            var whatsup = document.querySelector('#whatsup')
+            if(whatsup.value == ''){
                 alert('Express yourself!')
                 return false;
             }
