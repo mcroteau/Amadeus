@@ -190,28 +190,24 @@
     app.config(function($routeProvider) {
         $routeProvider
             .when('/', {
-                templateUrl: 'pages/activity.html',
+                templateUrl: 'pages/activity.html?v=' + Date.now(),
                 controller: 'activityController'
             })
             .when('/profile/:id', {
-                templateUrl: 'pages/profile.html',
+                templateUrl: 'pages/profile.html?v=' + Date.now(),
                 controller: 'profileController'
             })
             .when('/search/:q', {
-                templateUrl: 'pages/search.html',
+                templateUrl: 'pages/search.html?v=' + Date.now(),
                 controller: 'searchController'
             })
             .when('/search', {
-                templateUrl: 'pages/search.html',
+                templateUrl: 'pages/search.html?v=' + Date.now(),
                 controller: 'searchController'
             })
             .when('/invitations', {
                 templateUrl: 'pages/invitations.html',
                 controller: 'invitationController'
-            })
-            .when('/get', {
-                templateUrl: 'pages/get.html',
-                controller: 'getController'
             })
             .otherwise({redirectTo:'/'});
     });

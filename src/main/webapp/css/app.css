@@ -210,18 +210,28 @@ body{
 
 /* Safari 4.0 - 8.0 */
 @-webkit-keyframes logo-logo {
-    0%  {margin-top: 0px;fill:#000}
-    1%  {margin-top: 0px;fill:#fff}
-    9%  {margin-top: 0px;fill:#000}
-   100% {margin-top:0px;fill:#000}
+    0%  {fill:#54afff}
+    1%  {fill:#fff}
+    9%  {fill:#54afff}
+   100% {ill:#54afff}
 }
 
 @keyframes logo-logo {
-    0%  {margin-top: 0px;fill:#000}
-    1%  {margin-top: 0px;fill:#fff}
-    9%  {margin-top: 0px;fill:#000}
-    100%{margin-top:0px;fill:#000}
+    0%  {fill:#8131AF}
+    1%  {fill:#fff}
+    9%  {fill:#54afff}
+    29% {fill:#8131AF}
+    100%{fill:#8131AF}
 }
+
+@keyframes logo-logo {
+    0%  {fill:#d953a0}
+    1%  {fill:#fff}
+    9%  {fill:#54afff}
+    29% {fill:#d953a0}
+    100%{fill:#d953a0}
+}
+
 
 
 /*@-webkit-keyframes logo-logo {*/
@@ -2222,7 +2232,7 @@ p{
 
 #post-right{
     margin-top:15px;
-    background:#f1f1f1;
+    background:#f9f9f9;
     /*background:#ffffd3;*/
     /*background:#FCFFEE;*/
     padding:9px 9px 9px 9px;
@@ -3265,13 +3275,13 @@ a.information{
 }
 #logo-logo{
     height:37px;
-    height:45px;
+    height:47px;
     margin-top:0px !important;
     display:block;
     background:#768fa5;
     background:#fff;
     background:#FDFE01;
-    padding:15px 17px 0px 29px;
+    padding:13px 17px 0px 29px;
     line-height:1.0;
     vertical-align:middle;
     text-decoration:none;
@@ -3280,8 +3290,8 @@ a.information{
 #amadeus-logo{
     padding:0px;
     display:block !important;
-    width: 26px;
-    height: 26px;
+    width: 29px;
+    height: 29px;
     fill:#FD7300;
     fill:#43a7fb;
     fill:#ff821c;
