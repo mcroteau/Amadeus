@@ -128,6 +128,9 @@
     #notifications-outer-container{
         top:41px;
     }
+    #profile-picture-actions-container{
+        right:3px;
+    }
     #posts-fellows-fems-outer-container{
         display:none;
     }
