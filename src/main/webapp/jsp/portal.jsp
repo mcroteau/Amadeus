@@ -241,6 +241,7 @@
 
         var getData = function(){
             $http.get("/o/profile/data").then(function(data){
+                if(data.error)$window.location.href= "/"
                 $scope.data = data.data
             })
         }

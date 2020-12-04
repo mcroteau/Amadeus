@@ -2,12 +2,16 @@
 @media screen and (max-width: 690px) {
 
     #top-inner-container{
-        margin-left:67px;
+        margin-left:81px;
     }
 
     #navigation-container{
         left:0px;
         right:0px !important;
+    }
+
+    #logo-logo{
+        padding-left:23px
     }
 
     #profile-actions-href{
@@ -23,7 +27,7 @@
     }
 
     #content-container{
-        width:100%;
+        width:96%;
         margin: 5px auto 119px auto;
     }
     #activities-wrapper{
