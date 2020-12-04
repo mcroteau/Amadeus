@@ -516,7 +516,6 @@
             })
         }
 
-
         $scope.unsharePost = function(shareId){
             var confirmed = confirm("Are you sure you want to unshare this post?")
             if(confirmed)
@@ -612,7 +611,7 @@
             $http.post('/o/friend/invite/' + id).then($route.reload)
         }
 
-        $scope.toggeBlock = function(id){
+        $scope.toggleBlock = function(id){
             $http.post('/o/account/block/' + id).then(function(){
                 $scope.personBlocked = $scope.personBlocked ? false : true
             })
@@ -716,6 +715,15 @@
                 }
             }
         });
+
+        function unwrap(wrapper) {
+            var docFrag = document.createDocumentFragment();
+            while (wrapper.firstChild) {
+                var child = wrapper.removeChild(wrapper.firstChild);
+                docFrag.appendChild(child);
+            }
+            wrapper.parentNode.replaceChild(docFrag, wrapper);
+        }
 
         var setAnchors = function(){
             var comments = document.getElementsByClassName("post-comment")

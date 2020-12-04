@@ -302,8 +302,8 @@
     <br class="clear"/>
 
     <div ng-if="!profile.isOwnersAccount">
-        <a ng-show="!personBlocked" ng-click="toggeBlock(profile.id)" href="javascript:" id="block-profile-btn" class="button light small">Block Person</a>
-        <a ng-show="personBlocked" ng-click="toggeBlock(profile.id)" href="javascript:" id="block-profile-btn" class="button small yella">Unblock Person</a>
+        <a ng-show="!personBlocked" ng-click="toggleBlock(profile.id)" href="javascript:" id="block-profile-btn" class="button light small">Block Person</a>
+        <a ng-show="personBlocked" ng-click="toggleBlock(profile.id)" href="javascript:" id="block-profile-btn" class="button small yella">Unblock Person</a>
         <p class="information">Blocking an individual means <br/>
             he/she will not be able to see your profile and you will <br/>
             not show up in search results for them</p>

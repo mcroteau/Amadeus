@@ -2277,6 +2277,7 @@ p{
     left:20px;
     width:149px;
     color:#ddd;
+    z-index:99;
     cursor:pointer;
     cursor:hand;
     font-family:Roboto-Bold !important;
