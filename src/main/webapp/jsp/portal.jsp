@@ -228,21 +228,22 @@
     })
 
     app.config(function($routeProvider) {
+
         $routeProvider
             .when('/', {
-                templateUrl: 'pages/activity.html?v=' + Date.now(),
+                templateUrl: 'pages/activity.html',
                 controller: 'activityController'
             })
             .when('/profile/:id', {
-                templateUrl: 'pages/profile.html?v=' + Date.now(),
+                templateUrl: 'pages/profile.html',
                 controller: 'profileController'
             })
             .when('/search/:q', {
-                templateUrl: 'pages/search.html?v=' + Date.now(),
+                templateUrl: 'pages/search.html',
                 controller: 'searchController'
             })
             .when('/search', {
-                templateUrl: 'pages/search.html?v=' + Date.now(),
+                templateUrl: 'pages/search.html',
                 controller: 'searchController'
             })
             .when('/invitations', {
@@ -287,6 +288,7 @@
         }
 
         $scope.reloadActivities = function(){
+            console.log('reload activities', $route.current.loadedTemplateUrl)
             if($route.current.loadedTemplateUrl != "pages/activity.html"){
                 $location.path("/")
             }else{

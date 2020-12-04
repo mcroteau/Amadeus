@@ -23,6 +23,9 @@
             background-position:0px 0px;
             background-color:#fcfcfc;
             background-position:0px 0px;
+            background: rgb(253,254,3);
+            background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 42%, rgba(84,175,255,1) 69%, rgba(196,228,255,1) 100%);
+
         }
 
         #guest-content-left{
@@ -174,7 +177,7 @@
 
         <div id="guest-content-left" style="padding:3% 5%; width:46%;">
             <a href="/o/uno">
-                <span style="display:inline-block;background:#FDFE03; padding:53px;">
+                <span style="display:inline-block;">
                     <svg id="amadeus-logo-home" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
                         <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>
                     </svg>
@@ -185,9 +188,8 @@
 
             <div id="amadeus-words">
 
-                <p>Amadeus is a Social Networking app built with care. It is a
-                homegrown app. It is an alternative to Facebook, MySpace,
-                    Instagram and others. We really hope you like it.</p>
+                <p>Amadeus is a Social Networking app built with Love. It is
+                organic in creation. We really hope you like it.</p>
 
                 <p>Why should there be many to rule social
                     media when there is <strong>Amadeus</strong> to

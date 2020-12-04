@@ -197,7 +197,6 @@ body{
 }
 
 
-#amadeus-logo,
 #amadeus-logo-home{
     -webkit-animation-name: logo-logo; /* Safari 4.0 - 8.0 */
     -webkit-animation-duration: 13s; /* Safari 4.0 - 8.0 */
@@ -244,8 +243,8 @@ body{
 
 @keyframes logo-logo {
     0%  {fill:#17161b}
-    1%  {fill:#17161b}
-    9%  {fill:#17161b}
+    1%  {fill:#fff}
+    9%  {fill:#54afff}
     19% {fill:#17161b}
     100%{fill:#17161b}
 }
@@ -419,6 +418,18 @@ input[type="password"]::placeholder {
     /*background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 53%, rgba(217,82,160,1) 100%);*/
     background: rgb(253,254,3);
     background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 32%, rgba(128,235,255,1) 100%);
+    background: rgb(253,254,3);
+    background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 32%, rgba(84,175,255,1) 100%);
+    background: rgb(253,254,3);
+    background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 32%, rgba(84,175,255,1) 73%, rgba(163,212,255,1) 100%);
+    background: rgb(253,254,3);
+    background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 32%, rgba(84,175,255,1) 73%, rgba(196,228,255,1) 100%);
+    background: rgb(253,254,3);
+    background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 32%, rgba(106,185,255,1) 73%, rgba(196,228,255,1) 100%);
+    background: rgb(253,254,3);
+    background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 30%, rgba(106,185,255,1) 58%, rgba(196,228,255,1) 100%);
+    /*background: rgb(253,254,3);*/
+    /*background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 30%, rgba(106,185,255,1) 58%, rgba(229,243,255,1) 100%);*/
     margin:0px auto;
 	width:100%;
 	z-index:2001;
@@ -758,14 +769,15 @@ input[type="submit"]#search-button,
 
 #profile-ref-image{
     z-index:1;
-    height:52px;
-    width:52px;
-    margin-top:-6px;
+    height:53px;
+    width:53px;
+    margin-top:-4px;
     border-radius: 30px;
     -moz-border-radius: 30px;
     -webkit-border-radius: 30px;
     border:solid 3px #f2f306;
     border:solid 3px #f1f1f1;
+    border:none;
 }
 
 #base-notifications-count{
@@ -2958,7 +2970,7 @@ input[type="password"]:focus{
 }
 
 .post-button.beautiful{
-    background: #d953a0 !important;
+    background: #70bbff !important;
 }
 
 .post-button:active{
@@ -3409,6 +3421,7 @@ a.information{
     background:#ffff2b;
     background:#54AFFF;
     background:#0AD6FC;
+    background:#54afff;
 }
 
 #accounts-results-table{
