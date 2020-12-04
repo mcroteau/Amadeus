@@ -254,6 +254,9 @@
 
     app.controller('baseController', function($http, $route, $scope, $interval, $timeout, $location, $anchorScroll, $window, dataService) {
 
+        $scope.showProfile = false
+        $scope.showNotifications = false
+
         $scope.chatInput = document.querySelector("#chat-input")
         $scope.chatSession = document.querySelector("#chat-session")
 
