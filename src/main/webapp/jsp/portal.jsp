@@ -380,6 +380,10 @@
         }
 
         $scope.shareWhatsup = function(){
+            if($scope.whatsup.value == ''){
+                alert('Express yourself!')
+                return false;
+            }
             $scope.postButton.innerHtml = "Amadeus!"
             var content = $scope.whatsup.value
             var images = document.querySelector("#post-upload-image-files").files
