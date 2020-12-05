@@ -29,6 +29,13 @@
     #logo-logo{
         padding-left:23px;
         text-align:center;
+        background: rgb(253,254,3) !important;
+        background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 60%, rgba(106,185,255,1) 100%) !important;
+    }
+
+    #logo-logo:hover{
+        background: rgb(253,254,3) !important;
+        background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 60%, rgba(106,185,255,1) 100%) !important;
     }
 
     #amadeus-logo{

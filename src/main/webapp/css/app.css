@@ -2434,7 +2434,7 @@ p{
     z-index:11;
     position:absolute;
     background:#5AB2FF;
-    background:#d953a0;
+    background:#0ad5fc;
     width:297px;
     padding-top:10px;
     padding-bottom:20px;
@@ -3700,187 +3700,6 @@ h1.gray span{
     display: none;
 }
 
-/**
-@media screen and (max-width: 590px) {
-    #top-outer-container{
-        width:100% !important;
-        text-align:center;
-    }
-    #top-inner-container{
-        left:31px !important;
-        width:75% !important;
-        margin:0px auto 0px auto;
-    }
-    #logo-container{
-        width:auto;
-        float:left;
-        text-align:center;
-        position:relative;
-    }
-    #logo-container{
-        display:inline-block;
-    }
-    #navigation-container{
-        left:auto !important;
-        right:3px !important;
-        width:70px;
-    }
-    #music-player-container{
-        top:0px;
-        right:0px;
-        float:left;
-        position:relative;
-    }
-    #music-container{
-        float:left;
-        position:relative;
-    }
-    #content-container{
-        width:100%;
-        margin:0px auto;
-        text-align:center;
-    }
-    .leaf{
-        padding:13px;
-    }
-    #search-container{
-        top:0px;
-        left:0px;
-        float:left;
-        width:100%;
-        position:relative;
-        margin-top:3px;
-    }
-    #search-box{
-        float:left;
-        left:0px;
-        top:0px;
-        width: 57%;
-        position:relative;
-    }
-    #search-button{
-        top:0px;
-        left:-40px;
-        margin-top:0px !important;
-        float:left;
-        position:relative;
-    }
-    #profile-actions-href{
-        float:right;
-        margin-right:0px !important;
-        position:relative;
-    }
-    #profile-picture-actions-container{
-        right:30px;
-        width:149px;
-        margin-top:52px;
-        position:absolute;
-        background:#fff;
-        z-index:14;
-        -webkit-box-shadow: 1px 3px 12px 0px rgba(214,214,214,0.7);
-        -moz-box-shadow: 1px 3px 12px 0px rgba(214,214,214,0.7);
-        box-shadow: 1px 3px 12px 0px rgba(214,214,214,0.7);
-    }
-    #posts-title{
-        margin-right:30px !important;
-    }
-    #posts-right-container{
-        display:block;
-        float:none;
-        height:auto;
-        width:100% !important;
-    }
-    #posts-right{
-        width:100%;
-        padding:10px;
-    }
-    #posts-fellows-fems-outer-container,
-    #notifications-href,
-    #advertisement-container,
-    #share-something,
-    #cleared,
-    #invite-people{
-        display:none !important;
-    }
-    #notifications-href{
-        display:none;
-    }
-    #express-it{
-        margin-top:3px !important;
-    }
-    #music-player-container{
-        display:none;
-    }
-    #voice{
-        background:#f8f8f8;
-        height:198px !important;
-        padding:0px !important;
-        width:100% !important;
-    }
-    #voice:hover,
-    #voice:focus{
-        background:#f8f8f8;
-    }
-    .post-button{
-        right:63px !important;
-        bottom:54px;
-    }
-    .post-button:active{
-        bottom:53px;
-    }
-
-    #playlist-popup{
-        display:none !important;
-    }
-    #news-feed{
-        text-align:left;
-        margin:0px auto;
-        width:100%;
-    }
-    #posts-header{
-        text-align:center;
-        margin:7px auto 10px auto !important;
-    }
-    #feed{
-        text-align:center;
-    }
-    .feed-content-container{
-        text-align:left;
-        margin:10px auto 20px auto;
-    }
-
-    .share-container{
-        display:none;
-    }
-    .post-comment-form-container{
-        display:none;
-    }
-    .render-desktop{
-        display:none;
-    }
-    .render-mobile{
-        display:block;
-    }
-    #chat-launcher-popup{
-        display:none;
-    }
-}
-
-
-@media screen and (max-width: 364px) {
-    #music-player-container{
-        display:none;
-    }
-    #notifications-href{
-        display:none;
-    }
-    #express-it{
-        margin-top:3px !important;
-    }
-}
-
-**/
-
 .file-upload-container{
     float:right;
 }
@@ -3941,7 +3760,7 @@ h1.gray span{
 }
 
 .edit-click{
-    top:30px;
+    top:27px;
     right:0px;
     z-index:101;
     padding:4px 7px;
@@ -3952,7 +3771,7 @@ h1.gray span{
 }
 
 .author-ref{
-    top:11px;
+    top:8px;
     right:0px;
     color:#fff;
     background:#ccc;

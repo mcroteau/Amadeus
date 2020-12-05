@@ -24,7 +24,7 @@
             background-color:#fcfcfc;
             background-position:0px 0px;
             background: rgb(253,254,3);
-            background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 50%, rgba(84,175,255,1) 79%, rgba(196,228,255,1) 100%);
+            background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 50%, rgba(84,175,255,1) 100%);
         }
 
         #guest-content-left{
