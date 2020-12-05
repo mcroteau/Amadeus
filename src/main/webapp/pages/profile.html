@@ -140,9 +140,9 @@
 
                             <video controls ng-if="post.videoFileUri" ng-src="/o/{{post.videoFileUri}}" style="width:100%" data-video-uri="{{post.videoFileUri}}"></video>
 
-                            <div ng-if="post.content && post.postEditable" ng-class="{'tight' : !post.imageFileUris && !post.videoFileUri}" style="white-space: pre-line;" class="post-comment" contenteditable="true" id="post-content-{{post.id}}" ng-bind-html="post.content"></div>
+                            <div ng-if="post.postEditable" ng-class="{'tight' : !post.imageFileUris && !post.videoFileUri}" style="white-space: pre-line;" class="post-comment" contenteditable="true" id="post-content-{{post.id}}" ng-bind-html="post.content"></div>
 
-                            <div ng-if="post.content && !post.postEditable" ng-class="{'tight' : !post.imageFileUris && !post.videoFileUri}" style="white-space: pre-line;" class="post-comment" ng-bind-html="post.content"></div>
+                            <div ng-if="!post.postEditable" ng-class="{'tight' : !post.imageFileUris && !post.videoFileUri}" style="white-space: pre-line;" class="post-comment" ng-bind-html="post.content"></div>
 
                         </div>
 
@@ -161,7 +161,7 @@
                                     <span class="actions-count like-container-{{post.id}}" id="likes-{{post.id}}" ng-bind="post.likes"></span> <span class="actions-label">Likes</span>
                                 </div>
                                 <svg ng-click="likePost(post.id)" ng-class="{'liked': post.liked}" class="thunder like-button">
-                                    <use xlink:href="#amadeus" data-id="{{id}}"/>
+                                    <use xlink:href="#amadeus-icon" data-id="{{id}}"/>
                                 </svg>
                             </div>
 
@@ -315,9 +315,7 @@
 
 </div>
 
-<!--<div ng-if="personBlocked">-->
-<!--    <p class="notify">Profile hidden ...-->
-<!--    what did you do? Don't worry, she'll/he'll come back! <br/><br/>Until then...</p>-->
 
-<!--    <iframe width="560" height="315" src="https://www.youtube.com/embed/LatorN4P9aA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>-->
-<!--</div>-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 134 134" id="amadeus-icon">
+    <path d="M49 1L21 88L57 88L42 134L84 134L113 47L92 47L79 47L75 47L91 1L49 1Z" />
+</svg>

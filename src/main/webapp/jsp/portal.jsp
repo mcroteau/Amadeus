@@ -21,44 +21,77 @@
 <body ng-app="app" ng-controller="baseController">
 
     <style>
-        #linear-indicator {
-            overflow: hidden;
-            width: 100%;
-            height: 2px;
-            background-color: #B3E5FC;
-            margin: 0px auto;
-            position:absolute;
+        #amadeus-modal{
+            top:0px;
+            bottom:0px;
             left:0px;
             right:0px;
+            position:fixed;
+            z-index:2001;
+            opacity:0.8;
+            background: rgb(253,254,3);
+            background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 50%, rgba(84,175,255,1) 100%);
+        }
+
+        #amadeus-model-content{
             top:0px;
-            z-index:1201;
+            bottom:0px;
+            left:0px;
+            right:0px;
+            position:fixed;
+            z-index:2003;
+            opacity:1;
+            text-align: center;
         }
 
-        .indeterminate {
-            position: relative;
-            width: 100%;
-            height: 100%;
+        #amadeus-modal-icon{
+            height:59px;
+            width:59px;
+            margin-top:100px;
+            -webkit-animation-name: logo-logo; /* Safari 4.0 - 8.0 */
+            -webkit-animation-duration: 1.40s; /* Safari 4.0 - 8.0 */
+            animation-name: logo-logo;
+            animation-iteration-count: infinite;
+            animation-duration: 1.40s;
         }
 
-        .indeterminate:before {
-            content: '';
-            position: absolute;
-            height: 100%;
-            background-color: #03A9F4;
-            animation: indeterminate_first 1.7s infinite ease-out;
+        @keyframes logo-logo {
+            0%  {fill:#17161b}
+            1%  {fill:#FDFE03}
+            19%  {fill:#54afff}
+            49% {fill:#17161b}
+            100%{fill:#17161b}
         }
 
-        @keyframes indeterminate_first {
-            0% {
-                left: -100%;
-                width: 100%;
-            }
-            100% {
-                left: 100%;
-                width: 10%;
-            }
+        @keyframes logo-logo {
+            0%  {fill:#17161b}
+            1%  {fill:#FDFE03}
+            19%  {fill:#54afff}
+            49% {fill:#17161b}
+            100%{fill:#17161b}
         }
+
     </style>
+
+    <!--
+        show it on post
+
+        actions can be defined within a controller
+        variables can be defined and limited within a controller
+
+        we have multiple controllers
+
+
+    -->
+
+    <div ng-if="$root.renderModal" id="amadeus-modal"></div>
+    <div ng-if="$root.renderModal" id="amadeus-model-content">
+        <svg id="amadeus-modal-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
+            <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>
+        </svg>
+        <p class="tiny">Preparing...</p>
+    </div>
+
 
     <div id="linear-indicator">
         <div class="indeterminate" style="width: 100%"></div>
@@ -186,7 +219,7 @@
         </div>
 
         <p style="text-align:center;"><a href="mailto:support@amadeus.social" style="color:#17161b" class="href-dotted">support@amadeus.social</a>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 134 134" id="amadeus">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 134 134" id="amadeus-icon">
                 <path d="M49 1L21 88L57 88L42 134L84 134L113 47L92 47L79 47L75 47L91 1L49 1Z" />
             </svg>
         </p>
@@ -196,14 +229,7 @@
             <a href="http://tomcat.apache.org/" target="_blank" class="information">Powered by<br/>Tomcat</a>
         </div>
 
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 134 134" id="amadeus-icon">
-            <path d="M49 1L21 88L57 88L42 134L84 134L113 47L92 47L79 47L75 47L91 1L49 1Z" />
-        </svg>
     </div>
-
-<%--    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171" id="amadeus-icon">--%>
-<%--        <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>--%>
-<%--    </svg>--%>
 
 <script>
 
@@ -272,11 +298,10 @@
             .otherwise({redirectTo:'/'});
     });
 
-    app.controller('baseController', function($http, $route, $scope, $interval, $timeout, $location, $anchorScroll, $window, dataService) {
+    app.controller('baseController', function($http, $rootScope, $route, $scope, $interval, $timeout, $location, $anchorScroll, $window, dataService) {
 
         $scope.showProfile = false
         $scope.showNotifications = false
-
 
         $scope.chatInput = document.querySelector("#chat-input")
         $scope.chatSession = document.querySelector("#chat-session")
@@ -376,7 +401,7 @@
     });
 
 
-    app.controller('activityController', function($scope, $http, $route, $interval, $timeout, $location, $anchorScroll, $sce, $window, activityModel, dataService) {
+    app.controller('activityController', function($scope, $rootScope, $http, $route, $interval, $timeout, $location, $anchorScroll, $sce, $window, activityModel, dataService) {
 
         $scope.whatsup = document.querySelector("#whatsup")
         $scope.postButton = document.querySelector("#share-button")
@@ -403,14 +428,19 @@
 
         $scope.shareWhatsup = function(){
             var whatsup = document.querySelector('#whatsup')
-            if(whatsup.value == ''){
-                alert('Express yourself!')
-                return false;
-            }
             $scope.postButton.innerHtml = "Amadeus!"
             var content = $scope.whatsup.value
             var images = document.querySelector("#post-upload-image-files").files
             var videos = document.querySelector("#post-upload-video-files").files
+
+            if(whatsup.value == '' &&
+                images.length == 0 &&
+                    videos.length == 0){
+                alert('Express yourself!')
+                return false;
+            }
+
+            $rootScope.renderModal = true
 
             var fd = new FormData();
             angular.forEach(images, function(file){
@@ -432,6 +462,7 @@
                 $scope.beautiful = $scope.beautiful ? false : true
                 response.data.published = false
                 $scope.activities.unshift(response.data)
+                $rootScope.renderModal = false
             })
         }
 
@@ -463,12 +494,11 @@
 
     })
 
-    app.controller('searchController', function($scope, $http, $location, $route, $window) {
+    app.controller('searchController', function($scope, $rootScope, $http, $location, $route, $window) {
         var searchData = function(){
             var q = $route.current.params.q
 
             $http.get('/o/search?q=' + q).then(function(response){
-                console.log(response.data)
                 $scope.accounts = response.data.accounts
             })
         }
@@ -480,7 +510,7 @@
         searchData()
     });
 
-    app.controller('invitationController', function($scope, $http, $route, dataService) {
+    app.controller('invitationController', function($scope, $rootScope, $http, $route, dataService) {
 
         var getData = function() {
             dataService.getInvitations(setData)
@@ -505,7 +535,7 @@
         $scope.pageClass = 'page-contact';
     });
 
-    app.controller('mixController', function($scope, $sce, $route, $http, $location, $window, $anchorScroll, activityModel, dataService){
+    app.controller('mixController', function($scope, $rootScope, $sce, $route, $http, $location, $window, $anchorScroll, activityModel, dataService){
 
         $scope.makeLive = function(id){
             console.log('make it live!')
@@ -520,7 +550,11 @@
         }
 
         $scope.likePost = function(id){
-            dataService.likePost(id, $route.reload)
+            dataService.likePost(id, function(response){
+                var id = response.data.id
+                document.querySelector("#likes-" + id).innerHTML = response.data.likes
+                document.querySelector("#post-like-" + id).classList.toggle("liked")
+            })
         }
 
         $scope.toggle = [];
@@ -538,11 +572,14 @@
             var confirmed = confirm("Are you sure you want to delete this post?")
 
             if(confirmed){
+                $rootScope.renderModal = true
+
                 $http.delete("/o/post/remove/" + id).then(function (response) {
-                    console.log(response)
-                    var id = response.data.post.id
-                    $scope.removePost(id, activityModel.get('memory'))
-                    $scope.removePost(id, activityModel.get('activities'))
+                    // var id = response.data.post.id
+                    // $scope.removePost(id, activityModel.get('memory'))
+                    // $scope.removePost(id, activityModel.get('activities'))
+                    $rootScope.renderModal = false
+                    $route.reload()
                 });
             }
         }
@@ -628,8 +665,11 @@
         }
 
         $scope.updatePost = function(id){
+            $rootScope.renderModal = true
+
             var fd = new FormData();
             var content = document.querySelector("#post-content-" + id).innerHTML
+
             fd.append('content', content);
 
             $http({
@@ -637,9 +677,10 @@
                 url: '/o/post/update/' + id,
                 data: fd,
                 headers: {'Content-Type': undefined},
-            }).then(function(response){
+            }).then(function (response) {
                 $scope.maintainView($scope.memory, response.data.id)
                 $scope.maintainView($scope.activities, response.data.id)
+                $rootScope.renderModal = false
             })
         }
 
@@ -654,7 +695,7 @@
 
 
 
-    app.controller('profileController', function($scope, $http, $route, $timeout, dataService) {
+    app.controller('profileController', function($scope, $rootScope, $http, $route, $timeout, dataService) {
         var self = this
 
         $scope.unfriend = function(id){

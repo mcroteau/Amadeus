@@ -39,17 +39,10 @@ public class NotificationJdbcDao implements NotificationDao {
     }
 
     public boolean save(Notification notification) {
-        // log.info("save...");
         String sql = "insert into notifications (post_id, authenticated_account_id, notification_account_id, date_created, liked, shared, commented) values(?, ?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql, new Object[] {
                 notification.getPostId(), notification.getAuthenticatedAccountId(), notification.getPostAccountId(), notification.getDateCreated(), notification.isLiked(), notification.isShared(), notification.isCommented()
         });
-
-        String countSql = "select count(*) from notifications where notification_account_id = ?";
-        long count = jdbcTemplate.queryForObject(countSql, new Object[]{ notification.getPostAccountId() }, Long.class);
-
-        // log.info("saved " + count);
-
         return true;
     }
 

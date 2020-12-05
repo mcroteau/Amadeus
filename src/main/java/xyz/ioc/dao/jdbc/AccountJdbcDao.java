@@ -403,7 +403,6 @@ public class AccountJdbcDao implements AccountDao {
 							accountBlock.getPersonId(), accountBlock.getBlockerId()
 					}, new BeanPropertyRowMapper<AccountBlock>(AccountBlock.class));
 		}catch(Exception e){
-			log.info("error: " + e.getMessage());
 		}
 
 		if(existingBlock != null){

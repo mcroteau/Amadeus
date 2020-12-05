@@ -138,7 +138,7 @@ public class PostJdbcDao implements PostDao {
 		String sql = "select a.name from " +
 				"posts p inner join account a on p.account_id = a.id " +
 				"where account_id in (" + idsString + ") " +
-				"and p.date_posted between " + start + " and " + end + "";
+				"and p.published = true and p.date_posted between " + start + " and " + end + "";
 
 		List<Post> latest = jdbcTemplate.query(sql, new BeanPropertyRowMapper<Post>(Post.class));
 

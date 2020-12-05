@@ -142,6 +142,44 @@ body{
    }
 }
 
+#linear-indicator {
+    overflow: hidden;
+    width: 100%;
+    height: 2px;
+    background-color: #B3E5FC;
+    margin: 0px auto;
+    position:absolute;
+    left:0px;
+    right:0px;
+    top:0px;
+    z-index:1201;
+}
+
+.indeterminate {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.indeterminate:before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    background-color: #03A9F4;
+    animation: indeterminate_first 1.7s infinite ease-out;
+}
+
+@keyframes indeterminate_first {
+    0% {
+        left: -100%;
+        width: 100%;
+    }
+    100% {
+        left: 100%;
+        width: 10%;
+    }
+}
+
 
 
 #logo-logo{
@@ -189,7 +227,7 @@ body{
 }
 #logo-logo:hover #amadeus-logo {
     animation-play-state: paused;
-    fill:#17161b !important;
+    fill:#17161b;
 }
 
 #logo-logo:active{
@@ -428,6 +466,8 @@ input[type="password"]::placeholder {
     background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 32%, rgba(106,185,255,1) 73%, rgba(196,228,255,1) 100%);
     background: rgb(253,254,3);
     background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 30%, rgba(106,185,255,1) 58%, rgba(196,228,255,1) 100%);
+    background: rgb(253,254,3);
+    background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 50%, rgba(106,185,255,1) 58%, rgba(196,228,255,1) 100%);
     margin:0px auto;
 	width:100%;
 	z-index:2001;
