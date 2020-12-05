@@ -5,11 +5,15 @@ public class Constants {
 	public static int TRUE = 1;
 	public static int FALSE = 0;
 
-	public static String PASSWORD = "password";
-	public static String ADMIN_USERNAME = "croteau.mike@gmail.com";
+	public static final String AMADEUS_GROUP = "Amadeus";
+	public static final String PUBLISHING_JOB_NAME = "AmadeusPublishing";
+	public static final String PUBLISHING_JOB_TRIGGER = "AmadeusPublishingTrigger";
 
-	public static String GUEST_USERNAME = "mjackson.guest@outlook.com";
-	public static String GUEST_PASSWORD = "guest123";
+	public static final String PASSWORD = "password";
+	public static final String ADMIN_USERNAME = "croteau.mike@gmail.com";
+
+	public static final String GUEST_USERNAME = "mjackson.guest@outlook.com";
+	public static final String GUEST_PASSWORD = "guest123";
 
 	public static final String ROLE_ADMIN   = "ROLE_ADMIN";
 	public static final String ROLE_ACCOUNT = "ROLE_ACCOUNT";

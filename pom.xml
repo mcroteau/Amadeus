@@ -282,6 +282,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>2.3.2</version>
+		</dependency>
+
+		<dependency>
 			<groupId>io.github.mcroteau</groupId>
 			<artifactId>parakeet</artifactId>
 			<version>0.3</version>

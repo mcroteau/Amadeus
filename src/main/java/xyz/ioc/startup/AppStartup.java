@@ -5,6 +5,8 @@ import org.apache.log4j.Logger;
 import java.util.List;
 import java.util.Random;
 
+import org.quartz.*;
+import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -12,6 +14,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import xyz.ioc.common.Constants;
 import xyz.ioc.common.Utilities;
 import xyz.ioc.dao.*;
+import xyz.ioc.jobs.PublishJob;
 import xyz.ioc.model.*;
 
 
@@ -37,10 +40,12 @@ public class AppStartup implements ApplicationListener<ContextRefreshedEvent>{
 	@Autowired
 	public Utilities utilities;
 
+
 	public void onApplicationEvent(ContextRefreshedEvent contextRefreshEvent) {
 		createApplicationRoles();
 		createApplicationAdministrator();
 		createApplicationGuest();
+		initializeJobs();
 	}
 
 	private void createApplicationRoles(){
@@ -99,6 +104,32 @@ public class AppStartup implements ApplicationListener<ContextRefreshedEvent>{
 		}
 		log.info("Accounts : " + accountDao.count());
 	}
+
+
+	private void initializeJobs() {
+		try {
+			JobDetail job = JobBuilder.newJob(PublishJob.class)
+					.withIdentity(Constants.PUBLISHING_JOB_NAME, Constants.AMADEUS_GROUP).build();
+
+			Trigger trigger = TriggerBuilder
+					.newTrigger()
+					.withIdentity(Constants.PUBLISHING_JOB_TRIGGER, Constants.AMADEUS_GROUP)
+					.withSchedule(
+							SimpleScheduleBuilder.simpleSchedule()
+									.withIntervalInSeconds(5).repeatForever())
+					.build();
+
+			Scheduler scheduler = new StdSchedulerFactory().getScheduler();
+			scheduler.start();
+			scheduler.scheduleJob(job, trigger);
+
+			log.info("job initialized");
+
+		}catch(Exception e){
+			log.info("issue initializing job" + e.getMessage());
+		}
+	}
+
 
 
 

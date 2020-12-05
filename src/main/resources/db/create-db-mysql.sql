@@ -37,7 +37,9 @@ CREATE TABLE posts (
 	video_file_uri text,
 	hidden boolean,
 	flagged boolean,
-	date_posted bigint NOT NULL
+	published boolean,
+	date_posted bigint NOT NULL,
+	update_date bigint
 );
 
 
@@ -88,9 +90,9 @@ create table friend_invites(
 	invitee_id bigint NOT NULL REFERENCES account(id),
 	invited_id bigint NOT NULL REFERENCES account(id),
     date_created bigint NOT NULL,
-    accepted int,
-    ignored int,
-    new_invite int
+    accepted boolean,
+    ignored boolean,
+    new_invite boolean
 );
 
 create table mail_messages(

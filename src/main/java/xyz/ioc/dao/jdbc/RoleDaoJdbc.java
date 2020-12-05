@@ -1,4 +1,4 @@
-package xyz.ioc.dao.impl.jdbc;
+package xyz.ioc.dao.jdbc;
 
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;

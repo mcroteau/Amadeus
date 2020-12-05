@@ -1,8 +1,7 @@
-package xyz.ioc.dao.impl.jdbc;
+package xyz.ioc.dao.jdbc;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import xyz.ioc.dao.NotificationDao;

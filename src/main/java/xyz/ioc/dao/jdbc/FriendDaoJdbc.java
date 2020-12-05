@@ -1,4 +1,4 @@
-package xyz.ioc.dao.impl.jdbc;
+package xyz.ioc.dao.jdbc;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class FriendDaoJdbc implements FriendDao {
 
 	public long countInvitesByAccount(Account authenticatedAccount) {
 		String sql = "select count(*) from friend_invites where invited_id = ? and new_invite = ?";
-		long count = jdbcTemplate.queryForObject(sql, new Object[] { authenticatedAccount.getId(), Constants.TRUE }, Long.class);
+		long count = jdbcTemplate.queryForObject(sql, new Object[] { authenticatedAccount.getId(), true }, Long.class);
 		return count;
 	}
 
@@ -64,7 +64,7 @@ public class FriendDaoJdbc implements FriendDao {
 					"from friend_invites fi inner join account a on fi.invitee_id = a.id " +
 					"where invited_id = ? and new_invite = ?";
 
-			invites = jdbcTemplate.query(sql, new Object[]{invitedId, 1}, new BeanPropertyRowMapper<FriendInvite>(FriendInvite.class));
+			invites = jdbcTemplate.query(sql, new Object[]{invitedId, true}, new BeanPropertyRowMapper<FriendInvite>(FriendInvite.class));
 
 			if (invites == null) invites = new ArrayList<FriendInvite>();
 
@@ -84,7 +84,7 @@ public class FriendDaoJdbc implements FriendDao {
 			String sql = "insert into friend_invites (invitee_id, invited_id, date_created, new_invite, accepted, ignored) values (?, ?, ?, ?, ?, ?)";
 			try {
 				jdbcTemplate.update(sql, new Object[]{
-						inviteeId, invitedId, dateCreated, Constants.TRUE, Constants.FALSE, Constants.FALSE
+						inviteeId, invitedId, dateCreated, true, false, false
 				});
 			}catch(Exception e){
 				e.printStackTrace();
@@ -118,7 +118,7 @@ public class FriendDaoJdbc implements FriendDao {
 
 
 	public boolean accept(long inviteeId, long invitedId, long currentDate){
-		String sql = "update friend_invites set accepted = 1, new_invite = 0 where invitee_id = ? and invited_id = ?";
+		String sql = "update friend_invites set accepted = true, new_invite = false where invitee_id = ? and invited_id = ?";
 		try {
 			jdbcTemplate.update(sql, new Object[]{
 					inviteeId, invitedId
@@ -134,7 +134,7 @@ public class FriendDaoJdbc implements FriendDao {
 
 
 	public boolean ignore(long accountId, long invitedId, long currentDate){
-		String sql = "update friend_invites set ignored = 1, new_invite = 0 where invitee_id = ? and invited_id = ?";
+		String sql = "update friend_invites set ignored = true, new_invite = false where invitee_id = ? and invited_id = ?";
 		try {
 
 			jdbcTemplate.update(sql, new Object[]{

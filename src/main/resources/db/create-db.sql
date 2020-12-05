@@ -16,17 +16,17 @@ create table role (
 	name character varying(55) NOT NULL UNIQUE
 );
 
-create table account_permissions (
+create table account_permissions(
 	account_id bigint REFERENCES account(id),
 	permission character varying(55)
 );
 
-create table account_roles (
+create table account_roles(
 	role_id bigint NOT NULL REFERENCES role(id),
 	account_id bigint NOT NULL REFERENCES account(id)
 );
 
-create table posts (
+create table posts(
 	id bigint PRIMARY KEY AUTO_INCREMENT,
 	account_id bigint NOT NULL REFERENCES account(id),
 	content text,
@@ -35,7 +35,9 @@ create table posts (
 	video_file_uri text,
 	hidden boolean,
 	flagged boolean,
-	date_posted bigint NOT NULL
+	published boolean,
+	date_posted bigint NOT NULL,
+	update_date bigint
 );
 
 create table friends (
@@ -83,9 +85,9 @@ create table friend_invites(
 	invitee_id bigint NOT NULL REFERENCES account(id),
 	invited_id bigint NOT NULL REFERENCES account(id),
     date_created bigint NOT NULL,
-    accepted int,
-    ignored int,
-    new_invite int
+    accepted boolean,
+    ignored boolean,
+    new_invite boolean
 );
 
 create table mail_messages(

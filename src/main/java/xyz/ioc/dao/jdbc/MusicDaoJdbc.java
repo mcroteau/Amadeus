@@ -1,4 +1,4 @@
-package xyz.ioc.dao.impl.jdbc;
+package xyz.ioc.dao.jdbc;
 
 import java.util.HashSet;
 import java.util.ArrayList;

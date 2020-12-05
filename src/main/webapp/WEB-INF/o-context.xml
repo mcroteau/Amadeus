@@ -29,6 +29,7 @@
 	<bean id="stripeService" class="xyz.ioc.service.StripeService"/>
 	<bean id="reCaptchaService" class="xyz.ioc.service.ReCaptchaService"/>
 	<bean id="appStartup" class="xyz.ioc.startup.AppStartup"/>
+	<bean id="publish" class="xyz.ioc.jobs.PublishJob"/>
 	<bean id="sessionManager" class="xyz.ioc.common.SessionManager" scope="singleton"/>
 
 	<bean id="amadeusAccessor" class="xyz.ioc.accessor.AmadeusAccessor"/>
