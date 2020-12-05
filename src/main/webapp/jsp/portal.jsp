@@ -517,9 +517,13 @@
         }
 
         $scope.sharePost = function(id, $event){
+            $rootScope.renderModal = true
             var comment = document.querySelector("#share-comment-" + id).value
             var postId = $event.target.attributes['data-id'].value
-            dataService.sharePost(postId, comment, $route.reload)
+            dataService.sharePost(postId, comment, function(){
+                $rootScope.renderModal = false
+                $route.reload()
+            })
         }
 
         $scope.deletePost = function(id) {

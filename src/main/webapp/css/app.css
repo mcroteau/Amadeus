@@ -133,9 +133,13 @@ body{
     right:0px;
     position:fixed;
     z-index:2001;
-    opacity:0.8;
+    opacity:0.9;
     background: rgb(253,254,3);
     background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 50%, rgba(84,175,255,1) 100%);
+    background: rgb(253,254,3);
+    background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 33%, rgba(253,254,3,1) 70%, rgba(84,175,255,1) 70%, rgba(192,225,255,1) 100%);/*-moz-box-shadow: 0px 4px 17px 0px rgba(0,0,0,.9);*/
+    background: rgb(192,225,255);
+    background: linear-gradient(36deg, rgba(192,225,255,1) 0%, rgba(84,175,255,1) 15%, rgba(253,254,3,1) 15%, rgba(253,254,3,1) 90%, rgba(84,175,255,1) 90%, rgba(192,225,255,1) 100%);
 }
 
 #amadeus-model-content{
@@ -147,6 +151,10 @@ body{
     z-index:2003;
     opacity:1;
     text-align: center;
+}
+
+#amadeus-model-content p{
+    color:#54afff;
 }
 
 #amadeus-modal-icon{
