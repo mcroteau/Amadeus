@@ -427,7 +427,7 @@ input[type="password"]::placeholder {
     background: rgb(253,254,3);
     background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 32%, rgba(106,185,255,1) 73%, rgba(196,228,255,1) 100%);
     background: rgb(253,254,3);
-    background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 50%, rgba(106,185,255,1) 68%, rgba(196,228,255,1) 100%);
+    background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 30%, rgba(106,185,255,1) 58%, rgba(196,228,255,1) 100%);
     margin:0px auto;
 	width:100%;
 	z-index:2001;
@@ -1666,7 +1666,7 @@ h3#share-something span{
 
 .share-actions-count-container{
     position:absolute;
-    right:37px;
+    right:34px;
     top:9px;
 }
 
@@ -2064,6 +2064,7 @@ p{
     font-size:18px;
     font-family:Roboto-Light !important;
 }
+
 .post-content a{
     font-size:17px;
 }
@@ -2092,9 +2093,7 @@ p{
     line-height: 1.0em;
 }
 
-.post-comment{
-    margin-bottom:17px;
-}
+
 .post-comment-wrapper p{
     font-size:14px;
 }
@@ -2105,7 +2104,7 @@ p{
 
 .post-meta{
     margin:7px auto 7px auto;
-    padding:3px 30px;
+    padding:3px 12px;
 }
 
 .post-comment-meta{
@@ -2132,7 +2131,7 @@ p{
 }
 .like-container{
     float:right !important;
-    width:136px;
+    width:129px;
     text-align:right;
 }
 .shared-post-container{
@@ -2227,7 +2226,7 @@ p{
 }
 
 .post-comment{
-    padding:15px 62px 10px 30px;
+    padding:0px 62px 0px 30px;
 }
 
 .music-post-container{
@@ -2371,8 +2370,12 @@ p{
     margin-top:0px;
     padding:0px 10px 0px 62px;
     margin-left:0px !important;
-    background:#fff;
+    background:#f9f9f9;
     animation: fadeEffect 1s;
+}
+
+.comments-container input{
+    background:#fff !important;
 }
 
 .feed-content-container:hover .comments-container{

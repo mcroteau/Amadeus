@@ -145,6 +145,9 @@
                     <a ng-href="#!/profile/{{post.accountId}}" class="posted-by" data-id="{{post.accountId}}">{{post.name}}</a><br/>
                     <span class="post-date">{{post.timeAgo}}</span>
 
+                    <span ng-if="!post.published" class="tiny modern">Not Live</span>
+                    <a ng-click="makeLive(post.id)" ng-if="!post.published"  href="javascript:" class="button retro tiny" style="text-decoration: none;">Publish</a>
+
                     <br class="clear"/>
                 </div>
 
@@ -159,9 +162,9 @@
 
                     <video controls ng-if="post.videoFileUri" ng-src="/o/{{post.videoFileUri}}" style="width:100%" data-video-uri="{{post.videoFileUri}}"></video>
 
-                    <div ng-if="post.content && post.postEditable" style="white-space: pre-line;" class="post-comment" contenteditable="true" id="post-content-{{post.id}}" ng-bind-html="post.content"></div>
+                    <div ng-if="post.content && post.postEditable" ng-class="{'tight' : !post.imageFileUris && !post.videoFileUri}" style="white-space: pre-line;" class="post-comment" contenteditable="true" id="post-content-{{post.id}}" ng-bind-html="post.content"></div>
 
-                    <div ng-if="post.content && !post.postEditable" style="white-space: pre-line;" class="post-comment" ng-bind-html="post.content"></div>
+                    <div ng-if="post.content && !post.postEditable" ng-class="{'tight' : !post.imageFileUris && !post.videoFileUri}" style="white-space: pre-line;" class="post-comment" ng-bind-html="post.content"></div>
 
                 </div>
 

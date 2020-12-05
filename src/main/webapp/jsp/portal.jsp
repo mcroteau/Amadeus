@@ -407,8 +407,20 @@
                 url: '/o/post/share',
                 data: fd,
                 headers: {'Content-Type': undefined},
-            }).then(function(resp){
-                $location.path("/profile/${sessionScope.account.id}")
+            }).then(function(response){
+                document.querySelector('#whatsup').value = ''
+                $scope.beautiful = $scope.beautiful ? false : true
+                response.data.published = false
+                $scope.activities.unshift(response.data)
+            })
+        }
+
+        $scope.maintainView = function(list, id){
+            angular.forEach(list, function(activity){
+                if(activity.id == id) {
+                    activity.live = false
+                    activity.published = true
+                }
             })
         }
 
@@ -476,8 +488,9 @@
     app.controller('mixController', function($scope, $sce, $route, $http, $location, $window, $anchorScroll, activityModel, dataService){
 
         $scope.makeLive = function(id){
+            console.log('make it live!')
             $http.post("/o/post/publish/" + id).then(function(){
-                $location.path("/")
+                $window.location.reload()
             });
         }
 
