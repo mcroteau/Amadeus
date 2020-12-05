@@ -103,7 +103,6 @@ public class MusicFile {
 	@Override
 	public int hashCode(){
 		int hash = (this.title + this.artist).hashCode();
-		System.out.println("h:" + hash);
 		return hash;
 	}
 

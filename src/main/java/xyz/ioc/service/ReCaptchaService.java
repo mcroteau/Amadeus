@@ -34,8 +34,6 @@ public class ReCaptchaService {
 
             String json = gson.toJson(input);
 
-            System.out.println(json);
-
             okhttp3.RequestBody reCaptchaBody = okhttp3.RequestBody.create(json, JSON);
 
             Request request = new Request.Builder()
@@ -51,7 +49,6 @@ public class ReCaptchaService {
             e.printStackTrace();
         }
 
-        System.out.println("recaptcha is success : " + reCaptchaOutput.isSuccess());
         return reCaptchaOutput.isSuccess();
     }
 

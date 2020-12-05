@@ -208,7 +208,6 @@ public class AccountController extends BaseController {
 
 				if(!storedAccount.getImageUri().equals(Constants.DEFAULT_IMAGE_URI) &&
 						!storedAccount.getImageUri().equals(Constants.FRESCO)) {
-					System.out.println(">>> deleting existing profile : " + storedAccount.getImageUri());
 					utilities.deleteUploadedFile(storedAccount.getImageUri());
 				}
 			}
@@ -763,8 +762,7 @@ public class AccountController extends BaseController {
     	Map<String, Object> data = new HashMap<String, Object>();
 
 		if(!authenticated()){
-			System.out.println("not authenticated");
-			data.put("error", "Authentication required");
+			data.put("error", "authentication required");
 			return gson.toJson(data);
 		}
 

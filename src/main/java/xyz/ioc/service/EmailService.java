@@ -58,15 +58,14 @@ public class EmailService extends Thread {
         //props.put("mail.smtp.socketFactory.class",
         //        "javax.net.ssl.SSLSocketFactory");
 
-
-        System.out.println("to : " + toAddress +
-                " -> from: " + fromAddress +
-                " -> username : " + username +
-                " -> auth: " + auth +
-                " -> starttls: " + starttls +
-                " -> host: " + host +
-                " -> port: " + port +
-                " -> protocol: " + protocol);
+//        System.out.println("to : " + toAddress +
+//                " -> from: " + fromAddress +
+//                " -> username : " + username +
+//                " -> auth: " + auth +
+//                " -> starttls: " + starttls +
+//                " -> host: " + host +
+//                " -> port: " + port +
+//                " -> protocol: " + protocol);
 
         Session session = Session.getInstance(props,
                 new Authenticator() {

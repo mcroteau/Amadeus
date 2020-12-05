@@ -20,7 +20,6 @@ public class StripeService {
             Stripe.apiKey = apiKey;
 
             int amountInCents = ((int) amount) * 100;
-            System.out.println("amount " + amountInCents + " : " + stripeToken);
 
             Map<String, Object> chargeParams = new HashMap<String, Object>();
             chargeParams.put("amount", String.valueOf(amountInCents));

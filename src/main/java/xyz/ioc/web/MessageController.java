@@ -148,7 +148,6 @@ public class MessageController extends BaseController{
 
             if (message.getContent() != null &&
                     !message.getContent().equals("")) {
-                System.out.println("content " + message.getContent());
                 message.setDateSent(utilities.getCurrentDate());
                 messageDao.send(message);
             }

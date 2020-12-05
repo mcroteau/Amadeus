@@ -70,7 +70,6 @@ public class ResourceJdbcDao implements ResourceDao {
     public long likesCount(long resourceId) {
         String sql = "select count(*) from resource_likes where resource_id = ?";
         long count = jdbcTemplate.queryForObject(sql, new Object[]{ resourceId }, Long.class);
-        System.out.println("likes >" + resourceId + " : " + count);
         return count;
     }
 

@@ -26,8 +26,6 @@ public class PhoneService {
                     PLIVO_PHONE, Collections.singletonList("+1" + phone), "Amadeus : Setup complete ${account.name}")
                     .create();
 
-            System.out.println(message.toString());
-
         }catch(Exception e){
             e.printStackTrace();
             return false;
@@ -43,8 +41,6 @@ public class PhoneService {
                     PLIVO_PHONE, Collections.singletonList(phones), notification)
                     .create();
 
-            System.out.println("message sent.");
-
         }catch(Exception e){
             e.printStackTrace();
             return false;
@@ -55,14 +51,10 @@ public class PhoneService {
     public boolean support(String notification){
         try{
 
-            System.out.println("keys >> " + apiKey + " : " + secretKey);
-
             Plivo.init(apiKey, secretKey);
             MessageCreateResponse message = com.plivo.api.models.message.Message.creator(
                     PLIVO_PHONE, Collections.singletonList(NOTIFY_PHONE), notification)
                     .create();
-
-            System.out.println("message sent.");
 
         }catch(Exception e){
             e.printStackTrace();

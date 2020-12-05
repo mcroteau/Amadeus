@@ -107,7 +107,6 @@ public class Utilities {
 		List<String> list = Arrays.asList(contentTypes);
 
 		if(!correctMimeType(list, file)){
-			System.out.println("not eq video");
 			return "";
 		}
 
@@ -160,7 +159,6 @@ public class Utilities {
 	    try (OutputStream os = Files.newOutputStream(filepath)) {
 	        os.write(file.getBytes());
 	    }catch(Exception e){
-	    	System.out.println("\n\ncu : unable to write file");
 	    }
 
 	}
@@ -182,8 +180,6 @@ public class Utilities {
 
 			if(metadata.containsDirectoryOfType(ExifIFD0Directory.class)) {
 
-				System.out.println(" >>> contains exif ");
-
 				ExifIFD0Directory exifIFD0 = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
 
 				if(exifIFD0.containsTag(ExifIFD0Directory.TAG_ORIENTATION)) {
@@ -197,10 +193,6 @@ public class Utilities {
 					BufferedImage rotated = scalr.rotate(image, rotation);
 
 					File output = new File(imageDirectory + fileName);
-
-					System.out.println(tempFile.toPath());
-					System.out.println(output.toPath());
-
 					ImageIO.write(rotated, getFileExtension(fileName), output);
 
 				}
@@ -208,7 +200,6 @@ public class Utilities {
 
 		}catch(Exception e){
 			e.printStackTrace();
-			System.out.println("\n\ncu : unable to write file");
 		}
 
 	}
@@ -254,10 +245,8 @@ public class Utilities {
 
 			if(mimetype == null || mimetype == "content/unknown" )mimetype = connection.getContentType();
 			if(mimetype == null || mimetype == "content/unknown" )mimetype = file.getContentType();
-			System.out.println("mimetype : " + mimetype + " : c: " +  file.getContentType() + " p : " + tmpPath);
 
 			if (!mimetypes.contains(mimetype)) {
-				System.out.println("cu : not in correct mime types");
 				return false;
 			}
 
@@ -336,7 +325,6 @@ public class Utilities {
 
 			String applicationPath = getApplicationPath();
 			String filePath = applicationPath + fileUri;
-			System.out.println("file path : " + filePath);
 
 			File file = new File(filePath);
 			file.delete();

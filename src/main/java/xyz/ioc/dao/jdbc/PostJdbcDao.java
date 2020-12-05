@@ -261,7 +261,7 @@ public class PostJdbcDao implements PostDao {
 		for(Friend connection : friends) {
 			ids.add(connection.getFriendId());
 		}
-		//adding personal posts
+
 		ids.add(accountId);
 
 		//System.out.println(StringUtils.join(ids, "|"));
