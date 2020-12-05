@@ -71,7 +71,6 @@
                         <span class="information">Visits</span>
                     </div>
 
-
                     <br class="clear"/>
 
                  </div>
@@ -83,6 +82,8 @@
 
             <br class="clear"/>
         </div>
+
+        <br class="clear"/>
 
         <div id="profile-posts-container">
             <div id="profile-posts" ng-controller="mixController">
@@ -121,6 +122,7 @@
                             </a>
                             <a ng-href="#!/profile/{{post.accountId}}" class="posted-by" data-id="{{post.accountId}}">{{post.name}}</a><br/>
                             <span class="post-date">{{post.timeAgo}}</span>
+
                             <span ng-if="!post.published" class="tiny modern">Not Live</span>
                             <a ng-click="makeLive(post.id)" ng-if="!post.published"  href="javascript:" class="button retro tiny" style="text-decoration: none;">Publish</a>
 
@@ -138,9 +140,9 @@
 
                             <video controls ng-if="post.videoFileUri" ng-src="/o/{{post.videoFileUri}}" style="width:100%" data-video-uri="{{post.videoFileUri}}"></video>
 
-                            <div ng-if="post.content && post.postEditable" style="white-space: pre-line;" class="post-comment" contenteditable="true" id="post-content-{{post.id}}" ng-bind-html="post.content"></div>
+                            <div ng-if="post.content && post.postEditable" ng-class="{'tight' : !post.imageFileUris && !post.videoFileUri}" style="white-space: pre-line;" class="post-comment" contenteditable="true" id="post-content-{{post.id}}" ng-bind-html="post.content"></div>
 
-                            <div ng-if="post.content && !post.postEditable" style="white-space: pre-line;" class="post-comment" ng-bind-html="post.content"></div>
+                            <div ng-if="post.content && !post.postEditable" ng-class="{'tight' : !post.imageFileUris && !post.videoFileUri}" style="white-space: pre-line;" class="post-comment" ng-bind-html="post.content"></div>
 
                         </div>
 
@@ -172,7 +174,7 @@
                                     <a ng-click="toggleShare($index)" href="javascript:" class="share-button" data-id="{{id}}"><img ng-src="/o/images/share.png" style="width:32px;" data-id="{{id}}"/></a>
                                 </div>
                             </div>
-                            <div ng-if="!post.shared" class="share-container float-left">
+                            <div ng-if="!post.shared && !post.postEditable" class="share-container float-left">
                                 <div>
                                     <div class="share-actions-count-container">
                                         <span class="actions-count">{{post.shares}} </span>
@@ -319,20 +321,3 @@
 
 <!--    <iframe width="560" height="315" src="https://www.youtube.com/embed/LatorN4P9aA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>-->
 <!--</div>-->
-
-<div style="text-align:center;margin-top:191px;">
-    <a href="${pageContext.request.contextPath}/get_code" class="page-ref href-dotted" >Get Code</a>
-    <a href="javascript:" class="page-ref href-dotted" data-ref="about">About</a>
-    <a href="${pageContext.request.contextPath}/invite" class="href-dotted" id="invite-people">Invite</a>
-</div>
-
-<p style="text-align:center;"><a href="mailto:support@amadeus.social" style="color:#17161b" class="href-dotted">support@amadeus.social</a>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 134 134" id="amadeus">
-        <path d="M49 1L21 88L57 88L42 134L84 134L113 47L92 47L79 47L75 47L91 1L49 1Z" />
-    </svg>
-</p>
-
-<div style="text-align:center;margin:20px auto 560px auto">
-    <p style="text-align: center; font-size:12px;">&copy; 2020 Amadeus</p>
-    <a href="http://tomcat.apache.org/" target="_blank" class="information">Powered by<br/>Tomcat</a>
-</div>

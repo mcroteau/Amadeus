@@ -45,7 +45,7 @@ public class PostController extends BaseController {
 
 	private static final String YOUTUBE_EMBED_URL = "https://youtube.com/embed";
 
-	private static final String YOUTUBE_EMBED = "<iframe style=\"margin-top:-15px; margin-left:-30px;\" width=\"490\" height=\"276\" src=\"{{URL}}\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>";
+	private static final String YOUTUBE_EMBED = "<iframe style=\"margin-left:-30px;\" width=\"465\" height=\"261\" src=\"{{URL}}\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>";
 
 	private static final Pattern urlPattern = Pattern.compile(
 			"(?:^|[\\W])((ht|f)tp(s?):\\/\\/|www\\.)"

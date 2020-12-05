@@ -522,7 +522,6 @@ public class AccountController extends BaseController {
 		accountBlock.setBlockerId(account.getId());
 
 		boolean blocked = accountDao.blocked(accountBlock);
-		log.info("blocked: " + blocked + " : " + account.getId() + ":" + authenticatedAccount.getId());
 		account.setBlocked(blocked);
 
 		List<Friend> friends = friendDao.getFriends(Long.parseLong(id));
@@ -743,8 +742,6 @@ public class AccountController extends BaseController {
 				.byBlocker(account.getId())
 				.atDateBlocked(utilities.getCurrentDate())
 				.build();
-
-		log.info("b: " + blok.toString());
 
 		if(accountDao.blocked(blok)){
 			resp.put("success", "unblocked");

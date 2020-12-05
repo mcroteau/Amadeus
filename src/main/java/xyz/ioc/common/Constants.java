@@ -7,7 +7,7 @@ public class Constants {
 	public static final String PUBLISHING_JOB_TRIGGER = "AmadeusPublishingTrigger";
 
 	public static final int DURATION_DIFFERENCE  = 1000 * 60 * 3;
-	public static final int PUBLISH_JOB_DURATION = 60 * 5;
+	public static final int PUBLISH_JOB_DURATION = 60;
 	public static final String POSTS_DAO_KEY     = "PostsDao";
 
 	public static final String PASSWORD = "password";

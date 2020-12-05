@@ -201,7 +201,6 @@ public class ResourceController extends BaseController {
                 accountBlock.setBlockerId(a.getId());
 
                 boolean blocked = accountDao.blocked(accountBlock);
-                log.info("blocked: " + blocked + " : " + account.getId() + ":" + a.getId());
                 a.setBlocked(blocked);
             }
             Map<String, Object> d = new HashMap<String, Object>();

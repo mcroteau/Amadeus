@@ -178,15 +178,32 @@
 
 <%--    <h1 style="transform:  rotate(-90deg); opacity:0.1; position:absolute; left:-120px; top:270px;">Activity Feed</h1>--%>
 
+    <div ng-if="$root.renderFooter" id="footer">
+        <div style="text-align:center;margin-top:10px;">
+            <a href="${pageContext.request.contextPath}/get_code" class="page-ref href-dotted" >Get Code</a>
+            <a href="javascript:" class="page-ref href-dotted" data-ref="about">About</a>
+            <a href="${pageContext.request.contextPath}/invite" class="href-dotted" id="invite-people">Invite</a>
+        </div>
 
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 134 134" id="amadeus-icon">
-        <path d="M49 1L21 88L57 88L42 134L84 134L113 47L92 47L79 47L75 47L91 1L49 1Z" />
-    </svg>
+        <p style="text-align:center;"><a href="mailto:support@amadeus.social" style="color:#17161b" class="href-dotted">support@amadeus.social</a>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 134 134" id="amadeus">
+                <path d="M49 1L21 88L57 88L42 134L84 134L113 47L92 47L79 47L75 47L91 1L49 1Z" />
+            </svg>
+        </p>
+
+        <div style="text-align:center;margin:20px auto 560px auto">
+            <p style="text-align: center; font-size:12px;">&copy; 2020 Amadeus</p>
+            <a href="http://tomcat.apache.org/" target="_blank" class="information">Powered by<br/>Tomcat</a>
+        </div>
+
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 134 134" id="amadeus-icon">
+            <path d="M49 1L21 88L57 88L42 134L84 134L113 47L92 47L79 47L75 47L91 1L49 1Z" />
+        </svg>
+    </div>
 
 <%--    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171" id="amadeus-icon">--%>
 <%--        <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>--%>
 <%--    </svg>--%>
-
 
 <script>
 
@@ -212,6 +229,7 @@
 
         $rootScope.$on("$routeChangeStart", function () {
             $rootScope.indicator.style.display = 'block'
+            $rootScope.renderFooter = false;
         });
 
         $rootScope.$on("$routeChangeSuccess", function () {
@@ -223,6 +241,7 @@
                 $rootScope.profilePage = true;
             }else{
                 $rootScope.profilePage = false;
+                $rootScope.renderFooter = true;
             }
         });
     })
@@ -257,6 +276,7 @@
 
         $scope.showProfile = false
         $scope.showNotifications = false
+
 
         $scope.chatInput = document.querySelector("#chat-input")
         $scope.chatSession = document.querySelector("#chat-session")

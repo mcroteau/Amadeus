@@ -1796,20 +1796,6 @@ input[type="submit"].button.small{
     min-height:800px !important;
 }
 
-#content-container.ng-animate {
-    transition: all ease 0.4s;
-    position: absolute;
-}
-
-#content-container.ng-enter {
-    opacity: 0;
-}
-
-#content-container.ng-leave,
-#content-container.ng-enter.ng-enter-active {
-    opacity: 1;
-}
-
 #content-container.ng-leave.ng-leave-active {
     opacity: 0;
 }
@@ -2036,7 +2022,7 @@ p{
     font-size:14px;
 }
 .posted-by{
-    margin-top:1px;
+    margin-top:4px;
     margin-bottom:4px;
     display:inline-block;
     color:#54afff !important;
@@ -2116,7 +2102,7 @@ p{
 .content-actions{
 	height:40px;
 	padding-bottom:3px;
-    padding:0px 20px 9px 30px;
+    padding:0px 20px 4px 0px;
     margin-top:10px;
     /**background:url("/b/images/colors-symmetric.png");
     background-position:-41px 47px;
@@ -3955,7 +3941,7 @@ h1.gray span{
 }
 
 .edit-click{
-    top:29px;
+    top:30px;
     right:0px;
     z-index:101;
     padding:4px 7px;
@@ -3966,7 +3952,7 @@ h1.gray span{
 }
 
 .author-ref{
-    top:3px;
+    top:11px;
     right:0px;
     color:#fff;
     background:#ccc;
