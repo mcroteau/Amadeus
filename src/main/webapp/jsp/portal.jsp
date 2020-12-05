@@ -20,70 +20,6 @@
 
 <body ng-app="app" ng-controller="baseController">
 
-    <style>
-        #amadeus-modal{
-            top:0px;
-            bottom:0px;
-            left:0px;
-            right:0px;
-            position:fixed;
-            z-index:2001;
-            opacity:0.8;
-            background: rgb(253,254,3);
-            background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 50%, rgba(84,175,255,1) 100%);
-        }
-
-        #amadeus-model-content{
-            top:0px;
-            bottom:0px;
-            left:0px;
-            right:0px;
-            position:fixed;
-            z-index:2003;
-            opacity:1;
-            text-align: center;
-        }
-
-        #amadeus-modal-icon{
-            height:59px;
-            width:59px;
-            margin-top:100px;
-            -webkit-animation-name: logo-logo; /* Safari 4.0 - 8.0 */
-            -webkit-animation-duration: 1.40s; /* Safari 4.0 - 8.0 */
-            animation-name: logo-logo;
-            animation-iteration-count: infinite;
-            animation-duration: 1.40s;
-        }
-
-        @keyframes logo-logo {
-            0%  {fill:#17161b}
-            1%  {fill:#FDFE03}
-            19%  {fill:#54afff}
-            49% {fill:#17161b}
-            100%{fill:#17161b}
-        }
-
-        @keyframes logo-logo {
-            0%  {fill:#17161b}
-            1%  {fill:#FDFE03}
-            19%  {fill:#54afff}
-            49% {fill:#17161b}
-            100%{fill:#17161b}
-        }
-
-    </style>
-
-    <!--
-        show it on post
-
-        actions can be defined within a controller
-        variables can be defined and limited within a controller
-
-        we have multiple controllers
-
-
-    -->
-
     <div ng-if="$root.renderModal" id="amadeus-modal"></div>
     <div ng-if="$root.renderModal" id="amadeus-model-content">
         <svg id="amadeus-modal-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
@@ -97,7 +33,7 @@
         <div class="indeterminate" style="width: 100%"></div>
     </div>
 
-	<div id="layout-container" style="position:relative;">
+	<div ng-click="hideAll" id="layout-container" style="position:relative;">
 
 		<div id="top-outer-container" ng-init="init()">
 
@@ -209,7 +145,7 @@
         </div>
     </div>
 
-<%--    <h1 style="transform:  rotate(-90deg); opacity:0.1; position:absolute; left:-120px; top:270px;">Activity Feed</h1>--%>
+<%--    <h1 style="transform:  rotate(-90deg); opacity:0.1; position:absolute; left:-50px; top:270px;">Activity</h1>--%>
 
     <div ng-if="$root.renderFooter" id="footer">
         <div style="text-align:center;margin-top:10px;">
@@ -398,6 +334,10 @@
             $scope.chatStarted = $scope.chatStarted ? false : true
             if(!$scope.chatStarted)$interval.cancel($scope.chatInterval)
         }
+
+        $scope.hideAll = function(){
+            console.log("hide all")
+        }
     });
 
 
@@ -485,9 +425,12 @@
         }
 
         $scope.clearNotifications = function(){
+            $rootScope.renderModal = true
             $http.delete('/o/notifications/clear').then(function(response){
-                console.log(response)
+                $rootScope.renderModal = false
+                $route.reload()
             }).catch(function(error){
+                $rootScope.renderModal = false
                 console.log(error)
             })
         }
@@ -562,9 +505,15 @@
             })
         }
 
-        $scope.toggle = [];
-        $scope.toggleShare = function(inx) {
-            $scope.toggle[inx] = $scope.toggle[inx] ? false : true;
+        $scope.toggle = []
+        $scope.toggleShare = function(idx) {
+            $scope.toggle[idx] = $scope.toggle[idx] ? false : true;
+        }
+
+        $scope.showActions = []
+        $scope.toggleActions = function(idx){
+            console.log('toggle actions')
+            $scope.showActions[idx] = $scope.showActions[idx] ? false : true;
         }
 
         $scope.sharePost = function(id, $event){

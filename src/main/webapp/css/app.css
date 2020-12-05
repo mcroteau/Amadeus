@@ -115,31 +115,65 @@ body{
     height:3px;
 }
 
+#expressed{
+    color:#54AFFF;
+    margin-top:19px;
+    display:inline-block;
+    background: #fff;
+    padding:3px 4px;
+    vertical-align:bottom;
+    font-family:Roboto-Bold !important;
 
-
-/* Safari 4.0 - 8.0 */
-@-webkit-keyframes background {
-  0% {
-        background: #fff
-  }
-  50% {
-        background:#efefef;
-    }
-  100% {
-        background:#fff;
-   }
 }
 
-@keyframes background {
-  0% {
-           background: #fff
-  }
-  50% {
-        background:#efefef;
-   }
-  100% {
-        background:#fff;
-   }
+#amadeus-modal{
+    top:0px;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    position:fixed;
+    z-index:2001;
+    opacity:0.8;
+    background: rgb(253,254,3);
+    background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 50%, rgba(84,175,255,1) 100%);
+}
+
+#amadeus-model-content{
+    top:0px;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    position:fixed;
+    z-index:2003;
+    opacity:1;
+    text-align: center;
+}
+
+#amadeus-modal-icon{
+    height:59px;
+    width:59px;
+    margin-top:100px;
+    -webkit-animation-name: logo-logo; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 1.40s; /* Safari 4.0 - 8.0 */
+    animation-name: logo-logo;
+    animation-iteration-count: infinite;
+    animation-duration: 1.40s;
+}
+
+@keyframes logo-logo {
+    0%  {fill:#17161b}
+    1%  {fill:#FDFE03}
+    19%  {fill:#54afff}
+    49% {fill:#17161b}
+    100%{fill:#17161b}
+}
+
+@keyframes logo-logo {
+    0%  {fill:#17161b}
+    1%  {fill:#FDFE03}
+    19%  {fill:#54afff}
+    49% {fill:#17161b}
+    100%{fill:#17161b}
 }
 
 #linear-indicator {
@@ -223,11 +257,11 @@ body{
     opacity:1;
     color:#E34B86;
     color:#FDFE03;
-    background:#FAFB06 !important;
+    background: #FDFE03 !important;
 }
 #logo-logo:hover #amadeus-logo {
     animation-play-state: paused;
-    fill:#17161b;
+    fill:#54AFFF;
 }
 
 #logo-logo:active{
@@ -467,13 +501,11 @@ input[type="password"]::placeholder {
     background: rgb(253,254,3);
     background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 30%, rgba(106,185,255,1) 58%, rgba(196,228,255,1) 100%);
     background: rgb(253,254,3);
-    background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 50%, rgba(106,185,255,1) 58%, rgba(196,228,255,1) 100%);
-    margin:0px auto;
-	width:100%;
-	z-index:2001;
-    position:relative;
-	/*-webkit-box-shadow: 0px 4px 17px 0px rgba(0,0,0,.91);*/
-	/*-moz-box-shadow: 0px 4px 17px 0px rgba(0,0,0,.9);*/
+    background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 24%, rgba(106,185,255,1) 58%, rgba(196,228,255,1) 100%);
+    background: rgb(253,254,3);
+    background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 30%, rgba(255,255,255,1) 40%, rgba(255,255,255,1) 40%, rgba(84,175,255,1) 46%, rgba(192,225,255,1) 100%);width:100%;
+    background: rgb(253,254,3);
+    background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 33%, rgba(253,254,3,1) 40%, rgba(84,175,255,1) 40%, rgba(192,225,255,1) 100%);/*-moz-box-shadow: 0px 4px 17px 0px rgba(0,0,0,.9);*/
 	/*box-shadow: 0px 4px 17px 0px rgba(0,0,0,.9);*/
     /*-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);*/
     /*-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);*/
@@ -1321,12 +1353,6 @@ input[type="submit"].button.black{
 .clear{
 	clear:both;
 }
-
-
-
-
-
-/** MODIFICATIONS **/
 
 
 #top-outer-container{
@@ -2317,10 +2343,8 @@ p{
     /*-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);*/
     /*-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);*/
     /*box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);*/
-}
-
-.feed-content-container:hover .delete-post{
-    color:#777;
+    background: rgb(249,249,249);
+    background: linear-gradient(160deg, rgba(249,249,249,1) 0%, rgba(249,249,249,1) 30%, rgba(255,255,255,1) 58%, rgba(255,255,255,1) 100%);
 }
 
 .post-admin-actions-wrapper,
@@ -2328,7 +2352,7 @@ p{
     bottom:20px;
     left:20px;
     width:149px;
-    color:#ddd;
+    color:#00444f;
     z-index:99;
     cursor:pointer;
     cursor:hand;
@@ -2344,15 +2368,13 @@ p{
 
 .post-admin-actions-wrapper:hover .post-admin-actions,
 .post-admin-actions:hover{
-    display:block;
 }
 
 .post-admin-actions{
     left:0px;
-    bottom:0px;
+    bottom:25px;
     position:absolute;
-    background:#fff;
-    display:none;
+    background:#0ad5fc;
     padding:0px 0px 0px 0px;
     -webkit-box-shadow: 1px 3px 12px 0px rgba(0,0,0,.17) !important;
     -moz-box-shadow: 1px 3px 12px 0px rgba(0,0,0,.17) !important;
@@ -2361,7 +2383,7 @@ p{
 
 .post-admin-actions a{
     font-size:14px;
-    color:#2b2b34;
+    color:#fff;
     padding:20px 40px 10px 20px;
     text-decoration:none;
     display:block;
@@ -2372,8 +2394,8 @@ p{
 }
 
 .post-admin-actions a:hover{
-    background:#f8f8f8;
-    color:#2b2b34;
+    background:#FDFE03;
+    color:#00444f !important;
 }
 
 .post-admin-actions a.delete-post{

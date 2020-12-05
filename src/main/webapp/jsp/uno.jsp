@@ -27,7 +27,7 @@
 
         <div style="text-align:right; margin-top:30px;">
             <input type="hidden" name="targetUri" value="${targetUri}" />
-            <input type="submit" class="button beauty-light" value="Signin" style="width:100%;">
+            <input type="submit" class="button retro" value="Signin" style="width:100%;">
         </div>
 
         <br/>
@@ -41,7 +41,7 @@
     <br class="clear"/>
 
 
-    <a href="${pageContext.request.contextPath}/signup" class="button retro large" style="display:block;">Sign Up !</a>
+    <a href="${pageContext.request.contextPath}/signup" class="button yella large" style="display:block;">Sign Up !</a>
 
 <%--    <a href="${pageContext.request.contextPath}/account/guest" class="button light large" style="display:block;margin-top:10px;margin-bottom:70px;">Check it Out !</a>--%>
 

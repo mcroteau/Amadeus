@@ -25,7 +25,7 @@
         </div>
 
 
-        <span id="express-it" class="information left-float yella" style="color:#000 !important;font-family:Roboto-Light !important;display:inline-block;vertical-align:bottom;margin-top:19px;">Expression!</span>
+        <span id="expressed" class="information left-float">Xpress</span>
 
         <br class="clear"/>
 
@@ -162,9 +162,9 @@
 
                     <video controls ng-if="post.videoFileUri" ng-src="/o/{{post.videoFileUri}}" style="width:100%" data-video-uri="{{post.videoFileUri}}"></video>
 
-                    <div ng-if="post.postEditable" ng-class="{'tight' : !post.imageFileUris && !post.videoFileUri}" style="white-space: pre-line;" class="post-comment" contenteditable="true" id="post-content-{{post.id}}" ng-bind-html="post.content"></div>
+                    <div ng-if="post.postEditable" style="white-space: pre-line;" class="post-comment" contenteditable="true" id="post-content-{{post.id}}" ng-bind-html="post.content"></div>
 
-                    <div ng-if="!post.postEditable" ng-class="{'tight' : !post.imageFileUris && !post.videoFileUri}" style="white-space: pre-line;" class="post-comment" ng-bind-html="post.content"></div>
+                    <div ng-if="!post.postEditable" style="white-space: pre-line;" class="post-comment" ng-bind-html="post.content"></div>
 
                 </div>
 
@@ -241,7 +241,7 @@
                             </a>
                             <div class="left-float" style="margin-left:10px;width:79%;">
                                 <p>
-                                    <a ng-href="#!/profile/{{comment.accountId}}" class="post-comment-whois" style="text-decoration:none; color:#222; font-family:Roboto-Bold !important">{{comment.accountName}}</a>
+                                    <a ng-href="#!/profile/{{comment.accountId}}" class="post-comment-whois" style="text-decoration:none; color:#17161b; font-family:Roboto-Bold !important">{{comment.accountName}}</a>
                                     <span class="comment-comment">{{comment.comment}}</span>
                                     <a ng-if="comment.commentDeletable" ng-click="deleteShareComment(comment.id)" href="javascript:" class="comment-delete href-dotted" style="display:none">Delete</a>
                                 </p>
@@ -286,8 +286,8 @@
                 </div>
             </div>
 
-            <div class="post-admin-actions-wrapper" ng-if="post.shared">&Xi;
-                <div class="post-admin-actions-inner" style="position:relative;">
+            <div ng-click="toggleActions($index)" class="post-admin-actions-wrapper" ng-if="post.shared">&Xi;
+                <div ng-show="showActions[$index]" class="post-admin-actions-inner" style="position:relative;">
                     <div class="post-admin-actions">
                         <a ng-click="unsharePost(post.postShareId)" ng-if="post.deletable"  href="javascript:" class="delete-post-share" data-id="{{post.postShareId}}">Delete Post</a>
                         <a ng-click="flagPost(post.id, true)" href="javascript:" class="flag-post" data-id="{{post.id}}" data-shared="true">Flag Post</a>
@@ -295,8 +295,8 @@
                     </div>
                 </div>
             </div>
-            <div class="post-admin-actions-wrapper" ng-if="!post.shared">&Xi;
-                <div class="post-admin-actions-inner" style="position:relative;">
+            <div ng-click="toggleActions($index)" class="post-admin-actions-wrapper" ng-if="!post.shared">&Xi;
+                <div ng-show="showActions[$index]"  class="post-admin-actions-inner" style="position:relative;">
                     <div class="post-admin-actions">
                         <a ng-click="deletePost(post.id)" ng-if="post.deletable" href="javascript:" class="delete-post" data-id="{{post.id}}">Delete Post</a>
                         <a ng-click="flagPost(post.id, false)" href="javascript:" class="flag-post" data-id="{{post.id}}" data-shared="false">Flag Post</a>
