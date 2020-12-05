@@ -160,8 +160,8 @@
                                 <div class="like-actions-count-container">
                                     <span class="actions-count like-container-{{post.id}}" id="likes-{{post.id}}" ng-bind="post.likes"></span> <span class="actions-label">Likes</span>
                                 </div>
-                                <svg ng-click="likePost(post.id)" ng-class="{'liked': post.liked}" class="thunder like-button">
-                                    <use xlink:href="#amadeus-icon" data-id="{{id}}"/>
+                                <svg ng-click="likePost(post.id)" ng-class="{'liked': post.liked}" class="thunder like-button" id="post-like-{{post.id}}">
+                                    <use xlink:href="#amadeus-icon" />
                                 </svg>
                             </div>
 

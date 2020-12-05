@@ -3,12 +3,11 @@
 
     <div id="post-right">
 
-        <a ng-click="toggleNotifications()"href="javascript:" class="navigation-href float-right" id="notifications-href" style="margin-top:0px;margin-bottom:10px;">N<span id="notifications-count">{{data.notificationsCount}}</span></a>
+        <a ng-click="toggleNotifications()" href="javascript:" class="navigation-href float-right" id="notifications-href" style="margin-top:0px;margin-bottom:10px;">N<span id="notifications-count">{{data.notificationsCount}}</span></a>
 
         <div ng-show="showNotifications" id="notifications-outer-container" class="main-shadow">
 
-            <a ng-click="clearNotifications()" href="javascript:" id="clear-notifications" class="right-float href-dotted-light" style="margin-bottom:10px; margin-right:10px;" data-id="${sessionScope.account.id}">Clear</a>
-            <br class="clear"/>
+            <a ng-click="clearNotifications()" ng-if="data.notifications.length > 0"  href="javascript:" id="clear-notifications" class="right-float href-dotted-light" style="margin-bottom:10px; margin-right:10px;" data-id="${sessionScope.account.id}">Clear</a>
 
             <div class="notification" ng-controller="mixController" ng-repeat="notification in data.notifications">
 
@@ -22,9 +21,7 @@
 
             </div>
 
-            <div id="notifications-container">
-                <p ng-if="notifications.length == 0">No new notifications</p>
-            </div>
+            <div class="notification"><a href="javascript:"><span ng-if="data.notifications.length == 0">No new notifications</span></a></div>
         </div>
 
 
