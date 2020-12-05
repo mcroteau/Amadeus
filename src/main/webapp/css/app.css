@@ -2740,6 +2740,13 @@ p span{
     border-bottom:dotted 2px #68bbff !important;
 }
 
+
+.href-dotted-black{
+    color: #17161b !important;
+    text-decoration: none !important;
+    border-bottom:dotted 2px #17161b !important;
+}
+
 .black{
     font-family: Roboto-Black !important;
 }

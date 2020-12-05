@@ -27,6 +27,8 @@
             background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 50%, rgba(84,175,255,1) 100%);
             background: rgb(253,254,3);
             background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 13%, rgba(253,254,3,1) 20%, rgba(84,175,255,1) 20%, rgba(192,225,255,1) 100%) !important;/*-moz-box-shadow: 0px 4px 17px 0px rgba(0,0,0,.9);*/
+            background: rgb(192,225,255);
+            background: linear-gradient(36deg, rgba(192,225,255,1) 0%, rgba(84,175,255,1) 15%, rgba(253,254,3,1) 15%, rgba(253,254,3,1) 90%, rgba(84,175,255,1) 90%, rgba(192,225,255,1) 100%) !important;
         }
 
         #guest-content-left{
@@ -194,7 +196,7 @@
 
                 <p>Why should there be many to rule social
                     media when there is <strong>Amadeus</strong> to
-                    Rock Me Amadeus. <a href="${pageContext.request.contextPath}/signup" class="href-dotted-yella">Signup!</a></p>
+                    Rock Me Amadeus. <a href="${pageContext.request.contextPath}/signup" class="href-dotted-black">Signup!</a></p>
 
             </div>
 
