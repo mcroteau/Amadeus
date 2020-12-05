@@ -410,6 +410,8 @@
             }).then(function(resp){
                 $scope.whatsup.value = ''
                 $scope.beautiful = $scope.beautiful ? false : true
+                console.log(resp.data)
+                resp.data.published = true
                 $scope.activities.unshift(resp.data)
                 // $window.location.reload()
                 $timeout(function(){
@@ -601,10 +603,21 @@
                 url: '/o/post/update/' + id,
                 data: fd,
                 headers: {'Content-Type': undefined},
-            }).then($route.reload)
+            }).then(function(response){
+                $scope.maintainView($scope.memory, response.data.id)
+                $scope.maintainView($scope.activities, response.data.id)
+            })
+        }
+
+        $scope.maintainView = function(list, id){
+            angular.forEach(list, function(activity){
+                if(activity.id == id) activity.published = true
+            })
         }
 
     });
+
+
 
 
     app.controller('profileController', function($scope, $http, $route, $timeout, dataService) {

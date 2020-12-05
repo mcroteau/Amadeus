@@ -1260,7 +1260,7 @@ public class PostController extends BaseController {
 			post.setUpdateDate(date);
 
 			postDao.update(post);
-			resp.put("success", true);
+			resp.put("post", post);
 		}else{
 			resp.put("error", true);
 		}

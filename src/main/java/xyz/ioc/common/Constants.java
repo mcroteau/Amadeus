@@ -2,12 +2,13 @@ package xyz.ioc.common;
 
 public class Constants {
 
-	public static int TRUE = 1;
-	public static int FALSE = 0;
-
-	public static final String AMADEUS_GROUP = "Amadeus";
-	public static final String PUBLISHING_JOB_NAME = "AmadeusPublishing";
+	public static final String AMADEUS_GROUP          = "Amadeus";
+	public static final String PUBLISHING_JOB_NAME    = "AmadeusPublishing";
 	public static final String PUBLISHING_JOB_TRIGGER = "AmadeusPublishingTrigger";
+
+	public static final int DURATION_DIFFERENCE  = 1000 * 60 * 3;
+	public static final int PUBLISH_JOB_DURATION = 60 * 5;
+	public static final String POSTS_DAO_KEY     = "PostsDao";
 
 	public static final String PASSWORD = "password";
 	public static final String ADMIN_USERNAME = "croteau.mike@gmail.com";

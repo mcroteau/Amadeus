@@ -349,6 +349,7 @@ public class Utilities {
 	}
 
 
+
 	public long getCurrentDate() {
         Calendar cal = Calendar.getInstance();
         long date = getDateFormatted(cal);

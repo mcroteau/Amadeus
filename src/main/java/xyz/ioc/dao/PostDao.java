@@ -2,6 +2,7 @@ package xyz.ioc.dao;
 
 import java.util.List;
 
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import xyz.ioc.model.*;
 
 public interface PostDao {
@@ -21,6 +22,10 @@ public interface PostDao {
 	public Post save(Post post);
 
 	public boolean update(Post post);
+
+	public boolean publish(long id);
+
+	public List<Post> getUnpublished();
 
 	public boolean hide(long id);
 

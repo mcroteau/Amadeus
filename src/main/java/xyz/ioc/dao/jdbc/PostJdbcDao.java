@@ -114,7 +114,7 @@ public class PostJdbcDao implements PostDao {
 					"a.image_uri, a.name, a.username from " +
 						"posts p inner join account a on p.account_id = a.id " +
 							"where account_id in (" + idsString + ") " +
-								"and p.date_posted between " + start + " and " + end + " order by p.date_posted desc";
+								"and p.date_posted between " + start + " and " + end + " and published = true order by p.date_posted desc";
 
 		List<Post> feed = jdbcTemplate.query(sql, new BeanPropertyRowMapper<Post>(Post.class));
 
@@ -185,9 +185,9 @@ public class PostJdbcDao implements PostDao {
 		return true;
 	}
 
-	public List<Post> getUnpublished(long date) {
-		String sql = "select * from posts where published = false and update_date > ?";
-		List<Post> posts = jdbcTemplate.query(sql, new Object[]{ date }, new BeanPropertyRowMapper<Post>(Post.class));
+	public List<Post> getUnpublished() {
+		String sql = "select * from posts where published = false";
+		List<Post> posts = jdbcTemplate.query(sql, new Object[]{ }, new BeanPropertyRowMapper<Post>(Post.class));
 		return posts;
 	}
 

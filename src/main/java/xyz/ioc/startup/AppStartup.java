@@ -111,12 +111,14 @@ public class AppStartup implements ApplicationListener<ContextRefreshedEvent>{
 			JobDetail job = JobBuilder.newJob(PublishJob.class)
 					.withIdentity(Constants.PUBLISHING_JOB_NAME, Constants.AMADEUS_GROUP).build();
 
+			job.getJobDataMap().put(Constants.POSTS_DAO_KEY, postDao);
+
 			Trigger trigger = TriggerBuilder
 					.newTrigger()
 					.withIdentity(Constants.PUBLISHING_JOB_TRIGGER, Constants.AMADEUS_GROUP)
 					.withSchedule(
 							SimpleScheduleBuilder.simpleSchedule()
-									.withIntervalInSeconds(5).repeatForever())
+									.withIntervalInSeconds(Constants.PUBLISH_JOB_DURATION).repeatForever())
 					.build();
 
 			Scheduler scheduler = new StdSchedulerFactory().getScheduler();
