@@ -2498,7 +2498,7 @@ p{
 #notifications-container p{
     color:#fff;
     display:block;
-    font-size:19px;
+    font-size:17px;
     text-decoration:none;
     padding:10px 20px;
     text-align: left;
@@ -2508,10 +2508,13 @@ p{
     padding: 0px;
 }
 
-.notification a:hover{
+.notification a:hover,
+.notification a:hover span{
     color:#fff !important;
     background:#D954A0;
     background:#e861ad;
+    background: #FDFE03;
+    color:#00444f !important;
 }
 
 #notifications-container p{
@@ -3091,7 +3094,7 @@ textarea{
 
 #profile-picture-actions-container{
     right:37px;
-    width:149px;
+    width:139px;
     margin-top:58px;
     position:absolute;
     color:#fff;
@@ -3117,11 +3120,15 @@ textarea{
     color:#fff;
 }
 
-#profile-picture-actions-container a:hover{
+#profile-picture-actions-container a:hover,
+#profile-picture-actions-container a:hover span{
     background:#f8f8f8;
     background:#fb60a3;
     background:#f4f400;
     background:#0199B6;
+    background:#d953a0;;
+    background:#FDFE03;
+    color:#00444f;
 }
 
 #profile-picture-actions-container span{

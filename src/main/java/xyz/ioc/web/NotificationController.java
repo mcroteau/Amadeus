@@ -47,12 +47,11 @@ public class NotificationController extends BaseController {
             return gson.toJson(data);
         }
 
-        Account account = getAuthenticatedAccount();
+        Account authenticatedAccount = getAuthenticatedAccount();
 
-        if(notificationDao.clearNotifications(account.getId())){
+        if(notificationDao.clearNotifications(authenticatedAccount.getId())){
             data.put("success", true);
-        }
-        else{
+        }else{
             data.put("error", true);
         }
 

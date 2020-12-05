@@ -485,7 +485,11 @@
         }
 
         $scope.clearNotifications = function(){
-            $http.delete('/o/notifications/clear').then($route.reload)
+            $http.delete('/o/notifications/clear').then(function(response){
+                console.log(response)
+            }).catch(function(error){
+                console.log(error)
+            })
         }
 
         document.querySelector("#whatsup").focus()
