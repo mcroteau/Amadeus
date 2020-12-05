@@ -193,7 +193,7 @@
                             <a ng-click="toggleShare($index)" href="javascript:" class="share-button" data-id="{{id}}"><img ng-src="/o/images/share.png" style="width:32px;" data-id="{{id}}"/></a>
                         </div>
                     </div>
-                    <div ng-if="!post.shared" class="share-container float-left">
+                    <div ng-if="!post.shared && !post.postEditable" class="share-container float-left">
                         <div>
                             <div class="share-actions-count-container">
                                 <span class="actions-count">{{post.shares}} </span>

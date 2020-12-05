@@ -467,6 +467,7 @@ input[type="password"]::placeholder {
 	width:399px;
 	width:447px;
     width:392px;
+    width:363px;
 	height:45px;
     height:49px;
 	line-height:1.0;
@@ -831,6 +832,7 @@ input[type="submit"]#search-button,
 	width:485px;
 	width:530px;
 	width:490px;
+    width:465px;
     height:auto;
 }
 
@@ -1328,6 +1330,8 @@ input[type="submit"].button.black{
     width:848px;
     width:860px;
     width:825px;
+    width:800px;
+    margin-top:5px;
 }
 
 #no-activity-discovered{
@@ -2165,6 +2169,11 @@ p{
     width:40px;
     float:left;
 }
+.shared-post-whois img{
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+}
 .shared-comment-container{
     margin-left:47px;
     margin-top:10px;
@@ -2518,11 +2527,11 @@ p{
     text-decoration:none;
 }
 .profile-image-posted{
-    height:55px !important;
-    width:55px !important;
-	border-radius: 31px;
-	-moz-border-radius: 31px;
-	-webkit-border-radius: 31px;
+    height:67px !important;
+    width:67px !important;
+	border-radius: 34px;
+	-moz-border-radius: 34px;
+	-webkit-border-radius: 34px;
 }
 .activity-status{
     height:12px;
@@ -2585,6 +2594,10 @@ input[type="reset"].button.small,
 input[type="submit"].button.small{
     font-size: 10px;
     padding: 10px 16px !important;
+}
+
+.button.tiny{
+    padding: 2px 3px
 }
 
 strong{
@@ -2774,7 +2787,7 @@ a:hover{
 }
 #profile-posts-container{
     float:right;
-    width:490px;
+    width:465px;
 }
 #profile-profile-image{
     padding: 5px;
@@ -3686,7 +3699,7 @@ h1.gray span{
 #navigation-container{
     position:absolute;
     top:0px;
-    left:1046px;
+    left:1023px;
 }
 
 #posts-fellows-fems-container{

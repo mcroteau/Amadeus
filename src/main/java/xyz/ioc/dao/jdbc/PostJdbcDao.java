@@ -148,7 +148,7 @@ public class PostJdbcDao implements PostDao {
 
 	@Override
 	public List<Post> fetchUserPosts(long accountId) {
-		String sql = "select p.id, p.account_id, p.content, p.date_posted, p.image_file_uri, p.music_file_uri, p.video_file_uri, p.hidden, p.flagged, " +
+		String sql = "select p.id, p.account_id, p.content, p.date_posted, p.image_file_uri, p.music_file_uri, p.video_file_uri, p.hidden, p.flagged, p.published, " +
 				"a.image_uri, a.name, a.username from " +
 				"posts p inner join account a on p.account_id = a.id " +
 				"where account_id = ? order by p.date_posted desc";

@@ -1204,6 +1204,26 @@ public class PostController extends BaseController {
 		return gson.toJson(response);
 	}
 
+	@RequestMapping(value="/post/publish/{id}", method=RequestMethod.POST)
+	public @ResponseBody String publish(ModelMap model,
+									   @PathVariable String id) {
+
+		Gson gson = new Gson();
+		Map<String, Object> resp = new HashMap<String, Object>();
+
+		if (!authenticated()) {
+			resp.put("error", "authentication required");
+			return gson.toJson(resp);
+		}
+
+		if (hasPermission(Constants.POST_MAINTENANCE + id)) {
+			postDao.publish(Long.parseLong(id));
+			resp.put("success", true);
+		}else{
+			resp.put("error", "permission required");
+		}
+		return gson.toJson(resp);
+	}
 
 	@RequestMapping(value="/post/update/{id}", method=RequestMethod.POST)
 	public @ResponseBody String update(ModelMap model,

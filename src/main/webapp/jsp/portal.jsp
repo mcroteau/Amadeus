@@ -408,15 +408,7 @@
                 data: fd,
                 headers: {'Content-Type': undefined},
             }).then(function(resp){
-                $scope.whatsup.value = ''
-                $scope.beautiful = $scope.beautiful ? false : true
-                console.log(resp.data)
-                resp.data.published = true
-                $scope.activities.unshift(resp.data)
-                // $window.location.reload()
-                $timeout(function(){
-                    $scope.beautiful = $scope.beautiful ? false : true
-                }, 1300)
+                $location.path("/profile/${sessionScope.account.id}")
             })
         }
 
@@ -481,7 +473,13 @@
         $scope.pageClass = 'page-contact';
     });
 
-    app.controller('mixController', function($scope, $sce, $route, $http, $location, $anchorScroll, activityModel, dataService){
+    app.controller('mixController', function($scope, $sce, $route, $http, $location, $window, $anchorScroll, activityModel, dataService){
+
+        $scope.makeLive = function(id){
+            $http.post("/o/post/publish/" + id).then(function(){
+                $location.path("/")
+            });
+        }
 
         $scope.navigatePost = function(id){
             $location.hash('post-' + id);
@@ -527,20 +525,23 @@
 
         $scope.unsharePost = function(shareId){
             var confirmed = confirm("Are you sure you want to unshare this post?")
-            if(confirmed)
+            if(confirmed) {
                 $http.delete("/o/post/unshare/" + shareId).then($route.reload);
+            }
         }
 
         $scope.flagPost = function(id, shared){
             var confirmed = confirm("Are you sure you want to flag this post?")
-            if(confirmed)
+            if(confirmed) {
                 $http.post("/o/post/flag/" + id + "/" + shared).then($route.reload);
+            }
         }
 
         $scope.hidePost = function(id){
             var confirmed = confirm("Are you sure you want to hide this post?")
-            if(confirmed)
+            if(confirmed) {
                 $http.post("/o/post/hide/" + id).then($route.reload);
+            }
         }
 
         $scope.saveComment = function(id){
