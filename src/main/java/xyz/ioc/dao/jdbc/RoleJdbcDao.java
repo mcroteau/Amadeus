@@ -12,7 +12,7 @@ import xyz.ioc.dao.RoleDao;
 import xyz.ioc.model.Role;
 
 
-public class RoleDaoJdbc implements RoleDao {
+public class RoleJdbcDao implements RoleDao {
 	
 	
 	@Autowired

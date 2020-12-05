@@ -17,7 +17,7 @@ import xyz.ioc.dao.FriendDao;
 import xyz.ioc.dao.PostDao;
 
 
-public class PostDaoJdbc implements PostDao {
+public class PostJdbcDao implements PostDao {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -160,9 +160,9 @@ public class PostDaoJdbc implements PostDao {
 
 
 	public Post save(Post post){
-		String sql = "insert into posts (account_id, content, video_file_uri, date_posted, hidden, flagged ) values ( ?, ?, ?, ?, ?, ? )";
+		String sql = "insert into posts (account_id, content, video_file_uri, date_posted, update_date, hidden, flagged, published ) values ( ?, ?, ?, ?, ?, ?, ?, ? )";
 		jdbcTemplate.update(sql, new Object[] { 
-			post.getAccountId(), post.getContent(), post.getVideoFileUri(), post.getDatePosted(), post.isHidden(), false
+			post.getAccountId(), post.getContent(), post.getVideoFileUri(), post.getDatePosted(), post.getUpdateDate(), post.isHidden(), false, false
 		});
 		long id = id();
 		Post savedPost = get(id);
@@ -172,11 +172,23 @@ public class PostDaoJdbc implements PostDao {
 
 
 	public boolean update(Post post) {
-		String sql = "update posts set content = ? where id = ?";
+		String sql = "update posts set content = ?, update_date = ? where id = ?";
 		jdbcTemplate.update(sql, new Object[] {
-			post.getContent(), post.getId()
+			post.getContent(), post.getUpdateDate(), post.getId()
 		});
 		return true;
+	}
+
+	public boolean publish(long id) {
+		String sql = "update posts set published = true where id = ?";
+		jdbcTemplate.update(sql, new Object[] { id });
+		return true;
+	}
+
+	public List<Post> getUnpublished(long date) {
+		String sql = "select * from posts where published = false and update_date > ?";
+		List<Post> posts = jdbcTemplate.query(sql, new Object[]{ date }, new BeanPropertyRowMapper<Post>(Post.class));
+		return posts;
 	}
 
 	public boolean hide(long id){

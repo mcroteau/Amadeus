@@ -14,7 +14,7 @@ import xyz.ioc.model.MusicFile;
 import xyz.ioc.dao.MusicDao;
 
 
-public class MusicDaoJdbc implements MusicDao {
+public class MusicJdbcDao implements MusicDao {
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;

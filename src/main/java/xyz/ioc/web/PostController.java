@@ -615,9 +615,9 @@ public class PostController extends BaseController {
 			}
 		}
 
-
-		long datePosted = utilities.getCurrentDate();
-		post.setDatePosted(datePosted);
+		long date = utilities.getCurrentDate();
+		post.setDatePosted(date);
+		post.setUpdateDate(date);
 
 		if(imageUris.size() == 0 && 
 				(post.getVideoFileUri() == null || post.getVideoFileUri().equals("")) && 
@@ -634,7 +634,7 @@ public class PostController extends BaseController {
 			PostImage postImage = new PostImage();
 			postImage.setPostId(savedPost.getId());
 			postImage.setUri(imageUri);
-			postImage.setDate(datePosted);
+			postImage.setDate(date);
 			postDao.saveImage(postImage);
 		}
 		savedPost.setImageFileUris(imageUris);
@@ -1255,6 +1255,9 @@ public class PostController extends BaseController {
 					post.setContent(post.getContent().replace(bad, embed));
 				}
 			}
+
+			long date = utilities.getCurrentDate();
+			post.setUpdateDate(date);
 
 			postDao.update(post);
 			resp.put("success", true);

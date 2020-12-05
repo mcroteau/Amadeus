@@ -16,43 +16,43 @@ public class Post {
 
 	Account account;
 
-	private long likes;
+	long likes;
 
-	private boolean liked;
+	boolean liked;
 
-	private long shares;
+	long shares;
 
-	private boolean shared;
+	boolean shared;
 
-	private long sharedAccountId;
+	long sharedAccountId;
 
-	private String sharedComment;
+	String sharedComment;
 
-	private String sharedAccount;
+	String sharedAccount;
 
-	private String timeSharedAgo;
+	String timeSharedAgo;
 
-	private String imageUri;
+	String imageUri;
 
-	private String name;
+	String name;
 
-	private String username;
+	String username;
 
-	private String sharedImageUri;
+	String sharedImageUri;
 
-	private List<String> imageFileUris;
+	List<String> imageFileUris;
 
-	private List<String> musicFileUris;
+	List<String> musicFileUris;
 
-	private String musicFileUri;
+	String musicFileUri;
 
-    private String videoFileUri;
+    String videoFileUri;
 
-    private String status;
+    String status;
 
-	private List<PostComment> comments;
+	List<PostComment> comments;
 
-	private List<PostShareComment> shareComments;
+	List<PostShareComment> shareComments;
 
 	boolean deletable;
 
@@ -69,6 +69,10 @@ public class Post {
 	boolean postEditable;
 
 	boolean advertisment;
+
+	boolean published;
+
+	long updateDate;
 
 
 	public long getId(){
@@ -315,6 +319,22 @@ public class Post {
 
 	public void setAdvertisment(boolean advertisment) {
 		this.advertisment = advertisment;
+	}
+
+	public boolean isPublished() {
+		return published;
+	}
+
+	public void setPublished(boolean published) {
+		this.published = published;
+	}
+
+	public long getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(long updateDate) {
+		this.updateDate = updateDate;
 	}
 
 }

@@ -10,9 +10,9 @@ import xyz.ioc.model.Notification;
 
 import java.util.List;
 
-public class NotificationDaoJdbc implements NotificationDao {
+public class NotificationJdbcDao implements NotificationDao {
 
-    private static final Logger log = Logger.getLogger(NotificationDaoJdbc.class);
+    private static final Logger log = Logger.getLogger(NotificationJdbcDao.class);
 
     @Autowired
     public JdbcTemplate jdbcTemplate;

@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class MessageDaoJdbc implements MessageDao {
+public class MessageJdbcDao implements MessageDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

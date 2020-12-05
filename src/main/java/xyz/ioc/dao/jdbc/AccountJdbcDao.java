@@ -18,9 +18,9 @@ import xyz.ioc.dao.RoleDao;
 import xyz.ioc.model.*;
 
 
-public class AccountDaoJdbc implements AccountDao {
+public class AccountJdbcDao implements AccountDao {
 
-	private static final Logger log = Logger.getLogger(AccountDaoJdbc.class);
+	private static final Logger log = Logger.getLogger(AccountJdbcDao.class);
 
 	@Autowired
 	private RoleDao roleDao;

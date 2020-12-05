@@ -9,7 +9,7 @@ import xyz.ioc.model.*;
 
 import java.util.List;
 
-public class ResourceDaoJdbc implements ResourceDao {
+public class ResourceJdbcDao implements ResourceDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

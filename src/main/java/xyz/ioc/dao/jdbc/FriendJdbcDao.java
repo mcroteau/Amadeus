@@ -14,7 +14,7 @@ import xyz.ioc.model.AccountMusic;
 import xyz.ioc.model.Friend;
 import xyz.ioc.model.FriendInvite;
 
-public class FriendDaoJdbc implements FriendDao {
+public class FriendJdbcDao implements FriendDao {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
