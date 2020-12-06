@@ -129,7 +129,7 @@ public class FlyerController extends BaseController {
         return "flyer/live";
     }
 
-    @RequestMapping(value="/flyer/update/{id}", method=RequestMethod.POST)
+    @RequestMapping(value="/flyer/update", method=RequestMethod.POST)
     public String update(@ModelAttribute("flyer") Flyer flyer,
                          HttpServletRequest request,
                          final RedirectAttributes redirect,
@@ -145,7 +145,7 @@ public class FlyerController extends BaseController {
             return "redirect:/unauthorized";
         }
 
-        return "redirect:/flyer/edit/" + id;
+        return "redirect:/flyer/edit/" + flyer.getId();
     }
 
     @RequestMapping(value="/admin/flyer/list", method=RequestMethod.GET)

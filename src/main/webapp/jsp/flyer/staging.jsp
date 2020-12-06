@@ -4,10 +4,19 @@
         -webkit-border-radius: 4px;
         -moz-border-radius: 4px;
         border-radius: 4px;
+        margin-top:20px;
+        padding:20px;
+        border:solid 1px #ddd
+    }
+    p{
+        line-height: 1.4em;
+        text-align: center;
     }
 </style>
 
-<h1>Go Live</h1>
+<h1 style="text-align: center">Go Live</h1>
+
+<p>Your ad for <strong class="yella">${flyer.pageUri}</strong> will run<br/>for <strong class="yella">7</strong> days at a cost of <strong class="yella">$40</strong>.</p>
 
 <div id="start-ad-container">
     <div id="credit-card"></div>
@@ -19,7 +28,8 @@
     <input type="hidden" name="stripeToken" id="stripe-token" value=""/>
 </form>
 
-<button id="start">Go Live!</button>
+<button id="start" class="button retro right-float" style="margin-top:20px;display:inline-block;">Pay $40</button>
+<br class="clear"/>
 
 <script src="https://js.stripe.com/v3/"></script>
 <script type="text/javascript">

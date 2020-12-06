@@ -1,8 +1,12 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <h1>Ad #${flyer.id}</h1>
 
 <div id="form-container">
 
-    <form action="/o/flyer/update/${flyer.id}" modelAttribute="flyer" method="post" enctype="multipart/form-data">
+    <form action="/o/flyer/update" modelAttribute="flyer" method="post" enctype="multipart/form-data">
+
+        <input type="hidden" name="id" value="${flyer.id}"/>
 
         <div class="form-row">
             <img src="/o/${flyer.imageUri}" style="width:300px;"/>
@@ -21,9 +25,15 @@
             <textarea name="description" placeholder="Describe your web page in detail, leave an email and a phone number as well to help potential customers reach you">Some description</textarea>
         </div>
 
-        <input type="submit" value="Update Ad" class="button retro"/>&nbsp;
+        <br class="clear"/>
 
-        <a href="/o/flyer/staging/${flyer.id}" class="button beauty-light">Pay Go Live</a>
+        <input type="submit" value="Update Ad" class="button retro left-float"/>&nbsp;
+
+        <c:if test="${!flyer.active}">
+            <a href="/o/flyer/staging/${flyer.id}" class="button yella right-float">Pay Go Live</a>
+        </c:if>
+
+        <br class="clear"/>
 
     </form>
 

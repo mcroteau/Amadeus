@@ -33,7 +33,7 @@
         }
         textarea{
             height:170px;
-            width:501px;
+            width:100%;
         }
         textarea{
             color: #17161b;
@@ -58,6 +58,9 @@
         #form-action-container{
             margin-top:30px;
             text-align: right;
+        }
+        #content-container{
+            width:470px;
         }
     </style>
 
