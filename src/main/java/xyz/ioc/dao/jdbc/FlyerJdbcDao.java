@@ -51,7 +51,7 @@ public class FlyerJdbcDao implements FlyerDao {
 
     @Override
     public boolean update(Flyer flyer) {
-        String sql = "update flyers set image_uri = ?, page_uri = ?, desciption = ?, start_date = ?, active = ? where id = ?";
+        String sql = "update flyers set image_uri = ?, page_uri = ?, description = ?, start_date = ?, active = ? where id = ?";
         try {
             jdbcTemplate.update(sql, new Object[]{ flyer.getImageUri(), flyer.getPageUri(), flyer.getDescription(), flyer.getStartDate(), flyer.isActive(), flyer.getId()});
         }catch(Exception e){

@@ -1,5 +1,6 @@
 package xyz.ioc.web;
 
+import com.stripe.model.Charge;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -12,6 +13,7 @@ import xyz.ioc.dao.AccountDao;
 import xyz.ioc.dao.FlyerDao;
 import xyz.ioc.model.Account;
 import xyz.ioc.model.Flyer;
+import xyz.ioc.service.StripeService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -27,6 +29,10 @@ public class FlyerController extends BaseController {
 
     @Autowired
     private AccountDao accountDao;
+
+    @Autowired
+    private StripeService stripeService;
+
 
     @RequestMapping(value="/flyer/create", method=RequestMethod.GET)
     public String create(){
@@ -57,6 +63,20 @@ public class FlyerController extends BaseController {
         return "redirect:/flyer/edit/" + persistedFlyer.getId();
     }
 
+
+    @RequestMapping(value="/flyer/staging/{id}", method=RequestMethod.GET)
+    public String staging(ModelMap modelMap, @PathVariable String id){
+
+        if(hasPermission(Constants.FLYER_MAINTENANCE + id)) {
+            Flyer flyer = flyerDao.get(Long.parseLong(id));
+            modelMap.put("flyer", flyer);
+        }else{
+            return "redirect:/unauthorized";
+        }
+
+        return "flyer/staging";
+    }
+
     @RequestMapping(value="/flyer/edit/{id}", method=RequestMethod.GET)
     public String edit(ModelMap modelMap, @PathVariable String id){
 
@@ -68,6 +88,47 @@ public class FlyerController extends BaseController {
         }
 
         return "flyer/edit";
+    }
+
+
+    @RequestMapping(value="/flyer/start", method=RequestMethod.POST)
+    public String start(ModelMap modelMap,
+                         @ModelAttribute("flyer") Flyer flyer,
+                         @RequestParam(value="id") String id,
+                         @RequestParam(value="stripeToken") String stripeToken){
+
+        if(hasPermission(Constants.FLYER_MAINTENANCE + id)) {
+
+            Account authenticatedAccount = getAuthenticatedAccount();
+
+            long date = utilities.getCurrentDate();
+
+            flyer.setStartDate(date);
+            flyer.setActive(true);
+            flyerDao.update(flyer);
+
+            stripeService.charge(40, stripeToken, authenticatedAccount.getUsername());
+
+            modelMap.put("flyer", flyer);
+        }else{
+            return "redirect:/unauthorized";
+        }
+
+        return "redirect:/flyer/live/" + id;
+    }
+
+
+    @RequestMapping(value="/flyer/live/{id}", method=RequestMethod.GET)
+    public String live(ModelMap modelMap, @PathVariable String id){
+
+        if(hasPermission(Constants.FLYER_MAINTENANCE + id)) {
+            Flyer flyer = flyerDao.get(Long.parseLong(id));
+            modelMap.put("flyer", flyer);
+        }else{
+            return "redirect:/unauthorized";
+        }
+
+        return "flyer/live";
     }
 
     @RequestMapping(value="/flyer/update/{id}", method=RequestMethod.POST)
