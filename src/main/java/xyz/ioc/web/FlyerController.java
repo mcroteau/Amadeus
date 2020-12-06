@@ -53,7 +53,7 @@ public class FlyerController extends BaseController {
             String imageUri = utilities.write(flyerImage, Constants.IMAGE_DIRECTORY);
             flyer.setImageUri(imageUri);
         }
-        
+
         Account authenticatedAccount = getAuthenticatedAccount();
         flyer.setAccountId(authenticatedAccount.getId());
 

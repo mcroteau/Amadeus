@@ -77,7 +77,6 @@ public class Post {
 	String advertisementUri;
 
 
-
 	public long getId(){
 		return id;
 	}
@@ -347,4 +346,5 @@ public class Post {
 	public void setAdvertisementUri(String advertisementUri) {
 		this.advertisementUri = advertisementUri;
 	}
+
 }

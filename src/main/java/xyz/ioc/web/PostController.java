@@ -68,14 +68,15 @@ public class PostController extends BaseController {
 	@Autowired
 	private SessionManager sessionManager;
 
-//	@Autowired
-//	private DefaultWebSecurityManager securityManager;
-
 	@Autowired
 	private NotificationDao notificationDao;
 
 	@Autowired
+	private FlyerDao flyerDao;
+
+	@Autowired
 	private EmailService emailService;
+
 
 
 	//Germany is trying to get us all into one big group and use corporate espionage, so I don't need help right now.
@@ -179,6 +180,24 @@ public class PostController extends BaseController {
 				if(!post.isHidden() && !post.isFlagged()){
 					finalFeed.add(post);
 				}
+			}
+
+			int count = 0;
+			Random rand = new Random();
+			List<Flyer> flyers = flyerDao.getActiveFlyers();
+			for(Flyer flyer: flyers){
+				Post post = new Post();
+				List<String> imageUris = new ArrayList<String>();
+				imageUris.add(flyer.getImageUri());
+				post.setImageFileUris(imageUris);
+				post.setAdvertisementUri(flyer.getPageUri());
+				post.setAdvertisment(true);
+				int idx = rand.nextInt(finalFeed.size());
+				finalFeed.add(idx, post);
+				if(count == 3){
+					break;
+				}
+				count++;
 			}
 
 
