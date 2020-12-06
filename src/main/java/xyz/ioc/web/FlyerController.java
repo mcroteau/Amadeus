@@ -53,7 +53,7 @@ public class FlyerController extends BaseController {
             String imageUri = utilities.write(flyerImage, Constants.IMAGE_DIRECTORY);
             flyer.setImageUri(imageUri);
         }
-        System.out.println("flyer" + flyer.getPageUri());
+        
         Account authenticatedAccount = getAuthenticatedAccount();
         flyer.setAccountId(authenticatedAccount.getId());
 
@@ -93,7 +93,6 @@ public class FlyerController extends BaseController {
 
     @RequestMapping(value="/flyer/start", method=RequestMethod.POST)
     public String start(ModelMap modelMap,
-                         @ModelAttribute("flyer") Flyer flyer,
                          @RequestParam(value="id") String id,
                          @RequestParam(value="stripeToken") String stripeToken){
 
@@ -102,6 +101,7 @@ public class FlyerController extends BaseController {
             Account authenticatedAccount = getAuthenticatedAccount();
             long date = utilities.getCurrentDate();
 
+            Flyer flyer = flyerDao.get(Long.parseLong(id));
             flyer.setStartDate(date);
             flyer.setActive(true);
             flyerDao.update(flyer);

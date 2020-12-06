@@ -9,8 +9,11 @@
         <input type="hidden" name="id" value="${flyer.id}"/>
         <input type="hidden" name="imageUri" value="${flyer.imageUri}"/>
 
+
         <div class="form-row">
-            <img src="/o/${flyer.imageUri}" style="width:300px;"/>
+            <c:if test="${not empty flyer.imageUri}">
+                <img src="/o/${flyer.imageUri}" style="width:300px;"/>
+            </c:if>
             <label>Pick Image</label>
             <input type="file" name="flyerImage"/>
             <p class="information">This will be the main entry point to your web page</p>

@@ -68,11 +68,14 @@ public class Post {
 
 	boolean postEditable;
 
-	boolean advertisment;
-
 	boolean published;
 
 	long updateDate;
+
+	boolean advertisment;
+
+	String advertisementUri;
+
 
 
 	public long getId(){
@@ -313,14 +316,6 @@ public class Post {
 		this.postEditable = postEditable;
 	}
 
-	public boolean isAdvertisment() {
-		return advertisment;
-	}
-
-	public void setAdvertisment(boolean advertisment) {
-		this.advertisment = advertisment;
-	}
-
 	public boolean isPublished() {
 		return published;
 	}
@@ -337,4 +332,19 @@ public class Post {
 		this.updateDate = updateDate;
 	}
 
+	public boolean isAdvertisment() {
+		return advertisment;
+	}
+
+	public void setAdvertisment(boolean advertisment) {
+		this.advertisment = advertisment;
+	}
+
+	public String getAdvertisementUri() {
+		return advertisementUri;
+	}
+
+	public void setAdvertisementUri(String advertisementUri) {
+		this.advertisementUri = advertisementUri;
+	}
 }
