@@ -12,24 +12,31 @@
         line-height: 1.4em;
         text-align: center;
     }
+    #staging-wrapper{
+        text-align: center;
+    }
 </style>
 
-<h1 style="text-align: center">Go Live</h1>
+<div id="staging-wrapper">
 
-<p>Your ad for <strong class="yella">${flyer.pageUri}</strong> will run<br/>for <strong class="yella">7</strong> days at a cost of <strong class="yella">$40</strong>.</p>
+    <h1 style="text-align: center">Go Live</h1>
 
-<div id="start-ad-container">
-    <div id="credit-card"></div>
-    <div id="processing"></div>
+    <p>Your ad for <strong class="yella">${flyer.pageUri}</strong> will run<br/>for <strong class="yella">7</strong> days at a cost of <strong class="yella">$40</strong>.</p>
+
+    <div id="start-ad-container">
+        <div id="credit-card"></div>
+        <div id="processing"></div>
+    </div>
+
+    <form action="/o/flyer/start" method="post" id="start-ad-form">
+        <input type="hidden" name="id" value="${flyer.id}"/>
+        <input type="hidden" name="stripeToken" id="stripe-token" value=""/>
+    </form>
+
+    <button id="start" class="button retro right-float" style="margin-top:20px;display:inline-block;">Pay $40</button>
+    <br class="clear"/>
+
 </div>
-
-<form action="/o/flyer/start" method="post" id="start-ad-form">
-    <input type="hidden" name="id" value="${flyer.id}"/>
-    <input type="hidden" name="stripeToken" id="stripe-token" value=""/>
-</form>
-
-<button id="start" class="button retro right-float" style="margin-top:20px;display:inline-block;">Pay $40</button>
-<br class="clear"/>
 
 <script src="https://js.stripe.com/v3/"></script>
 <script type="text/javascript">

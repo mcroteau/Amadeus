@@ -53,7 +53,7 @@ public class FlyerController extends BaseController {
             String imageUri = utilities.write(flyerImage, Constants.IMAGE_DIRECTORY);
             flyer.setImageUri(imageUri);
         }
-
+        System.out.println("flyer" + flyer.getPageUri());
         Account authenticatedAccount = getAuthenticatedAccount();
         flyer.setAccountId(authenticatedAccount.getId());
 
@@ -133,10 +133,11 @@ public class FlyerController extends BaseController {
     public String update(@ModelAttribute("flyer") Flyer flyer,
                          HttpServletRequest request,
                          final RedirectAttributes redirect,
-                         @RequestParam(value="flyerImage", required=false) CommonsMultipartFile flyerImage) {
+                         @RequestParam(value="flyerImage", required=true) CommonsMultipartFile flyerImage) {
 
         if(hasPermission(Constants.FLYER_MAINTENANCE + flyer.getId())) {
-            if(!flyerImage.isEmpty() && flyerImage != null){
+            if(flyerImage != null &&
+                    flyerImage.getSize() > 0){
                 String imageUri = utilities.write(flyerImage, Constants.IMAGE_DIRECTORY);
                 flyer.setImageUri(imageUri);
             }

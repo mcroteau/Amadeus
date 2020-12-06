@@ -13,12 +13,12 @@
 
         <div class="form-row">
             <label>Page Url</label>
-            <input type="text" name="pageUri" placeholder="www.microsoft.com" value="www.c.com"/>
+            <input type="text" name="pageUri" placeholder="www.microsoft.com" value=""/>
         </div>
 
         <div class="form-row">
             <label>Description</label>
-            <textarea name="description" placeholder="Describe your web page in detail, leave an email and a phone number as well to help potential customers reach you">Some description</textarea>
+            <textarea name="description" placeholder="Describe your web page in detail, leave an email and a phone number as well to help potential customers reach you"></textarea>
         </div>
 
     </form>
