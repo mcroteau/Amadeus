@@ -38,6 +38,9 @@ public class AppStartup implements ApplicationListener<ContextRefreshedEvent>{
 	public MessageDao messageDao;
 
 	@Autowired
+	public FlyerDao flyerDao;
+
+	@Autowired
 	public Utilities utilities;
 
 
@@ -46,6 +49,7 @@ public class AppStartup implements ApplicationListener<ContextRefreshedEvent>{
 		createApplicationAdministrator();
 		createApplicationGuest();
 		initializeJobs();
+		generateAds();
 	}
 
 	private void createApplicationRoles(){
@@ -158,7 +162,7 @@ public class AppStartup implements ApplicationListener<ContextRefreshedEvent>{
 				account.setPassword(password);
 				account.setImageUri(Constants.DEFAULT_IMAGE_URI);
 				Account savedAccount = accountDao.save(account);
-				accountDao.saveAccountPermission(savedAccount.getId(), Constants.ACCOUNT_MAINTENANCE + savedAccount.getId());
+				accountDao.savePermission(savedAccount.getId(), Constants.ACCOUNT_MAINTENANCE + savedAccount.getId());
 			}
 		}
 
@@ -259,7 +263,7 @@ public class AppStartup implements ApplicationListener<ContextRefreshedEvent>{
 					
 					post.setDatePosted(datePosted);
 					Post savedPost = postDao.save(post);
-					accountDao.saveAccountPermission(account.getId(), Constants.POST_MAINTENANCE + savedPost.getId());
+					accountDao.savePermission(account.getId(), Constants.POST_MAINTENANCE + savedPost.getId());
 
 				}
 			}
@@ -322,6 +326,35 @@ public class AppStartup implements ApplicationListener<ContextRefreshedEvent>{
 		}
 
 		log.info("Profile Views : " + accountDao.getAllViewsAll());
+	}
+
+	private void generateAds(){
+		Flyer existing = flyerDao.getLast();
+		if (existing == null) {
+			Account account = accountDao.findByUsername(Constants.ADMIN_USERNAME);
+			Flyer flyer = new Flyer();
+			flyer.setImageUri(Constants.DEFAULT_FLYER_IMAGE_URI);
+			flyer.setActive(true);
+			flyer.setPageUri("www.microsoft.org");
+			flyer.setStartDate(utilities.getCurrentDate());
+			flyer.setAccountId(account.getId());
+			flyer.setDescription("Duis convallis convallis");
+			Flyer savedFlyer = flyerDao.save(flyer);
+			accountDao.savePermission(account.getId(), Constants.FLYER_MAINTENANCE  + savedFlyer.getId());
+
+
+			Flyer flyer2 = new Flyer();
+			flyer2.setImageUri("images/help.jpg");
+			flyer2.setActive(true);
+			flyer2.setPageUri("www.sap.org");
+			flyer2.setStartDate(utilities.getCurrentDate());
+			flyer2.setAccountId(account.getId());
+			flyer2.setDescription("Duis convallis convallis");
+			Flyer savedFlyer2 = flyerDao.save(flyer2);
+			accountDao.savePermission(account.getId(), Constants.FLYER_MAINTENANCE  + savedFlyer2.getId());
+
+		}
+		log.info("Ads : " + flyerDao.getFlyers().size());
 	}
 
 }

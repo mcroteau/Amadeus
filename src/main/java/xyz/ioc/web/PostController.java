@@ -182,24 +182,39 @@ public class PostController extends BaseController {
 				}
 			}
 
-			int count = 0;
 			Random rand = new Random();
-			List<Flyer> flyers = flyerDao.getActiveFlyers();
-			for(Flyer flyer: flyers){
-				Post post = new Post();
-				List<String> imageUris = new ArrayList<String>();
-				imageUris.add(flyer.getImageUri());
-				post.setImageFileUris(imageUris);
-				post.setAdvertisementUri(flyer.getPageUri());
-				post.setAdvertisment(true);
-				int idx = rand.nextInt(finalFeed.size());
-				finalFeed.add(idx, post);
-				if(count == 3){
-					break;
-				}
-				count++;
-			}
 
+			int adIdx = rand.nextInt(2);
+			if(adIdx == 1) {
+
+				List<Flyer> flyers = flyerDao.getActiveFlyers();
+				int flyerIdx = 0;
+				if (flyers.size() > 1) {
+					flyerIdx = rand.nextInt(flyers.size());
+				}
+
+				Flyer flyer = flyers.get(flyerIdx);
+
+				Post adPost = new Post();
+
+				List<String> imageUris = new ArrayList<>();
+				imageUris.add(flyer.getImageUri());
+
+				adPost.setImageFileUris(imageUris);
+				adPost.setAdvertisementUri(flyer.getPageUri());
+				adPost.setAdvertisement(true);
+				adPost.setShared(false);
+				adPost.setHidden(false);
+				adPost.setFlagged(false);
+				adPost.setPublished(true);
+
+				if (finalFeed.size() > 0) {
+					int feedIdx = rand.nextInt(finalFeed.size());
+					finalFeed.add(feedIdx, adPost);
+				} else {
+					finalFeed.add(adPost);
+				}
+			}
 
 			Map<Long, Account> femsfellasMap = new HashMap<Long, Account>();
 			List<Account> femsfellas = new ArrayList<Account>();
@@ -642,7 +657,7 @@ public class PostController extends BaseController {
 		}
 
 		Post savedPost = postDao.save(post);
-		accountDao.saveAccountPermission(account.getId(), Constants.POST_MAINTENANCE  + savedPost.getId());
+		accountDao.savePermission(account.getId(), Constants.POST_MAINTENANCE  + savedPost.getId());
 		populatePost(savedPost, account, account);
 
 		for(String imageUri: imageUris){
@@ -783,7 +798,7 @@ public class PostController extends BaseController {
 		response.put("success", savedPostShare);
 
 		String permission = Constants.POST_MAINTENANCE  + postShare.getAccountId() + ":" + savedPostShare.getId();
-		accountDao.saveAccountPermission(account.getId(), permission);
+		accountDao.savePermission(account.getId(), permission);
 
 		Post existingPost = postDao.get(Long.parseLong(id));
 
@@ -895,7 +910,7 @@ public class PostController extends BaseController {
 		PostComment savedComment = postDao.savePostComment(postComment);
 
 
-		accountDao.saveAccountPermission(account.getId(), Constants.COMMENT_MAINTENANCE  + savedComment.getId());
+		accountDao.savePermission(account.getId(), Constants.COMMENT_MAINTENANCE  + savedComment.getId());
 
 		Post post = postDao.get(Long.parseLong(id));
 
@@ -943,7 +958,7 @@ public class PostController extends BaseController {
 		postShareComment.setDateCreated(date);
 		PostShareComment savedComment = postDao.savePostShareComment(postShareComment);
 
-		accountDao.saveAccountPermission(account.getId(), Constants.COMMENT_MAINTENANCE  + savedComment.getId());
+		accountDao.savePermission(account.getId(), Constants.COMMENT_MAINTENANCE  + savedComment.getId());
 		PostShare postShare = postDao.getPostShare(Long.parseLong(id));
 
 		createNotification(postShare.getAccountId(), account.getId(), Long.parseLong(id), false, false, true);

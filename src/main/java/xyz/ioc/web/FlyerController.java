@@ -58,7 +58,7 @@ public class FlyerController extends BaseController {
         flyer.setAccountId(authenticatedAccount.getId());
 
         Flyer persistedFlyer = flyerDao.save(flyer);
-        accountDao.saveAccountPermission(authenticatedAccount.getId(), Constants.FLYER_MAINTENANCE  + persistedFlyer.getId());
+        accountDao.savePermission(authenticatedAccount.getId(), Constants.FLYER_MAINTENANCE  + persistedFlyer.getId());
 
         return "redirect:/flyer/edit/" + persistedFlyer.getId();
     }

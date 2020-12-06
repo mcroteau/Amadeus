@@ -113,7 +113,7 @@ public class ResourceController extends BaseController {
         post.setDatePosted(utilities.getCurrentDate());
         Post savedPost = postDao.save(post);
 
-        accountDao.saveAccountPermission(getAuthenticatedAccount().getId(), Constants.POST_MAINTENANCE + savedPost.getId());
+        accountDao.savePermission(getAuthenticatedAccount().getId(), Constants.POST_MAINTENANCE + savedPost.getId());
 
         ResourceShare resourceShare = new ResourceShare();
         resourceShare.setComment(comment);

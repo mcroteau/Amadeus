@@ -24,8 +24,9 @@ public class Constants {
 
     public static final String PROFILE_IMAGE_DIRECTORY = "media/profiles/";
 
-    public static final String FRESCO            = "media/profiles/sebastien.jpg";
-	public static final String DEFAULT_IMAGE_URI = "media/profiles/amadeus.png";
+    public static final String FRESCO                  = "media/profiles/sebastien.jpg";
+	public static final String DEFAULT_IMAGE_URI       = "media/profiles/amadeus.png";
+	public static final String DEFAULT_FLYER_IMAGE_URI = "images/figma-ad.jpg";
 
 	public static final String ACCOUNT_MAINTENANCE = "permission:accounts:";
 	public static final String POST_MAINTENANCE    = "permission:posts:";

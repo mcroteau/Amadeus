@@ -82,8 +82,12 @@ h1, h2, h3, h4,
 input, select, textarea,
 input::placeholder,
 textarea::placeholder, th, td{
+    vertical-align: middle;
 	font-family: 'Roboto' !important;
 	color:#17161b;
+}
+td{
+    padding:10px 0px 10px 0px;
 }
 /*csslint box-model:false*/
 /*
@@ -1082,8 +1086,9 @@ input[type="submit"].button{
 	cursor:pointer;
 	text-transform:uppercase;
 	color:#fff;
-	font-size:15px;
-	padding:13px 23px;
+	font-size:13px;
+	padding:13px 18px;
+    line-height: 1.0em;
 	border:solid 1px #418dc5;
 	display:inline-block;
 	background:#0481bc;
@@ -1295,7 +1300,7 @@ input[type="button"].button.retro{
 	border:solid 1px #1f9bc4;
 	border:solid 1px #1792b7;
 	border:solid 1px #54afff;
-    border:solid 1px #1792b7;
+    border:solid 1px #4198e4;
 }
 
 
@@ -2774,7 +2779,8 @@ p span{
     border-bottom:dotted 2px #17161b !important;
 }
 
-.black{
+.black,
+.fun{
     font-family: Roboto-Black !important;
 }
 
@@ -3068,7 +3074,7 @@ input[type="password"]:focus{
     -webkit-border-radius: 4px !important;
     -moz-border-radius: 4px !important;
     border-radius: 4px !important;
-    border:solid 1px #1792b7;
+    border:solid 1px #4198e4;
 }
 
 .post-button:hover{
@@ -3483,6 +3489,7 @@ a.information{
     background: #7D0047;
     background: #9E0059;
     background: #54afff;
+    /*background:#17161b;*/
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
     font-family: Roboto-Light !important;

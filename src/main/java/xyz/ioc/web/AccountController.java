@@ -383,7 +383,7 @@ public class AccountController extends BaseController {
 			Role defaultRole = roleDao.find(Constants.ROLE_ACCOUNT);
 
 			accountDao.saveAccountRole(savedAccount.getId(), defaultRole.getId());
-			accountDao.saveAccountPermission(savedAccount.getId(), "account:maintenance:" + savedAccount.getId());
+			accountDao.savePermission(savedAccount.getId(), "account:maintenance:" + savedAccount.getId());
 
 
 			String body = "<h1>Amadeus</h1>"+
@@ -473,7 +473,7 @@ public class AccountController extends BaseController {
 			Role defaultRole = roleDao.find(Constants.ROLE_ACCOUNT);
 
 			accountDao.saveAccountRole(savedAccount.getId(), defaultRole.getId());
-			accountDao.saveAccountPermission(savedAccount.getId(), "account:maintenance:" + savedAccount.getId());
+			accountDao.savePermission(savedAccount.getId(), "account:maintenance:" + savedAccount.getId());
 
 			String body = "<h1>Amadeus</h1>"+
 					"<p>Thank you for registering! Enjoy!</p>";

@@ -191,7 +191,7 @@ public class AccountJdbcDao implements AccountDao {
 		String permission = Constants.ACCOUNT_MAINTENANCE + accountId;
 		AccountPermission existing = getAccountPermission(accountId, permission);
 		if(existing == null){
-			saveAccountPermission(accountId, permission);
+			savePermission(accountId, permission);
 		}
 		return true;
 	}
@@ -215,7 +215,7 @@ public class AccountJdbcDao implements AccountDao {
 		return true;
 	}
 	
-	public boolean saveAccountPermission(long accountId, String permission){
+	public boolean savePermission(long accountId, String permission){
 		String sql = "insert into account_permissions (account_id, permission) values (?, ?)";
 		jdbcTemplate.update(sql, new Object[] { 
 			accountId, permission

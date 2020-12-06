@@ -10,6 +10,11 @@
 	<link rel="stylesheet" href="/o/css/app.css?v=<%=System.currentTimeMillis()%>">
 
     <style>
+        #logo-logo,
+        #logo-logo:hover{
+            background: rgb(253,254,3) !important;
+            background: linear-gradient(60deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 33%, rgba(253,254,3,1) 60%, rgba(84,175,255,1) 90%, rgba(192,225,255,1) 100%) !important;/*-moz-box-shadow: 0px 4px 17px 0px rgba(0,0,0,.9);*/
+        }
         #content-header{
             text-align: center;
         }
@@ -17,31 +22,39 @@
             font-family: Roboto-Bold !important;
         }
         h1{
-            font-size:59px;
+            font-size:32px;
+        }
+        p{
+            padding:0px;
+            line-height:1.3em;
+            margin:7px 0px 7px 0px;
         }
         label{
+            font-size:12px;
             display:block;
-            margin:20px 0px 0px 0px;
+            margin:10px 0px 0px 0px;
         }
         input[type="text"]{
             background:#fff;
             width:401px;
+            padding:8px;
+            font-size:17px;
         }
         input[type="text"]:hover,
         input[type="text"]:focus{
             background: #fff;
         }
         textarea{
-            height:170px;
-            width:100%;
+            height: 115px;
+            width: 300px;
         }
         textarea{
             color: #17161b;
             font-family: Roboto-Light !important;
-            font-size: 19px !important;
+            font-size: 18px !important;
             background: #fff;
             line-height: 1.4em !important;
-            padding: 12px 12px !important;
+            padding: 8px 8px !important;
             border: solid 1px #ccc !important;
             -webkit-border-radius: 3px !important;
             -moz-border-radius: 3px !important;

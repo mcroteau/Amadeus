@@ -356,6 +356,7 @@
         }
 
         var setData = function(response){
+            console.log(response.data.activities)
             $scope.activities = response.data.activities
             $scope.femsfellas = response.data.femsfellas
             $scope.memory = $scope.activities

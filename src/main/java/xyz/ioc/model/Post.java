@@ -72,7 +72,7 @@ public class Post {
 
 	long updateDate;
 
-	boolean advertisment;
+	boolean advertisement;
 
 	String advertisementUri;
 
@@ -331,12 +331,12 @@ public class Post {
 		this.updateDate = updateDate;
 	}
 
-	public boolean isAdvertisment() {
-		return advertisment;
+	public boolean isAdvertisement() {
+		return advertisement;
 	}
 
-	public void setAdvertisment(boolean advertisment) {
-		this.advertisment = advertisment;
+	public void setAdvertisement(boolean advertisement) {
+		this.advertisement = advertisement;
 	}
 
 	public String getAdvertisementUri() {

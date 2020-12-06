@@ -8,6 +8,7 @@
 
         <input type="hidden" name="id" value="${flyer.id}"/>
         <input type="hidden" name="imageUri" value="${flyer.imageUri}"/>
+        <input type="hidden" name="active" value="${flyer.active}"/>
 
 
         <div class="form-row">
@@ -17,6 +18,10 @@
             <label>Pick Image</label>
             <input type="file" name="flyerImage"/>
             <p class="information">This will be the main entry point to your web page</p>
+
+            <c:if test="${empty flyer.imageUri}">
+                <span class="tiny yella">No image selected.</span>
+            </c:if>
         </div>
 
         <div class="form-row">
@@ -24,10 +29,10 @@
             <input type="text" name="pageUri" placeholder="www.microsoft.com" value="${flyer.pageUri}"/>
         </div>
 
-        <div class="form-row">
-            <label>Description</label>
-            <textarea name="description" placeholder="Describe your web page in detail, leave an email and a phone number as well to help potential customers reach you">${flyer.description}</textarea>
-        </div>
+<%--        <div class="form-row">--%>
+<%--            <label>Description</label>--%>
+<%--            <textarea name="description" placeholder="Describe your web page in detail, leave an email and a phone number as well to help potential customers reach you">${flyer.description}</textarea>--%>
+<%--        </div>--%>
 
         <br class="clear"/>
 

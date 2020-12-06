@@ -37,7 +37,7 @@ public interface AccountDao {
 
 	public boolean saveAccountRole(long accountId, long roleId);
 	
-	public boolean saveAccountPermission(long accountId, String permission);
+	public boolean savePermission(long accountId, String permission);
 	
 	public boolean deleteAccountRoles(long accountId);
 	

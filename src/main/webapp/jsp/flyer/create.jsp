@@ -14,19 +14,20 @@
         <div class="form-row">
             <label>Page Url</label>
             <input type="text" name="pageUri" placeholder="www.microsoft.com" value=""/>
+            <p class="information">No http:// just start it with www or subdomain</p>
         </div>
 
-        <div class="form-row">
-            <label>Description</label>
-            <textarea name="description" placeholder="Describe your web page in detail, leave an email and a phone number as well to help potential customers reach you"></textarea>
-        </div>
+<%--        <div class="form-row">--%>
+<%--            <label>Description</label>--%>
+<%--            <textarea name="description" placeholder="Describe your web page in detail, leave an email and a phone number as well to help potential customers reach you"></textarea>--%>
+<%--        </div>--%>
 
     </form>
 
 </div>
 
 <div id="form-action-container">
-    <input type="submit" id="save-button" value="Begin Ad" class="button retro"/>
+    <input type="submit" id="save-button" value="Start Ad" class="button retro"/>
 </div>
 
 <script>

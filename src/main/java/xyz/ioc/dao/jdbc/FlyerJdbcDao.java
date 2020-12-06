@@ -14,13 +14,15 @@ public class FlyerJdbcDao implements FlyerDao {
 
     @Override
     public Flyer getLast() {
-        String sql = "select max(id) from flyers";
-        long id = jdbcTemplate.queryForObject(sql, new Object[]{}, Long.class);
+        Flyer persistedFlyer = null;
+        try {
+            String sql = "select max(id) from flyers";
+            long id = jdbcTemplate.queryForObject(sql, new Object[]{}, Long.class);
 
-        String selectSql = "select * from flyers where id = ?";
-        Flyer persistedFlyer = jdbcTemplate.queryForObject(selectSql, new Object[] { id },
-                new BeanPropertyRowMapper<Flyer>(Flyer.class));
-
+            String selectSql = "select * from flyers where id = ?";
+            persistedFlyer = jdbcTemplate.queryForObject(selectSql, new Object[]{id},
+                    new BeanPropertyRowMapper<Flyer>(Flyer.class));
+        }catch(Exception e){ }
         return persistedFlyer;
     }
 

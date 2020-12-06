@@ -19,13 +19,13 @@
 
 <div id="staging-wrapper">
 
-    <h1 style="text-align: center">Go Live</h1>
+    <h1 style="text-align: center">Go Live!</h1>
 
     <p>Your ad for <strong class="yella">${flyer.pageUri}</strong> will run<br/>for <strong class="yella">7</strong> days at a cost of <strong class="yella">$40</strong>.</p>
 
     <div id="start-ad-container">
         <div id="credit-card"></div>
-        <div id="processing"></div>
+        <div id="processing" class="tiny" style="display:block;text-align:left;margin-top:10px;"></div>
     </div>
 
     <form action="/o/flyer/start" method="post" id="start-ad-form">
@@ -33,7 +33,7 @@
         <input type="hidden" name="stripeToken" id="stripe-token" value=""/>
     </form>
 
-    <button id="start" class="button retro right-float" style="margin-top:20px;display:inline-block;">Pay $40</button>
+    <button id="start" class="button retro right-float fun" style="margin-top:20px;display:inline-block;">Pay $40</button>
     <br class="clear"/>
 
 </div>
