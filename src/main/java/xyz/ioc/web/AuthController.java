@@ -128,6 +128,6 @@ public class AuthController extends BaseController {
 
 	@RequestMapping(value="/unauthorized", method=RequestMethod.GET)
 	public String unauthorized(ModelMap model, @RequestParam(value="uri", required = false ) String uri){
-		return "unauthorized";
+		return "app/unauthorized";
 	}
 }

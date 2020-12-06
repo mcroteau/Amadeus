@@ -62,7 +62,7 @@
 
     #mobile-outer-container {
         background:#f1f1f1;
-        height:62px;
+        height:63px;
         display: block !important;
     }
 
@@ -76,7 +76,11 @@
         z-index:1;
         position:absolute;
     }
+    #profile-ref-image{
+        margin-top:-2px;
+    }
     #mobile-search-container #search-box{
+        top:6px;
         height:51px;
         display:block;
         box-sizing: border-box;
@@ -88,6 +92,10 @@
         -webkit-box-shadow: none;
     }
 
+    #mobile-search-container #search-label{
+        top:6px;
+    }
+
     #mobile-outer-container #navigation-outer-container{
         right:0px;
         top:59px;
@@ -97,9 +105,7 @@
     #search-container{
         display:none;
     }
-    #search-box{
-        width:135px;
-    }
+
     #content-container{
         width:96%;
         margin: 5px auto 119px auto;

@@ -75,27 +75,24 @@ public class FriendController extends BaseController {
                                        final RedirectAttributes redirect,
                                        @PathVariable String id){
 
-        Map<String, Object> data = new HashMap<String, Object>();
+        Map<String, Object> response = new HashMap<String, Object>();
         Gson gson = new Gson();
 
         if(!authenticated()){
-            data.put("error", true);
-            String error = gson.toJson(data);
+            response.put("error", "authentication required");
+            String error = gson.toJson(response);
             return error;
         }
 
         Account authenticatedAccount = getAuthenticatedAccount();
 
         if(friendDao.invite(authenticatedAccount.getId(), Long.parseLong(id), utilities.getCurrentDate())){
-            Account account = accountDao.get(Long.parseLong(id));
-            data.put("success", true);
-            return gson.toJson(data);
-        }
-        else{
-            data.put("error", true);
-            return gson.toJson(data);
+            response.put("success", true);
+        }else{
+            response.put("error", true);
         }
 
+        return gson.toJson(response);
     }
 
 

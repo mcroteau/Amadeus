@@ -50,7 +50,7 @@ public class ResourceController extends BaseController {
             return "redirect:/uno?uri=" + uri;
 
         model.addAttribute("uri", uri);
-        return "resource";
+        return "resource/resource";
     }
 
 
@@ -82,7 +82,7 @@ public class ResourceController extends BaseController {
             resourceDao.like(resourceLike);
 
         model.addAttribute("message", "Successfully liked!");
-        return "resource_success";
+        return "resource/resource_success";
     }
 
 
@@ -125,7 +125,7 @@ public class ResourceController extends BaseController {
 
         model.addAttribute("message", "Successfully shared!");
 
-        return "resource_success";
+        return "resource/resource_success";
     }
 
     @CrossOrigin(origins="*")

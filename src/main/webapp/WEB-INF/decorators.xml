@@ -14,7 +14,8 @@
         <pattern>*/issues/report*</pattern>
         <pattern>*/invite*</pattern>
     </decorator>
-    <decorator name="resource" page="resource.jsp">
+    <decorator name="app" page="app.jsp">
+        <pattern>*/flyer*</pattern>
         <pattern>*/resource</pattern>
         <pattern>*/resource/like</pattern>
         <pattern>*/resource/share</pattern>
@@ -24,6 +25,7 @@
         <pattern>*/eula</pattern>
     </decorator>
     <decorator name="admin" page="admin.jsp">
+        <pattern>*/admin</pattern>
         <pattern>*/accounts</pattern>
         <pattern>*/posts/flagged*</pattern>
         <pattern>*/post/review*</pattern>

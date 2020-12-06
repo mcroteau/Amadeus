@@ -3,11 +3,7 @@ package xyz.ioc.web;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.commons.io.IOUtils;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;

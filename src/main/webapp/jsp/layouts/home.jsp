@@ -7,7 +7,7 @@
 
 <html>
 <head>
-    <title>Amadeus : Like. Share. Rock Me Amadeus!</title>
+    <title>Amadeus : Like. Share. Rock!</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -196,7 +196,7 @@
 
                 <p>Why should there be many to rule social
                     media when there is <strong>Amadeus</strong> to
-                    Rock Me Amadeus. <a href="${pageContext.request.contextPath}/signup" class="href-dotted-black">Signup!</a></p>
+                    Rock! <a href="${pageContext.request.contextPath}/signup" class="href-dotted-black">Signup!</a></p>
 
             </div>
 

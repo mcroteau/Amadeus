@@ -1,11 +1,10 @@
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
-<%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro"%>
 <%@ page import="io.github.mcroteau.Parakeet" %>
 <%@ page import="xyz.ioc.common.BeanLookup" %>
 
 <html>
 <head>
-    <title>Amadeus : Like. Share. Rock Me Amadeus!</title>
+    <title>Amadeus : Like. Share. Rock!</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -63,14 +62,6 @@
             margin-left:-20px;
         }
 
-        #logo-logo{
-            padding:60px;
-            height:70px;
-            background:#FDFE00;
-            font-family:Roboto-Medium !important;
-            border-radius:0px;
-        }
-
         #amadeus-logo-container h1{
             font-size:72px;
             font-family:Roboto-Bold !important;
@@ -111,24 +102,23 @@
         }
     </style>
 
+    <div id="top-outer-container">
+        <a href="/o/" id="logo-logo">
+            <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
+                <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>
+            </svg>
+        </a>
+        <br class="clear"/>
+    </div>
 
     <div id="guest-content-container">
-
-
-        <div id="amadeus-logo-container">
-            <a href="${pageContext.request.contextPath}/uno" id="logo-logo" style="display:block;text-decoration:none;line-height:0.9em;">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 134 134" id="amadeus">
-                    <path d="M49 1L21 88L57 88L42 134L84 134L113 47L92 47L79 47L75 47L91 1L49 1Z" />
-                </svg>
-            </a>
-            <h1>Amadeus</h1>
-            <p style="text-align:center">Like. Share. Rock Me Amadeus!</p>
-            <br class="clear"/>
-        </div>
 
         <div id="guest-content-right">
 
             <div id="guest-header">
+
+                <br class="clear"/>
+
                 <%
                     BeanLookup beanLookup = new BeanLookup();
                     Parakeet parakeet = (Parakeet) beanLookup.get("parakeet");
@@ -136,13 +126,14 @@
 
                 <%if(parakeet.isAuthenticated()){%>
 
-                    Welcome <strong>${sessionScope.account.nameUsername}</strong>!
+                    Hello <strong>${sessionScope.account.nameUsername}</strong>!
                     &nbsp;|&nbsp;
-                    <a href="${pageContext.request.contextPath}/signout" class="href-dotted">Signout<a>
+                    <a href="${pageContext.request.contextPath}/signout" class="href-dotted">Signout</a>
                     <br/>
                     <br/>
-                    <a href="${pageContext.request.contextPath}/" class="href-dotted">Home<a>&nbsp;|&nbsp;
-                    <a href="${pageContext.request.contextPath}/account/edit/${sessionScope.account.id}" class="href-dotted">Edit Profile<a>
+                    <a href="${pageContext.request.contextPath}/" class="href-dotted">Home</a>&nbsp;|&nbsp;
+                        <a href="${pageContext.request.contextPath}/flyer/list/${sessionScope.account.id}" class="href-dotted">Advertise</a>&nbsp;|&nbsp;
+                    <a href="${pageContext.request.contextPath}/account/edit/${sessionScope.account.id}" class="href-dotted">Edit Profile</a>
 
                 <%}else{%>
                     <a href="${pageContext.request.contextPath}/?uri=${uri}" class="href-dotted">Signin</a>

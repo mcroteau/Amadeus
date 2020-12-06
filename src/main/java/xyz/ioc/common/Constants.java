@@ -20,7 +20,6 @@ public class Constants {
 	public static final String ROLE_ACCOUNT = "ROLE_ACCOUNT";
 
 	public static final String IMAGE_DIRECTORY  = "media/images/";
-	public static final String MUSIC_DIRECTORY  = "media/music/";
 	public static final String VIDEO_DIRECTORY  = "media/video/";
 
     public static final String PROFILE_IMAGE_DIRECTORY = "media/profiles/";
@@ -31,16 +30,13 @@ public class Constants {
 	public static final String ACCOUNT_MAINTENANCE = "permission:accounts:";
 	public static final String POST_MAINTENANCE    = "permission:posts:";
 	public static final String COMMENT_MAINTENANCE = "permission:comments:";
+	public static final String FLYER_MAINTENANCE   = "permission:flyer:";
 
 	public static final int RESULTS_PER_PAGE       = 10;
 	public static final int RESULTS_PER_PAGE_MUSIC = 7;
-	public static final int MAX_RECORDS_MUSIC      = 7;
 	public static final int MOCK_ACCOUNTS          = 7;
 	
     public static final String DATE_SEARCH_FORMAT  = "yyyyMMddHHmmssSSS";
 	public static final String DATE_GRAPH_FORMAT  = "dd MMM";
-
-    public static final String[] PRELOADED_PLAYLIST = {
-			"media/samples/WhereEverIMayRoam.mp3" };
     
 }

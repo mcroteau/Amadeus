@@ -18,9 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @Controller
-public class StaticController extends BaseController {
+public class AppController extends BaseController {
 
-	private static final Logger log = Logger.getLogger(StaticController.class);
+	private static final Logger log = Logger.getLogger(AppController.class);
 
 	@Autowired
 	private PhoneService phoneService;
@@ -63,7 +63,7 @@ public class StaticController extends BaseController {
 	public String mobile(Device device, HttpServletRequest req){
 
 		if(!authenticated()){
-			return "redirect:/uno";
+			return "app/uno";
 		}
 
 		Account account = getAuthenticatedAccount();
@@ -83,37 +83,31 @@ public class StaticController extends BaseController {
 			!uri.equals("")){
 			req.setAttribute("uri", uri);
 		}
-		return "uno";
+		return "app/uno";
 	}
 
-
-	@RequestMapping(value="/dos", method=RequestMethod.GET)
-	public String dos(HttpServletRequest request){
-		phoneService.support("Qq:" + request.getRemoteHost());
-		return "dos";
-	}
 
 	@RequestMapping(value="/eula", method=RequestMethod.GET)
 	public String eula(){
-		return "static/eula";
+		return "app/eula";
 	}
 
 	@RequestMapping(value="/privacy", method=RequestMethod.GET)
 	public String privacy(){
-		return "static/privacy";
+		return "app/privacy";
 	}
 
 
 	@RequestMapping(value="/get_code", method=RequestMethod.GET)
 	public String getCode(){
-		return "get_code";
+		return "app/get_code";
 	}
 
 
 	@RequestMapping(value="/issues/report", method=RequestMethod.GET)
 	public String report(){
 		phoneService.support("Amadeus:issue");
-		return "report";
+		return "app/report";
 	}
 
 
@@ -142,13 +136,13 @@ public class StaticController extends BaseController {
 		emailService.send("croteau.mike+amadeus@gmail.com", "Amadeus", sb.toString());
 
 		model.addAttribute("message", "Thank you. Issue has been reported.");
-		return "success";
+		return "app/success";
 	}
 
 
 	@RequestMapping(value="/invite", method=RequestMethod.GET)
 	public String invite(){
-		return "invite";
+		return "app/invite";
 	}
 
 
@@ -167,7 +161,7 @@ public class StaticController extends BaseController {
 
 		if (emails.equals("")) {
 			redirect.addFlashAttribute("error", "Please enter valid email addresses");
-			return "redirect:/invite";
+			return "app/invite";
 		}
 
 		String body = "<h1>Amadeus</h1>" +
@@ -177,7 +171,7 @@ public class StaticController extends BaseController {
 		emailService.send(emails, "You have been invited to join!", body);
 
 		model.addAttribute("message", "Invite(s) have been sent! Thank you!");
-		return "success";
+		return "app/success";
 	}
 
 }

@@ -86,7 +86,7 @@ public class AccountController extends BaseController {
 
 
 	@RequiresAuthentication
-	@RequestMapping(value="/accounts", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/accounts", method=RequestMethod.GET)
 	public String accounts(ModelMap model, 
 					final RedirectAttributes redirect, 
 				    @RequestParam(value="admin", required = false ) String admin,
