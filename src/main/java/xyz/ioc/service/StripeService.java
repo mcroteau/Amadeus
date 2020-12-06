@@ -25,7 +25,7 @@ public class StripeService {
             chargeParams.put("amount", String.valueOf(amountInCents));
             chargeParams.put("currency", "usd");
             chargeParams.put("source", stripeToken);
-            chargeParams.put("description", "Donation :" + amount + ":" + email);
+            chargeParams.put("description", "Amadeus Advertisement @ 7 days for $" + amount);
 
             Charge charge = Charge.create(chargeParams);
 

@@ -100,7 +100,6 @@ public class FlyerController extends BaseController {
         if(hasPermission(Constants.FLYER_MAINTENANCE + id)) {
 
             Account authenticatedAccount = getAuthenticatedAccount();
-
             long date = utilities.getCurrentDate();
 
             flyer.setStartDate(date);
@@ -120,7 +119,6 @@ public class FlyerController extends BaseController {
 
     @RequestMapping(value="/flyer/live/{id}", method=RequestMethod.GET)
     public String live(ModelMap modelMap, @PathVariable String id){
-
         if(hasPermission(Constants.FLYER_MAINTENANCE + id)) {
             Flyer flyer = flyerDao.get(Long.parseLong(id));
             modelMap.put("flyer", flyer);
@@ -138,7 +136,7 @@ public class FlyerController extends BaseController {
                          @RequestParam(value="flyerImage", required=false) CommonsMultipartFile flyerImage) {
 
         if(hasPermission(Constants.FLYER_MAINTENANCE + flyer.getId())) {
-            if(!flyerImage.isEmpty()){
+            if(!flyerImage.isEmpty() && flyerImage != null){
                 String imageUri = utilities.write(flyerImage, Constants.IMAGE_DIRECTORY);
                 flyer.setImageUri(imageUri);
             }
@@ -147,7 +145,7 @@ public class FlyerController extends BaseController {
             return "redirect:/unauthorized";
         }
 
-        return "redirect:/flyer/edit/" + flyer.getId();
+        return "redirect:/flyer/edit/" + id;
     }
 
     @RequestMapping(value="/admin/flyer/list", method=RequestMethod.GET)
