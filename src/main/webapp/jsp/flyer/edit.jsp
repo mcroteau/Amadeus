@@ -2,6 +2,10 @@
 
 <h1>Ad #${flyer.id}</h1>
 
+<c:if test="${not empty message}">
+    <p>${message}</p>
+</c:if>
+
 <div id="form-container">
 
     <form action="/o/flyer/update" modelAttribute="flyer" method="post" enctype="multipart/form-data">
@@ -17,7 +21,7 @@
 
         <div class="form-row">
             <c:if test="${not empty flyer.imageUri}">
-                <img src="/o/${flyer.imageUri}" style="width:300px;"/>
+                <img src="/o/${flyer.imageUri}" style="width:300px;border-radius: 40px;"/>
             </c:if>
             <label>Pick Image</label>
             <input type="file" name="flyerImage"/>
@@ -31,6 +35,7 @@
         <div class="form-row">
             <label>Page Url</label>
             <input type="text" name="pageUri" placeholder="www.microsoft.com" value="${flyer.pageUri}"/>
+            <p class="information">No http:// or https:// just start it with www or subdomain</p>
         </div>
 
 <%--        <div class="form-row">--%>

@@ -665,7 +665,7 @@ input[type="password"]::placeholder {
     border:solid 1px #17161b !important;
     background:#fff !important;
     color:#2b2b34 !important;
-    border:solid 1px #17161b !important;
+    border:solid 1px #54AFFF !important;
 }
 
 
@@ -674,7 +674,7 @@ input[type="password"]::placeholder {
 #search-box:-webkit-autofill:focus{
     font-size:19px !important;
     background:#fff !important;
-    border:solid 1px #17161b !important;
+    border:solid 1px #54AFFF !important;
   -webkit-text-fill-color: #2b2b34;
   -webkit-box-shadow: 0 0 0px 1000px #fff inset;
 }

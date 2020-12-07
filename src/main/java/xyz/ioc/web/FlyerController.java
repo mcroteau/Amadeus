@@ -60,7 +60,7 @@ public class FlyerController extends BaseController {
 
         if(flyer.getPageUri().contains("http://") ||
                 flyer.getPageUri().contains("https://")){
-            redirect.addFlashAttribute("Page url cannot contain http:// or https://");
+            redirect.addFlashAttribute("message", "Page url cannot contain http:// or https://, please re-enter your page url minus http & https");
             return "redirect:/flyer/create";
         }
 
@@ -154,6 +154,13 @@ public class FlyerController extends BaseController {
                          @RequestParam(value="flyerImage", required=true) CommonsMultipartFile flyerImage) {
 
         if(hasPermission(Constants.FLYER_MAINTENANCE + flyer.getId())) {
+
+            if(flyer.getPageUri().contains("http://") ||
+                    flyer.getPageUri().contains("https://")){
+                redirect.addFlashAttribute("message", "Page url cannot contain http:// or https://, please re-enter your page url minus http & https");
+                return "redirect:/flyer/edit/" + flyer.getId();
+            }
+
             if(flyerImage != null &&
                     flyerImage.getSize() > 0){
                 String imageUri = utilities.write(flyerImage, Constants.IMAGE_DIRECTORY);

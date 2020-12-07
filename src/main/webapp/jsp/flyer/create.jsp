@@ -1,4 +1,8 @@
 
+<c:if test="${not empty message}">
+    <p>${message}</p>
+</c:if>
+
 <h1>Start Ad</h1>
 
 <div id="form-container">
@@ -14,7 +18,7 @@
         <div class="form-row">
             <label>Page Url</label>
             <input type="text" name="pageUri" placeholder="www.microsoft.com" value=""/>
-            <p class="information">No http:// just start it with www or subdomain</p>
+            <p class="information">No http:// or https:// just start it with www or subdomain</p>
         </div>
 
 <%--        <div class="form-row">--%>

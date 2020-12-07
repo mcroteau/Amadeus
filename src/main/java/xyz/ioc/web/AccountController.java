@@ -297,7 +297,7 @@ public class AccountController extends BaseController {
 
 		if(!administrator()){
 			redirect.addFlashAttribute("error", "You don't hava permissionsa...");
-			return "redirect:/accounts";
+			return "redirect:/admin/accounts";
 		}
 
 		Account account = accountDao.get(Long.parseLong(id));
@@ -313,7 +313,7 @@ public class AccountController extends BaseController {
 
 		redirect.addFlashAttribute("message", "Successfully disabled account");
 
-		return "redirect:/accounts";
+		return "redirect:/admin/accounts";
 	}
 	
 	@RequestMapping(value="/signup", method=RequestMethod.GET)
