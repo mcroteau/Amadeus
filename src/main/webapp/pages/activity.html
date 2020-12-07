@@ -157,7 +157,7 @@
                     <div ng-repeat="imageUri in post.imageFileUris" class="image-post-container" data-image-uri="{{imageUri}}" style="position:relative;">
                         <a ng-click="deleteImage(post.id, imageUri)" ng-href="javascript:" ng-if="post.postEditable" class="delete-image modern edit-fade-in" data-uri="{{imageUri}}" data-id="{{post.id}}">x</a>
                         <a ng-if="!post.advertisement" href="/o/{{imageUri}}" target="_blank">
-                            <img ng-src="/o/{{imageUri}}" style="width:100%;border:solid 3px #ff0000"/>
+                            <img ng-src="/o/{{imageUri}}" style="width:100%;"/>
                         </a>
 
                         <a ng-if="post.advertisement" href="http://{{post.advertisementUri}}" target="_blank">
