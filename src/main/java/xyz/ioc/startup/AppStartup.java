@@ -49,8 +49,7 @@ public class AppStartup implements ApplicationListener<ContextRefreshedEvent>{
 		createApplicationRoles();
 		createApplicationAdministrator();
 		createApplicationGuest();
-		initializeBackgroundJobs();
-		generateAds();
+		startupBackgroundJobs();
 	}
 
 	private void createApplicationRoles(){
@@ -111,7 +110,7 @@ public class AppStartup implements ApplicationListener<ContextRefreshedEvent>{
 	}
 
 
-	private void initializeBackgroundJobs() {
+	private void startupBackgroundJobs() {
 		try {
 			JobDetail publishJob = JobBuilder.newJob(PublishJob.class)
 				.withIdentity(Constants.PUBLISHING_JOB, Constants.AMADEUS_GROUP).build();
