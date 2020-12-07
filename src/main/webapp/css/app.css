@@ -924,9 +924,12 @@ input[type="submit"]#search-button,
 }
 
 
+#media-selected{
+    margin:0px;
+}
 
 #actions-container{
-	margin-top: 15px;
+	margin-top: 0px;
 }
 
 #actions-container input{
@@ -3879,24 +3882,26 @@ h1.gray span{
 }
 
 .edit-click{
-    top:27px;
+    top:28px;
     right:0px;
     z-index:101;
-    padding:4px 7px;
+    padding:2px 7px;
     display:block;
-    position:absolute;
     line-height:1.6em;
+    position:absolute;
     box-shadow:none !important;
     border-top-left-radius: 7px;
     border-bottom-left-radius: 7px;
 }
 
 .author-ref{
-    top:8px;
+    top:4px;
     right:0px;
     color:#fff;
     background:#ccc;
-    padding:3px 7px;
+    padding:2px 7px;
+    display:block;
+    line-height:1.6em;
     position:absolute;
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
