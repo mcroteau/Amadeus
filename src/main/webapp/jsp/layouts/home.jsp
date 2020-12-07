@@ -7,7 +7,7 @@
 
 <html>
 <head>
-    <title>Amadeus : Like. Share. Rock!</title>
+    <title>Amadeus : Like. Share. Amadeus!</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -197,8 +197,7 @@
                 organic in creation. We really hope you like it.</p>
 
                 <p>Why should there be many to rule social
-                    media when there is <strong>Amadeus</strong> to
-                    Rock! <a href="${pageContext.request.contextPath}/signup" class="href-dotted-black">Signup!</a></p>
+                    media when there is <strong>Amadeus</strong>! <a href="${pageContext.request.contextPath}/signup" class="href-dotted-black">Signup!</a></p>
 
             </div>
 

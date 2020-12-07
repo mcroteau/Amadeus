@@ -7,10 +7,11 @@
         animation-iteration-count: infinite;
         animation-duration: 23s;
     }
-    .pure-form-stacked input[type="text"],
-    .pure-form-stacked input[type="email"],
-    .pure-form-stacked input[type="password"]{
+    input[type="text"],
+    input[type="email"],
+    input[type="password"]{
         margin:0.35em 0;
+        width:90% !important;
     }
 
 </style>
@@ -18,7 +19,7 @@
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 
-<div id="registration-form-container" style="padding-top:20px;text-align: center">
+<div id="registration-form-container" style="width:90%;padding-top:20px;text-align: center">
 
     <c:if test="${not empty message}">
         <div class="notify alert-info">${message}</div>
@@ -28,7 +29,7 @@
         <div class="notify alert-danger">${error}</div>
     </c:if>
 
-    <div id="registration-form-container" style="width:90%; margin:auto; text-align: left;">
+    <div id="registration-form-container" style="margin:auto; text-align: left;">
 
         <form action="${pageContext.request.contextPath}/register" modelAttribute="account" method="post" enctype="multipart/form-data" autocomplete="false" class="pure-form pure-form-stacked" id="registration-form">
             <fieldset>

@@ -3,7 +3,7 @@
 
 <html>
 <head>
-    <title>Amadeus : Like. Share. Rock!</title>
+    <title>Amadeus : Like. Share. Amadeus!</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
