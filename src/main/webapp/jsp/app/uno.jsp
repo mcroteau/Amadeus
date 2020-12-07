@@ -17,12 +17,12 @@
 
         <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" name="username" class="form-control" id="username" placeholder=""  value="croteau.mike@gmail.com"  style="width:100%;">
+            <input type="text" name="username" class="form-control" id="username" placeholder=""  value=""  style="width:100%;">
         </div>
 
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" name="password" class="form-control" id="password" style="width:100%;" value="password"  placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;">
+            <input type="password" name="password" class="form-control" id="password" style="width:100%;" value=""  placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;">
         </div>
 
         <div style="text-align:right; margin-top:30px;">
@@ -35,11 +35,9 @@
         <br/>
         <a href="${pageContext.request.contextPath}/account/reset" class="href-dotted">Forgot Password</a>&nbsp;&nbsp;
 
-
     </form>
 
     <br class="clear"/>
-
 
     <a href="${pageContext.request.contextPath}/signup" class="button beauty-light large" style="display:block;">Sign Up !</a>
 

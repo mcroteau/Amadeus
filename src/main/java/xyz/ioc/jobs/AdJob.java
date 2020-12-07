@@ -28,15 +28,12 @@ public class AdJob implements Job {
             DateFormat df = new SimpleDateFormat(Constants.DATE_SEARCH_FORMAT);
             String dateStr = df.format(cal.getTime());
             long now = Long.parseLong(dateStr);
-
-
+            
             List<Flyer> activeFlyers = flyerDao.getActiveFlyers();
-            log.info("active flyers eq " + activeFlyers.size());
 
             for(Flyer flyer : activeFlyers){
                 long difference = now - flyer.getStartDate();
                 if(difference > Constants.AD_DURATION_DIFFERENCE){
-                    log.info("make dispose of");
                     flyerDao.crumpleUp(flyer.getId());
                 }
             }

@@ -220,3 +220,15 @@ create table account_blocks (
 	blocker_id bigint NOT NULL REFERENCES account(id),
     date_blocked bigint NOT NULL
 );
+
+create table flyers (
+	id bigint PRIMARY KEY AUTO_INCREMENT,
+	description text,
+	image_uri text,
+	page_uri text,
+    ad_views bigint default 0,
+    active boolean,
+    ad_runs bigint default 1,
+	account_id bigint NOT NULL REFERENCES account(id),
+    start_date bigint NOT NULL
+);

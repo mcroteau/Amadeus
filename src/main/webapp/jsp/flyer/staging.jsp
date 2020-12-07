@@ -53,8 +53,8 @@
         processingGoLive = document.querySelector("#processing"),
         stripeToken = document.querySelector("#stripe-token");
 
-    stripe = Stripe("pk_test_KYVCbdaOAuezlE7sF7cn2hnK")
-    // stripe = Stripe("pk_live_D2JuVMbBm0B5kVJz949oR6OB")
+    // stripe = Stripe("pk_test_KYVCbdaOAuezlE7sF7cn2hnK")
+    stripe = Stripe("pk_live_D2JuVMbBm0B5kVJz949oR6OB")
     elements = stripe.elements()
 
     card = elements.create('card', {

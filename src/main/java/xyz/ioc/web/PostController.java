@@ -187,8 +187,6 @@ public class PostController extends BaseController {
 			int adIdx = rand.nextInt(2);
 			if(adIdx == 1) {
 
-				log.info("randomed");
-
 				List<Flyer> activeFlyers = flyerDao.getActiveFlyers();
 
 				int flyerIdx = 0;
