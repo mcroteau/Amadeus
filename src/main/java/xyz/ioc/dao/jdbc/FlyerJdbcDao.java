@@ -12,17 +12,21 @@ public class FlyerJdbcDao implements FlyerDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    public long getCount() {
+        String sql = "select count(*) from flyers";
+        long count = jdbcTemplate.queryForObject(sql, new Object[] { }, Long.class);
+        return count;
+    }
+
     @Override
     public Flyer getLast() {
-        Flyer persistedFlyer = null;
-        try {
-            String sql = "select max(id) from flyers";
-            long id = jdbcTemplate.queryForObject(sql, new Object[]{}, Long.class);
+        String sql = "select max(id) from flyers";
+        long id = jdbcTemplate.queryForObject(sql, new Object[]{}, Long.class);
 
-            String selectSql = "select * from flyers where id = ?";
-            persistedFlyer = jdbcTemplate.queryForObject(selectSql, new Object[]{id},
-                    new BeanPropertyRowMapper<Flyer>(Flyer.class));
-        }catch(Exception e){ }
+        String selectSql = "select * from flyers where id = ?";
+        Flyer persistedFlyer = jdbcTemplate.queryForObject(selectSql, new Object[]{id},
+                new BeanPropertyRowMapper<Flyer>(Flyer.class));
+
         return persistedFlyer;
     }
 
@@ -53,9 +57,9 @@ public class FlyerJdbcDao implements FlyerDao {
 
     @Override
     public boolean update(Flyer flyer) {
-        String sql = "update flyers set image_uri = ?, page_uri = ?, description = ?, start_date = ?, active = ? where id = ?";
+        String sql = "update flyers set image_uri = ?, page_uri = ?, description = ?, start_date = ?, active = ?, ad_runs = ? where id = ?";
         try {
-            jdbcTemplate.update(sql, new Object[]{ flyer.getImageUri(), flyer.getPageUri(), flyer.getDescription(), flyer.getStartDate(), flyer.isActive(), flyer.getId()});
+            jdbcTemplate.update(sql, new Object[]{ flyer.getImageUri(), flyer.getPageUri(), flyer.getDescription(), flyer.getStartDate(), flyer.isActive(), flyer.getAdRuns(), flyer.getId()});
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -105,8 +109,8 @@ public class FlyerJdbcDao implements FlyerDao {
     }
 
     @Override
-    public boolean updateViews(int views, long id) {
-        String sql = "update flyers set views = ? where id = ?";
+    public boolean updateViews(long views, long id) {
+        String sql = "update flyers set ad_views = ? where id = ?";
         try {
             jdbcTemplate.update(sql, new Object[]{ views, id });
         }catch(Exception e){

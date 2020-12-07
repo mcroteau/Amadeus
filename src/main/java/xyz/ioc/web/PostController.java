@@ -187,12 +187,16 @@ public class PostController extends BaseController {
 			int adIdx = rand.nextInt(2);
 			if(adIdx == 1) {
 
-				List<Flyer> flyers = flyerDao.getActiveFlyers();
-				int flyerIdx = 0;
-				if (flyers.size() > 1) {
-					flyerIdx = rand.nextInt(flyers.size());
+				log.info("randomed");
 
-					Flyer flyer = flyers.get(flyerIdx);
+				List<Flyer> activeFlyers = flyerDao.getActiveFlyers();
+
+				int flyerIdx = 0;
+				if (activeFlyers.size() > 0) {
+
+					flyerIdx = rand.nextInt(activeFlyers.size());
+
+					Flyer flyer = activeFlyers.get(flyerIdx);
 
 					Post adPost = new Post();
 
@@ -213,6 +217,8 @@ public class PostController extends BaseController {
 					} else {
 						finalFeed.add(adPost);
 					}
+					long views = flyer.getAdViews() + 1;
+					flyerDao.updateViews(views, flyer.getId());
 				}
 			}
 

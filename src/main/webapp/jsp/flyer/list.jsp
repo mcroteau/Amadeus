@@ -14,7 +14,7 @@
         <tr>
             <td>
                 <c:if test="${not empty flyer.imageUri}">
-                    <img src="/o/${flyer.imageUri}" style="width:100px;"/>
+                    <img src="/o/${flyer.imageUri}" style="width:60px;border-radius:9px;"/>
                 </c:if>
             </td>
             <td>
@@ -24,13 +24,19 @@
                 <a href="/o/flyer/edit/${flyer.id}" class="href-dotted">${flyer.pageUri}</a>
             </td>
             <td>
+                <span><strong>${flyer.adViews}</strong><br/> views</span>
+            </td>
+            <td>
+                <span><strong>${flyer.adRuns}</strong><br/> Campaigns</span>
+            </td>
+            <td>
                 <c:if test="${flyer.active}">
                     <span class="yella">Running</span>
                 </c:if>
             </td>
             <td>
                 <c:if test="${!flyer.active}">
-                    <a href="/o/flyer/staging/${flyer.id}" title="" class="button retro">Go Live</a>
+                    <a href="/o/flyer/staging/${flyer.id}" title="" class="button yella">Go Live</a>
                 </c:if>
             </td>
         </tr>

@@ -219,8 +219,9 @@ create table flyers (
 	description text,
 	image_uri text,
 	page_uri text,
+    ad_views bigint default 0,
+    active boolean,
+    ad_runs bigint default 1,
 	account_id bigint NOT NULL REFERENCES account(id),
-    start_date bigint NOT NULL,
-    ad_views bigint,
-    active boolean
+    start_date bigint NOT NULL
 );

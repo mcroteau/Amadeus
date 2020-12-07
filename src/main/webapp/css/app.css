@@ -1119,14 +1119,14 @@ input[type="submit"].button{
 
 .image-edit{
     z-index: 23;
-    left:21px;
+    left:30px;
     display: none;
     position:absolute;
 }
 
 .edit-update-button{
     z-index: 23;
-    left:105px;
+    left:116px;
     display: none;
     position:absolute;
     -webkit-box-shadow: 0px 3px 5px 0px rgba(179,179,179,0.23) !important;
@@ -3887,6 +3887,8 @@ h1.gray span{
     position:absolute;
     line-height:1.6em;
     box-shadow:none !important;
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
 }
 
 .author-ref{
@@ -3896,6 +3898,8 @@ h1.gray span{
     background:#ccc;
     padding:3px 7px;
     position:absolute;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
 }
 
 #amadeus{

@@ -33,7 +33,7 @@
         <input type="hidden" name="stripeToken" id="stripe-token" value=""/>
     </form>
 
-    <button id="start" class="button retro right-float fun" style="margin-top:20px;display:inline-block;">Pay $40</button>
+    <button id="start" class="button yella right-float fun" style="margin-top:20px;display:inline-block;">Pay $40 Go Live!</button>
     <br class="clear"/>
 
 </div>

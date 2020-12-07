@@ -13,6 +13,7 @@ import xyz.ioc.dao.AccountDao;
 import xyz.ioc.dao.FlyerDao;
 import xyz.ioc.model.Account;
 import xyz.ioc.model.Flyer;
+import xyz.ioc.service.PhoneService;
 import xyz.ioc.service.StripeService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +34,9 @@ public class FlyerController extends BaseController {
     @Autowired
     private StripeService stripeService;
 
+    @Autowired
+    private PhoneService phoneService;
+
 
     @RequestMapping(value="/flyer/create", method=RequestMethod.GET)
     public String create(){
@@ -46,8 +50,19 @@ public class FlyerController extends BaseController {
 
     @RequestMapping(value="/flyer/save", method=RequestMethod.POST)
     public String save(HttpServletRequest req,
+                          RedirectAttributes redirect,
                           @ModelAttribute("flyer") Flyer flyer,
                           @RequestParam(value="flyerImage", required=false) CommonsMultipartFile flyerImage) {
+
+        if(!authenticated()){
+            return "redirect:/uno";
+        }
+
+        if(flyer.getPageUri().contains("http://") ||
+                flyer.getPageUri().contains("https://")){
+            redirect.addFlashAttribute("Page url cannot contain http:// or https://");
+            return "redirect:/flyer/create";
+        }
 
         if(!flyerImage.isEmpty()){
             String imageUri = utilities.write(flyerImage, Constants.IMAGE_DIRECTORY);
@@ -98,17 +113,20 @@ public class FlyerController extends BaseController {
 
         if(hasPermission(Constants.FLYER_MAINTENANCE + id)) {
 
-            Account authenticatedAccount = getAuthenticatedAccount();
             long date = utilities.getCurrentDate();
 
             Flyer flyer = flyerDao.get(Long.parseLong(id));
             flyer.setStartDate(date);
             flyer.setActive(true);
+            long adRuns = flyer.getAdRuns() + 1;
+            flyer.setAdRuns(adRuns);
             flyerDao.update(flyer);
 
             stripeService.charge(stripeToken);
 
             modelMap.put("flyer", flyer);
+            phoneService.support("Super Duper!");
+
         }else{
             return "redirect:/unauthorized";
         }

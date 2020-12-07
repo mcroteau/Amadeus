@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface FlyerDao {
 
+    public long getCount();
+
     public Flyer getLast();
 
     public Flyer get(long id);
@@ -22,7 +24,7 @@ public interface FlyerDao {
 
     public List<Flyer> getActiveFlyers();
 
-    public boolean updateViews(int views, long id);
+    public boolean updateViews(long views, long id);
 
     public boolean crumpleUp(long id);
 

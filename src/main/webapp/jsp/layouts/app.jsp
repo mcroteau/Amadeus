@@ -73,7 +73,7 @@
             text-align: right;
         }
         #content-container{
-            width:470px;
+            width:570px;
         }
     </style>
 
@@ -92,7 +92,7 @@
         <div id="content-header">
 
             <p>Hello <strong>${sessionScope.account.nameUsername}</strong>!</p>
-            <a href="/o/account/edit/${sessionScope.account.id}" class="href-dotted">Back</a>&nbsp;|&nbsp;
+            <a href="/o/account/edit/${sessionScope.account.id}" class="href-dotted">Edit Profile</a>&nbsp;|&nbsp;
             <a href="/o/flyer/list/${sessionScope.account.id}" class="href-dotted">Advertisements</a>
 
         </div>

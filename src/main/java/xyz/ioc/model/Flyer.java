@@ -10,6 +10,7 @@ public class Flyer {
     long accountId;
     long startDate;
     boolean active;
+    long adRuns;
 
     public long getId() {
         return id;
@@ -75,4 +76,11 @@ public class Flyer {
         this.active = active;
     }
 
+    public long getAdRuns() {
+        return adRuns;
+    }
+
+    public void setAdRuns(long adRuns) {
+        this.adRuns = adRuns;
+    }
 }

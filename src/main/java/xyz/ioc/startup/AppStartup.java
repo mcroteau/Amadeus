@@ -50,6 +50,7 @@ public class AppStartup implements ApplicationListener<ContextRefreshedEvent>{
 		createApplicationAdministrator();
 		createApplicationGuest();
 		initializeBackgroundJobs();
+		generateAds();
 	}
 
 	private void createApplicationRoles(){
@@ -351,8 +352,8 @@ public class AppStartup implements ApplicationListener<ContextRefreshedEvent>{
 	}
 
 	private void generateAds(){
-		Flyer existing = flyerDao.getLast();
-		if (existing == null) {
+		long count = flyerDao.getCount();
+		if (count == 0) {
 			Account account = accountDao.findByUsername(Constants.ADMIN_USERNAME);
 			Flyer flyer = new Flyer();
 			flyer.setImageUri(Constants.DEFAULT_FLYER_IMAGE_URI);
@@ -360,11 +361,11 @@ public class AppStartup implements ApplicationListener<ContextRefreshedEvent>{
 			flyer.setPageUri("www.microsoft.org");
 			flyer.setStartDate(utilities.getCurrentDate());
 			flyer.setAccountId(account.getId());
-			flyer.setDescription("Duis convallis convallis");
 			Flyer savedFlyer = flyerDao.save(flyer);
+			log.info("saved flyer " + savedFlyer.getId());
 			accountDao.savePermission(account.getId(), Constants.FLYER_MAINTENANCE  + savedFlyer.getId());
 		}
-		log.info("Ads : " + flyerDao.getFlyers().size());
+		log.info("Ads : " + flyerDao.getCount());
 	}
 
 }
