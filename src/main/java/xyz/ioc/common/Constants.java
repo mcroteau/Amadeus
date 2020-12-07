@@ -14,8 +14,8 @@ public class Constants {
 	public static final String AD_JOB_TRIGGER = "AmadeusAdTrigger";
 
 	public static final String FLYER_DAO_KEY = "FlyerDao";
-	public static final int AD_JOB_DURATION = 10;
-	public static final int AD_DURATION_DIFFERENCE = 1000 * 20;
+	public static final int AD_JOB_DURATION = 1000 * 60;
+	public static final int AD_DURATION_DIFFERENCE = 1000 * 60 * 60 * 24 * 7;
 
 
 
