@@ -42,7 +42,7 @@
 	<context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-			/WEB-INF/o-db-live.xml,
+			/WEB-INF/o-db-dev.xml,
 			/WEB-INF/o-context.xml,
 			/WEB-INF/o-servlet.xml
 		</param-value>
@@ -50,10 +50,6 @@
 
 	<session-config>
 		<tracking-mode>COOKIE</tracking-mode>
-		<!--<cookie-config>
-			<name>Parakeet</name>
-			<secure>true</secure>
-		</cookie-config>-->
 	</session-config>
 
 </web-app>
