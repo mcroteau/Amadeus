@@ -11,6 +11,10 @@
         <input type="hidden" name="active" value="${flyer.active}"/>
 
 
+        <c:if test="${flyer.active}">
+            <span class="yella">Running</span>
+        </c:if>
+
         <div class="form-row">
             <c:if test="${not empty flyer.imageUri}">
                 <img src="/o/${flyer.imageUri}" style="width:300px;"/>

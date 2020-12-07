@@ -8,7 +8,7 @@
         <div class="form-row">
             <label>Pick Image</label>
             <input type="file" name="flyerImage"/>
-            <p class="information">This will be the main entry point to your web page</p>
+            <p class="information">This will be the main entry point to your page, because there is no description your make your image really sing!</p>
         </div>
 
         <div class="form-row">

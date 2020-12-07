@@ -103,4 +103,26 @@ public class FlyerJdbcDao implements FlyerDao {
 
         return flyers;
     }
+
+    @Override
+    public boolean updateViews(int views, long id) {
+        String sql = "update flyers set views = ? where id = ?";
+        try {
+            jdbcTemplate.update(sql, new Object[]{ views, id });
+        }catch(Exception e){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean crumpleUp(long id) {
+        String sql = "update flyers set active = false where id = ?";
+        try {
+            jdbcTemplate.update(sql, new Object[]{ id });
+        }catch(Exception e){
+            return false;
+        }
+        return true;
+    }
 }

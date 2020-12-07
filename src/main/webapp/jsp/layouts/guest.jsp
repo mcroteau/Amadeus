@@ -132,8 +132,8 @@
                     <br/>
                     <br/>
                     <a href="${pageContext.request.contextPath}/" class="href-dotted">Home</a>&nbsp;|&nbsp;
-                        <a href="${pageContext.request.contextPath}/flyer/list/${sessionScope.account.id}" class="href-dotted">Advertise</a>&nbsp;|&nbsp;
-                    <a href="${pageContext.request.contextPath}/account/edit/${sessionScope.account.id}" class="href-dotted">Edit Profile</a>
+                    <a href="${pageContext.request.contextPath}/account/edit/${sessionScope.account.id}" class="href-dotted">Edit Profile</a>&nbsp;|&nbsp;
+                <a href="${pageContext.request.contextPath}/flyer/list/${sessionScope.account.id}" class="href-dotted">Advertise</a>
 
                 <%}else{%>
                     <a href="${pageContext.request.contextPath}/?uri=${uri}" class="href-dotted">Signin</a>

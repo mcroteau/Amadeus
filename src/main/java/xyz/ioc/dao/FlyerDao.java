@@ -22,4 +22,8 @@ public interface FlyerDao {
 
     public List<Flyer> getActiveFlyers();
 
+    public boolean updateViews(int views, long id);
+
+    public boolean crumpleUp(long id);
+
 }

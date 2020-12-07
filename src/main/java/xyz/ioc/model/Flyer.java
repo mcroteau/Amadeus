@@ -2,20 +2,20 @@ package xyz.ioc.model;
 
 public class Flyer {
 
-    String id;
+    long id;
     String description;
     String imageUri;
     String pageUri;
-    long views;
+    long adViews;
     long accountId;
     long startDate;
     boolean active;
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -43,12 +43,12 @@ public class Flyer {
         this.pageUri = pageUri;
     }
 
-    public long getViews() {
-        return views;
+    public long getAdViews() {
+        return adViews;
     }
 
-    public void setViews(long views) {
-        this.views = views;
+    public void setAdViews(long adViews) {
+        this.adViews = adViews;
     }
 
     public long getAccountId() {

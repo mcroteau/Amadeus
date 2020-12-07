@@ -2,13 +2,22 @@ package xyz.ioc.common;
 
 public class Constants {
 
-	public static final String AMADEUS_GROUP          = "Amadeus";
-	public static final String PUBLISHING_JOB_NAME    = "AmadeusPublishing";
+	public static final String AMADEUS_GROUP = "Amadeus";
+	public static final String PUBLISHING_JOB = "AmadeusPublishingJob";
 	public static final String PUBLISHING_JOB_TRIGGER = "AmadeusPublishingTrigger";
 
-	public static final int DURATION_DIFFERENCE  = 1000 * 60 * 3;
+	public static final String POSTS_DAO_KEY = "PostsDao";
 	public static final int PUBLISH_JOB_DURATION = 60;
-	public static final String POSTS_DAO_KEY     = "PostsDao";
+	public static final int PUBLISH_DURATION_DIFFERENCE  = 1000 * 60 * 3;
+
+	public static final String AD_JOB = "AmadeusAdJob";
+	public static final String AD_JOB_TRIGGER = "AmadeusAdTrigger";
+
+	public static final String FLYER_DAO_KEY       = "FlyerDao";
+	public static final int AD_JOB_DURATION        = 20;
+	public static final int AD_DURATION_DIFFERENCE = 1000 * 60;
+
+
 
 	public static final String PASSWORD = "password";
 	public static final String ADMIN_USERNAME = "croteau.mike@gmail.com";

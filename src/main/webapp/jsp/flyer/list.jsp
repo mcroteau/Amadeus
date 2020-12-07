@@ -25,7 +25,7 @@
             </td>
             <td>
                 <c:if test="${flyer.active}">
-                    <span class="modern tiny">Running</span>
+                    <span class="yella">Running</span>
                 </c:if>
             </td>
             <td>

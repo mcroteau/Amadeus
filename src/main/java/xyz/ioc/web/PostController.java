@@ -191,28 +191,28 @@ public class PostController extends BaseController {
 				int flyerIdx = 0;
 				if (flyers.size() > 1) {
 					flyerIdx = rand.nextInt(flyers.size());
-				}
 
-				Flyer flyer = flyers.get(flyerIdx);
+					Flyer flyer = flyers.get(flyerIdx);
 
-				Post adPost = new Post();
+					Post adPost = new Post();
 
-				List<String> imageUris = new ArrayList<>();
-				imageUris.add(flyer.getImageUri());
+					List<String> imageUris = new ArrayList<>();
+					imageUris.add(flyer.getImageUri());
 
-				adPost.setImageFileUris(imageUris);
-				adPost.setAdvertisementUri(flyer.getPageUri());
-				adPost.setAdvertisement(true);
-				adPost.setShared(false);
-				adPost.setHidden(false);
-				adPost.setFlagged(false);
-				adPost.setPublished(true);
+					adPost.setImageFileUris(imageUris);
+					adPost.setAdvertisementUri(flyer.getPageUri());
+					adPost.setAdvertisement(true);
+					adPost.setShared(false);
+					adPost.setHidden(false);
+					adPost.setFlagged(false);
+					adPost.setPublished(true);
 
-				if (finalFeed.size() > 0) {
-					int feedIdx = rand.nextInt(finalFeed.size());
-					finalFeed.add(feedIdx, adPost);
-				} else {
-					finalFeed.add(adPost);
+					if (finalFeed.size() > 0) {
+						int feedIdx = rand.nextInt(finalFeed.size());
+						finalFeed.add(feedIdx, adPost);
+					} else {
+						finalFeed.add(adPost);
+					}
 				}
 			}
 

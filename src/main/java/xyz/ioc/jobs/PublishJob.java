@@ -21,7 +21,7 @@ public class PublishJob implements Job {
     @Override
     public void execute(JobExecutionContext context) {
         try {
-            JobKey jobKey = new JobKey(Constants.PUBLISHING_JOB_NAME, Constants.AMADEUS_GROUP);
+            JobKey jobKey = new JobKey(Constants.PUBLISHING_JOB, Constants.AMADEUS_GROUP);
             JobDetail jobDetail = context.getScheduler().getJobDetail(jobKey);
 
             PostDao postDao = (PostJdbcDao) jobDetail.getJobDataMap().get(Constants.POSTS_DAO_KEY);
@@ -34,7 +34,7 @@ public class PublishJob implements Job {
             List<Post> unpublished = postDao.getUnpublished();
             for(Post post : unpublished){
                 long difference = now - post.getUpdateDate();
-                if(difference > Constants.DURATION_DIFFERENCE){
+                if(difference > Constants.PUBLISH_DURATION_DIFFERENCE){
                     postDao.publish(post.getId());
                 }
             }

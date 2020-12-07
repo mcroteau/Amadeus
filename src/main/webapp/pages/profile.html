@@ -114,8 +114,7 @@
 
                     <div ng-class="{'shared': post.shared}" class="feed-content">
 
-                        <div class="post-meta" style="position: relative">
-                            <p class="edit-status tiny float-right" id="edit-status-{{id}}">Updating...</p>
+                        <div ng-if="!post.advertisement" class="post-meta" style="position: relative">
 
                             <a ng-href="#!/profile/{{post.accountId}}" href="javascript:" class="post-whois" data-id="{{post.accountId}}">
                                 <img ng-src="/o/{{post.imageUri}}"/>
@@ -133,7 +132,11 @@
 
                             <div ng-repeat="imageUri in post.imageFileUris" class="image-post-container" data-image-uri="{{imageUri}}" style="position:relative;">
                                 <a ng-click="deleteImage(post.id, imageUri)" ng-href="javascript:" ng-if="post.postEditable" class="delete-image modern edit-fade-in" data-uri="{{imageUri}}" data-id="{{post.id}}">x</a>
-                                <a href="/o/{{imageUri}}" target="_blank">
+                                <a ng-if="!post.advertisement" href="/o/{{imageUri}}" target="_blank">
+                                    <img ng-src="/o/{{imageUri}}" style="width:100%;border:solid 3px #ff0000"/>
+                                </a>
+
+                                <a ng-if="post.advertisement" href="http://{{post.advertisementUri}}" target="_blank">
                                     <img ng-src="/o/{{imageUri}}" style="width:100%"/>
                                 </a>
                             </div>
@@ -144,9 +147,11 @@
 
                             <div ng-if="!post.postEditable" style="white-space: pre-line;" class="post-comment" ng-bind-html="post.content"></div>
 
+                            <div ng-if="post.advertisement" style="padding:0px 10px 0px 30px;text-align:right"><span class="tiny">Ad</span></div>
+
                         </div>
 
-                        <div class="content-actions">
+                        <div ng-if="!post.advertisement" class="content-actions">
 
                             <div ng-if="!post.shared && post.postEditable">
                                 <a ng-click="updatePost(post.id)" href="javascript:" class="button small retro edit-update-button edit-fade-in">Update</a>
@@ -187,7 +192,7 @@
 
                         </div>
 
-                        <div class="post-separators">
+                        <div ng-if="!post.advertisement" class="post-separators">
                             <div class="post-sep post-sep-uno"></div>
                             <div class="post-sep post-sep-dos"></div>
                             <div class="post-sep post-sep-tres"></div>
@@ -207,7 +212,7 @@
                             <br class="clear"/>
                         </div>
 
-                        <div class="comments-container" style="margin-left:62px;">
+                        <div ng-if="!post.advertisement" class="comments-container" style="margin-left:62px;">
 
                             <div ng-if="post.commentsOrShareComments" class="comments-header-spacer"></div>
 
@@ -264,7 +269,7 @@
                         </div>
                     </div>
 
-                    <div ng-click="toggleActions($index)" class="post-admin-actions-wrapper" ng-if="post.shared">&Xi;
+                    <div ng-if="!post.advertisement" ng-click="toggleActions($index)" class="post-admin-actions-wrapper" ng-if="post.shared">&Xi;
                         <div ng-show="showActions[$index]" class="post-admin-actions-inner" style="position:relative;">
                             <div class="post-admin-actions">
                                 <a ng-click="unsharePost(post.postShareId)" ng-if="post.deletable"  href="javascript:" class="delete-post-share" data-id="{{post.postShareId}}">Delete Post</a>
@@ -273,7 +278,7 @@
                             </div>
                         </div>
                     </div>
-                    <div ng-click="toggleActions($index)" class="post-admin-actions-wrapper" ng-if="!post.shared">&Xi;
+                    <div ng-if="!post.advertisement" ng-click="toggleActions($index)" class="post-admin-actions-wrapper" ng-if="!post.shared">&Xi;
                         <div ng-show="showActions[$index]"  class="post-admin-actions-inner" style="position:relative;">
                             <div class="post-admin-actions">
                                 <a ng-click="deletePost(post.id)" ng-if="post.deletable" href="javascript:" class="delete-post" data-id="{{post.id}}">Delete Post</a>

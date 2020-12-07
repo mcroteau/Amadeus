@@ -106,7 +106,7 @@ public class FlyerController extends BaseController {
             flyer.setActive(true);
             flyerDao.update(flyer);
 
-            stripeService.charge(40, stripeToken, authenticatedAccount.getUsername());
+            stripeService.charge(stripeToken);
 
             modelMap.put("flyer", flyer);
         }else{

@@ -14,6 +14,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import xyz.ioc.common.Constants;
 import xyz.ioc.common.Utilities;
 import xyz.ioc.dao.*;
+import xyz.ioc.jobs.AdJob;
 import xyz.ioc.jobs.PublishJob;
 import xyz.ioc.model.*;
 
@@ -48,8 +49,7 @@ public class AppStartup implements ApplicationListener<ContextRefreshedEvent>{
 		createApplicationRoles();
 		createApplicationAdministrator();
 		createApplicationGuest();
-		initializeJobs();
-		generateAds();
+		initializeBackgroundJobs();
 	}
 
 	private void createApplicationRoles(){
@@ -110,14 +110,14 @@ public class AppStartup implements ApplicationListener<ContextRefreshedEvent>{
 	}
 
 
-	private void initializeJobs() {
+	private void initializeBackgroundJobs() {
 		try {
-			JobDetail job = JobBuilder.newJob(PublishJob.class)
-					.withIdentity(Constants.PUBLISHING_JOB_NAME, Constants.AMADEUS_GROUP).build();
+			JobDetail publishJob = JobBuilder.newJob(PublishJob.class)
+				.withIdentity(Constants.PUBLISHING_JOB, Constants.AMADEUS_GROUP).build();
 
-			job.getJobDataMap().put(Constants.POSTS_DAO_KEY, postDao);
+			publishJob.getJobDataMap().put(Constants.POSTS_DAO_KEY, postDao);
 
-			Trigger trigger = TriggerBuilder
+			Trigger publishTrigger = TriggerBuilder
 					.newTrigger()
 					.withIdentity(Constants.PUBLISHING_JOB_TRIGGER, Constants.AMADEUS_GROUP)
 					.withSchedule(
@@ -125,18 +125,40 @@ public class AppStartup implements ApplicationListener<ContextRefreshedEvent>{
 									.withIntervalInSeconds(Constants.PUBLISH_JOB_DURATION).repeatForever())
 					.build();
 
-			Scheduler scheduler = new StdSchedulerFactory().getScheduler();
-			scheduler.start();
-			scheduler.scheduleJob(job, trigger);
+			Scheduler publishScheduler = new StdSchedulerFactory().getScheduler();
+			publishScheduler.start();
+			publishScheduler.scheduleJob(publishJob, publishTrigger);
 
-			log.info("job initialized");
+			log.info("publish job repeated " + Constants.PUBLISH_JOB_DURATION + " seconds");
+
+
+
+
+
+			JobDetail adJob = JobBuilder.newJob(AdJob.class)
+				.withIdentity(Constants.AD_JOB, Constants.AMADEUS_GROUP).build();
+
+			adJob.getJobDataMap().put(Constants.FLYER_DAO_KEY, flyerDao);
+
+			Trigger adTrigger = TriggerBuilder
+					.newTrigger()
+					.withIdentity(Constants.AD_JOB_TRIGGER, Constants.AMADEUS_GROUP)
+					.withSchedule(
+							SimpleScheduleBuilder.simpleSchedule()
+									.withIntervalInSeconds(Constants.AD_JOB_DURATION).repeatForever())
+					.build();
+
+			Scheduler adScheduler = new StdSchedulerFactory().getScheduler();
+			adScheduler.start();
+			adScheduler.scheduleJob(adJob, adTrigger);
+
+			log.info("ad job repeated " + Constants.AD_JOB_DURATION + " seconds");
+
 
 		}catch(Exception e){
 			log.info("issue initializing job" + e.getMessage());
 		}
 	}
-
-
 
 
 	private void generateAppData(){
@@ -341,18 +363,6 @@ public class AppStartup implements ApplicationListener<ContextRefreshedEvent>{
 			flyer.setDescription("Duis convallis convallis");
 			Flyer savedFlyer = flyerDao.save(flyer);
 			accountDao.savePermission(account.getId(), Constants.FLYER_MAINTENANCE  + savedFlyer.getId());
-
-
-			Flyer flyer2 = new Flyer();
-			flyer2.setImageUri("images/help.jpg");
-			flyer2.setActive(true);
-			flyer2.setPageUri("www.sap.org");
-			flyer2.setStartDate(utilities.getCurrentDate());
-			flyer2.setAccountId(account.getId());
-			flyer2.setDescription("Duis convallis convallis");
-			Flyer savedFlyer2 = flyerDao.save(flyer2);
-			accountDao.savePermission(account.getId(), Constants.FLYER_MAINTENANCE  + savedFlyer2.getId());
-
 		}
 		log.info("Ads : " + flyerDao.getFlyers().size());
 	}
