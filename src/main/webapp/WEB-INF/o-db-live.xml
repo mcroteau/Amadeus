@@ -28,11 +28,25 @@
 		<constructor-arg ref="dataSource"/>
 	</bean>
 
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+<!--	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+<!--		<property name="driverClassName" value="com.mysql.jdbc.Driver" />-->
+<!--		<property name="url" value="jdbc:mysql://${db.host}:3306/${db.database}"/>-->
+<!--		<property name="username" value="${db.username}"/>-->
+<!--		<property name="password" value="${db.password}"/>-->
+<!--	</bean>-->
+
+	<bean id="dataSource" class="org.vibur.dbcp.ViburDBCPDataSource" init-method="start" destroy-method="terminate">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://${db.host}:3306/${db.database}"/>
+		<property name="jdbcUrl" value="jdbc:mysql://${db.host}:3306/${db.database}"/>
 		<property name="username" value="${db.username}"/>
 		<property name="password" value="${db.password}"/>
+		<property name="poolInitialSize">10</property>
+		<property name="poolMaxSize">100</property>
+		<property name="connectionIdleLimitInSeconds">30</property>
+		<property name="testConnectionQuery">isValid</property>
+		<property name="logQueryExecutionLongerThanMs" value="500"/>
+		<property name="logStackTraceForLongQueryExecution" value="true"/>
+		<property name="statementCacheMaxSize" value="200"/>
 	</bean>
 
 </beans>
