@@ -19,6 +19,9 @@ public class PublishJob implements Job {
     @Override
     public void execute(JobExecutionContext context) {
         try {
+
+            log.info("************ executing publish job ************");
+
             JobKey jobKey = new JobKey(Constants.PUBLISHING_JOB, Constants.AMADEUS_GROUP);
             JobDetail jobDetail = context.getScheduler().getJobDetail(jobKey);
 
@@ -36,6 +39,8 @@ public class PublishJob implements Job {
                     postDao.publish(post.getId());
                 }
             }
+
+            log.info("************ publish job complete ************");
 
         } catch (Exception e) {
             e.printStackTrace();
