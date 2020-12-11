@@ -126,10 +126,13 @@ public class AppStartup implements ApplicationListener<ContextRefreshedEvent>{
 					.build();
 
 			Scheduler publishScheduler = new StdSchedulerFactory().getScheduler();
-			publishScheduler.start();
-			publishScheduler.scheduleJob(publishJob, publishTrigger);
 
-			log.info("publish job repeated " + Constants.PUBLISH_JOB_DURATION + " seconds");
+			JobKey pubKey = new JobKey(Constants.PUBLISHING_JOB, Constants.AMADEUS_GROUP);
+			if(!publishScheduler.checkExists(pubKey)) {
+				publishScheduler.start();
+				publishScheduler.scheduleJob(publishJob, publishTrigger);
+				log.info("publish job repeated " + Constants.PUBLISH_JOB_DURATION + " seconds");
+			}
 
 
 
@@ -149,11 +152,12 @@ public class AppStartup implements ApplicationListener<ContextRefreshedEvent>{
 					.build();
 
 			Scheduler adScheduler = new StdSchedulerFactory().getScheduler();
-			adScheduler.start();
-			adScheduler.scheduleJob(adJob, adTrigger);
-
-			log.info("ad job repeated " + Constants.AD_JOB_DURATION + " seconds");
-
+			JobKey adKey = new JobKey(Constants.AD_JOB, Constants.AMADEUS_GROUP);
+			if(!adScheduler.checkExists(adKey)) {
+				adScheduler.start();
+				adScheduler.scheduleJob(adJob, adTrigger);
+				log.info("ad job repeated " + Constants.AD_JOB_DURATION + " seconds");
+			}
 
 		}catch(Exception e){
 			log.info("issue initializing job" + e.getMessage());
