@@ -12,6 +12,7 @@ import social.amadeus.common.Utilities;
 import social.amadeus.dao.AccountDao;
 import social.amadeus.model.Account;
 import social.amadeus.model.Flyer;
+import social.amadeus.service.AuthService;
 import social.amadeus.service.PhoneService;
 import social.amadeus.service.StripeService;
 
@@ -19,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
-public class FlyerController extends BaseController {
+public class FlyerController {
 
     @Autowired
     private Utilities utilities;
@@ -36,11 +37,14 @@ public class FlyerController extends BaseController {
     @Autowired
     private PhoneService phoneService;
 
+    @Autowired
+    private AuthService authService;
+
 
     @RequestMapping(value="/flyer/create", method=RequestMethod.GET)
     public String create(){
 
-        if(!authenticated()){
+        if(!authService.isAuthenticated()){
             return "redirect:/uno";
         }
 
@@ -53,7 +57,7 @@ public class FlyerController extends BaseController {
                           @ModelAttribute("flyer") Flyer flyer,
                           @RequestParam(value="flyerImage", required=false) CommonsMultipartFile flyerImage) {
 
-        if(!authenticated()){
+        if(!authService.isAuthenticated()){
             return "redirect:/uno";
         }
 
@@ -68,7 +72,7 @@ public class FlyerController extends BaseController {
             flyer.setImageUri(imageUri);
         }
 
-        Account authenticatedAccount = getAuthenticatedAccount();
+        Account authenticatedAccount = authService.getAccount();
         flyer.setAccountId(authenticatedAccount.getId());
 
         Flyer persistedFlyer = flyerDao.save(flyer);
@@ -81,7 +85,8 @@ public class FlyerController extends BaseController {
     @RequestMapping(value="/flyer/staging/{id}", method=RequestMethod.GET)
     public String staging(ModelMap modelMap, @PathVariable String id){
 
-        if(hasPermission(Constants.FLYER_MAINTENANCE + id)) {
+        String permission = Constants.FLYER_MAINTENANCE + id;
+        if(authService.hasPermission(permission)) {
             Flyer flyer = flyerDao.get(Long.parseLong(id));
             modelMap.put("flyer", flyer);
         }else{
@@ -94,7 +99,8 @@ public class FlyerController extends BaseController {
     @RequestMapping(value="/flyer/edit/{id}", method=RequestMethod.GET)
     public String edit(ModelMap modelMap, @PathVariable String id){
 
-        if(hasPermission(Constants.FLYER_MAINTENANCE + id)) {
+        String permission = Constants.FLYER_MAINTENANCE + id;
+        if(authService.hasPermission(permission)) {
             Flyer flyer = flyerDao.get(Long.parseLong(id));
             modelMap.put("flyer", flyer);
         }else{
@@ -110,7 +116,8 @@ public class FlyerController extends BaseController {
                          @RequestParam(value="id") String id,
                          @RequestParam(value="stripeToken") String stripeToken){
 
-        if(hasPermission(Constants.FLYER_MAINTENANCE + id)) {
+        String permission = Constants.FLYER_MAINTENANCE + id;
+        if(authService.hasPermission(permission)) {
 
             long date = utilities.getCurrentDate();
 
@@ -136,7 +143,9 @@ public class FlyerController extends BaseController {
 
     @RequestMapping(value="/flyer/live/{id}", method=RequestMethod.GET)
     public String live(ModelMap modelMap, @PathVariable String id){
-        if(hasPermission(Constants.FLYER_MAINTENANCE + id)) {
+
+        String permission = Constants.FLYER_MAINTENANCE + id;
+        if(authService.hasPermission(permission)) {
             Flyer flyer = flyerDao.get(Long.parseLong(id));
             modelMap.put("flyer", flyer);
         }else{
@@ -152,7 +161,8 @@ public class FlyerController extends BaseController {
                          final RedirectAttributes redirect,
                          @RequestParam(value="flyerImage", required=true) CommonsMultipartFile flyerImage) {
 
-        if(hasPermission(Constants.FLYER_MAINTENANCE + flyer.getId())) {
+        String permission = Constants.FLYER_MAINTENANCE + flyer.getId();
+        if(authService.hasPermission(permission)) {
 
             if(flyer.getPageUri().contains("http://") ||
                     flyer.getPageUri().contains("https://")){
@@ -176,7 +186,7 @@ public class FlyerController extends BaseController {
     @RequestMapping(value="/admin/flyer/list", method=RequestMethod.GET)
     public String flyers(ModelMap modelMap){
 
-        if(!administrator()){
+        if(!authService.isAdministrator()){
             return "redirect:/unauthorized";
         }
 
@@ -189,7 +199,7 @@ public class FlyerController extends BaseController {
     @RequestMapping(value="/flyer/list/{id}", method=RequestMethod.GET)
     public String flyers(ModelMap modelMap, @PathVariable String id){
 
-        if(!authenticated()){
+        if(!authService.isAuthenticated()){
             return "redirect:/uno";
         }
 

@@ -15,6 +15,7 @@ import social.amadeus.common.Utilities;
 import social.amadeus.model.Account;
 import social.amadeus.model.Friend;
 import social.amadeus.model.FriendInvite;
+import social.amadeus.service.AuthService;
 import social.amadeus.service.EmailService;
 import social.amadeus.dao.FriendDao;
 import social.amadeus.dao.MessageDao;
@@ -25,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class FriendController extends BaseController {
+public class FriendController {
 
     private static final Logger log = Logger.getLogger(FriendController.class);
 
@@ -42,6 +43,9 @@ public class FriendController extends BaseController {
     @Autowired
     private MessageDao messageDao;
 
+    @Autowired
+    private AuthService authService;
+
 
     @RequestMapping(value="/friend/invitations", method=RequestMethod.GET, produces="application/json")
     public @ResponseBody String invitations(ModelMap model,
@@ -51,12 +55,12 @@ public class FriendController extends BaseController {
         Map<String, Object> data = new HashMap<String, Object>();
         Gson gson = new Gson();
 
-        if(!authenticated()){
+        if(!authService.isAuthenticated()){
             data.put("error", "Authentication required");
             return gson.toJson(data);
         }
 
-        Account account = getAuthenticatedAccount();
+        Account account = authService.getAccount();
 
         List<FriendInvite> invites = friendDao.invites(account.getId());
         for(FriendInvite invite : invites){
@@ -79,13 +83,13 @@ public class FriendController extends BaseController {
         Map<String, Object> response = new HashMap<String, Object>();
         Gson gson = new Gson();
 
-        if(!authenticated()){
+        if(!authService.isAuthenticated()){
             response.put("error", "authentication required");
             String error = gson.toJson(response);
             return error;
         }
 
-        Account authenticatedAccount = getAuthenticatedAccount();
+        Account authenticatedAccount = authService.getAccount();
 
         if(friendDao.invite(authenticatedAccount.getId(), Long.parseLong(id), utilities.getCurrentDate())){
             response.put("success", true);
@@ -108,12 +112,12 @@ public class FriendController extends BaseController {
         Map<String, Object> data = new HashMap<String, Object>();
         Gson gson = new Gson();
 
-        if(!authenticated()){
+        if(!authService.isAuthenticated()){
             data.put("error", true);
             return gson.toJson(data);
         }
 
-        Account authenticatedAccount = getAuthenticatedAccount();
+        Account authenticatedAccount = authService.getAccount();
 
         if(friendDao.accept(Long.parseLong(id), authenticatedAccount.getId(), utilities.getCurrentDate())) {
             data.put("success", true);
@@ -136,13 +140,13 @@ public class FriendController extends BaseController {
         Map<String, Object> data = new HashMap<String, Object>();
         Gson gson = new Gson();
 
-        if(!authenticated()){
+        if(!authService.isAuthenticated()){
             data.put("error", true);
             String error = gson.toJson(data);
             return error;
         }
 
-        Account account = getAuthenticatedAccount();
+        Account account = authService.getAccount();
 
         boolean ignored = friendDao.ignore(Long.parseLong(id), account.getId(), utilities.getCurrentDate());
 
@@ -160,13 +164,13 @@ public class FriendController extends BaseController {
         Map<String, Object> data = new HashMap<String, Object>();
         Gson gson = new Gson();
 
-        if(!authenticated()){
+        if(!authService.isAuthenticated()){
             data.put("error", true);
             String error = gson.toJson(data);
             return error;
         }
 
-        Account account = getAuthenticatedAccount();
+        Account account = authService.getAccount();
         boolean success = friendDao.removeConnection(account.getId(), Long.parseLong(id));
 
         data.put("success", success);
@@ -185,14 +189,14 @@ public class FriendController extends BaseController {
         Map<String, Object> data = new HashMap<String, Object>();
         Gson gson = new Gson();
 
-        if(!authenticated()){
+        if(!authService.isAuthenticated()){
             data.put("error", "authentication required");
             return gson.toJson(data);
         }
 
         List<Friend> friends = friendDao.getFriends(Long.parseLong(id));
         for(Friend friend : friends){
-            if(messageDao.hasMessages(friend.getFriendId(), getAuthenticatedAccount().getId()))
+            if(messageDao.hasMessages(friend.getFriendId(), authService.getAccount().getId()))
                 friend.setHasMessages(true);
         }
 

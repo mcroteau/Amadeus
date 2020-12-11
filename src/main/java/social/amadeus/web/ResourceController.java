@@ -11,6 +11,7 @@ import social.amadeus.common.Constants;
 import social.amadeus.common.Utilities;
 import social.amadeus.dao.*;
 import social.amadeus.model.*;
+import social.amadeus.service.AuthService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class ResourceController extends BaseController {
+public class ResourceController {
 
     private static final Logger log = Logger.getLogger(ResourceController.class);
 
@@ -40,13 +41,16 @@ public class ResourceController extends BaseController {
     @Autowired
     private ResourceDao resourceDao;
 
+    @Autowired
+    private AuthService authService;
+
     @RequestMapping(value="/resource", method=RequestMethod.GET)
     public String resource(ModelMap model,
                                          HttpServletRequest request,
                                          final RedirectAttributes redirect,
                                          @RequestParam(value="uri", required = false ) String uri){
 
-        if(!authenticated())
+        if(!authService.isAuthenticated())
             return "redirect:/uno?uri=" + uri;
 
         model.addAttribute("uri", uri);
@@ -60,14 +64,14 @@ public class ResourceController extends BaseController {
                                          final RedirectAttributes redirect,
                                          @RequestParam(value="uri", required = true ) String uri){
 
-        if(!authenticated())
+        if(!authService.isAuthenticated())
             return "redirect:/signin?uri=" + uri;
 
         Resource existingResource = resourceDao.get(uri);
         if(existingResource == null){
             Resource resource = new Resource();
             resource.setUri(uri);
-            resource.setAccountId(getAuthenticatedAccount().getId());
+            resource.setAccountId(authService.getAccount().getId());
             resource.setDateAdded(utilities.getCurrentDate());
             resourceDao.save(resource);
         }
@@ -75,7 +79,7 @@ public class ResourceController extends BaseController {
         Resource savedResource = resourceDao.get(uri);
         ResourceLike resourceLike = new ResourceLike();
         resourceLike.setResourceId(savedResource.getId());
-        resourceLike.setAccountId(getAuthenticatedAccount().getId());
+        resourceLike.setAccountId(authService.getAccount().getId());
         resourceLike.setDateLiked(utilities.getCurrentDate());
 
         if(!resourceDao.liked(resourceLike))
@@ -93,14 +97,14 @@ public class ResourceController extends BaseController {
                                      @RequestParam(value="uri", required = true ) String uri,
                                      @RequestParam(value="comment", required = true ) String comment){
 
-        if(!authenticated())
+        if(!authService.isAuthenticated())
             return "redirect:/signin?uri=" + uri;
 
         Resource resource = resourceDao.get(uri);
         if(resource == null){
             Resource r = new Resource();
             r.setUri(uri);
-            r.setAccountId(getAuthenticatedAccount().getId());
+            r.setAccountId(authService.getAccount().getId());
             r.setDateAdded(utilities.getCurrentDate());
             resourceDao.save(r);
         }
@@ -108,18 +112,18 @@ public class ResourceController extends BaseController {
         Resource savedResource = resourceDao.get(uri);
 
         Post post = new Post();
-        post.setAccountId(getAuthenticatedAccount().getId());
+        post.setAccountId(authService.getAccount().getId());
         post.setContent("<p class=\"post-comment\" style=\"white-space: pre-line\">" + uri + "<br/>" + comment + "</p>");
         post.setDatePosted(utilities.getCurrentDate());
         Post savedPost = postDao.save(post);
 
-        accountDao.savePermission(getAuthenticatedAccount().getId(), Constants.POST_MAINTENANCE + savedPost.getId());
+        accountDao.savePermission(authService.getAccount().getId(), Constants.POST_MAINTENANCE + savedPost.getId());
 
         ResourceShare resourceShare = new ResourceShare();
         resourceShare.setComment(comment);
         resourceShare.setResourceId(savedResource.getId());
         resourceShare.setPostId(savedPost.getId());
-        resourceShare.setAccountId(getAuthenticatedAccount().getId());
+        resourceShare.setAccountId(authService.getAccount().getId());
         resourceShare.setDateShared(utilities.getCurrentDate());
         resourceDao.share(resourceShare);
 
@@ -181,12 +185,12 @@ public class ResourceController extends BaseController {
         Map<String, Object> data = new HashMap<String, Object>();
         Gson gson = new Gson();
 
-        if(!authenticated()){
+        if(!authService.isAuthenticated()){
             data.put("error", "Authentication required");
             return gson.toJson(data);
         }
 
-        Account account = getAuthenticatedAccount();
+        Account account = authService.getAccount();
 
         if(q != null){
 

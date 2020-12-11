@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import social.amadeus.common.Utilities;
 import social.amadeus.model.Account;
+import social.amadeus.service.AuthService;
 import social.amadeus.service.EmailService;
 import social.amadeus.service.PhoneService;
 
@@ -18,9 +19,12 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @Controller
-public class AppController extends BaseController {
+public class AppController {
 
 	private static final Logger log = Logger.getLogger(AppController.class);
+
+	@Autowired
+	private Utilities utilities;
 
 	@Autowired
 	private PhoneService phoneService;
@@ -29,7 +33,7 @@ public class AppController extends BaseController {
 	private EmailService emailService;
 
 	@Autowired
-	private Utilities utilities;
+	private AuthService authService;
 
 
 	@RequestMapping(value="/", method=RequestMethod.GET)
@@ -39,11 +43,11 @@ public class AppController extends BaseController {
 						 HttpServletResponse resp,
 						 final RedirectAttributes redirect){
 
-		if(!authenticated()){
+		if(!authService.isAuthenticated()){
 			return "redirect:/uno";
 		}
 
-		Account account = getAuthenticatedAccount();
+		Account account = authService.getAccount();
 		if(account.isDisabled()) {
 			return "redirect:/account/edit/" + account.getId();
 		}
@@ -62,11 +66,11 @@ public class AppController extends BaseController {
 	@RequestMapping(value="/mobile", method=RequestMethod.GET)
 	public String mobile(Device device, HttpServletRequest req){
 
-		if(!authenticated()){
+		if(!authService.isAuthenticated()){
 			return "app/uno";
 		}
 
-		Account account = getAuthenticatedAccount();
+		Account account = authService.getAccount();
 		if(account.isDisabled()) {
 			return "redirect:/account/edit/" + account.getId();
 		}
@@ -152,12 +156,12 @@ public class AppController extends BaseController {
 			final RedirectAttributes redirect,
 			ModelMap model){
 
-		if(!authenticated()){
+		if(!authService.isAuthenticated()){
 			redirect.addFlashAttribute("error", "Please signin to continue...");
 			return "redirect:/signin";
 		}
 
-		Account account = getAuthenticatedAccount();
+		Account account = authService.getAccount();
 
 		if (emails.equals("")) {
 			redirect.addFlashAttribute("error", "Please enter valid email addresses");

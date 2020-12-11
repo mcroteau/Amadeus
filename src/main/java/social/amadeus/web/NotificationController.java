@@ -13,12 +13,13 @@ import social.amadeus.dao.NotificationDao;
 import social.amadeus.model.Account;
 import social.amadeus.dao.AccountDao;
 import social.amadeus.dao.FriendDao;
+import social.amadeus.service.AuthService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Controller
-public class NotificationController extends BaseController {
+public class NotificationController {
 
     private static final Logger log = Logger.getLogger(NotificationController.class);
 
@@ -30,6 +31,9 @@ public class NotificationController extends BaseController {
 
     @Autowired
     private NotificationDao notificationDao;
+
+    @Autowired
+    private AuthService authService;
     
 
     @RequestMapping(value="/notifications/clear", method=RequestMethod.DELETE,  produces="application/json")
@@ -40,12 +44,12 @@ public class NotificationController extends BaseController {
         Map<String, Object> data = new HashMap<String, Object>();
         Gson gson = new Gson();
 
-        if(!authenticated()){
+        if(!authService.isAuthenticated()){
             data.put("error", "authentication required");
             return gson.toJson(data);
         }
 
-        Account authenticatedAccount = getAuthenticatedAccount();
+        Account authenticatedAccount = authService.getAccount();
 
         if(notificationDao.clearNotifications(authenticatedAccount.getId())){
             data.put("success", true);

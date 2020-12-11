@@ -21,9 +21,10 @@ import java.util.HashMap;
 import io.github.mcroteau.Parakeet;
 import social.amadeus.model.Account;
 import social.amadeus.dao.AccountDao;
+import social.amadeus.service.AuthService;
 
 @Controller
-public class AuthController extends BaseController {
+public class AuthController {
 
 	private static final Logger log = Logger.getLogger(AuthController.class);
 
@@ -34,6 +35,9 @@ public class AuthController extends BaseController {
 
 	@Autowired
 	private AccountDao accountDao;
+
+	@Autowired
+	private AuthService authService;
 
 
 	@RequestMapping(value="/authenticate", method=RequestMethod.POST)
@@ -95,7 +99,7 @@ public class AuthController extends BaseController {
 				return gson.toJson(response);
 			}
 
-			Account authenticatedAccount = getAuthenticatedAccount();
+			Account authenticatedAccount = authService.getAccount();
 			response.put("profile", authenticatedAccount);
 
 		} catch ( Exception e ) { 

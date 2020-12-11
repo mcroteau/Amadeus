@@ -21,13 +21,14 @@ import social.amadeus.common.Constants;
 import social.amadeus.common.Utilities;
 import social.amadeus.dao.*;
 import social.amadeus.model.*;
+import social.amadeus.service.AuthService;
 import social.amadeus.service.EmailService;
 import social.amadeus.service.PhoneService;
 import social.amadeus.service.ReCaptchaService;
 
 
 @Controller
-public class AccountController extends BaseController {
+public class AccountController {
 
 	private static final Logger log = Logger.getLogger(AccountController.class);
 
@@ -70,17 +71,20 @@ public class AccountController extends BaseController {
 	@Autowired
 	private ReCaptchaService reCaptchaService;
 
+	@Autowired
+	private AuthService authService;
+
 
     @RequestMapping(value="/account/info", method=RequestMethod.GET)
     public @ResponseBody String info(ModelMap model, HttpServletRequest request){
 
-        if(!authenticated()){
+        if(!authService.isAuthenticated()){
             Map<String, String> data = new HashMap<String, String>();
             data.put("error", "Not authenticated");
             return gson.toJson(data);
         }
 
-        Account account = getAuthenticatedAccount();
+        Account account = authService.getAccount();
         return gson.toJson(account);
     }
 
@@ -94,7 +98,7 @@ public class AccountController extends BaseController {
 				    @RequestParam(value="max", required = false ) String max,
 				    @RequestParam(value="page", required = false ) String page){
 
-		if(!administrator()){
+		if(!authService.isAdministrator()){
 			redirect.addFlashAttribute("error", "You are not administrator.");
 			return "redirect:/";
 		}
@@ -139,8 +143,9 @@ public class AccountController extends BaseController {
 						 final RedirectAttributes redirect,
 					     @PathVariable String id){
 
-		if(administrator() || 
-				hasPermission(Constants.ACCOUNT_MAINTENANCE + id)){
+		String permission = Constants.ACCOUNT_MAINTENANCE + id;
+		if(authService.isAdministrator() ||
+				authService.hasPermission(permission)){
 
 			Account account = accountDao.get(Long.parseLong(id));
 			model.addAttribute("account", account);
@@ -161,9 +166,9 @@ public class AccountController extends BaseController {
 					     	@PathVariable String id){
 
 
-		if(administrator() ||
-				hasPermission("account:maintenance:" + id)){
-
+    	String permission = Constants.ACCOUNT_MAINTENANCE + id;
+		if(authService.isAdministrator() ||
+				authService.hasPermission(permission)){
 
 			Account account = accountDao.get(Long.parseLong(id));
 
@@ -191,8 +196,9 @@ public class AccountController extends BaseController {
 
 		String imageFileUri = "";
 
-		if(administrator() || 
-				hasPermission(Constants.ACCOUNT_MAINTENANCE + id)){
+		String permission = Constants.ACCOUNT_MAINTENANCE + id;
+		if(authService.isAdministrator() ||
+				authService.hasPermission(permission)){
 
 
 			if(uploadedProfileImage != null &&
@@ -243,8 +249,9 @@ public class AccountController extends BaseController {
 						 final RedirectAttributes redirect,
 					     @PathVariable String id){
 
-		if(administrator() || 
-				hasPermission("account:maintenance:" + id)){
+		String permission = Constants.ACCOUNT_MAINTENANCE + id;
+		if(authService.isAdministrator() ||
+				authService.hasPermission(permission)){
 
 			Account account = accountDao.get(Long.parseLong(id));
 			model.addAttribute("account", account);
@@ -263,7 +270,7 @@ public class AccountController extends BaseController {
 							 ModelMap model,
 					   		 HttpServletRequest request,
 					  	 	 final RedirectAttributes redirect // @RequestParam("image") CommonsMultipartFile file
-			   				 ){
+								 ){
 		
 		if(account.getPassword().length() < 7){
 		 	redirect.addFlashAttribute("account", account);
@@ -271,8 +278,10 @@ public class AccountController extends BaseController {
 			return "redirect:/signup";
 		}
 
-		if(administrator() || 
-				hasPermission("account:maintenance:" + account.getId())){
+
+		String permission = Constants.ACCOUNT_MAINTENANCE + account.getId();
+		if(authService.isAdministrator() ||
+				authService.hasPermission(permission)){
 			
 			if(!account.getPassword().equals("")){
 				String password = utilities.hash(account.getPassword());
@@ -295,7 +304,7 @@ public class AccountController extends BaseController {
 								  final RedirectAttributes redirect,
 								  @PathVariable String id) {
 
-		if(!administrator()){
+		if(!authService.isAdministrator()){
 			redirect.addFlashAttribute("error", "You don't hava permissionsa...");
 			return "redirect:/admin/accounts";
 		}
@@ -499,13 +508,13 @@ public class AccountController extends BaseController {
 
 		Map<String, Object> data = new HashMap<String, Object>();
 
-		if(!authenticated()){
+		if(!authService.isAuthenticated()){
 			data.put("error", "Authentication required");
 			return gson.toJson(data);
 		}
 
 		Account account = accountDao.get(Long.parseLong(id));
-		Account authenticatedAccount = getAuthenticatedAccount();
+		Account authenticatedAccount = authService.getAccount();
 
 		if(account.getId() == authenticatedAccount.getId()){
 			account.setOwnersAccount(true);
@@ -525,7 +534,7 @@ public class AccountController extends BaseController {
 
 		List<Friend> friends = friendDao.getFriends(Long.parseLong(id));
         for(Friend friend : friends){
-            if(messageDao.hasMessages(friend.getFriendId(), getAuthenticatedAccount().getId()))
+            if(messageDao.hasMessages(friend.getFriendId(), authService.getAccount().getId()))
                 friend.setHasMessages(true);
         }
 
@@ -648,7 +657,7 @@ public class AccountController extends BaseController {
 		try {
 
 			if(parakeet.login(Constants.GUEST_USERNAME, Constants.GUEST_PASSWORD)) {
-				Account sessionAccount = getAuthenticatedAccount();
+				Account sessionAccount = authService.getAccount();
 //				parakeet.store("account", sessionAccount);
 //				parakeet.store("imageUri", sessionAccount.getImageUri());
 
@@ -678,12 +687,12 @@ public class AccountController extends BaseController {
 		Gson gson = new Gson();
 		Map<String, Object> responseData = new HashMap<String, Object>();
 
-		if(!authenticated()){
+		if(!authService.isAuthenticated()){
 			responseData.put("error", "authentication required");
 			return gson.toJson(responseData);
 		}
 
-		Account account = getAuthenticatedAccount();
+		Account account = authService.getAccount();
 
 		ProfileLike profileLike = new ProfileLike();
 		profileLike.setLikerId(account.getId());
@@ -723,12 +732,12 @@ public class AccountController extends BaseController {
 		Gson gson = new Gson();
 		Map<String, Object> resp = new HashMap<String, Object>();
 
-		if(!authenticated()){
+		if(!authService.isAuthenticated()){
 			resp.put("error", "authentication required");
 			return gson.toJson(resp);
 		}
 
-		Account account = getAuthenticatedAccount();
+		Account account = authService.getAccount();
 
 		if(account.getId() == Long.parseLong(id)){
 			resp.put("error", "cannot block yourself b");
@@ -761,12 +770,12 @@ public class AccountController extends BaseController {
 
     	Map<String, Object> data = new HashMap<String, Object>();
 
-		if(!authenticated()){
+		if(!authService.isAuthenticated()){
 			data.put("error", "authentication required");
 			return gson.toJson(data);
 		}
 
-		Account account = getAuthenticatedAccount();
+		Account account = authService.getAccount();
 
 		List<Post> latestPostsTiny = getLatestPostsSkinny(account, request);
 		List<Notification> notifications = getNotifications(account);
@@ -838,12 +847,12 @@ public class AccountController extends BaseController {
 										final RedirectAttributes redirect){
 		Map<String, Object> viewsData = new HashMap<String, Object>();
 
-		if(!authenticated()){
+		if(!authService.isAuthenticated()){
 			viewsData.put("error", "Authentication required");
 			return gson.toJson(viewsData);
 		}
 
-		Account account = getAuthenticatedAccount();
+		Account account = authService.getAccount();
 
 		long end = utilities.getCurrentDate();
 
@@ -884,7 +893,7 @@ public class AccountController extends BaseController {
 	public String suspend(ModelMap model,
 					   final RedirectAttributes redirect,
 					   @PathVariable String id){
-		if(!administrator()){
+		if(!authService.isAdministrator()){
 			redirect.addFlashAttribute("message", "You don't have permission to do this!");
 			return "redirect:/account/profile/" + id;
 		}
@@ -903,7 +912,7 @@ public class AccountController extends BaseController {
 						  final RedirectAttributes redirect,
 						  @PathVariable String id){
 
-		if(!administrator()){
+		if(!authService.isAdministrator()){
 			redirect.addFlashAttribute("message", "You don't have permission to do this!");
 			return "redirect:/account/profile/" + id;
 		}

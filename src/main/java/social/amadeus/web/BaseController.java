@@ -22,19 +22,19 @@ public class BaseController {
 	public AccountDao accountDao;
 
 
-	public boolean administrator(){
+	public boolean administratord(){
 		return parakeet.hasRole(Constants.ROLE_ADMIN);
 	}	
 
-	public boolean authenticated(){
+	public boolean authenticatedd(){
 		return parakeet.isAuthenticated();
 	}
 
-	public boolean hasPermission(String str){
+	public boolean hasPermissiond(String str){
 		return parakeet.hasPermission(str);
 	}
 
-	public Account getAuthenticatedAccount(){
+	public Account getAuthenticatedAccountd(){
 		String user = parakeet.getUser();
 		Account account = accountDao.findByUsername(user);
 		return account;
