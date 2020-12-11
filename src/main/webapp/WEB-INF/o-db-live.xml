@@ -40,10 +40,10 @@
 		<property name="jdbcUrl" value="jdbc:mysql://${db.host}:3306/${db.database}"/>
 		<property name="username" value="${db.username}"/>
 		<property name="password" value="${db.password}"/>
-		<property name="poolInitialSize">10</property>
-		<property name="poolMaxSize">100</property>
-		<property name="connectionIdleLimitInSeconds">30</property>
-		<property name="testConnectionQuery">isValid</property>
+		<property name="poolInitialSize" value="10"/>
+		<property name="poolMaxSize" value="100"/>
+		<property name="connectionIdleLimitInSeconds" value="30"/>
+		<property name="testConnectionQuery" value="isValid"/>
 		<property name="logQueryExecutionLongerThanMs" value="500"/>
 		<property name="logStackTraceForLongQueryExecution" value="true"/>
 		<property name="statementCacheMaxSize" value="200"/>

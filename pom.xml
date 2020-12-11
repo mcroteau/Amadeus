@@ -252,6 +252,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.vibur</groupId>
+			<artifactId>vibur-dbcp</artifactId>
+			<version>25.0</version>
+		</dependency>
+
+		<dependency>
 			<groupId>com.plivo</groupId>
 			<artifactId>plivo-java</artifactId>
 			<version>${plivo.version}</version>
