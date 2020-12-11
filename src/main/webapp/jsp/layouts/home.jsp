@@ -3,7 +3,7 @@
 <%@ taglib prefix="parakeet" uri="/META-INF/tags/parakeet.tld"%>
 
 <%@ page import="io.github.mcroteau.Parakeet" %>
-<%@ page import="xyz.ioc.common.BeanLookup" %>
+<%@ page import="social.amadeus.common.BeanLookup" %>
 
 <html>
 <head>

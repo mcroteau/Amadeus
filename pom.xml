@@ -324,7 +324,7 @@
                 </includes>
             </resource>
             <resource>
-                <directory>src/main/resources/db</directory>
+                <directory>src/main/resources/database</directory>
                 <includes>
                     <include>create-db.sql</include>
                 </includes>

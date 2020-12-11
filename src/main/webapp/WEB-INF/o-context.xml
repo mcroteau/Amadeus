@@ -23,16 +23,22 @@
 	</bean>  
 
 	
-	<bean id="utilities" class="xyz.ioc.common.Utilities"/>
-	<bean id="emailService" class="xyz.ioc.service.EmailService"/>
-	<bean id="phoneService" class="xyz.ioc.service.PhoneService"/>
-	<bean id="stripeService" class="xyz.ioc.service.StripeService"/>
-	<bean id="reCaptchaService" class="xyz.ioc.service.ReCaptchaService"/>
-	<bean id="appStartup" class="xyz.ioc.startup.AppStartup"/>
-	<bean id="publish" class="xyz.ioc.jobs.PublishJob"/>
-	<bean id="sessionManager" class="xyz.ioc.common.SessionManager" scope="singleton"/>
+	<bean id="utilities" class="social.amadeus.common.Utilities"/>
 
-	<bean id="amadeusAccessor" class="xyz.ioc.accessor.AmadeusAccessor"/>
+	<bean id="emailService" class="social.amadeus.service.EmailService"/>
+	<bean id="phoneService" class="social.amadeus.service.PhoneService"/>
+	<bean id="stripeService" class="social.amadeus.service.StripeService"/>
+	<bean id="reCaptchaService" class="social.amadeus.service.ReCaptchaService"/>
+	<bean id="authService" class="social.amadeus.service.AuthService"/>
+
+	<bean id="appStartup" class="social.amadeus.startup.AppStartup"/>
+
+	<bean id="publishJob" class="social.amadeus.jobs.PublishJob"/>
+	<bean id="adJob" class="social.amadeus.jobs.AdJob"/>
+
+	<bean id="sessionManager" class="social.amadeus.common.SessionManager" scope="singleton"/>
+
+	<bean id="amadeusAccessor" class="social.amadeus.accessor.AmadeusAccessor"/>
 
 	<bean id="parakeet" class="io.github.mcroteau.Parakeet" scope="singleton">
 		<constructor-arg name="accessor" ref="amadeusAccessor"/>
