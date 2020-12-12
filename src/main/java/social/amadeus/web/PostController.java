@@ -111,24 +111,92 @@ public class PostController {
 			return gson.toJson(responseData);
 		}
 
-		Account authenticatedAccount = authService.getAccount();
-//		Map<String, Object> activityData = postService.getActivity(authenticatedAccount, req);
-
 		long start = utilities.getPreviousDay(14);
 		long end = utilities.getCurrentDate();
 
-		List<Post> postsPre = postDao.getActivity(start, end, authenticatedAccount.getId());
+		List<Post> postsPre = postDao.getActivity(start, end, authService.getAccount().getId());
 		List<Post> posts = populatePostData(postsPre);
 
-		List<PostShare> postShares = postDao.getPostShares(start, end, authenticatedAccount.getId());
+		List<PostShare> postShares = postDao.getPostShares(start, end, authService.getAccount().getId());
 		List<Post> postsShared = getPopulatedSharedPosts(postShares);
 
-		List<Post> flyerPosts = getFlyerPosts();
+		List<Post> activityFeedPre = new ArrayList<>();
+		activityFeedPre.addAll(posts);
+		activityFeedPre.addAll(postsShared);
 
+		List<Post> activityFeed = getFlyerPosts(activityFeedPre);
+		List<Account> femalesMales = getFemalesMales(activityFeed);
 
-		return gson.toJson(activityData);
+		Map<String, Object> data = new HashMap<>();
+		data.put("activities", activityFeed);
+		data.put("femsfellas", femalesMales);
+
+		return gson.toJson(data);
 
 	}
+
+	private List<Account> getFemalesMales(List<Post> activityFeed){
+		Map<Long, Account> femalesMalesMap = new HashMap<>();
+		for (Post post : activityFeed) {
+			Account account = new Account();
+			account.setId(post.getAccountId());
+			account.setName(post.getName());
+			account.setImageUri(post.getImageUri());
+			if (femalesMalesMap.containsKey(post.getAccountId())) {
+				int count = femalesMalesMap.get(post.getAccountId()).getCount() + 1;
+				account.setCount(count);
+				femalesMalesMap.put(post.getAccountId(), account);
+			} else {
+				account.setCount(1);
+				femalesMalesMap.put(post.getAccountId(), account);
+			}
+		}
+
+		List<Account> femalesMales = new ArrayList<Account>();
+		for (Account femfella : femalesMalesMap.values()) {
+			femalesMales.add(femfella);
+		}
+		return femalesMales;
+	}
+
+	private List<Post> getFlyerPosts(List<Post> activityFeed){
+		Random rand = new Random();
+
+		int adIdx = rand.nextInt(4);
+		if (adIdx == 2) {
+			List<Post> flyerPosts = new ArrayList<Post>();
+			List<Flyer> activeFlyers = flyerDao.getActiveFlyers();
+
+			int flyerIdx = 0;
+			if (activeFlyers.size() > 0) {
+
+				flyerIdx = rand.nextInt(activeFlyers.size());
+
+				Flyer flyer = activeFlyers.get(flyerIdx);
+
+				Post adPost = new Post();
+
+				List<String> imageUris = new ArrayList<>();
+				imageUris.add(flyer.getImageUri());
+
+				adPost.setImageFileUris(imageUris);
+				adPost.setAdvertisementUri(flyer.getPageUri());
+				adPost.setAdvertisement(true);
+				adPost.setPublished(true);
+
+				if (activityFeed.size() > 0) {
+					int feedIdx = rand.nextInt(activityFeed.size());
+					activityFeed.add(feedIdx, adPost);
+				} else {
+					activityFeed.add(adPost);
+				}
+				long views = flyer.getAdViews() + 1;
+				flyerDao.updateViews(views, flyer.getId());
+			}
+		}
+		return activityFeed;
+	}
+
 
 	private List<Post> populatePostData(List<Post> posts){
 		posts.stream().forEach(post -> setPostData(post));
@@ -143,15 +211,16 @@ public class PostController {
 		setPostComments(post);
 		setMultimedia(post);
 		setAccountData(post);
+		log.info("image uri " + post.getImageUri());
 		return post;
 	}
 
-	private Post setPostShareData(Post post){
+	private Post setPostShareData(Post post, PostShare postShare){
 		setTimeAgo(post);
 		setLikes(post);
 		setShares(post);
 		setSharedPostActions(post);
-		setPostShareComments(post);
+		setPostShareComments(post, postShare);
 		setMultimedia(post);
 		setAccountData(post);
 		return post;
@@ -162,7 +231,7 @@ public class PostController {
 		List<Post> sharedPosts = new ArrayList<Post>();
 		for(PostShare postShare: postShares){
 			Post post = postDao.get(postShare.getPostId());
-			setPostShareData(post);
+			setPostShareData(post, postShare);
 			sharedPosts.add(post);
 		}
 		return sharedPosts;
@@ -218,7 +287,7 @@ public class PostController {
 		return post;
 	}
 
-	private Post setPostShareComments(Post post){
+	private Post setPostShareComments(Post post, PostShare postShare){
 		List<PostShareComment> postShareComments = postDao.getPostShareComments(postShare.getId());
 
 		for (PostShareComment postShareComment : postShareComments) {
@@ -541,17 +610,20 @@ public class PostController {
 
 		Post savedPost = postDao.save(post);
 		accountDao.savePermission(account.getId(), Constants.POST_MAINTENANCE  + savedPost.getId());
-		postService.populatePost(savedPost, account, account);
+//		postService.populatePost(savedPost, account, account);
+		Post populatedPost = setPostData(savedPost);
+//		postDao.update(populatedPost);
+
+
 
 		for(String imageUri: imageUris){
 			PostImage postImage = new PostImage();
-			postImage.setPostId(savedPost.getId());
+			postImage.setPostId(populatedPost.getId());
 			postImage.setUri(imageUri);
 			postImage.setDate(date);
 			postDao.saveImage(postImage);
 		}
-		savedPost.setImageFileUris(imageUris);
-		postDao.update(savedPost);
+		populatedPost.setImageFileUris(imageUris);
 
         return gson.toJson(savedPost);
 	}
