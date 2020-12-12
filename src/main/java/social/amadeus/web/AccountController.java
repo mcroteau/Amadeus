@@ -310,7 +310,7 @@ public class AccountController {
 		}
 
 		Account account = accountDao.get(Long.parseLong(id));
-		List<Post> posts = postDao.fetchUserPosts(Long.parseLong(id));
+		List<Post> posts = postDao.getUserPosts(Long.parseLong(id));
 		for(Post post : posts){
 			postDao.hide(post.getId());
 			postDao.removePostShares(post.getId());
@@ -830,10 +830,10 @@ public class AccountController {
 		List<Post> latestPosts = new ArrayList<Post>();
 
 		try {
-			if (request.getSession().getAttribute("feed-request-time") != null) {
-				long start = (Long) request.getSession().getAttribute("feed-request-time");
+			if (request.getSession().getAttribute(Constants.ACTIVITY_REQUEST_TIME) != null) {
+				long start = (Long) request.getSession().getAttribute(Constants.ACTIVITY_REQUEST_TIME);
 				long end = utilities.getCurrentDate();
-				latestPosts = postDao.getLatestPostsSkinny(start, end, account.getId());
+				latestPosts = postDao.getLatestSkinny(start, end, account.getId());
 			}
 		}catch(Exception e){}
 

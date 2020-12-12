@@ -1,4 +1,4 @@
-package social.amadeus.startup;
+package social.amadeus;
 
 import org.apache.log4j.Logger;
 
@@ -8,9 +8,8 @@ import java.util.Random;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
 
+import org.springframework.core.env.Environment;
 import social.amadeus.dao.*;
 import social.amadeus.jobs.AdJob;
 import social.amadeus.jobs.PublishJob;
@@ -18,10 +17,11 @@ import social.amadeus.model.*;
 import social.amadeus.common.Constants;
 import social.amadeus.common.Utilities;
 
+import javax.annotation.PostConstruct;
 
-public class AppStartup implements ApplicationListener<ContextRefreshedEvent>{
+public class AppRunner {
 
-	private static final Logger log = Logger.getLogger(AppStartup.class);
+	private static final Logger log = Logger.getLogger(AppRunner.class);
 
 	@Autowired
 	public RoleDao roleDao;
@@ -44,13 +44,31 @@ public class AppStartup implements ApplicationListener<ContextRefreshedEvent>{
 	@Autowired
 	public Utilities utilities;
 
+	@Autowired
+	private Environment env;
 
-	public void onApplicationEvent(ContextRefreshedEvent contextRefreshEvent) {
+
+	@PostConstruct
+	public void init() {
 		createApplicationRoles();
 		createApplicationAdministrator();
 		createApplicationGuest();
-		startupBackgroundJobs();
+
+		if(!isTestEnvironment()) {
+			startupBackgroundJobs();
+		}
 	}
+
+	private boolean isTestEnvironment(){
+		String[] profiles = env.getActiveProfiles();
+		for(String profile: profiles){
+			if(profile.equals("test")){
+				return true;
+			}
+		}
+		return false;
+	}
+
 
 	private void createApplicationRoles(){
 		Role adminRole = roleDao.find(Constants.ROLE_ADMIN);
@@ -267,7 +285,7 @@ public class AppStartup implements ApplicationListener<ContextRefreshedEvent>{
 	
 	private void generateMockPosts(){
 		
-		if(postDao.count() == 0) {
+		if(postDao.getCount() == 0) {
 			List<Account> accounts = accountDao.findAll();
 			
 			for(Account account : accounts){
@@ -281,7 +299,7 @@ public class AppStartup implements ApplicationListener<ContextRefreshedEvent>{
 
 					StringBuilder sb = new StringBuilder();
 					for(int n = 0; n < 7; n++){
-						sb.append("The Lazy Fox jumped over the yellow dog and laughed. ");
+						sb.append("The Lazy Fox jumped over the yellow dog. ");
 					}
 					post.setContent(sb.toString());
 
@@ -295,7 +313,7 @@ public class AppStartup implements ApplicationListener<ContextRefreshedEvent>{
 			}
 		}
 		
-		log.info("Posts : " + postDao.count());
+		log.info("Posts : " + postDao.getCount());
 	}
 
 

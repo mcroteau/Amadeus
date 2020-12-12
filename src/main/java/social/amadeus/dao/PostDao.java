@@ -8,15 +8,15 @@ public interface PostDao {
 
 	public long id();
 
-	public long count();
+	public long getCount();
 	
 	public Post get(long id);
 	
-	public List<Post> feed(long start, long end, long accountId);
+	public List<Post> getActivity(long start, long end, long accountId);
 
-	public List<Post> getLatestPostsSkinny(long start, long end, long accountId);
+	public List<Post> getLatestSkinny(long start, long end, long accountId);
 
-	public List<Post> fetchUserPosts(long accountId);
+	public List<Post> getUserPosts(long accountId);
 	
 	public Post save(Post post);
 

@@ -25,6 +25,7 @@ import social.amadeus.dao.*;
 import social.amadeus.model.*;
 import social.amadeus.service.AuthService;
 import social.amadeus.service.EmailService;
+import social.amadeus.service.PostService;
 
 import java.text.ParseException;
 import java.util.regex.Matcher;
@@ -48,6 +49,8 @@ public class PostController {
 					+ "[\\p{Alnum}.,%_=?&#\\-+()\\[\\]\\*$~@!:/{};']*)",
 			Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 
+
+	Gson gson = new Gson();
 
 	@Autowired
 	private PostDao postDao;
@@ -79,6 +82,9 @@ public class PostController {
 	@Autowired
 	private AuthService authService;
 
+	@Autowired
+	private PostService postService;
+
 
 
 	//Germany is trying to get us all into one big group and use corporate espionage, so I don't need help right now.
@@ -91,169 +97,23 @@ public class PostController {
 		Post post = postDao.get(Long.parseLong(id));
 		Account account = accountDao.get(post.getAccountId());
 		Account authenticatedAccount = authService.getAccount();
-		Post populated = populatePost(post, account, authenticatedAccount);
+		Post populated = postService.populatePost(post, account, authenticatedAccount);
 		return gson.toJson(populated);
 	}
 	
 
 	@RequestMapping(value="/activity", method=RequestMethod.GET, produces="application/json")
-	public @ResponseBody String posts(HttpServletRequest request){
-
-		Gson gson = new Gson();
-		Map<String, Object> responseData = new HashMap<String, Object>();
+	public @ResponseBody String posts(HttpServletRequest req){
 
 		if(!authService.isAuthenticated()){
+			Map<String, Object> responseData = new HashMap<String, Object>();
 			responseData.put("error", "authentication required");
 			return gson.toJson(responseData);
 		}
 
-		try{
-
-			Account account = authService.getAccount();
-
-			long start = utilities.getPrevious14Days();
-			long end = utilities.getCurrentDate();
-
-			List<Post> posts = postDao.feed(start, end, account.getId());
-			for(Post post : posts){
-				Account postedAccount = accountDao.get(post.getAccountId());
-				populatePost(post, postedAccount, account);
-			}
-
-			List<PostShare> postShares = postDao.getPostShares(start, end, account.getId());
-
-			for(PostShare postShare: postShares){
-				Post post = postDao.get(postShare.getPostId());
-				post.setPostShareId(postShare.getId());
-
-				Account postedAccount = accountDao.get(post.getAccountId());
-
-				populatePostShare(post, postShare, postedAccount, account);
-
-				post.setShared(true);
-
-				post.setSharedComment(postShare.getComment());
-
-				Account acc = accountDao.get(postShare.getAccountId());
-				post.setSharedAccountId(postShare.getAccountId());
-				post.setSharedAccount(acc.getName());
-				post.setSharedImageUri(acc.getImageUri());
-
-				SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_SEARCH_FORMAT);
-				Date date = format.parse(Long.toString(postShare.getDateShared()));
-
-				PrettyTime p = new PrettyTime();
-				post.setTimeSharedAgo(p.format(date));
-				post.setDatePosted(postShare.getDateShared());
-
-				if(postShare.getAccountId() == account.getId()){
-					post.setDeletable(true);
-				}
-
-				Account authenticatedAccount = authService.getAccount();
-				if(postShare.getAccountId() == authenticatedAccount.getId()){
-					post.setPostShareEditable(true);
-				}
-
-				posts.add(post);
-			}
-
-
-			Comparator<Post> comparator = new Comparator<Post>() {
-				@Override
-				public int compare(Post a1, Post a2) {
-					Long p1 = new Long(a1.getDatePosted());
-					Long p2 = new Long(a2.getDatePosted());
-					return p2.compareTo(p1);
-				}
-			};
-
-
-			Collections.sort(posts, comparator);
-			List<Post> finalFeed = new ArrayList<Post>();
-
-			request.getSession().setAttribute("feed-request-time", utilities.getCurrentDate());
-
-			for(Post post : posts){
-				if(sessionManager.sessions.containsKey(post.getUsername())){
-					post.setStatus("active");
-				}else{
-					post.setStatus("logged-out");
-				}
-				if(!post.isHidden() && !post.isFlagged()){
-					finalFeed.add(post);
-				}
-			}
-
-			Random rand = new Random();
-
-			int adIdx = rand.nextInt(2);
-			if(adIdx == 1) {
-
-				List<Flyer> activeFlyers = flyerDao.getActiveFlyers();
-
-				int flyerIdx = 0;
-				if (activeFlyers.size() > 0) {
-
-					flyerIdx = rand.nextInt(activeFlyers.size());
-
-					Flyer flyer = activeFlyers.get(flyerIdx);
-
-					Post adPost = new Post();
-
-					List<String> imageUris = new ArrayList<>();
-					imageUris.add(flyer.getImageUri());
-
-					adPost.setImageFileUris(imageUris);
-					adPost.setAdvertisementUri(flyer.getPageUri());
-					adPost.setAdvertisement(true);
-					adPost.setShared(false);
-					adPost.setHidden(false);
-					adPost.setFlagged(false);
-					adPost.setPublished(true);
-
-					if (finalFeed.size() > 0) {
-						int feedIdx = rand.nextInt(finalFeed.size());
-						finalFeed.add(feedIdx, adPost);
-					} else {
-						finalFeed.add(adPost);
-					}
-					long views = flyer.getAdViews() + 1;
-					flyerDao.updateViews(views, flyer.getId());
-				}
-			}
-
-			Map<Long, Account> femsfellasMap = new HashMap<Long, Account>();
-			List<Account> femsfellas = new ArrayList<Account>();
-			for(Post post : posts){
-				Account femfella = new Account();
-				femfella.setId(post.getAccountId());
-				femfella.setName(post.getName());
-				femfella.setImageUri(post.getImageUri());
-				if(femsfellasMap.containsKey(post.getAccountId())){
-					int count = femsfellasMap.get(post.getAccountId()).getCount() + 1;
-					femfella.setCount(count);
-					femsfellasMap.put(post.getAccountId(), femfella);
-				}else{
-					femfella.setCount(1);
-					femsfellasMap.put(post.getAccountId(), femfella);
-				}
-			}
-
-			for (Account femfella : femsfellasMap.values()) {
-				femsfellas.add(femfella);
-			}
-
-
-			responseData.put("activities", finalFeed);
-			responseData.put("femsfellas", femsfellas);
-
-			return gson.toJson(responseData);
-
-    	}catch(ParseException e){
-    		e.printStackTrace();
-			return gson.toJson(responseData);
-    	}
+		Account authenticatedAccount = authService.getAccount();
+		Map<String, Object> activityData = postService.getActivity(authenticatedAccount, req);
+		return gson.toJson(activityData);
 
 	}
 
@@ -275,14 +135,14 @@ public class PostController {
 
 			Account authenticatedAccount = authService.getAccount();
 
-			if(request.getSession().getAttribute("feed-request-time") != null) {
-				long start = (Long) request.getSession().getAttribute("feed-request-time");
+			if(request.getSession().getAttribute(Constants.ACTIVITY_REQUEST_TIME) != null) {
+				long start = (Long) request.getSession().getAttribute(Constants.ACTIVITY_REQUEST_TIME);
 				long end = utilities.getCurrentDate();
 
-				feed = postDao.feed(start, end, authenticatedAccount.getId());
+				feed = postDao.getActivity(start, end, authenticatedAccount.getId());
 				for (Post post : feed) {
 					Account postedAccount = accountDao.get(post.getAccountId());
-					populatePost(post, postedAccount, authenticatedAccount);
+					postService.populatePost(post, postedAccount, authenticatedAccount);
 				}
 
 				List<PostShare> postShares = postDao.getPostShares(start, end, authenticatedAccount.getId());
@@ -297,7 +157,7 @@ public class PostController {
 					post.setSharedAccount(acc.getName());
 					post.setSharedImageUri(acc.getImageUri());
 
-					populatePost(post, acc, authenticatedAccount);
+					postService.populatePost(post, acc, authenticatedAccount);
 
 					SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_SEARCH_FORMAT);
 					Date date = format.parse(Long.toString(postShare.getDateShared()));
@@ -348,12 +208,12 @@ public class PostController {
 
 			Account account = authService.getAccount();
 
-			List<Post> posts = postDao.fetchUserPosts(Long.parseLong(id));
+			List<Post> posts = postDao.getUserPosts(Long.parseLong(id));
 			List<Post> populatedPosts = new ArrayList<Post>();
 
 			for(Post post : posts){
 				Account postedAccount = accountDao.get(post.getAccountId());
-				Post populated = populatePost(post, postedAccount, account);
+				Post populated = postService.populatePost(post, postedAccount, account);
 				populatedPosts.add(populated);
 			}
 
@@ -365,7 +225,7 @@ public class PostController {
 
 				Account postedAccount = accountDao.get(post.getAccountId());
 
-				populatePostShare(post, postShare, postedAccount, account);
+				postService.populatePostShare(post, postShare, postedAccount, account);
 
 				post.setShared(true);
 
@@ -403,7 +263,7 @@ public class PostController {
 			Collections.sort(populatedPosts, comparator);
 			List<Post> userPosts = new ArrayList<Post>();
 
-			request.getSession().setAttribute("feed-request-time", utilities.getCurrentDate());
+			request.getSession().setAttribute(Constants.ACTIVITY_REQUEST_TIME, utilities.getCurrentDate());
 
 			for(Post post : populatedPosts){
 				if(sessionManager.sessions.containsKey(post.getUsername())){
@@ -425,141 +285,6 @@ public class PostController {
 
 	}
 
-
-
-	private Post populatePost(Post post, Account postAccount, Account authenticatedAccount){
-		try {
-
-			SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_SEARCH_FORMAT);
-			Date date = format.parse(Long.toString(post.getDatePosted()));
-
-			PrettyTime p = new PrettyTime();
-			post.setTimeAgo(p.format(date));
-
-			long likes = postDao.likes(post.getId());
-			post.setLikes(likes);
-
-			PostLike postLike = new PostLike();
-			postLike.setPostId(post.getId());
-			postLike.setAccountId(authenticatedAccount.getId());
-			boolean existingPostLike = postDao.liked(postLike);
-			if (existingPostLike) {
-				post.setLiked(true);
-			}
-
-			long shares = postDao.shares(post.getId());
-			post.setShares(shares);
-
-			post.setAccountId(postAccount.getId());
-			post.setImageUri(postAccount.getImageUri());
-			post.setName(postAccount.getName());
-			post.setUsername(postAccount.getUsername());
-
-			if(post.getAccountId() == authenticatedAccount.getId()){
-				post.setDeletable(true);
-				post.setPostEditable(true);
-			}else{
-				post.setDeletable(false);
-			}
-
-			List<PostComment> postComments = postDao.getPostComments(post.getId());
-
-			for (PostComment postComment : postComments) {
-				if(postComment.getAccountId() == authenticatedAccount.getId()){
-					postComment.setCommentDeletable(true);
-				}
-				postComment.setCommentId(postComment.getId());//used for front end
-			}
-
-			post.setComments(postComments);
-
-			List<HiddenPost> hiddenPosts = postDao.getHiddenPosts(post.getId(), authenticatedAccount.getId());
-			if(hiddenPosts.size() > 0){
-				post.setHidden(true);
-			}
-
-			if(postComments.size() > 0)post.setCommentsOrShareComments(true);
-
-			retrieveMultimedia(post);
-
-		}catch(Exception e){ }
-
-		return post;
-	}
-
-
-	private Post populatePostShare(Post post, PostShare postShare, Account postAccount, Account authenticatedAccount){
-		try {
-
-			//this and previous written in a hurry, needs help.
-			SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_SEARCH_FORMAT);
-			Date date = format.parse(Long.toString(post.getDatePosted()));
-
-			PrettyTime p = new PrettyTime();
-			post.setTimeAgo(p.format(date));
-
-			long likes = postDao.likes(post.getId());
-			post.setLikes(likes);
-
-			PostLike postLike = new PostLike();
-			postLike.setPostId(post.getId());
-			postLike.setAccountId(postAccount.getId());
-			boolean existingPostLike = postDao.liked(postLike);
-			if (existingPostLike) {
-				post.setLiked(true);
-			}
-
-			long shares = postDao.shares(post.getId());
-			post.setShares(shares);
-
-			post.setAccountId(postAccount.getId());
-			post.setImageUri(postAccount.getImageUri());
-			post.setName(postAccount.getName());
-			post.setUsername(postAccount.getUsername());
-
-			if(post.getAccountId() == authenticatedAccount.getId()){
-				post.setDeletable(true);
-			}else{
-				post.setDeletable(false);
-			}
-
-			List<PostShareComment> postShareComments = postDao.getPostShareComments(postShare.getId());
-
-			for (PostShareComment postShareComment : postShareComments) {
-				if(postShareComment.getAccountId() == authenticatedAccount.getId()){
-					postShareComment.setCommentDeletable(true);
-				}
-				postShareComment.setCommentId(postShareComment.getId());
-			}
-
-			post.setShareComments(postShareComments);
-
-			List<HiddenPost> hiddenPosts = postDao.getHiddenPosts(post.getId(), authenticatedAccount.getId());
-			if(hiddenPosts.size() > 0){
-				post.setHidden(true);
-			}
-
-			if(postShareComments.size() > 0)post.setCommentsOrShareComments(true);
-
-			retrieveMultimedia(post);
-
-		}catch(Exception e){ }
-
-		return post;
-	}
-
-
-	private Post retrieveMultimedia(Post post){
-		List<PostImage> postImages = postDao.getImages(post.getId());
-		List<String> imageUris = new ArrayList<String>();
-
-		for(PostImage postImage : postImages){
-			imageUris.add(postImage.getUri());
-		}
-		post.setImageFileUris(imageUris);
-
-		return post;
-	}
 
 
 	@RequestMapping(value="/post/share", method=RequestMethod.POST, produces="application/json")
@@ -665,7 +390,7 @@ public class PostController {
 
 		Post savedPost = postDao.save(post);
 		accountDao.savePermission(account.getId(), Constants.POST_MAINTENANCE  + savedPost.getId());
-		populatePost(savedPost, account, account);
+		postService.populatePost(savedPost, account, account);
 
 		for(String imageUri: imageUris){
 			PostImage postImage = new PostImage();
@@ -1132,7 +857,7 @@ public class PostController {
 
 		Post post = postDao.getFlaggedPost(Long.parseLong(id));
 		Account account = accountDao.get(post.getAccountId());
-		Post populatedPost = populatePost(post, account, authService.getAccount());
+		Post populatedPost = postService.populatePost(post, account, authService.getAccount());
 		model.addAttribute("post", populatedPost);
 		return "admin/review_post";
 	}

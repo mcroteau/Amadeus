@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,6 +18,8 @@ import social.amadeus.dao.PostDao;
 import social.amadeus.model.*;
 
 public class PostJdbcDao implements PostDao {
+
+	private static final Logger log = Logger.getLogger(PostJdbcDao.class);
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -54,7 +57,7 @@ public class PostJdbcDao implements PostDao {
 	}
 
 
-	public long count() {
+	public long getCount() {
 		String sql = "select count(*) from posts";
 		long count = jdbcTemplate.queryForObject(sql, new Object[] { }, Long.class);
 	 	return count; 
@@ -97,7 +100,7 @@ public class PostJdbcDao implements PostDao {
 	}
 
 
-	public List<Post> feed(long start, long end, long accountId){
+	public List<Post> getActivity(long start, long end, long accountId){
 		
 		List<Friend> friends = friendDao.getFriends(accountId);
 		Set<Long> ids = new HashSet<Long>();
@@ -107,13 +110,14 @@ public class PostJdbcDao implements PostDao {
 		}
 
 		ids.add(accountId);
+
 		String idsString = StringUtils.join(ids, ",");
 
-		String sql = "select p.id, p.account_id, p.content, p.date_posted, p.image_file_uri, p.music_file_uri, p.video_file_uri, p.hidden, p.flagged, p.published," +
+		String sql = "select p.id, p.account_id, p.content, p.date_posted, p.music_file_uri, p.video_file_uri, p.hidden, p.flagged, p.published," +
 					"a.image_uri, a.name, a.username from " +
 						"posts p inner join account a on p.account_id = a.id " +
-							"where account_id in (" + idsString + ") " +
-								"and p.date_posted between " + start + " and " + end + " and published = true order by p.date_posted desc";
+							"where p.flagged = false and p.hidden = false and published = true and account_id in (" + idsString + ") " +
+								"and p.date_posted between " + start + " and " + end + " order by p.date_posted desc";
 
 		List<Post> feed = jdbcTemplate.query(sql, new BeanPropertyRowMapper<Post>(Post.class));
 
@@ -122,7 +126,7 @@ public class PostJdbcDao implements PostDao {
 
 
 
-	public List<Post> getLatestPostsSkinny(long start, long end, long accountId){
+	public List<Post> getLatestSkinny(long start, long end, long accountId){
 
 		List<Friend> friends = friendDao.getFriends(accountId);
 		Set<Long> ids = new HashSet<Long>();
@@ -146,11 +150,11 @@ public class PostJdbcDao implements PostDao {
 
 
 	@Override
-	public List<Post> fetchUserPosts(long accountId) {
+	public List<Post> getUserPosts(long accountId) {
 		String sql = "select p.id, p.account_id, p.content, p.date_posted, p.image_file_uri, p.music_file_uri, p.video_file_uri, p.hidden, p.flagged, p.published, " +
 				"a.image_uri, a.name, a.username from " +
 				"posts p inner join account a on p.account_id = a.id " +
-				"where account_id = ? order by p.date_posted desc";
+				"where p.flagged = false and p.hidden = false and account_id = ? order by p.date_posted desc";
 
 		List<Post> posts = jdbcTemplate.query(sql, new Object[]{ accountId }, new BeanPropertyRowMapper<Post>(Post.class));
 

@@ -18,6 +18,7 @@ public class Constants {
 	public static final int AD_DURATION_DIFFERENCE = 1000 * 60 * 60 * 24 * 7;
 
 
+	public static final String ACTIVITY_REQUEST_TIME = "activity-request-time";
 
 	public static final String PASSWORD = "password";
 	public static final String ADMIN_USERNAME = "croteau.mike@gmail.com";
