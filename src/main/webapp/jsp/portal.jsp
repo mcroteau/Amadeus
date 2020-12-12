@@ -684,7 +684,7 @@
             $scope.profile = response.data.profile
             $scope.friends = response.data.friends
 
-            $http.get("/o/posts/" + self.id).then(function(response){
+            $http.get("/o/account/posts/" + self.id).then(function(response){
                 $scope.activities = response.data
                 $timeout(setAnchors, 1300)
             })

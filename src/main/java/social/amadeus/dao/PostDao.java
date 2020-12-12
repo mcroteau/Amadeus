@@ -42,11 +42,11 @@ public interface PostDao {
 
 	public long shares(long id);
 
-	public PostShare share(PostShare postShare);
+	public PostShare sharePost(PostShare postShare);
 
 	public List<PostShare> getPostShares(long start, long end, long accountId);
 
-	public List<PostShare> fetchUserPostShares(long accountId);
+	public List<PostShare> getUserPostShares(long accountId);
 
 	public PostShare getPostShare(long postShareId);
 

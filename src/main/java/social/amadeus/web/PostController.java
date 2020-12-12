@@ -68,9 +68,6 @@ public class PostController {
 	private Utilities utilities;
 
 	@Autowired
-	private SessionManager sessionManager;
-
-	@Autowired
 	private NotificationDao notificationDao;
 
 	@Autowired
@@ -98,8 +95,8 @@ public class PostController {
 		Account account = accountDao.get(post.getAccountId());
 		Account authenticatedAccount = authService.getAccount();
 //		Post populated = postService.populatePost(post, account, authenticatedAccount);
-		Post populatedPost = setPostData(post);
-		return gson.toJson(populated);
+		Post populatedPost = postService.setPostData(post, authenticatedAccount);
+		return gson.toJson(populatedPost);
 	}
 	
 
@@ -112,246 +109,13 @@ public class PostController {
 			return gson.toJson(responseData);
 		}
 
-		long start = utilities.getPreviousDay(14);
-		long end = utilities.getCurrentDate();
+		Account authdAccount = authService.getAccount();
+		req.getSession().setAttribute(Constants.ACTIVITY_REQUEST_TIME, utilities.getCurrentDate());
+		Map<String, Object> respData = postService.getActivity(authdAccount);
 
-		List<Post> postsPre = postDao.getActivity(start, end, authService.getAccount().getId());
-		List<Post> posts = populatePostData(postsPre);
-
-		List<PostShare> postShares = postDao.getPostShares(start, end, authService.getAccount().getId());
-		List<Post> postsShared = getPopulatedSharedPosts(postShares);
-
-		List<Post> activityFeedPre = new ArrayList<>();
-		activityFeedPre.addAll(posts);
-		activityFeedPre.addAll(postsShared);
-
-		List<Post> activityFeed = getFlyerPosts(activityFeedPre);
-		List<Post> activityFeedSorted = getSortedActivities();
-
-		List<Account> femalesMales = getFemalesMales(activityFeed);
-
-		Map<String, Object> data = new HashMap<>();
-		data.put("activities", activityFeedSorted);
-		data.put("femsfellas", femalesMales);
-
-		return gson.toJson(data);
-
+		return gson.toJson(respData);
 	}
 
-	private List<Post> getSortedActivities(List<Post> activityFeed){
-		Comparator<Post> comparator = new Comparator<Post>() {
-			@Override
-			public int compare(Post a1, Post a2) {
-				Long p1 = a1.getDatePosted();
-				Long p2 = a2.getDatePosted();
-				return p2.compareTo(p1);
-			}
-		};
-		Collections.sort(activityFeed, comparator);
-		return activityFeed;
-	}
-
-
-	private List<Account> getFemalesMales(List<Post> activityFeed){
-		Map<Long, Account> femalesMalesMap = new HashMap<>();
-		for (Post post : activityFeed) {
-			Account account = new Account();
-			account.setId(post.getAccountId());
-			account.setName(post.getName());
-			account.setImageUri(post.getImageUri());
-			if (femalesMalesMap.containsKey(post.getAccountId())) {
-				int count = femalesMalesMap.get(post.getAccountId()).getCount() + 1;
-				account.setCount(count);
-				femalesMalesMap.put(post.getAccountId(), account);
-			} else {
-				account.setCount(1);
-				femalesMalesMap.put(post.getAccountId(), account);
-			}
-		}
-
-		List<Account> femalesMales = new ArrayList<Account>();
-		for (Account femfella : femalesMalesMap.values()) {
-			femalesMales.add(femfella);
-		}
-		return femalesMales;
-	}
-
-	private List<Post> getFlyerPosts(List<Post> activityFeed){
-		Random rand = new Random();
-
-		int adIdx = rand.nextInt(4);
-		if (adIdx == 2) {
-			List<Post> flyerPosts = new ArrayList<Post>();
-			List<Flyer> activeFlyers = flyerDao.getActiveFlyers();
-
-			int flyerIdx = 0;
-			if (activeFlyers.size() > 0) {
-
-				flyerIdx = rand.nextInt(activeFlyers.size());
-
-				Flyer flyer = activeFlyers.get(flyerIdx);
-
-				Post adPost = new Post();
-
-				List<String> imageUris = new ArrayList<>();
-				imageUris.add(flyer.getImageUri());
-
-				adPost.setImageFileUris(imageUris);
-				adPost.setAdvertisementUri(flyer.getPageUri());
-				adPost.setAdvertisement(true);
-				adPost.setPublished(true);
-
-				if (activityFeed.size() > 0) {
-					int feedIdx = rand.nextInt(activityFeed.size());
-					activityFeed.add(feedIdx, adPost);
-				} else {
-					activityFeed.add(adPost);
-				}
-				long views = flyer.getAdViews() + 1;
-				flyerDao.updateViews(views, flyer.getId());
-			}
-		}
-		return activityFeed;
-	}
-
-
-	private List<Post> populatePostData(List<Post> posts){
-		posts.stream().forEach(post -> setPostData(post));
-		return posts;
-	}
-
-	private Post setPostData(Post post){
-		setTimeAgo(post);
-		setLikes(post);
-		setShares(post);
-		setPostActions(post);
-		setPostComments(post);
-		setMultimedia(post);
-		setAccountData(post);
-		log.info("image uri " + post.getImageUri());
-		return post;
-	}
-
-	private Post setPostShareData(Post post, PostShare postShare){
-		setTimeAgo(post);
-		setLikes(post);
-		setShares(post);
-		setSharedPostActions(post);
-		setPostShareComments(post, postShare);
-		setMultimedia(post);
-		setAccountData(post);
-		return post;
-	}
-
-
-	private List<Post> getPopulatedSharedPosts(List<PostShare> postShares){
-		List<Post> sharedPosts = new ArrayList<Post>();
-		for(PostShare postShare: postShares){
-			Post post = postDao.get(postShare.getPostId());
-			setPostShareData(post, postShare);
-			sharedPosts.add(post);
-		}
-		return sharedPosts;
-	}
-
-
-	private Post setLikes(Post post){
-		long likes = postDao.likes(post.getId());
-		post.setLikes(likes);
-
-		PostLike postLike = new PostLike();
-		postLike.setPostId(post.getId());
-		postLike.setAccountId(authService.getAccount().getId());
-
-		if (postDao.liked(postLike)) post.setLiked(true);
-
-		return post;
-	}
-
-	private Post setShares(Post post){
-		long shares = postDao.shares(post.getId());
-		post.setShares(shares);
-		return post;
-	}
-
-	private Post setPostActions(Post post){
-		if(post.getAccountId() == authService.getAccount().getId()){
-			post.setDeletable(true);
-			post.setPostEditable(true);
-		}
-		return post;
-	}
-
-	private Post setSharedPostActions(Post post){
-		if(post.getAccountId() == authService.getAccount().getId()){
-			post.setDeletable(true);
-		}
-		return post;
-	}
-
-	private Post setPostComments(Post post){
-
-		List<PostComment> postComments = postDao.getPostComments(post.getId());
-		for (PostComment postComment : postComments) {
-			if(postComment.getAccountId() == authService.getAccount().getId()){
-				postComment.setCommentDeletable(true);
-			}
-			postComment.setCommentId(postComment.getId());//used for front end
-		}
-		post.setComments(postComments);
-		if(postComments.size() > 0)post.setCommentsOrShareComments(true);
-
-		return post;
-	}
-
-	private Post setPostShareComments(Post post, PostShare postShare){
-		List<PostShareComment> postShareComments = postDao.getPostShareComments(postShare.getId());
-
-		for (PostShareComment postShareComment : postShareComments) {
-			if(postShareComment.getAccountId() == authService.getAccount().getId()){
-				postShareComment.setCommentDeletable(true);
-			}
-			postShareComment.setCommentId(postShareComment.getId());
-		}
-
-		post.setShareComments(postShareComments);
-		if(postShareComments.size() > 0)post.setCommentsOrShareComments(true);
-		return post;
-	}
-
-	private Post setMultimedia(Post post){
-		List<PostImage> postImages = postDao.getImages(post.getId());
-		List<String> imageUris = new ArrayList<String>();
-
-		for(PostImage postImage : postImages){
-			imageUris.add(postImage.getUri());
-		}
-		post.setImageFileUris(imageUris);
-
-		return post;
-	}
-
-	private Post setAccountData(Post post){
-		Account account = accountDao.get(post.getAccountId());
-		post.setAccountId(account.getId());
-		post.setImageUri(account.getImageUri());
-		post.setName(account.getName());
-		post.setUsername(account.getUsername());
-		return post;
-	}
-
-	private Post setTimeAgo(Post post){
-		try {
-			SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_SEARCH_FORMAT);
-			Date date = format.parse(Long.toString(post.getDatePosted()));
-
-			PrettyTime prettyTime = new PrettyTime();
-			post.setTimeAgo(prettyTime.format(date));
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return post;
-	}
 
 
 
@@ -430,97 +194,22 @@ public class PostController {
 //	}
 
 
-	@RequestMapping(value="/posts/{id}", method=RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="/account/posts/{id}", method=RequestMethod.GET, produces="application/json")
 	public @ResponseBody String posts(HttpServletRequest request,
 									  @PathVariable String id){
 
-		Gson gson = new Gson();
-		Map<String, Object> responseData = new HashMap<String, Object>();
 
 		if(!authService.isAuthenticated()){
+			Map<String, Object> responseData = new HashMap<String, Object>();
 			responseData.put("error", "authentication required");
 			return gson.toJson(responseData);
 		}
 
-		try{
+		Account authdAccount = authService.getAccount();
+		Account profileAccount = accountDao.get(Long.parseLong(id));
+		List<Post> userActivity = postService.getUserActivity(profileAccount, authdAccount);
 
-			Account account = authService.getAccount();
-
-			List<Post> posts = postDao.getUserPosts(Long.parseLong(id));
-			List<Post> populatedPosts = new ArrayList<Post>();
-
-			for(Post post : posts){
-				Account postedAccount = accountDao.get(post.getAccountId());
-				Post populated = postService.populatePost(post, postedAccount, account);
-				populatedPosts.add(populated);
-			}
-
-			List<PostShare> postShares = postDao.fetchUserPostShares(Long.parseLong(id));
-
-			for(PostShare postShare: postShares){
-				Post post = postDao.get(postShare.getPostId());
-				post.setPostShareId(postShare.getId());
-
-				Account postedAccount = accountDao.get(post.getAccountId());
-
-				postService.populatePostShare(post, postShare, postedAccount, account);
-
-				post.setShared(true);
-
-				post.setSharedComment(postShare.getComment());
-
-				Account acc = accountDao.get(postShare.getAccountId());
-				post.setSharedAccountId(postShare.getAccountId());
-				post.setSharedAccount(acc.getName());
-				post.setSharedImageUri(acc.getImageUri());
-
-				SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_SEARCH_FORMAT);
-				Date date = format.parse(Long.toString(postShare.getDateShared()));
-
-				PrettyTime p = new PrettyTime();
-				post.setTimeSharedAgo(p.format(date));
-				post.setDatePosted(postShare.getDateShared());
-
-				if(postShare.getAccountId() == account.getId()){
-					post.setDeletable(true);
-				}
-				populatedPosts.add(post);
-			}
-
-
-			Comparator<Post> comparator = new Comparator<Post>() {
-				@Override
-				public int compare(Post a1, Post a2) {
-					Long p1 = new Long(a1.getDatePosted());
-					Long p2 = new Long(a2.getDatePosted());
-					return p2.compareTo(p1);
-				}
-			};
-
-
-			Collections.sort(populatedPosts, comparator);
-			List<Post> userPosts = new ArrayList<Post>();
-
-			request.getSession().setAttribute(Constants.ACTIVITY_REQUEST_TIME, utilities.getCurrentDate());
-
-			for(Post post : populatedPosts){
-				if(sessionManager.sessions.containsKey(post.getUsername())){
-					post.setStatus("active");
-				}else{
-					post.setStatus("logged-out");
-				}
-				if(!post.isHidden() || post.isShared()){
-					userPosts.add(post);
-				}
-			}
-
-			return gson.toJson(userPosts);
-
-		}catch(ParseException e){
-			e.printStackTrace();
-			return gson.toJson(responseData);
-		}
-
+		return gson.toJson(userActivity);
 	}
 
 
@@ -629,7 +318,7 @@ public class PostController {
 		Post savedPost = postDao.save(post);
 		accountDao.savePermission(account.getId(), Constants.POST_MAINTENANCE  + savedPost.getId());
 //		postService.populatePost(savedPost, account, account);
-		Post populatedPost = setPostData(savedPost);
+		Post populatedPost = postService.setPostData(savedPost, account);
 //		postDao.update(populatedPost);
 
 
@@ -767,7 +456,7 @@ public class PostController {
 
 		postShare.setDateShared(dateShared);
 
-		PostShare savedPostShare = postDao.share(postShare);
+		PostShare savedPostShare = postDao.sharePost(postShare);
 
 		response.put("success", savedPostShare);
 
@@ -1099,7 +788,7 @@ public class PostController {
 		Post post = postDao.getFlaggedPost(Long.parseLong(id));
 		Account account = accountDao.get(post.getAccountId());
 //		Post populatedPost = postService.populatePost(post, account, authService.getAccount());
-		Post populatedPost = setPostData(post);
+		Post populatedPost = postService.setPostData(post, account);
 		model.addAttribute("post", populatedPost);
 		return "admin/review_post";
 	}

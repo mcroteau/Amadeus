@@ -53,6 +53,7 @@ public class AppRunner {
 		createApplicationRoles();
 		createApplicationAdministrator();
 		createApplicationGuest();
+		connectEm();
 
 		if(!isTestEnvironment()) {
 			startupBackgroundJobs();
@@ -239,8 +240,6 @@ public class AppRunner {
 		log.info("Friend Invites : " + friendDao.countInvites());
 	}
 
-
-
 	private void generateMockConnections() {
 		try {
 			long count = friendDao.count();
@@ -389,4 +388,9 @@ public class AppRunner {
 		log.info("Ads : " + flyerDao.getCount());
 	}
 
+	private void connectEm(){
+		Account admin = accountDao.findByUsername(Constants.ADMIN_USERNAME);
+		Account guest = accountDao.findByUsername(Constants.GUEST_USERNAME);
+		friendDao.saveConnection(admin.getId(), guest.getId(), utilities.getCurrentDate());
+	}
 }

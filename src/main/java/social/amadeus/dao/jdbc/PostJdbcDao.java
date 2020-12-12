@@ -277,7 +277,7 @@ public class PostJdbcDao implements PostDao {
 	}
 
 	@Override
-	public List<PostShare> fetchUserPostShares(long accountId) {
+	public List<PostShare> getUserPostShares(long accountId) {
 		String sql = "select * from post_shares where account_id = ? order by date_shared desc";
 		List<PostShare> postShares = jdbcTemplate.query(sql, new Object[]{ accountId }, new BeanPropertyRowMapper<PostShare>(PostShare.class));
 
@@ -292,7 +292,7 @@ public class PostJdbcDao implements PostDao {
 	}
 
 
-	public PostShare share(PostShare postShare){
+	public PostShare sharePost(PostShare postShare){
 		String sql = "insert into post_shares (post_id, account_id, comment, date_shared) values ( ?, ?, ?, ? )";
 		jdbcTemplate.update(sql, new Object[] {
 				postShare.getPostId(), postShare.getAccountId(), postShare.getComment(), postShare.getDateShared()
