@@ -65,7 +65,6 @@ public class PostService {
                 populatePostShare(post, postShare, postedAccount, authenticatedAccount);
 
                 post.setShared(true);
-
                 post.setSharedComment(postShare.getComment());
 
                 Account acc = accountDao.get(postShare.getAccountId());
@@ -212,9 +211,9 @@ public class PostService {
             post.setShares(shares);
 
             post.setAccountId(postAccount.getId());
-            post.setImageUri(postAccount.getImageUri());
-            post.setName(postAccount.getName());
-            post.setUsername(postAccount.getUsername());
+//            post.setImageUri(postAccount.getImageUri());
+//            post.setName(postAccount.getName());
+//            post.setUsername(postAccount.getUsername());
 
             if(post.getAccountId() == authenticatedAccount.getId()){
                 post.setDeletable(true);
@@ -234,10 +233,10 @@ public class PostService {
 
             post.setComments(postComments);
 
-            List<HiddenPost> hiddenPosts = postDao.getHiddenPosts(post.getId(), authenticatedAccount.getId());
-            if(hiddenPosts.size() > 0){
-                post.setHidden(true);
-            }
+//            List<HiddenPost> hiddenPosts = postDao.getHiddenPosts(post.getId(), authenticatedAccount.getId());
+//            if(hiddenPosts.size() > 0){
+//                post.setHidden(true);
+//            }
 
             if(postComments.size() > 0)post.setCommentsOrShareComments(true);
 

@@ -112,10 +112,161 @@ public class PostController {
 		}
 
 		Account authenticatedAccount = authService.getAccount();
-		Map<String, Object> activityData = postService.getActivity(authenticatedAccount, req);
+//		Map<String, Object> activityData = postService.getActivity(authenticatedAccount, req);
+
+		long start = utilities.getPreviousDay(14);
+		long end = utilities.getCurrentDate();
+
+		List<Post> postsPre = postDao.getActivity(start, end, authenticatedAccount.getId());
+		List<Post> posts = populatePostData(postsPre);
+
+		List<PostShare> postShares = postDao.getPostShares(start, end, authenticatedAccount.getId());
+		List<Post> postsShared = getPopulatedSharedPosts(postShares);
+
+		List<Post> flyerPosts = getFlyerPosts();
+
+
 		return gson.toJson(activityData);
 
 	}
+
+	private List<Post> populatePostData(List<Post> posts){
+		posts.stream().forEach(post -> setPostData(post));
+		return posts;
+	}
+
+	private Post setPostData(Post post){
+		setTimeAgo(post);
+		setLikes(post);
+		setShares(post);
+		setPostActions(post);
+		setPostComments(post);
+		setMultimedia(post);
+		setAccountData(post);
+		return post;
+	}
+
+	private Post setPostShareData(Post post){
+		setTimeAgo(post);
+		setLikes(post);
+		setShares(post);
+		setSharedPostActions(post);
+		setPostShareComments(post);
+		setMultimedia(post);
+		setAccountData(post);
+		return post;
+	}
+
+
+	private List<Post> getPopulatedSharedPosts(List<PostShare> postShares){
+		List<Post> sharedPosts = new ArrayList<Post>();
+		for(PostShare postShare: postShares){
+			Post post = postDao.get(postShare.getPostId());
+			setPostShareData(post);
+			sharedPosts.add(post);
+		}
+		return sharedPosts;
+	}
+
+
+	private Post setLikes(Post post){
+		long likes = postDao.likes(post.getId());
+		post.setLikes(likes);
+
+		PostLike postLike = new PostLike();
+		postLike.setPostId(post.getId());
+		postLike.setAccountId(authService.getAccount().getId());
+
+		if (postDao.liked(postLike)) post.setLiked(true);
+
+		return post;
+	}
+
+	private Post setShares(Post post){
+		long shares = postDao.shares(post.getId());
+		post.setShares(shares);
+		return post;
+	}
+
+	private Post setPostActions(Post post){
+		if(post.getAccountId() == authService.getAccount().getId()){
+			post.setDeletable(true);
+			post.setPostEditable(true);
+		}
+		return post;
+	}
+
+	private Post setSharedPostActions(Post post){
+		if(post.getAccountId() == authService.getAccount().getId()){
+			post.setDeletable(true);
+		}
+		return post;
+	}
+
+	private Post setPostComments(Post post){
+
+		List<PostComment> postComments = postDao.getPostComments(post.getId());
+		for (PostComment postComment : postComments) {
+			if(postComment.getAccountId() == authService.getAccount().getId()){
+				postComment.setCommentDeletable(true);
+			}
+			postComment.setCommentId(postComment.getId());//used for front end
+		}
+		post.setComments(postComments);
+		if(postComments.size() > 0)post.setCommentsOrShareComments(true);
+
+		return post;
+	}
+
+	private Post setPostShareComments(Post post){
+		List<PostShareComment> postShareComments = postDao.getPostShareComments(postShare.getId());
+
+		for (PostShareComment postShareComment : postShareComments) {
+			if(postShareComment.getAccountId() == authService.getAccount().getId()){
+				postShareComment.setCommentDeletable(true);
+			}
+			postShareComment.setCommentId(postShareComment.getId());
+		}
+
+		post.setShareComments(postShareComments);
+		if(postShareComments.size() > 0)post.setCommentsOrShareComments(true);
+		return post;
+	}
+
+	private Post setMultimedia(Post post){
+		List<PostImage> postImages = postDao.getImages(post.getId());
+		List<String> imageUris = new ArrayList<String>();
+
+		for(PostImage postImage : postImages){
+			imageUris.add(postImage.getUri());
+		}
+		post.setImageFileUris(imageUris);
+
+		return post;
+	}
+
+	private Post setAccountData(Post post){
+		Account account = accountDao.get(post.getAccountId());
+		post.setAccountId(account.getId());
+		post.setImageUri(account.getImageUri());
+		post.setName(account.getName());
+		post.setUsername(account.getUsername());
+		return post;
+	}
+
+	private Post setTimeAgo(Post post){
+		try {
+			SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_SEARCH_FORMAT);
+			Date date = format.parse(Long.toString(post.getDatePosted()));
+
+			PrettyTime prettyTime = new PrettyTime();
+			post.setTimeAgo(prettyTime.format(date));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return post;
+	}
+
 
 
 	@RequestMapping(value="/posts/latest", method=RequestMethod.GET, produces="application/json")
