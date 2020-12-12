@@ -97,7 +97,8 @@ public class PostController {
 		Post post = postDao.get(Long.parseLong(id));
 		Account account = accountDao.get(post.getAccountId());
 		Account authenticatedAccount = authService.getAccount();
-		Post populated = postService.populatePost(post, account, authenticatedAccount);
+//		Post populated = postService.populatePost(post, account, authenticatedAccount);
+		Post populatedPost = setPostData(post);
 		return gson.toJson(populated);
 	}
 	
@@ -125,15 +126,31 @@ public class PostController {
 		activityFeedPre.addAll(postsShared);
 
 		List<Post> activityFeed = getFlyerPosts(activityFeedPre);
+		List<Post> activityFeedSorted = getSortedActivities();
+
 		List<Account> femalesMales = getFemalesMales(activityFeed);
 
 		Map<String, Object> data = new HashMap<>();
-		data.put("activities", activityFeed);
+		data.put("activities", activityFeedSorted);
 		data.put("femsfellas", femalesMales);
 
 		return gson.toJson(data);
 
 	}
+
+	private List<Post> getSortedActivities(List<Post> activityFeed){
+		Comparator<Post> comparator = new Comparator<Post>() {
+			@Override
+			public int compare(Post a1, Post a2) {
+				Long p1 = a1.getDatePosted();
+				Long p2 = a2.getDatePosted();
+				return p2.compareTo(p1);
+			}
+		};
+		Collections.sort(activityFeed, comparator);
+		return activityFeed;
+	}
+
 
 	private List<Account> getFemalesMales(List<Post> activityFeed){
 		Map<Long, Account> femalesMalesMap = new HashMap<>();
@@ -338,78 +355,79 @@ public class PostController {
 
 
 
-	@RequestMapping(value="/posts/latest", method=RequestMethod.GET, produces="application/json")
-	public @ResponseBody String latest(HttpServletRequest request){
-
-		Gson gson = new Gson();
-		Map<String, Object> responseData = new HashMap<String, Object>();
-
-		if(!authService.isAuthenticated()){
-			responseData.put("error", "authentication required");
-			return gson.toJson(responseData);
-		}
-
-		try{
-
-			List<Post> feed = new ArrayList<Post>();
-
-			Account authenticatedAccount = authService.getAccount();
-
-			if(request.getSession().getAttribute(Constants.ACTIVITY_REQUEST_TIME) != null) {
-				long start = (Long) request.getSession().getAttribute(Constants.ACTIVITY_REQUEST_TIME);
-				long end = utilities.getCurrentDate();
-
-				feed = postDao.getActivity(start, end, authenticatedAccount.getId());
-				for (Post post : feed) {
-					Account postedAccount = accountDao.get(post.getAccountId());
-					postService.populatePost(post, postedAccount, authenticatedAccount);
-				}
-
-				List<PostShare> postShares = postDao.getPostShares(start, end, authenticatedAccount.getId());
-
-				for (PostShare postShare : postShares) {
-					Post post = postDao.get(postShare.getPostId());
-
-					post.setShared(true);
-					post.setSharedComment(postShare.getComment());
-
-					Account acc = accountDao.get(postShare.getAccountId());
-					post.setSharedAccount(acc.getName());
-					post.setSharedImageUri(acc.getImageUri());
-
-					postService.populatePost(post, acc, authenticatedAccount);
-
-					SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_SEARCH_FORMAT);
-					Date date = format.parse(Long.toString(postShare.getDateShared()));
-
-					PrettyTime p = new PrettyTime();
-					post.setTimeSharedAgo(p.format(date));
-					post.setDatePosted(postShare.getDateShared());
-
-					feed.add(post);
-				}
-
-				Comparator<Post> comparator = new Comparator<Post>() {
-					@Override
-					public int compare(Post a1, Post a2) {
-						Long p1 = new Long(a1.getDatePosted());
-						Long p2 = new Long(a2.getDatePosted());
-						return p2.compareTo(p1);
-					}
-				};
-
-
-				Collections.sort(feed, comparator);
-
-			}
-
-			return gson.toJson(feed);
-
-		}catch(ParseException e){
-			e.printStackTrace();
-			return gson.toJson(responseData);
-		}
-	}
+//	@RequestMapping(value="/posts/latest", method=RequestMethod.GET, produces="application/json")
+//	public @ResponseBody String latest(HttpServletRequest request){
+//
+//		Gson gson = new Gson();
+//		Map<String, Object> responseData = new HashMap<String, Object>();
+//
+//		if(!authService.isAuthenticated()){
+//			responseData.put("error", "authentication required");
+//			return gson.toJson(responseData);
+//		}
+//
+//		try{
+//
+//			List<Post> feed = new ArrayList<Post>();
+//
+//			Account authenticatedAccount = authService.getAccount();
+//
+//			if(request.getSession().getAttribute(Constants.ACTIVITY_REQUEST_TIME) != null) {
+//				long start = (Long) request.getSession().getAttribute(Constants.ACTIVITY_REQUEST_TIME);
+//				long end = utilities.getCurrentDate();
+//
+//				feed = postDao.getActivity(start, end, authenticatedAccount.getId());
+//				for (Post post : feed) {
+//					Account postedAccount = accountDao.get(post.getAccountId());
+////					postService.populatePost(post, postedAccount, authenticatedAccount);
+//					Post populatedPost = setPostData(post);
+//				}
+//
+//				List<PostShare> postShares = postDao.getPostShares(start, end, authenticatedAccount.getId());
+//
+//				for (PostShare postShare : postShares) {
+//					Post post = postDao.get(postShare.getPostId());
+//
+//					post.setShared(true);
+//					post.setSharedComment(postShare.getComment());
+//
+//					Account acc = accountDao.get(postShare.getAccountId());
+//					post.setSharedAccount(acc.getName());
+//					post.setSharedImageUri(acc.getImageUri());
+//
+//					postService.populatePost(post, acc, authenticatedAccount);
+//
+//					SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_SEARCH_FORMAT);
+//					Date date = format.parse(Long.toString(postShare.getDateShared()));
+//
+//					PrettyTime p = new PrettyTime();
+//					post.setTimeSharedAgo(p.format(date));
+//					post.setDatePosted(postShare.getDateShared());
+//
+//					feed.add(post);
+//				}
+//
+//				Comparator<Post> comparator = new Comparator<Post>() {
+//					@Override
+//					public int compare(Post a1, Post a2) {
+//						Long p1 = new Long(a1.getDatePosted());
+//						Long p2 = new Long(a2.getDatePosted());
+//						return p2.compareTo(p1);
+//					}
+//				};
+//
+//
+//				Collections.sort(feed, comparator);
+//
+//			}
+//
+//			return gson.toJson(feed);
+//
+//		}catch(ParseException e){
+//			e.printStackTrace();
+//			return gson.toJson(responseData);
+//		}
+//	}
 
 
 	@RequestMapping(value="/posts/{id}", method=RequestMethod.GET, produces="application/json")
@@ -1080,7 +1098,8 @@ public class PostController {
 
 		Post post = postDao.getFlaggedPost(Long.parseLong(id));
 		Account account = accountDao.get(post.getAccountId());
-		Post populatedPost = postService.populatePost(post, account, authService.getAccount());
+//		Post populatedPost = postService.populatePost(post, account, authService.getAccount());
+		Post populatedPost = setPostData(post);
 		model.addAttribute("post", populatedPost);
 		return "admin/review_post";
 	}
