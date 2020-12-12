@@ -140,6 +140,7 @@ public class PostService {
         post.setShared(true);
         post.setSharedComment(postShare.getComment());
         post.setPostShareId(postShare.getId());
+        post.setDatePosted(postShare.getDateShared());
         return post;
     }
 

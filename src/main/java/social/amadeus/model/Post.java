@@ -5,77 +5,41 @@ import java.util.List;
 public class Post {
 
 	long id;
-
 	long accountId;
-
 	String content;
-
 	long datePosted;
-
 	String timeAgo;
-
 	Account account;
-
 	long likes;
-
 	boolean liked;
-
 	long shares;
-
 	boolean shared;
-
 	long sharedAccountId;
-
 	String sharedComment;
-
 	String sharedAccount;
-
 	String timeSharedAgo;
-
 	String imageUri;
-
 	String name;
-
 	String username;
-
 	String sharedImageUri;
-
 	List<String> imageFileUris;
-
 	List<String> musicFileUris;
-
 	String musicFileUri;
-
     String videoFileUri;
-
     String status;
-
 	List<PostComment> comments;
-
 	List<PostShareComment> shareComments;
-
 	boolean deletable;
-
 	boolean hidden;
-
 	long postShareId;
-
 	boolean commentsOrShareComments;
-
 	boolean flagged;
-
 	boolean postShareEditable;
-
 	boolean postEditable;
-
 	boolean published;
-
 	long updateDate;
-
 	boolean advertisement;
-
 	String advertisementUri;
-
 
 	public long getId(){
 		return id;
