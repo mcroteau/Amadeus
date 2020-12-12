@@ -64,7 +64,7 @@ public class MessageController {
     }
 
 
-    @RequestMapping(value="/messages/read/{id}", method=RequestMethod.GET, produces="application/json")
+    @RequestMapping(value="/messages/read/{id}", method=RequestMethod.POST, produces="application/json")
     public @ResponseBody String read( @PathVariable String id ) {
         Account recipient = authService.getAccount();
         Account sender = accountDao.get(Long.parseLong(id));

@@ -294,6 +294,7 @@
                 $scope.chatStarted = $scope.chatStarted ? false : true
                 $scope.chatSession.scrollBottom = $scope.chatSession.scrollHeight
                 $scope.chatInterval = $interval(getChatMessages, 2300)
+                $http.post('/o/messages/read/' + friendId).then(function(){})
             })
         }
 

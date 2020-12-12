@@ -48,8 +48,8 @@ public class AppInterceptor implements HandlerInterceptor {
         for (Map.Entry<String, Long> entry : sessionManager.sessions.entrySet()) {
             long currentTime = System.currentTimeMillis();
             long sessionTime = entry.getValue();
-
-            if (currentTime - sessionTime >= 60000 * 3) {
+            long diff = currentTime - sessionTime;
+            if ( diff >= 24000) {
                 sessionManager.sessions.remove(entry.getKey());
             }
         }

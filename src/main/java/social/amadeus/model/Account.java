@@ -4,44 +4,26 @@ package social.amadeus.model;
 public class Account {
 
 	long id;
-
 	String uuid;
-
 	String name;
-
 	String imageUri;
-
 	String username;
-
 	String password;
-
 	String passwordConfirm;
-
 	String location;
-
 	String age;
-
 	boolean isFriend;
-
 	boolean isOwnersAccount;
-
 	boolean invited;
-
 	long views;
-
 	long likes;
-
 	boolean liked;
-
 	int count;
-
 	boolean disabled;
-
 	long dateDisabled;
-
 	boolean hidden;
-
 	boolean blocked;
+	String status;
 
 	public long getId(){
 		return id;
@@ -196,7 +178,15 @@ public class Account {
 	public void setBlocked(boolean blocked) {
 		this.blocked = blocked;
 	}
-	
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public String getNameUsername(){
 		if(name != null && !name.equals("")) return name;
 		return username;

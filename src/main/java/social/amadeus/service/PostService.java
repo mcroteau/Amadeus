@@ -63,8 +63,6 @@ public class PostService {
         List<PostShare> postSharesPre = postDao.getPostShares(start, end, authdAccount.getId());
         List<Post> sharedPosts = getPopulatedSharedPosts(authdAccount, postSharesPre);
 
-        log.info(postSharesPre.size()  + ":" + sharedPosts.size());
-
         List<Post> activityFeedPre = new ArrayList<>();
         activityFeedPre.addAll(posts);
         activityFeedPre.addAll(sharedPosts);
@@ -98,7 +96,6 @@ public class PostService {
     }
 
     private Post setActive(Post post){
-        log.info(post.getUsername());
         post.setStatus("inactive");
         if (sessionManager.sessions.containsKey(post.getUsername())) {
             post.setStatus("active");
@@ -323,6 +320,9 @@ public class PostService {
             account.setId(post.getAccountId());
             account.setName(post.getName());
             account.setImageUri(post.getImageUri());
+            if (sessionManager.sessions.containsKey(post.getUsername())) {
+                account.setStatus("online");
+            }
             if (femalesMalesMap.containsKey(post.getAccountId())) {
                 int count = femalesMalesMap.get(post.getAccountId()).getCount() + 1;
                 account.setCount(count);
