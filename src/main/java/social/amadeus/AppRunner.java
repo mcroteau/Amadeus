@@ -318,7 +318,6 @@ public class AppRunner {
 
 	private void generateMockMessages(){
 		try{
-
 			List<Account> accounts = accountDao.findAll();
 			int possibilities = accounts.size() * accounts.size();
 
@@ -337,7 +336,6 @@ public class AppRunner {
 					}
 				}
 			}
-
 		}catch(Exception e){
 			// log.error("message error");
 		}
@@ -348,7 +346,6 @@ public class AppRunner {
 	private void generateMockViewData() {
 
 		if(accountDao.getAllViewsAll() == 0) {
-
 			List<Account> accounts = accountDao.findAll();
 			for (Account account : accounts) {
 				for (int n = 0; n < 61; n++) {

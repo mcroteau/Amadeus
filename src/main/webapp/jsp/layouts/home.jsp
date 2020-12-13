@@ -193,8 +193,7 @@
 
             <div id="amadeus-words">
 
-                <p>Amadeus is a Social Networking app built with Love. It is
-                organic in creation. We really hope you like it.</p>
+                <p>Amadeus is a Social Networking app built with Love.</p>
 
                 <p>Why should there be many to rule social
                     media when there is <strong>Amadeus</strong>! <a href="${pageContext.request.contextPath}/signup" class="href-dotted-black">Signup!</a></p>

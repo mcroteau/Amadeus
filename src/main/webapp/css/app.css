@@ -1770,13 +1770,18 @@ h3#share-something span{
 .like-actions-count-container{
     position:absolute;
     right:41px;
-    top:9px;
+    top:13px;
 }
 
 .share-actions-count-container{
     position:absolute;
     right:34px;
-    top:9px;
+    top:13px;
+}
+
+a.share-button img{
+    margin-top:5px;
+    width:29px !important;
 }
 
 .actions-count{
@@ -2226,7 +2231,7 @@ p{
 }
 .like-container{
     float:right !important;
-    width:129px;
+    width:107px;
     text-align:right;
 }
 .shared-post-container{
