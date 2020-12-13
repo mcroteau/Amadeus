@@ -135,12 +135,10 @@ public class PostJdbcRepo implements PostRepo {
 
 		String idsString = StringUtils.join(ids, ",");
 
-		String sql = "select count(*) totalCount from " +
-				"posts p inner join account a on p.account_id = a.id " +
-				"where account_id in (" + idsString + ") " +
-				"and p.published = true and p.date_posted between " + start + " and " + end + "";
-
-		log.info(sql);
+		String sql = "select count(*) as c from " +
+				"posts p left join account a on p.account_id = a.id " +
+				"where p.account_id in (" + idsString + ") " +
+				"and p.published = true and p.date_posted between " + start + " and " + end;
 
 		return jdbcTemplate.queryForObject(sql, new Object[] { }, Long.class);
 	}
