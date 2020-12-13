@@ -391,6 +391,8 @@ public class AppRunner {
 	private void connectEm(){
 		Account admin = accountDao.findByUsername(Constants.ADMIN_USERNAME);
 		Account guest = accountDao.findByUsername(Constants.GUEST_USERNAME);
-		friendDao.saveConnection(admin.getId(), guest.getId(), utilities.getCurrentDate());
+		if(!friendDao.isFriend(admin.getId(), guest.getId())) {
+			friendDao.saveConnection(admin.getId(), guest.getId(), utilities.getCurrentDate());
+		}
 	}
 }
