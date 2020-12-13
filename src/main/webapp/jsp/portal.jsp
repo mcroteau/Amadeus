@@ -511,9 +511,12 @@
         }
 
         $scope.toggle = []
+        $scope.commentToggle = []
         $scope.toggleShare = function(idx) {
             $scope.toggle[idx] = $scope.toggle[idx] ? false : true;
+            $scope.commentToggle[idx] = $scope.commentToggle[idx] ? false : true;
         }
+
 
         $scope.showActions = []
         $scope.toggleActions = function(idx){
