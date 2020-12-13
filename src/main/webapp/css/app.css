@@ -518,16 +518,26 @@ input[type="password"]::placeholder {
     background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 30%, rgba(255,255,255,1) 40%, rgba(255,255,255,1) 40%, rgba(84,175,255,1) 46%, rgba(192,225,255,1) 100%);width:100%;
     background: rgb(253,254,3);
     background: linear-gradient(79deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 33%, rgba(253,254,3,1) 40%, rgba(84,175,255,1) 70%, rgba(192,225,255,1) 100%);/*-moz-box-shadow: 0px 4px 17px 0px rgba(0,0,0,.9);*/
+    background: rgb(253,254,3);
+    background: linear-gradient(36deg, rgba(253,254,3,1) 35%, rgba(208,48,138,1) 63%);
+    background: rgb(253,254,3);
+    background: linear-gradient(36deg, rgba(253,254,3,1) 22%, rgba(254,211,4,1) 38%, rgba(84,175,255,1) 51%, rgba(208,48,138,1) 74%);
+    background: rgb(253,254,3);
+    background: linear-gradient(36deg, rgba(253,254,3,1) 22%, rgba(254,211,4,1) 39%, rgba(159,237,3,1) 53%, rgba(84,175,255,1) 68%, rgba(208,48,138,1) 93%);
+    background: rgb(253,254,3);
+    background: linear-gradient(79deg, rgba(253,254,3,1) 22%, rgba(159,237,3,1) 44%, rgba(84,175,255,1) 61%, rgba(84,175,255,1) 74%, rgba(208,48,138,1) 94%);
+    background: rgb(253,254,3);
+    background: linear-gradient(36deg, rgba(253,254,3,1) 22%, rgba(159,237,3,1) 44%, rgba(84,175,255,1) 66%, rgba(84,175,255,1) 79%, rgba(208,48,138,1) 94%);
     /*background: rgb(253,254,3);*/
     /*background: linear-gradient(36deg, rgba(253,254,3,1) 35%, rgba(254,211,4,1) 100%);*/
-    /*background-size: 400% 400%;*/
+    /*background-size: 300% 300%;*/
     /*box-shadow: 0px 4px 17px 0px rgba(0,0,0,.9);*/
     /*-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);*/
     /*-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);*/
     /*box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);*/
-    /*-webkit-animation: verb 23s ease infinite;*/
-    /*-moz-animation: verb 23s ease infinite;*/
-    /*animation: verb 23s ease infinite;*/
+    /*-webkit-animation: verb 121s ease infinite;*/
+    /*-moz-animation: verb 121s ease infinite;*/
+    /*animation: verb 121s ease infinite;*/
 }
 
 @-webkit-keyframes verb {
@@ -541,14 +551,9 @@ input[type="password"]::placeholder {
     100%{background-position:5% 0%}
 }
 @keyframes verb {
-    0%{background-position:5% 0%;
-        background-rotation:160deg;}
-    50%{
-        background-position:46% 47%;
-        background-rotation:30deg;
-    }
-    100%{background-position:5% 0%;
-        background-rotation:160deg;}
+    0%{background-position:5% 0%;}
+    50%{background-position:96% 100%;}
+    100%{background-position:5% 0%;}
 }
 
 #top-inner-container{
@@ -3065,13 +3070,13 @@ input[type="password"]:focus{
     z-index:10;
     margin-top:6px;
     color:#fff !important;
-    font-size:17px !important;
+    font-size:13px !important;
     text-transform: none !important;
     font-family:Roboto-Black !important;
     outline: none !important;
     cursor: pointer;
     cursor: hand;
-    padding:13px 23px;
+    padding:10px 23px;
     display:block;
     text-decoration:none;
     text-align: center;
