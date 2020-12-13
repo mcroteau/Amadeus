@@ -5,16 +5,14 @@ import org.apache.log4j.Logger;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import social.amadeus.common.Constants;
 import social.amadeus.common.Utilities;
 import social.amadeus.model.Account;
 import social.amadeus.model.Message;
 import social.amadeus.model.OutputMessage;
-import social.amadeus.dao.AccountDao;
-import social.amadeus.dao.MessageDao;
+import social.amadeus.repository.AccountRepo;
+import social.amadeus.repository.MessageRepo;
 import social.amadeus.service.AuthService;
 
 import java.text.SimpleDateFormat;
@@ -31,10 +29,10 @@ public class MessageController {
     private Utilities utilities;
 
     @Autowired
-    private MessageDao messageDao;
+    private MessageRepo messageRepo;
 
     @Autowired
-    private AccountDao accountDao;
+    private AccountRepo accountRepo;
 
     @Autowired
     private AuthService authService;
@@ -54,7 +52,7 @@ public class MessageController {
         Map data = new HashMap<String, Integer>();
         try {
             Account account = authService.getAccount();
-            int count = messageDao.unread(account.getId());
+            int count = messageRepo.unread(account.getId());
             data.put("count", count);
         }catch(Exception e){
             data.put("count", 0);
@@ -67,9 +65,9 @@ public class MessageController {
     @RequestMapping(value="/messages/read/{id}", method=RequestMethod.POST, produces="application/json")
     public @ResponseBody String read( @PathVariable String id ) {
         Account recipient = authService.getAccount();
-        Account sender = accountDao.get(Long.parseLong(id));
+        Account sender = accountRepo.get(Long.parseLong(id));
         try {
-            messageDao.read(sender.getId(), recipient.getId());
+            messageRepo.read(sender.getId(), recipient.getId());
         }catch(Exception e){
             log.info("requests overlapping");
         }
@@ -83,13 +81,13 @@ public class MessageController {
     @RequestMapping(value="/messages/{id}", method=RequestMethod.GET, produces="application/json")
     public @ResponseBody String messages( @PathVariable String id ) {
         Account recipient = authService.getAccount();
-        Account sender = accountDao.get(Long.parseLong(id));
+        Account sender = accountRepo.get(Long.parseLong(id));
 
         OutputMessage outputMessage = new OutputMessage();
 
         try {
 
-            List<Message> messages = messageDao.messages(sender.getId(), recipient.getId());
+            List<Message> messages = messageRepo.messages(sender.getId(), recipient.getId());
 
 
             for (Message m : messages) {
@@ -98,8 +96,8 @@ public class MessageController {
                 PrettyTime p = new PrettyTime();
                 m.setTimeAgo(p.format(date));
 
-                Account s = accountDao.get(m.getSenderId());
-                Account r = accountDao.get(m.getRecipientId());
+                Account s = accountRepo.get(m.getSenderId());
+                Account r = accountRepo.get(m.getRecipientId());
 
                 m.setSender(s.getName());
                 m.setRecipient(r.getName());
@@ -120,7 +118,7 @@ public class MessageController {
     public @ResponseBody String  send(@PathVariable String id,
 									  Message m) {
         Account sender = authService.getAccount();
-        Account recipient = accountDao.get(Long.parseLong(id));
+        Account recipient = accountRepo.get(Long.parseLong(id));
 
         long time = utilities.getCurrentDate();
 
@@ -129,7 +127,7 @@ public class MessageController {
         message.setRecipientId(recipient.getId());
         message.setDateSent(time);
         message.setContent(m.getContent());
-        messageDao.send(message);
+        messageRepo.send(message);
 
         Map<String, Boolean> d = new HashMap<String, Boolean>();
         d.put("success", true);

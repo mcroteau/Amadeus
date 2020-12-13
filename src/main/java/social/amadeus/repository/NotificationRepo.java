@@ -1,11 +1,11 @@
-package social.amadeus.dao;
+package social.amadeus.repository;
 
 import java.util.List;
 
 import social.amadeus.model.Account;
 import social.amadeus.model.Notification;
 
-public interface NotificationDao {
+public interface NotificationRepo {
 
 	public long count();
 

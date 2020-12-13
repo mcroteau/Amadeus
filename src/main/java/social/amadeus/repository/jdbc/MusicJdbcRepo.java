@@ -1,4 +1,4 @@
-package social.amadeus.dao.jdbc;
+package social.amadeus.repository.jdbc;
 
 import java.util.HashSet;
 import java.util.ArrayList;
@@ -9,12 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import social.amadeus.dao.MusicDao;
+import social.amadeus.repository.MusicRepo;
 import social.amadeus.model.AccountMusic;
 import social.amadeus.model.MusicFile;
 
 
-public class MusicJdbcDao implements MusicDao {
+public class MusicJdbcRepo implements MusicRepo {
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;

@@ -1,10 +1,10 @@
-package social.amadeus.dao;
+package social.amadeus.repository;
 
 import social.amadeus.model.Flyer;
 
 import java.util.List;
 
-public interface FlyerDao {
+public interface FlyerRepo {
 
     public long getCount();
 

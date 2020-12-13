@@ -1,11 +1,11 @@
-package social.amadeus.dao;
+package social.amadeus.repository;
 
 import social.amadeus.model.Account;
 import social.amadeus.model.Message;
 
 import java.util.List;
 
-public interface MessageDao {
+public interface MessageRepo {
 
     public long count();
 

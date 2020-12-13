@@ -42,7 +42,7 @@
                     <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
                         <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>
                     </svg>
-                    <span id="latest-feed-total" class="notifications-count" style="display:inline-block; position:absolute;bottom:3px;left:54px;">{{data.latestPosts.length}}</span></a>
+                    <span id="latest-feed-total" class="notifications-count" style="display:inline-block; position:absolute;bottom:3px;left:54px;">{{data.newestCount}}</span></a>
             </div>
 
 			<div id="top-inner-container">
@@ -688,7 +688,7 @@
             $scope.profile = response.data.profile
             $scope.friends = response.data.friends
 
-            $http.get("/o/account/posts/" + self.id).then(function(response){
+            $http.get("/o/post/account/" + self.id).then(function(response){
                 $scope.activities = response.data
                 $timeout(setAnchors, 1300)
             })
@@ -719,7 +719,7 @@
             }
 
             this.getActivities = function(callback){
-                $http.get("/o/activity").then(callback)
+                $http.get("/o/post/activity").then(callback)
             }
 
             this.likePost = function(id, callback){

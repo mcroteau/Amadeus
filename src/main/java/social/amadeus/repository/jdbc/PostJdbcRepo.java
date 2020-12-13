@@ -1,4 +1,4 @@
-package social.amadeus.dao.jdbc;
+package social.amadeus.repository.jdbc;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,13 +13,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
-import social.amadeus.dao.FriendDao;
-import social.amadeus.dao.PostDao;
+import social.amadeus.repository.FriendRepo;
+import social.amadeus.repository.PostRepo;
 import social.amadeus.model.*;
 
-public class PostJdbcDao implements PostDao {
+public class PostJdbcRepo implements PostRepo {
 
-	private static final Logger log = Logger.getLogger(PostJdbcDao.class);
+	private static final Logger log = Logger.getLogger(PostJdbcRepo.class);
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -28,7 +28,7 @@ public class PostJdbcDao implements PostDao {
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	
 	@Autowired
-	private FriendDao friendDao;
+	private FriendRepo friendRepo;
 
 
 	public long id() {
@@ -102,7 +102,7 @@ public class PostJdbcDao implements PostDao {
 
 	public List<Post> getActivity(long start, long end, long accountId){
 		
-		List<Friend> friends = friendDao.getFriends(accountId);
+		List<Friend> friends = friendRepo.getFriends(accountId);
 		Set<Long> ids = new HashSet<Long>();
 
 		for(Friend connection : friends) {
@@ -126,27 +126,45 @@ public class PostJdbcDao implements PostDao {
 
 
 
-	public List<Post> getLatestSkinny(long start, long end, long accountId){
-
-		List<Friend> friends = friendDao.getFriends(accountId);
+	public long getNewestCount(long start, long end, long authdAccountId){
+		List<Friend> friends = friendRepo.getFriends(authdAccountId);
 		Set<Long> ids = new HashSet<Long>();
+		ids.add(authdAccountId);
 
-		for(Friend connection : friends) {
-			ids.add(connection.getFriendId());
-		}
+		friends.stream().forEach(connection -> ids.add(connection.getFriendId()));
 
-		ids.add(accountId);
 		String idsString = StringUtils.join(ids, ",");
 
-		String sql = "select a.name from " +
-				"posts p inner join account a on p.account_id = a.id " +
-				"where account_id in (" + idsString + ") " +
-				"and p.published = true and p.date_posted between " + start + " and " + end + "";
+		String sql = "select count(*) as c from " +
+				"posts p left join account a on p.account_id = a.id " +
+				"where p.account_id in (" + idsString + ") " +
+				"and p.published = true and p.date_posted between " + start + " and " + end;
 
-		List<Post> latest = jdbcTemplate.query(sql, new BeanPropertyRowMapper<Post>(Post.class));
-
-		return latest;
+		return jdbcTemplate.queryForObject(sql, new Object[] { }, Long.class);
 	}
+
+//Remove
+//	public List<Post> getLatestSkinny(long start, long end, long accountId){
+//
+//		List<Friend> friends = friendRepo.getFriends(accountId);
+//		Set<Long> ids = new HashSet<Long>();
+//
+//		for(Friend connection : friends) {
+//			ids.add(connection.getFriendId());
+//		}
+//
+//		ids.add(accountId);
+//		String idsString = StringUtils.join(ids, ",");
+//
+//		String sql = "select a.name from " +
+//				"posts p inner join account a on p.account_id = a.id " +
+//				"where account_id in (" + idsString + ") " +
+//				"and p.published = true and p.date_posted between " + start + " and " + end + "";
+//
+//		List<Post> latest = jdbcTemplate.query(sql, new BeanPropertyRowMapper<Post>(Post.class));
+//
+//		return latest;
+//	}
 
 
 	@Override
@@ -259,7 +277,7 @@ public class PostJdbcDao implements PostDao {
 
 		String sql = "select * from post_shares where account_id in (:ids) and date_shared between " + start + " and " + end + " order by date_shared desc";
 
-		List<Friend> friends = friendDao.getFriends(accountId);
+		List<Friend> friends = friendRepo.getFriends(accountId);
 		Set<Long> ids = new HashSet<Long>();
 		for(Friend connection : friends) {
 			ids.add(connection.getFriendId());

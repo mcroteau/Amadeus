@@ -13,21 +13,16 @@ import org.springframework.ui.ModelMap;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import java.text.SimpleDateFormat;
-import org.ocpsoft.prettytime.PrettyTime;
-
 import java.util.*;
 
 import social.amadeus.common.Constants;
-import social.amadeus.common.SessionManager;
 import social.amadeus.common.Utilities;
-import social.amadeus.dao.*;
+import social.amadeus.repository.*;
 import social.amadeus.model.*;
 import social.amadeus.service.AuthService;
 import social.amadeus.service.EmailService;
 import social.amadeus.service.PostService;
 
-import java.text.ParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,28 +48,16 @@ public class PostController {
 	Gson gson = new Gson();
 
 	@Autowired
-	private PostDao postDao;
+	private PostRepo postRepo;
 
 	@Autowired
-	private AccountDao accountDao;
-
-	@Autowired
-	private FriendDao friendDao;
-
-	@Autowired
-	private MusicDao musicDao;
+	private AccountRepo accountRepo;
 
 	@Autowired
 	private Utilities utilities;
 
 	@Autowired
-	private NotificationDao notificationDao;
-
-	@Autowired
-	private FlyerDao flyerDao;
-
-	@Autowired
-	private EmailService emailService;
+	private NotificationRepo notificationRepo;
 
 	@Autowired
 	private AuthService authService;
@@ -84,23 +67,15 @@ public class PostController {
 
 
 
-	//Germany is trying to get us all into one big group and use corporate espionage, so I don't need help right now.
-	//I am Microsoft, I am IBM I am America
-
 	@RequestMapping(value="/post/{id}", method=RequestMethod.GET, produces="application/json")
 	public @ResponseBody String postData(HttpServletRequest request,
 									  @PathVariable String id){
-		Gson gson = new Gson();
-		Post post = postDao.get(Long.parseLong(id));
-		Account account = accountDao.get(post.getAccountId());
-		Account authenticatedAccount = authService.getAccount();
-//		Post populated = postService.populatePost(post, account, authenticatedAccount);
-		Post populatedPost = postService.setPostData(post, authenticatedAccount);
-		return gson.toJson(populatedPost);
+		Post post = postService.getPost(id);
+		return gson.toJson(post);
 	}
 	
 
-	@RequestMapping(value="/activity", method=RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="/post/activity", method=RequestMethod.GET, produces="application/json")
 	public @ResponseBody String posts(HttpServletRequest req){
 
 		if(!authService.isAuthenticated()){
@@ -118,83 +93,7 @@ public class PostController {
 
 
 
-
-//	@RequestMapping(value="/posts/latest", method=RequestMethod.GET, produces="application/json")
-//	public @ResponseBody String latest(HttpServletRequest request){
-//
-//		Gson gson = new Gson();
-//		Map<String, Object> responseData = new HashMap<String, Object>();
-//
-//		if(!authService.isAuthenticated()){
-//			responseData.put("error", "authentication required");
-//			return gson.toJson(responseData);
-//		}
-//
-//		try{
-//
-//			List<Post> feed = new ArrayList<Post>();
-//
-//			Account authenticatedAccount = authService.getAccount();
-//
-//			if(request.getSession().getAttribute(Constants.ACTIVITY_REQUEST_TIME) != null) {
-//				long start = (Long) request.getSession().getAttribute(Constants.ACTIVITY_REQUEST_TIME);
-//				long end = utilities.getCurrentDate();
-//
-//				feed = postDao.getActivity(start, end, authenticatedAccount.getId());
-//				for (Post post : feed) {
-//					Account postedAccount = accountDao.get(post.getAccountId());
-////					postService.populatePost(post, postedAccount, authenticatedAccount);
-//					Post populatedPost = setPostData(post);
-//				}
-//
-//				List<PostShare> postShares = postDao.getPostShares(start, end, authenticatedAccount.getId());
-//
-//				for (PostShare postShare : postShares) {
-//					Post post = postDao.get(postShare.getPostId());
-//
-//					post.setShared(true);
-//					post.setSharedComment(postShare.getComment());
-//
-//					Account acc = accountDao.get(postShare.getAccountId());
-//					post.setSharedAccount(acc.getName());
-//					post.setSharedImageUri(acc.getImageUri());
-//
-//					postService.populatePost(post, acc, authenticatedAccount);
-//
-//					SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_SEARCH_FORMAT);
-//					Date date = format.parse(Long.toString(postShare.getDateShared()));
-//
-//					PrettyTime p = new PrettyTime();
-//					post.setTimeSharedAgo(p.format(date));
-//					post.setDatePosted(postShare.getDateShared());
-//
-//					feed.add(post);
-//				}
-//
-//				Comparator<Post> comparator = new Comparator<Post>() {
-//					@Override
-//					public int compare(Post a1, Post a2) {
-//						Long p1 = new Long(a1.getDatePosted());
-//						Long p2 = new Long(a2.getDatePosted());
-//						return p2.compareTo(p1);
-//					}
-//				};
-//
-//
-//				Collections.sort(feed, comparator);
-//
-//			}
-//
-//			return gson.toJson(feed);
-//
-//		}catch(ParseException e){
-//			e.printStackTrace();
-//			return gson.toJson(responseData);
-//		}
-//	}
-
-
-	@RequestMapping(value="/account/posts/{id}", method=RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="/post/account/{id}", method=RequestMethod.GET, produces="application/json")
 	public @ResponseBody String posts(HttpServletRequest request,
 									  @PathVariable String id){
 
@@ -206,7 +105,7 @@ public class PostController {
 		}
 
 		Account authdAccount = authService.getAccount();
-		Account profileAccount = accountDao.get(Long.parseLong(id));
+		Account profileAccount = accountRepo.get(Long.parseLong(id));
 		List<Post> userActivity = postService.getUserActivity(profileAccount, authdAccount);
 
 		return gson.toJson(userActivity);
@@ -215,14 +114,12 @@ public class PostController {
 
 
 	@RequestMapping(value="/post/share", method=RequestMethod.POST, produces="application/json")
-	public @ResponseBody String share(HttpServletRequest request,
-									  @ModelAttribute("post") Post post,
+	public @ResponseBody String share(@ModelAttribute("post") Post post,
 									  @RequestParam(value="imageFiles", required = false) CommonsMultipartFile[] uploadedImageFiles,
 									  @RequestParam(value="videoFile", required = false) CommonsMultipartFile uploadedVideoFile){
 
 
 		Map<String, Object> data = new HashMap<String, Object>();
-		Gson gson = new Gson();
 
 		if(!authService.isAuthenticated()){
 			data.put("error", "authentication required");
@@ -315,20 +212,16 @@ public class PostController {
 			return gson.toJson(data);
 		}
 
-		Post savedPost = postDao.save(post);
-		accountDao.savePermission(account.getId(), Constants.POST_MAINTENANCE  + savedPost.getId());
-//		postService.populatePost(savedPost, account, account);
+		Post savedPost = postRepo.save(post);
+		accountRepo.savePermission(account.getId(), Constants.POST_MAINTENANCE  + savedPost.getId());
 		Post populatedPost = postService.setPostData(savedPost, account);
-//		postDao.update(populatedPost);
-
-
 
 		for(String imageUri: imageUris){
 			PostImage postImage = new PostImage();
 			postImage.setPostId(populatedPost.getId());
 			postImage.setUri(imageUri);
 			postImage.setDate(date);
-			postDao.saveImage(postImage);
+			postRepo.saveImage(postImage);
 		}
 		populatedPost.setImageFileUris(imageUris);
 
@@ -341,7 +234,6 @@ public class PostController {
 									@RequestParam(value="imageUri", required = true) String imageUri){
 
 		Map<String, Object> response = new HashMap<String, Object>();
-		Gson gson = new Gson();
 
 		if(!authService.isAuthenticated()){
 			response.put("error", "authentication required");
@@ -351,7 +243,7 @@ public class PostController {
 
 		String permission = Constants.POST_MAINTENANCE  + id;
 		if(authService.hasPermission(permission)) {
-			postDao.deletePostImage(Long.parseLong(id), imageUri);
+			postRepo.deletePostImage(Long.parseLong(id), imageUri);
 			response.put("success", true);
 		}else{
 			response.put("error", "user does not have required permissions");
@@ -367,57 +259,14 @@ public class PostController {
 									  final RedirectAttributes redirect,
 									 @PathVariable String id){
 
-		Gson gson = new Gson();
-		Map<String, Object> response = new HashMap<String, Object>();
-
 		if(!authService.isAuthenticated()){
-			response.put("error", "authentication required");
-			String responseData = gson.toJson(response);
-			return responseData;
-		}
-		Account account = authService.getAccount();
-
-
-		PostLike postLike = new PostLike();
-		postLike.setAccountId(account.getId());
-		postLike.setPostId(Long.parseLong(id));
-
-		boolean existingPostLike = postDao.liked(postLike);
-
-
-		boolean success = false;
-		
-		Map<String, Object> data = new HashMap<String, Object>();
-		Post post = postDao.get(Long.parseLong(id));
-		Notification notification = notificationDao.getLikeNotification(Long.parseLong(id), post.getAccountId(), account.getId());
-		if(existingPostLike) {
-			data.put("action", "removed");
-			success = postDao.unlike(postLike);
-			if(notification != null){
-				notificationDao.delete(notification.getId());
-			}
-		}
-		else{
-			long dateLiked = utilities.getCurrentDate();
-			postLike.setDateLiked(dateLiked);
-
-			success = postDao.like(postLike);
-			data.put("action", "added");
-
-			// log.info("notification: " + notification);
-			if(notification == null) {
-				createNotification(post.getAccountId(), account.getId(), Long.parseLong(id), true, false, false);
-			}
+			Map<String, Object> respData = new HashMap<>();
+			respData.put("error", "authentication required");
+			return gson.toJson(respData);
 		}
 
-		long likes = postDao.likes(Long.parseLong(id));
-
-		data.put("success", success);
-		data.put("likes", likes);
-		data.put("id", id);
-
-		String json = gson.toJson(data);
-		return json;
+		Map<String, Object> respData = postService.likePost(id);
+		return gson.toJson(respData);
 	}
 
 
@@ -456,14 +305,14 @@ public class PostController {
 
 		postShare.setDateShared(dateShared);
 
-		PostShare savedPostShare = postDao.sharePost(postShare);
+		PostShare savedPostShare = postRepo.sharePost(postShare);
 
 		response.put("success", savedPostShare);
 
 		String permission = Constants.POST_MAINTENANCE  + postShare.getAccountId() + ":" + savedPostShare.getId();
-		accountDao.savePermission(account.getId(), permission);
+		accountRepo.savePermission(account.getId(), permission);
 
-		Post existingPost = postDao.get(Long.parseLong(id));
+		Post existingPost = postRepo.get(Long.parseLong(id));
 
 		createNotification(existingPost.getAccountId(), account.getId(), Long.parseLong(id), false, true, false);
 
@@ -489,8 +338,8 @@ public class PostController {
 		String permission = Constants.POST_MAINTENANCE  + id;
 		if(authService.hasPermission(permission)) {
 
-			Post post = postDao.get(Long.parseLong(id));
-			postDao.hide(Long.parseLong(id));
+			Post post = postRepo.get(Long.parseLong(id));
+			postRepo.hide(Long.parseLong(id));
 			data.put("post", post);
 
 		}else{
@@ -518,8 +367,8 @@ public class PostController {
 		Account authenticatedAccount = authService.getAccount();
 		String permission = Constants.POST_MAINTENANCE  + authenticatedAccount.getId() + ":" + id;
 		if(authService.hasPermission(permission)){
-			if(postDao.deletePostShareComments(Long.parseLong(id))){
-				if(!postDao.deletePostShare(Long.parseLong(id))){
+			if(postRepo.deletePostShareComments(Long.parseLong(id))){
+				if(!postRepo.deletePostShare(Long.parseLong(id))){
 					data.put("error", "something went wrong...");
 					return gson.toJson(data);
 				}
@@ -570,12 +419,12 @@ public class PostController {
 		}
 
 		postComment.setDateCreated(date);
-		PostComment savedComment = postDao.savePostComment(postComment);
+		PostComment savedComment = postRepo.savePostComment(postComment);
 
 
-		accountDao.savePermission(account.getId(), Constants.COMMENT_MAINTENANCE  + savedComment.getId());
+		accountRepo.savePermission(account.getId(), Constants.COMMENT_MAINTENANCE  + savedComment.getId());
 
-		Post post = postDao.get(Long.parseLong(id));
+		Post post = postRepo.get(Long.parseLong(id));
 
 		createNotification(post.getAccountId(), account.getId(), Long.parseLong(id), false, false, true);
 
@@ -619,10 +468,10 @@ public class PostController {
 		}
 
 		postShareComment.setDateCreated(date);
-		PostShareComment savedComment = postDao.savePostShareComment(postShareComment);
+		PostShareComment savedComment = postRepo.savePostShareComment(postShareComment);
 
-		accountDao.savePermission(account.getId(), Constants.COMMENT_MAINTENANCE  + savedComment.getId());
-		PostShare postShare = postDao.getPostShare(Long.parseLong(id));
+		accountRepo.savePermission(account.getId(), Constants.COMMENT_MAINTENANCE  + savedComment.getId());
+		PostShare postShare = postRepo.getPostShare(Long.parseLong(id));
 
 		createNotification(postShare.getAccountId(), account.getId(), Long.parseLong(id), false, false, true);
 
@@ -644,7 +493,7 @@ public class PostController {
 		Long commentId = Long.parseLong(id);
 		String permission = Constants.COMMENT_MAINTENANCE + id;
 		if(authService.hasPermission(permission)){
-			postDao.deletePostComment(commentId);
+			postRepo.deletePostComment(commentId);
 			data.put("success", true);
 		}
 		else{
@@ -670,7 +519,7 @@ public class PostController {
 		Long commentId = Long.parseLong(id);
 		String permission = Constants.COMMENT_MAINTENANCE + id;
 		if(authService.hasPermission(permission)){
-			postDao.deletePostShareComment(commentId);
+			postRepo.deletePostShareComment(commentId);
 			data.put("success", true);
 		}
 		else{
@@ -692,7 +541,7 @@ public class PostController {
 		notification.setShared(shared);
 		notification.setCommented(commented);
 
-		notificationDao.save(notification);
+		notificationRepo.save(notification);
 	}
 
 
@@ -716,7 +565,7 @@ public class PostController {
 		hiddenPost.setPostId(Long.parseLong(id));
 		hiddenPost.setDateHidden(utilities.getCurrentDate());
 
-		postDao.makeInvisible(hiddenPost);
+		postRepo.makeInvisible(hiddenPost);
 
 		resp.put("success", true);
 		return gson.toJson(resp);
@@ -738,7 +587,7 @@ public class PostController {
 			return gson.toJson(response);
 		}
 
-		Post post = postDao.get(Long.parseLong(id));
+		Post post = postRepo.get(Long.parseLong(id));
 		post.setFlagged(true);
 
 		PostFlag postFlag = new PostFlag();
@@ -747,8 +596,8 @@ public class PostController {
 		postFlag.setDateFlagged(utilities.getCurrentDate());
 		postFlag.setShared(shared);
 
-		postDao.flagPost(postFlag);
-		postDao.updateFlagged(post);
+		postRepo.flagPost(postFlag);
+		postRepo.updateFlagged(post);
 
 		String body = "<h1>Amadeus</h1>"+
 				"<p>" + post.getContent() + "</p>" +
@@ -768,9 +617,7 @@ public class PostController {
 			return "redirect:/unauthorized";
 		}
 
-		List<Post> posts = postDao.getFlaggedPosts();
-		// log.info("flagged : " + posts.size());
-
+		List<Post> posts = postRepo.getFlaggedPosts();
 		model.addAttribute("posts", posts);
 
 		return "admin/flagged";
@@ -785,9 +632,8 @@ public class PostController {
 			return "redirect:/unauthorized";
 		}
 
-		Post post = postDao.getFlaggedPost(Long.parseLong(id));
-		Account account = accountDao.get(post.getAccountId());
-//		Post populatedPost = postService.populatePost(post, account, authService.getAccount());
+		Post post = postRepo.getFlaggedPost(Long.parseLong(id));
+		Account account = accountRepo.get(post.getAccountId());
 		Post populatedPost = postService.setPostData(post, account);
 		model.addAttribute("post", populatedPost);
 		return "admin/review_post";
@@ -802,19 +648,19 @@ public class PostController {
 			return "redirect:/unauthorized";
 		}
 
-		Post post = postDao.get(Long.parseLong(id));
-		Account account = accountDao.get(post.getAccountId());
+		Post post = postRepo.get(Long.parseLong(id));
+		Account account = accountRepo.get(post.getAccountId());
 
 		account.setDisabled(true);
-		accountDao.updateDisabled(account);
+		accountRepo.updateDisabled(account);
 
-		postDao.delete(post.getId());
-		postDao.removePostShares(post.getId());
-		postDao.removePostFlags(post.getId());
+		postRepo.delete(post.getId());
+		postRepo.removePostShares(post.getId());
+		postRepo.removePostFlags(post.getId());
 
-		List<PostImage> postImages = postDao.getImages(post.getId());
+		List<PostImage> postImages = postRepo.getImages(post.getId());
 		for(PostImage postImage : postImages){
-			postDao.deletePostImage(postImage.getId());
+			postRepo.deletePostImage(postImage.getId());
 			utilities.deleteUploadedFile(postImage.getUri());
 		}
 
@@ -832,15 +678,15 @@ public class PostController {
 			return "redirect:/unauthorized";
 		}
 
-		Post post = postDao.get(Long.parseLong(id));
-		Account account = accountDao.get(post.getAccountId());
+		Post post = postRepo.get(Long.parseLong(id));
+		Account account = accountRepo.get(post.getAccountId());
 
 		account.setDisabled(false);
-		accountDao.updateDisabled(account);
+		accountRepo.updateDisabled(account);
 
 		post.setFlagged(false);
-		postDao.updateFlagged(post);
-		postDao.removePostFlags(post.getId());
+		postRepo.updateFlagged(post);
+		postRepo.removePostFlags(post.getId());
 
 		return "redirect:/posts/flagged";
 	}
@@ -883,14 +729,14 @@ public class PostController {
 				}
 			}
 
-			Post post = postDao.get(Long.parseLong(id));
+			Post post = postRepo.get(Long.parseLong(id));
 
 			for(String imageUri: imageUris){
 				PostImage postImage = new PostImage();
 				postImage.setPostId(post.getId());
 				postImage.setUri(imageUri);
 				postImage.setDate(utilities.getCurrentDate());
-				postDao.saveImage(postImage);
+				postRepo.saveImage(postImage);
 			}
 
 			response.put("success", true);
@@ -916,7 +762,7 @@ public class PostController {
 
 		String permission = Constants.POST_MAINTENANCE + id;
 		if (authService.hasPermission(permission)) {
-			postDao.publish(Long.parseLong(id));
+			postRepo.publish(Long.parseLong(id));
 			resp.put("success", true);
 		}else{
 			resp.put("error", "permission required");
@@ -979,7 +825,7 @@ public class PostController {
 			long date = utilities.getCurrentDate();
 			post.setUpdateDate(date);
 
-			postDao.update(post);
+			postRepo.update(post);
 			resp.put("post", post);
 		}else{
 			resp.put("error", true);

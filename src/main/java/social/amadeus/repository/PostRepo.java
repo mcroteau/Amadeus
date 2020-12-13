@@ -1,10 +1,10 @@
-package social.amadeus.dao;
+package social.amadeus.repository;
 
 import java.util.List;
 
 import social.amadeus.model.*;
 
-public interface PostDao {
+public interface PostRepo {
 
 	public long id();
 
@@ -14,7 +14,7 @@ public interface PostDao {
 	
 	public List<Post> getActivity(long start, long end, long accountId);
 
-	public List<Post> getLatestSkinny(long start, long end, long accountId);
+	public long getNewestCount(long start, long end, long accountId);
 
 	public List<Post> getUserPosts(long accountId);
 	

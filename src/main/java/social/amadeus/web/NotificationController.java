@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import social.amadeus.dao.NotificationDao;
+import social.amadeus.repository.NotificationRepo;
 import social.amadeus.model.Account;
-import social.amadeus.dao.AccountDao;
-import social.amadeus.dao.FriendDao;
+import social.amadeus.repository.AccountRepo;
+import social.amadeus.repository.FriendRepo;
 import social.amadeus.service.AuthService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,13 +24,13 @@ public class NotificationController {
     private static final Logger log = Logger.getLogger(NotificationController.class);
 
     @Autowired
-    private FriendDao friendDao;
+    private FriendRepo friendRepo;
 
     @Autowired
-    private AccountDao accountDao;
+    private AccountRepo accountRepo;
 
     @Autowired
-    private NotificationDao notificationDao;
+    private NotificationRepo notificationRepo;
 
     @Autowired
     private AuthService authService;
@@ -51,7 +51,7 @@ public class NotificationController {
 
         Account authenticatedAccount = authService.getAccount();
 
-        if(notificationDao.clearNotifications(authenticatedAccount.getId())){
+        if(notificationRepo.clearNotifications(authenticatedAccount.getId())){
             data.put("success", true);
         }else{
             data.put("error", true);

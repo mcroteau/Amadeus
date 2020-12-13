@@ -1,8 +1,8 @@
-package social.amadeus.dao;
+package social.amadeus.repository;
 
 import social.amadeus.model.Role;
 
-public interface RoleDao {
+public interface RoleRepo {
 
 	public int count();
 

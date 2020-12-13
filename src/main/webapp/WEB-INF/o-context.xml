@@ -33,7 +33,7 @@
 	<bean id="postService" class="social.amadeus.service.PostService"/>
 	<bean id="syncService" class="social.amadeus.service.SyncService"/>
 
-	<bean id="appRunner" class="social.amadeus.AppRunner" scope="singleton"/>
+	<bean id="appRunner" class="social.amadeus.AppStartup" scope="singleton"/>
 
 	<bean id="publishJob" class="social.amadeus.jobs.PublishJob"/>
 	<bean id="adJob" class="social.amadeus.jobs.AdJob"/>

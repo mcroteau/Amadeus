@@ -1,4 +1,4 @@
-package social.amadeus.dao.jdbc;
+package social.amadeus.repository.jdbc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -7,11 +7,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
 
-import social.amadeus.dao.RoleDao;
+import social.amadeus.repository.RoleRepo;
 import social.amadeus.model.Role;
 
 
-public class RoleJdbcDao implements RoleDao {
+public class RoleJdbcRepo implements RoleRepo {
 	
 	
 	@Autowired

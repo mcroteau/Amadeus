@@ -19,7 +19,7 @@ import java.util.*;
 import io.github.mcroteau.Parakeet;
 import social.amadeus.common.Constants;
 import social.amadeus.common.Utilities;
-import social.amadeus.dao.*;
+import social.amadeus.repository.*;
 import social.amadeus.model.*;
 import social.amadeus.service.AuthService;
 import social.amadeus.service.EmailService;
@@ -42,25 +42,25 @@ public class AccountController {
 	private Utilities utilities;
 
 	@Autowired
-	private AccountDao accountDao;
+	private AccountRepo accountRepo;
 
 	@Autowired
-	private RoleDao roleDao;
+	private RoleRepo roleRepo;
 
 	@Autowired
-	private FriendDao friendDao;
+	private FriendRepo friendRepo;
 
 	@Autowired
-	private MusicDao musicDao;
+	private MusicRepo musicRepo;
 
 	@Autowired
-	private MessageDao messageDao;
+	private MessageRepo messageRepo;
 
 	@Autowired
-	private PostDao postDao;
+	private PostRepo postRepo;
 
 	@Autowired
-	private NotificationDao notificationDao;
+	private NotificationRepo notificationRepo;
 
 	@Autowired
 	private EmailService emailService;
@@ -115,12 +115,12 @@ public class AccountController {
 				m = Integer.parseInt(max);
 			}
 			int o = Integer.parseInt(offset);
-			accounts = accountDao.findAllOffset(m, o);	
+			accounts = accountRepo.findAllOffset(m, o);
 		}else{
-			accounts = accountDao.findAll();	
+			accounts = accountRepo.findAll();
 		} 
 		
-		long count = accountDao.count();
+		long count = accountRepo.count();
 		
 		model.addAttribute("accounts", accounts);
 		model.addAttribute("total", count);
@@ -147,7 +147,7 @@ public class AccountController {
 		if(authService.isAdministrator() ||
 				authService.hasPermission(permission)){
 
-			Account account = accountDao.get(Long.parseLong(id));
+			Account account = accountRepo.get(Long.parseLong(id));
 			model.addAttribute("account", account);
 
 			return "account/edit";
@@ -170,7 +170,7 @@ public class AccountController {
 		if(authService.isAdministrator() ||
 				authService.hasPermission(permission)){
 
-			Account account = accountDao.get(Long.parseLong(id));
+			Account account = accountRepo.get(Long.parseLong(id));
 
 			model.addAttribute("account", account);
 			return "account/edit";
@@ -192,7 +192,7 @@ public class AccountController {
 					  	 	 @RequestParam(value="image", required=false) CommonsMultipartFile uploadedProfileImage){
 		
 		long id = account.getId();
-		Account storedAccount = accountDao.get(id);
+		Account storedAccount = accountRepo.get(id);
 
 		String imageFileUri = "";
 
@@ -219,8 +219,8 @@ public class AccountController {
 			}
 
 			if(!account.getImageUri().equals("")) {
-				accountDao.update(account);
-				Account savedAccount = accountDao.get(id);
+				accountRepo.update(account);
+				Account savedAccount = accountRepo.get(id);
 
 				//TODO: update session account
 
@@ -253,7 +253,7 @@ public class AccountController {
 		if(authService.isAdministrator() ||
 				authService.hasPermission(permission)){
 
-			Account account = accountDao.get(Long.parseLong(id));
+			Account account = accountRepo.get(Long.parseLong(id));
 			model.addAttribute("account", account);
 			return "account/edit_password";
 
@@ -286,7 +286,7 @@ public class AccountController {
 			if(!account.getPassword().equals("")){
 				String password = utilities.hash(account.getPassword());
 				account.setPassword(password);
-				accountDao.updatePassword(account);
+				accountRepo.updatePassword(account);
 			}
 
 			redirect.addFlashAttribute("message", "password successfully updated");	
@@ -309,16 +309,16 @@ public class AccountController {
 			return "redirect:/admin/accounts";
 		}
 
-		Account account = accountDao.get(Long.parseLong(id));
-		List<Post> posts = postDao.getUserPosts(Long.parseLong(id));
+		Account account = accountRepo.get(Long.parseLong(id));
+		List<Post> posts = postRepo.getUserPosts(Long.parseLong(id));
 		for(Post post : posts){
-			postDao.hide(post.getId());
-			postDao.removePostShares(post.getId());
+			postRepo.hide(post.getId());
+			postRepo.removePostShares(post.getId());
 		}
 
 		account.setDisabled(true);
 		account.setDateDisabled(utilities.getCurrentDate());
-		accountDao.suspend(account);
+		accountRepo.suspend(account);
 
 		redirect.addFlashAttribute("message", "Successfully disabled account");
 
@@ -352,7 +352,7 @@ public class AccountController {
 			return "redirect:/signup?uri=" + uri;
 		}
 
-		Account existingAccount = accountDao.findByUsername(account.getUsername());
+		Account existingAccount = accountRepo.findByUsername(account.getUsername());
 		if(existingAccount != null){
 			redirect.addFlashAttribute("account", account);
 			redirect.addFlashAttribute("error", "Account exists with same username.");
@@ -384,15 +384,15 @@ public class AccountController {
 
 			account.setPassword(passwordHashed.toString());
 			account.setImageUri(Constants.DEFAULT_IMAGE_URI);
-			accountDao.save(account);	
+			accountRepo.save(account);
 			
-			Account savedAccount = accountDao.findByUsername(account.getUsername());
+			Account savedAccount = accountRepo.findByUsername(account.getUsername());
 			preloadConnections(savedAccount);
 
-			Role defaultRole = roleDao.find(Constants.ROLE_ACCOUNT);
+			Role defaultRole = roleRepo.find(Constants.ROLE_ACCOUNT);
 
-			accountDao.saveAccountRole(savedAccount.getId(), defaultRole.getId());
-			accountDao.savePermission(savedAccount.getId(), "account:maintenance:" + savedAccount.getId());
+			accountRepo.saveAccountRole(savedAccount.getId(), defaultRole.getId());
+			accountRepo.savePermission(savedAccount.getId(), "account:maintenance:" + savedAccount.getId());
 
 
 			String body = "<h1>Amadeus</h1>"+
@@ -474,15 +474,15 @@ public class AccountController {
 
 			account.setPassword(passwordHashed.toString());
 			account.setImageUri(Constants.DEFAULT_IMAGE_URI);
-			accountDao.save(account);	
+			accountRepo.save(account);
 			
-			Account savedAccount = accountDao.findByUsername(account.getUsername());
+			Account savedAccount = accountRepo.findByUsername(account.getUsername());
 			preloadConnections(savedAccount);
 
-			Role defaultRole = roleDao.find(Constants.ROLE_ACCOUNT);
+			Role defaultRole = roleRepo.find(Constants.ROLE_ACCOUNT);
 
-			accountDao.saveAccountRole(savedAccount.getId(), defaultRole.getId());
-			accountDao.savePermission(savedAccount.getId(), "account:maintenance:" + savedAccount.getId());
+			accountRepo.saveAccountRole(savedAccount.getId(), defaultRole.getId());
+			accountRepo.savePermission(savedAccount.getId(), "account:maintenance:" + savedAccount.getId());
 
 			String body = "<h1>Amadeus</h1>"+
 					"<p>Thank you for registering! Enjoy!</p>";
@@ -513,14 +513,14 @@ public class AccountController {
 			return gson.toJson(data);
 		}
 
-		Account account = accountDao.get(Long.parseLong(id));
+		Account account = accountRepo.get(Long.parseLong(id));
 		Account authenticatedAccount = authService.getAccount();
 
 		if(account.getId() == authenticatedAccount.getId()){
 			account.setOwnersAccount(true);
 		}
 
-		boolean ifFriend = friendDao.isFriend(authenticatedAccount.getId(), account.getId());
+		boolean ifFriend = friendRepo.isFriend(authenticatedAccount.getId(), account.getId());
 		if(ifFriend){
 			account.setIsFriend(true);
 		}
@@ -529,16 +529,16 @@ public class AccountController {
 		accountBlock.setPersonId(authenticatedAccount.getId());
 		accountBlock.setBlockerId(account.getId());
 
-		boolean blocked = accountDao.blocked(accountBlock);
+		boolean blocked = accountRepo.blocked(accountBlock);
 		account.setBlocked(blocked);
 
-		List<Friend> friends = friendDao.getFriends(Long.parseLong(id));
+		List<Friend> friends = friendRepo.getFriends(Long.parseLong(id));
         for(Friend friend : friends){
-            if(messageDao.hasMessages(friend.getFriendId(), authService.getAccount().getId()))
+            if(messageRepo.hasMessages(friend.getFriendId(), authService.getAccount().getId()))
                 friend.setHasMessages(true);
         }
 
-		long likes = accountDao.likes(account.getId());
+		long likes = accountRepo.likes(account.getId());
         if(likes > 0){
         	account.setLiked(true);
 		}
@@ -554,7 +554,7 @@ public class AccountController {
 					.date(utilities.getCurrentDate())
 					.build();
 
-			accountDao.incrementViews(view);
+			accountRepo.incrementViews(view);
 		}
 
 		return gson.toJson(data);
@@ -572,7 +572,7 @@ public class AccountController {
 
 
 		try {
-			Account account = accountDao.findByUsername(username);
+			Account account = accountRepo.findByUsername(username);
 
 			if (account == null) {
 				redirect.addFlashAttribute("error", "Unable to find account.");
@@ -581,7 +581,7 @@ public class AccountController {
 
 			String resetUuid = utilities.generateRandomString(13);
 			account.setUuid(resetUuid);
-			accountDao.updateUuid(account);
+			accountRepo.updateUuid(account);
 
 			StringBuffer url = request.getRequestURL();
 
@@ -614,7 +614,7 @@ public class AccountController {
 						@RequestParam(value="username", required = true ) String username,
 						@RequestParam(value="uuid", required = true ) String uuid){
 
-		Account account = accountDao.findByUsernameAndUuid(username, uuid);
+		Account account = accountRepo.findByUsernameAndUuid(username, uuid);
 
 		if (account == null) {
 			redirect.addFlashAttribute("error", "Unable to find account.");
@@ -642,7 +642,7 @@ public class AccountController {
 		if(!account.getPassword().equals("")){
 			String password = utilities.hash(account.getPassword());
 			account.setPassword(password);
-			accountDao.updatePassword(account);
+			accountRepo.updatePassword(account);
 		}
 
 		redirect.addFlashAttribute("message", "Password successfully updated");
@@ -673,8 +673,8 @@ public class AccountController {
 
 
 	private void preloadConnections(Account authenticatedAccount){
-		Account adminAccount = accountDao.findByUsername(Constants.ADMIN_USERNAME);
-		friendDao.saveConnection(adminAccount.getId(), authenticatedAccount.getId(), utilities.getCurrentDate());
+		Account adminAccount = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
+		friendRepo.saveConnection(adminAccount.getId(), authenticatedAccount.getId(), utilities.getCurrentDate());
 	}
 
 
@@ -701,18 +701,18 @@ public class AccountController {
 
 		boolean result = false;
 
-		boolean existingProfileLike = accountDao.liked(profileLike);
+		boolean existingProfileLike = accountRepo.liked(profileLike);
 
 		if(existingProfileLike) {
 			responseData.put("action", "removed");
-			result = accountDao.unlike(profileLike);
+			result = accountRepo.unlike(profileLike);
 		}
 		else{
-			result = accountDao.like(profileLike);
+			result = accountRepo.like(profileLike);
 			responseData.put("action", "added");
 		}
 
-		long likes = accountDao.likes(Long.parseLong(id));
+		long likes = accountRepo.likes(Long.parseLong(id));
 
 
 		responseData.put("success", result);
@@ -751,12 +751,12 @@ public class AccountController {
 				.atDateBlocked(utilities.getCurrentDate())
 				.build();
 
-		if(accountDao.blocked(blok)){
+		if(accountRepo.blocked(blok)){
 			resp.put("success", "unblocked");
-			accountDao.unblock(blok);
+			accountRepo.unblock(blok);
 		}else{
 			resp.put("success", "blocked");
-			accountDao.block(blok);
+			accountRepo.block(blok);
 		}
 
 		return gson.toJson(resp);
@@ -777,16 +777,25 @@ public class AccountController {
 
 		Account account = authService.getAccount();
 
-		List<Post> latestPostsTiny = getLatestPostsSkinny(account, request);
-		List<Notification> notifications = getNotifications(account);
-		long messagesCount = messageDao.countByAccount(account);
-		long notificationsCount = notificationDao.countByAccount(account);
-		long invitationsCount = friendDao.countInvitesByAccount(account);
+		//remove
+//		List<Post> latestPostsTiny = getLatestPostsSkinny(account, request);
 
-		List<FriendInvite> invites = friendDao.invites(account.getId());
+		long newestCount = 0;
+		if (request.getSession().getAttribute(Constants.ACTIVITY_REQUEST_TIME) != null) {
+			long start = (Long) request.getSession().getAttribute(Constants.ACTIVITY_REQUEST_TIME);
+			long end = utilities.getCurrentDate();
+			newestCount = postRepo.getNewestCount(start, end, account.getId());
+		}
+
+		List<Notification> notifications = getNotifications(account);
+		long messagesCount = messageRepo.countByAccount(account);
+		long notificationsCount = notificationRepo.countByAccount(account);
+		long invitationsCount = friendRepo.countInvitesByAccount(account);
+
+		List<FriendInvite> invites = friendRepo.invites(account.getId());
 		notificationsCount = notificationsCount + invites.size();
 
-		data.put("latestPosts", latestPostsTiny);
+		data.put("newestCount", newestCount);
 		data.put("messagesCount", messagesCount);
 		data.put("notifications", notifications);
 		data.put("notificationsCount", notificationsCount);
@@ -796,9 +805,9 @@ public class AccountController {
 	}
 
 	private List<Notification> getNotifications(Account account){
-		List<Notification> notifications = notificationDao.notifications(account.getId());
+		List<Notification> notifications = notificationRepo.notifications(account.getId());
 		for(Notification notification: notifications){
-			Account a = accountDao.get(notification.getAuthenticatedAccountId());
+			Account a = accountRepo.get(notification.getAuthenticatedAccountId());
 			notification.setName(a.getName());
 		}
 
@@ -811,11 +820,11 @@ public class AccountController {
 			}
 		};
 
-		List<FriendInvite> invites = friendDao.invites(account.getId());
+		List<FriendInvite> invites = friendRepo.invites(account.getId());
 		for(FriendInvite invite : invites){
 			Notification notification = new Notification();
 			notification.setInvite(true);
-			Account invitee = accountDao.get(invite.getInviteeId());
+			Account invitee = accountRepo.get(invite.getInviteeId());
 			notification.setName(invitee.getName());
 			notification.setDateCreated(invite.getDateCreated());
 			notifications.add(notification);
@@ -826,20 +835,20 @@ public class AccountController {
 		return notifications;
 	}
 
-	private List<Post> getLatestPostsSkinny(Account account, HttpServletRequest request){
-		List<Post> latestPosts = new ArrayList<Post>();
-
-		try {
-			if (request.getSession().getAttribute(Constants.ACTIVITY_REQUEST_TIME) != null) {
-				long start = (Long) request.getSession().getAttribute(Constants.ACTIVITY_REQUEST_TIME);
-				long end = utilities.getCurrentDate();
-				latestPosts = postDao.getLatestSkinny(start, end, account.getId());
-			}
-		}catch(Exception e){}
-
-		return latestPosts;
-	}
-
+//	private List<Post> getLatestPostsSkinny(Account account, HttpServletRequest request) {
+//		List<Post> latestPosts = new ArrayList<Post>();
+//
+//		try {
+//			if (request.getSession().getAttribute(Constants.ACTIVITY_REQUEST_TIME) != null) {
+//				long start = (Long) request.getSession().getAttribute(Constants.ACTIVITY_REQUEST_TIME);
+//				long end = utilities.getCurrentDate();
+//				latestPosts = postRepo.getLatestSkinny(start, end, account.getId());
+//			}
+//		} catch (Exception e) {
+//		}
+//
+//		return latestPosts;
+//	}
 
 
 	@RequestMapping(value="/profile/data/views", method=RequestMethod.GET, produces="application/json")
@@ -864,7 +873,7 @@ public class AccountController {
 
 		for(int n = 32; n != 0; n--){
 			long date = utilities.getPreviousDay(n);
-			long count = accountDao.getViews(account, date, currentDate);
+			long count = accountRepo.getViews(account, date, currentDate);
 
 			String datef = utilities.getGraphDate(n);
 			labels.add(datef);
@@ -875,9 +884,9 @@ public class AccountController {
 		}
 
 
-		long weekCount = accountDao.getViews(account, utilities.getPreviousDay(7), end);
-		long monthCount = accountDao.getViews(account, utilities.getPreviousDay(31), end);
-		long allTimeCount = accountDao.getAllViews(account);
+		long weekCount = accountRepo.getViews(account, utilities.getPreviousDay(7), end);
+		long monthCount = accountRepo.getViews(account, utilities.getPreviousDay(31), end);
+		long allTimeCount = accountRepo.getAllViews(account);
 
 		viewsData.put("labels", labels);
 		viewsData.put("counts", counts);
@@ -898,9 +907,9 @@ public class AccountController {
 			return "redirect:/account/profile/" + id;
 		}
 
-		Account account = accountDao.get(Long.parseLong(id));
+		Account account = accountRepo.get(Long.parseLong(id));
 		account.setDateDisabled(utilities.getCurrentDate());
-		accountDao.suspend(account);
+		accountRepo.suspend(account);
 
 		model.addAttribute("message", "Account suspended.");
 		return "redirect:/account/edit/" + id;
@@ -917,8 +926,8 @@ public class AccountController {
 			return "redirect:/account/profile/" + id;
 		}
 
-		Account account = accountDao.get(Long.parseLong(id));
-		accountDao.renew(account);
+		Account account = accountRepo.get(Long.parseLong(id));
+		accountRepo.renew(account);
 
 		model.addAttribute("message", "Account renewed.");
 		return "redirect:/account/edit/" + id;

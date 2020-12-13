@@ -17,8 +17,8 @@ import social.amadeus.model.Friend;
 import social.amadeus.model.FriendInvite;
 import social.amadeus.service.AuthService;
 import social.amadeus.service.EmailService;
-import social.amadeus.dao.FriendDao;
-import social.amadeus.dao.MessageDao;
+import social.amadeus.repository.FriendRepo;
+import social.amadeus.repository.MessageRepo;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -38,10 +38,10 @@ public class FriendController {
     private EmailService emailService;
 
     @Autowired
-    private FriendDao friendDao;
+    private FriendRepo friendRepo;
 
     @Autowired
-    private MessageDao messageDao;
+    private MessageRepo messageRepo;
 
     @Autowired
     private AuthService authService;
@@ -62,7 +62,7 @@ public class FriendController {
 
         Account account = authService.getAccount();
 
-        List<FriendInvite> invites = friendDao.invites(account.getId());
+        List<FriendInvite> invites = friendRepo.invites(account.getId());
         for(FriendInvite invite : invites){
             if(account.getId() == invite.getInviteeId()){
                 invite.setOwnersAccount(true);
@@ -91,7 +91,7 @@ public class FriendController {
 
         Account authenticatedAccount = authService.getAccount();
 
-        if(friendDao.invite(authenticatedAccount.getId(), Long.parseLong(id), utilities.getCurrentDate())){
+        if(friendRepo.invite(authenticatedAccount.getId(), Long.parseLong(id), utilities.getCurrentDate())){
             response.put("success", true);
         }else{
             response.put("error", true);
@@ -119,7 +119,7 @@ public class FriendController {
 
         Account authenticatedAccount = authService.getAccount();
 
-        if(friendDao.accept(Long.parseLong(id), authenticatedAccount.getId(), utilities.getCurrentDate())) {
+        if(friendRepo.accept(Long.parseLong(id), authenticatedAccount.getId(), utilities.getCurrentDate())) {
             data.put("success", true);
             return gson.toJson(data);
         }
@@ -148,7 +148,7 @@ public class FriendController {
 
         Account account = authService.getAccount();
 
-        boolean ignored = friendDao.ignore(Long.parseLong(id), account.getId(), utilities.getCurrentDate());
+        boolean ignored = friendRepo.ignore(Long.parseLong(id), account.getId(), utilities.getCurrentDate());
 
         data.put("success", ignored);
         return gson.toJson(data);
@@ -171,7 +171,7 @@ public class FriendController {
         }
 
         Account account = authService.getAccount();
-        boolean success = friendDao.removeConnection(account.getId(), Long.parseLong(id));
+        boolean success = friendRepo.removeConnection(account.getId(), Long.parseLong(id));
 
         data.put("success", success);
         String json = gson.toJson(data);
@@ -194,9 +194,9 @@ public class FriendController {
             return gson.toJson(data);
         }
 
-        List<Friend> friends = friendDao.getFriends(Long.parseLong(id));
+        List<Friend> friends = friendRepo.getFriends(Long.parseLong(id));
         for(Friend friend : friends){
-            if(messageDao.hasMessages(friend.getFriendId(), authService.getAccount().getId()))
+            if(messageRepo.hasMessages(friend.getFriendId(), authService.getAccount().getId()))
                 friend.setHasMessages(true);
         }
 

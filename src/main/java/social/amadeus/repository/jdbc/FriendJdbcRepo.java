@@ -1,4 +1,4 @@
-package social.amadeus.dao.jdbc;
+package social.amadeus.repository.jdbc;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import social.amadeus.dao.FriendDao;
+import social.amadeus.repository.FriendRepo;
 import social.amadeus.model.Account;
 import social.amadeus.model.Friend;
 import social.amadeus.model.FriendInvite;
 
-public class FriendJdbcDao implements FriendDao {
+public class FriendJdbcRepo implements FriendRepo {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
