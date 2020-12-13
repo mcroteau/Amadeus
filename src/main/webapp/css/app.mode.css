@@ -89,6 +89,32 @@ textarea::placeholder, th, td{
 td{
     padding:10px 0px 10px 0px;
 }
+
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="text"]:hover,
+input[type="password"]:hover,
+input[type="text"]:focus,
+input[type="password"]:focus{
+    color:#221;
+    font-family:Roboto-Light !important;
+    font-size:19px;
+    background:#edf7ff;
+    background:#ffffea;
+    background:#fdff82;
+    background:#f8f8f8;
+    line-height:1.0em !important;
+    padding:12px 12px !important;
+    border:solid 1px #ccc;
+    -webkit-border-radius: 3px !important;
+    -moz-border-radius: 3px !important;
+    border-radius: 3px !important;
+}
+
+
+
 /*csslint box-model:false*/
 /*
 Box-model set to false because we're setting a height on select elements, which
@@ -104,7 +130,7 @@ h3{
 body{
     background:#fff;
     background: rgb(253,254,3);
-    background: linear-gradient(76deg, rgba(253,254,3,1) 2%, rgba(159,237,3,1) 4%, rgba(84,175,255,1) 46%, rgba(84,175,255,1) 59%, rgba(208,48,138,1) 94%)
+    background: linear-gradient(76deg, rgba(253,254,3,1) 2%, rgba(159,237,3,1) 16%, rgba(84,175,255,1) 46%, rgba(84,175,255,1) 69%, rgba(208,48,138,1) 94%)
 }
 
 .feed-content-container{
@@ -2543,6 +2569,7 @@ p{
     font-size: 14px !important;
     padding: 9px 8px !important;
     margin-bottom: 6px;
+    border:solid 1px #84c5ff !important;
     background:rgba(255,255,255, 0.1) !important;
 }
 .comment-input,
@@ -2551,6 +2578,7 @@ p{
 .comment-shared-input:hover,
 .comment-shared-input:focus{
     color:#fff !important;
+    border:solid 1px #84c5ff !important;
     background:rgba(255,255,255, 0.1) !important;
 }
 
@@ -3078,30 +3106,6 @@ table tr:hover{
     background:#efefef;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="text"]:hover,
-input[type="password"]:hover,
-input[type="text"]:focus,
-input[type="password"]:focus{
-    color:#221;
-    font-family:Roboto-Light !important;
-    font-size:19px;
-    background:#edf7ff;
-    background:#ffffea;
-    background:#fdff82;
-    background:#f8f8f8;
-    line-height:1.0em !important;
-    padding:12px 12px !important;
-    border:solid 1px #ccc !important;
-    border-style:solid !important;
-    -webkit-border-radius: 3px !important;
-    -moz-border-radius: 3px !important;
-    border-radius: 3px !important;
-}
-
-
 .post-button{
     /*position:absolute;*/
     bottom:69px;
@@ -3128,13 +3132,16 @@ input[type="password"]:focus{
     -moz-border-radius: 4px !important;
     border-radius: 4px !important;
     border:solid 1px #4198e4;
+    -webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.07) !important;
+    -moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.07) !important;
+    box-shadow: 0px 2px 3px 0px rgba(0,0,0,.07) !important;
 }
 
 .post-button:hover{
     background: #54afff !important;
-	-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.07) !important;
-	-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.07) !important;
-	box-shadow: 0px 2px 3px 0px rgba(0,0,0,.07) !important;
+	-webkit-box-shadow: 0px 2px 4px 0px rgba(0,0,0,.07) !important;
+	-moz-box-shadow: 0px 2px 4px 0px rgba(0,0,0,.07) !important;
+	box-shadow: 0px 2px 4px 0px rgba(0,0,0,.07) !important;
 }
 
 .post-button.beautiful{
