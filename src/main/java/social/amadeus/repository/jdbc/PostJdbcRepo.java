@@ -126,27 +126,47 @@ public class PostJdbcRepo implements PostRepo {
 
 
 
-	public List<Post> getLatestSkinny(long start, long end, long accountId){
-
-		List<Friend> friends = friendRepo.getFriends(accountId);
+	public long getNewestCount(long start, long end, long authdAccountId){
+		List<Friend> friends = friendRepo.getFriends(authdAccountId);
 		Set<Long> ids = new HashSet<Long>();
+		ids.add(authdAccountId);
 
-		for(Friend connection : friends) {
-			ids.add(connection.getFriendId());
-		}
+		friends.stream().forEach(connection -> ids.add(connection.getFriendId()));
 
-		ids.add(accountId);
 		String idsString = StringUtils.join(ids, ",");
 
-		String sql = "select a.name from " +
+		String sql = "select count(*) totalCount from " +
 				"posts p inner join account a on p.account_id = a.id " +
 				"where account_id in (" + idsString + ") " +
 				"and p.published = true and p.date_posted between " + start + " and " + end + "";
 
-		List<Post> latest = jdbcTemplate.query(sql, new BeanPropertyRowMapper<Post>(Post.class));
+		log.info(sql);
 
-		return latest;
+		return jdbcTemplate.queryForObject(sql, new Object[] { }, Long.class);
 	}
+
+//Remove
+//	public List<Post> getLatestSkinny(long start, long end, long accountId){
+//
+//		List<Friend> friends = friendRepo.getFriends(accountId);
+//		Set<Long> ids = new HashSet<Long>();
+//
+//		for(Friend connection : friends) {
+//			ids.add(connection.getFriendId());
+//		}
+//
+//		ids.add(accountId);
+//		String idsString = StringUtils.join(ids, ",");
+//
+//		String sql = "select a.name from " +
+//				"posts p inner join account a on p.account_id = a.id " +
+//				"where account_id in (" + idsString + ") " +
+//				"and p.published = true and p.date_posted between " + start + " and " + end + "";
+//
+//		List<Post> latest = jdbcTemplate.query(sql, new BeanPropertyRowMapper<Post>(Post.class));
+//
+//		return latest;
+//	}
 
 
 	@Override

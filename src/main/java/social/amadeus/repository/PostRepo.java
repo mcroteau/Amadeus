@@ -14,7 +14,7 @@ public interface PostRepo {
 	
 	public List<Post> getActivity(long start, long end, long accountId);
 
-	public List<Post> getLatestSkinny(long start, long end, long accountId);
+	public long getNewestCount(long start, long end, long accountId);
 
 	public List<Post> getUserPosts(long accountId);
 	

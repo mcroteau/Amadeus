@@ -777,7 +777,16 @@ public class AccountController {
 
 		Account account = authService.getAccount();
 
-		List<Post> latestPostsTiny = getLatestPostsSkinny(account, request);
+		//remove
+//		List<Post> latestPostsTiny = getLatestPostsSkinny(account, request);
+
+		long newestCount = 0;
+		if (request.getSession().getAttribute(Constants.ACTIVITY_REQUEST_TIME) != null) {
+			long start = (Long) request.getSession().getAttribute(Constants.ACTIVITY_REQUEST_TIME);
+			long end = utilities.getCurrentDate();
+			newestCount = postRepo.getNewestCount(start, end, account.getId());
+		}
+
 		List<Notification> notifications = getNotifications(account);
 		long messagesCount = messageRepo.countByAccount(account);
 		long notificationsCount = notificationRepo.countByAccount(account);
@@ -786,7 +795,7 @@ public class AccountController {
 		List<FriendInvite> invites = friendRepo.invites(account.getId());
 		notificationsCount = notificationsCount + invites.size();
 
-		data.put("latestPosts", latestPostsTiny);
+		data.put("newestCount", newestCount);
 		data.put("messagesCount", messagesCount);
 		data.put("notifications", notifications);
 		data.put("notificationsCount", notificationsCount);
@@ -826,20 +835,20 @@ public class AccountController {
 		return notifications;
 	}
 
-	private List<Post> getLatestPostsSkinny(Account account, HttpServletRequest request){
-		List<Post> latestPosts = new ArrayList<Post>();
-
-		try {
-			if (request.getSession().getAttribute(Constants.ACTIVITY_REQUEST_TIME) != null) {
-				long start = (Long) request.getSession().getAttribute(Constants.ACTIVITY_REQUEST_TIME);
-				long end = utilities.getCurrentDate();
-				latestPosts = postRepo.getLatestSkinny(start, end, account.getId());
-			}
-		}catch(Exception e){}
-
-		return latestPosts;
-	}
-
+//	private List<Post> getLatestPostsSkinny(Account account, HttpServletRequest request) {
+//		List<Post> latestPosts = new ArrayList<Post>();
+//
+//		try {
+//			if (request.getSession().getAttribute(Constants.ACTIVITY_REQUEST_TIME) != null) {
+//				long start = (Long) request.getSession().getAttribute(Constants.ACTIVITY_REQUEST_TIME);
+//				long end = utilities.getCurrentDate();
+//				latestPosts = postRepo.getLatestSkinny(start, end, account.getId());
+//			}
+//		} catch (Exception e) {
+//		}
+//
+//		return latestPosts;
+//	}
 
 
 	@RequestMapping(value="/profile/data/views", method=RequestMethod.GET, produces="application/json")

@@ -54,22 +54,10 @@ public class PostController {
 	private AccountRepo accountRepo;
 
 	@Autowired
-	private FriendRepo friendRepo;
-
-	@Autowired
-	private MusicRepo musicRepo;
-
-	@Autowired
 	private Utilities utilities;
 
 	@Autowired
 	private NotificationRepo notificationRepo;
-
-	@Autowired
-	private FlyerRepo flyerRepo;
-
-	@Autowired
-	private EmailService emailService;
 
 	@Autowired
 	private AuthService authService;
@@ -79,23 +67,15 @@ public class PostController {
 
 
 
-	//Germany is trying to get us all into one big group and use corporate espionage, so I don't need help right now.
-	//I am Microsoft, I am IBM I am America
-
 	@RequestMapping(value="/post/{id}", method=RequestMethod.GET, produces="application/json")
 	public @ResponseBody String postData(HttpServletRequest request,
 									  @PathVariable String id){
-		Gson gson = new Gson();
-		Post post = postRepo.get(Long.parseLong(id));
-		Account account = accountRepo.get(post.getAccountId());
-		Account authenticatedAccount = authService.getAccount();
-//		Post populated = postService.populatePost(post, account, authenticatedAccount);
-		Post populatedPost = postService.setPostData(post, authenticatedAccount);
-		return gson.toJson(populatedPost);
+		Post post = postService.getPost(id);
+		return gson.toJson(post);
 	}
 	
 
-	@RequestMapping(value="/activity", method=RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="/post/activity", method=RequestMethod.GET, produces="application/json")
 	public @ResponseBody String posts(HttpServletRequest req){
 
 		if(!authService.isAuthenticated()){
@@ -113,83 +93,7 @@ public class PostController {
 
 
 
-
-//	@RequestMapping(value="/posts/latest", method=RequestMethod.GET, produces="application/json")
-//	public @ResponseBody String latest(HttpServletRequest request){
-//
-//		Gson gson = new Gson();
-//		Map<String, Object> responseData = new HashMap<String, Object>();
-//
-//		if(!authService.isAuthenticated()){
-//			responseData.put("error", "authentication required");
-//			return gson.toJson(responseData);
-//		}
-//
-//		try{
-//
-//			List<Post> feed = new ArrayList<Post>();
-//
-//			Account authenticatedAccount = authService.getAccount();
-//
-//			if(request.getSession().getAttribute(Constants.ACTIVITY_REQUEST_TIME) != null) {
-//				long start = (Long) request.getSession().getAttribute(Constants.ACTIVITY_REQUEST_TIME);
-//				long end = utilities.getCurrentDate();
-//
-//				feed = postDao.getActivity(start, end, authenticatedAccount.getId());
-//				for (Post post : feed) {
-//					Account postedAccount = accountDao.get(post.getAccountId());
-////					postService.populatePost(post, postedAccount, authenticatedAccount);
-//					Post populatedPost = setPostData(post);
-//				}
-//
-//				List<PostShare> postShares = postDao.getPostShares(start, end, authenticatedAccount.getId());
-//
-//				for (PostShare postShare : postShares) {
-//					Post post = postDao.get(postShare.getPostId());
-//
-//					post.setShared(true);
-//					post.setSharedComment(postShare.getComment());
-//
-//					Account acc = accountDao.get(postShare.getAccountId());
-//					post.setSharedAccount(acc.getName());
-//					post.setSharedImageUri(acc.getImageUri());
-//
-//					postService.populatePost(post, acc, authenticatedAccount);
-//
-//					SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_SEARCH_FORMAT);
-//					Date date = format.parse(Long.toString(postShare.getDateShared()));
-//
-//					PrettyTime p = new PrettyTime();
-//					post.setTimeSharedAgo(p.format(date));
-//					post.setDatePosted(postShare.getDateShared());
-//
-//					feed.add(post);
-//				}
-//
-//				Comparator<Post> comparator = new Comparator<Post>() {
-//					@Override
-//					public int compare(Post a1, Post a2) {
-//						Long p1 = new Long(a1.getDatePosted());
-//						Long p2 = new Long(a2.getDatePosted());
-//						return p2.compareTo(p1);
-//					}
-//				};
-//
-//
-//				Collections.sort(feed, comparator);
-//
-//			}
-//
-//			return gson.toJson(feed);
-//
-//		}catch(ParseException e){
-//			e.printStackTrace();
-//			return gson.toJson(responseData);
-//		}
-//	}
-
-
-	@RequestMapping(value="/account/posts/{id}", method=RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="/post/account/{id}", method=RequestMethod.GET, produces="application/json")
 	public @ResponseBody String posts(HttpServletRequest request,
 									  @PathVariable String id){
 
@@ -210,14 +114,12 @@ public class PostController {
 
 
 	@RequestMapping(value="/post/share", method=RequestMethod.POST, produces="application/json")
-	public @ResponseBody String share(HttpServletRequest request,
-									  @ModelAttribute("post") Post post,
+	public @ResponseBody String share(@ModelAttribute("post") Post post,
 									  @RequestParam(value="imageFiles", required = false) CommonsMultipartFile[] uploadedImageFiles,
 									  @RequestParam(value="videoFile", required = false) CommonsMultipartFile uploadedVideoFile){
 
 
 		Map<String, Object> data = new HashMap<String, Object>();
-		Gson gson = new Gson();
 
 		if(!authService.isAuthenticated()){
 			data.put("error", "authentication required");
@@ -312,11 +214,7 @@ public class PostController {
 
 		Post savedPost = postRepo.save(post);
 		accountRepo.savePermission(account.getId(), Constants.POST_MAINTENANCE  + savedPost.getId());
-//		postService.populatePost(savedPost, account, account);
 		Post populatedPost = postService.setPostData(savedPost, account);
-//		postDao.update(populatedPost);
-
-
 
 		for(String imageUri: imageUris){
 			PostImage postImage = new PostImage();
@@ -336,7 +234,6 @@ public class PostController {
 									@RequestParam(value="imageUri", required = true) String imageUri){
 
 		Map<String, Object> response = new HashMap<String, Object>();
-		Gson gson = new Gson();
 
 		if(!authService.isAuthenticated()){
 			response.put("error", "authentication required");
@@ -362,57 +259,14 @@ public class PostController {
 									  final RedirectAttributes redirect,
 									 @PathVariable String id){
 
-		Gson gson = new Gson();
-		Map<String, Object> response = new HashMap<String, Object>();
-
 		if(!authService.isAuthenticated()){
-			response.put("error", "authentication required");
-			String responseData = gson.toJson(response);
-			return responseData;
-		}
-		Account account = authService.getAccount();
-
-
-		PostLike postLike = new PostLike();
-		postLike.setAccountId(account.getId());
-		postLike.setPostId(Long.parseLong(id));
-
-		boolean existingPostLike = postRepo.liked(postLike);
-
-
-		boolean success = false;
-		
-		Map<String, Object> data = new HashMap<String, Object>();
-		Post post = postRepo.get(Long.parseLong(id));
-		Notification notification = notificationRepo.getLikeNotification(Long.parseLong(id), post.getAccountId(), account.getId());
-		if(existingPostLike) {
-			data.put("action", "removed");
-			success = postRepo.unlike(postLike);
-			if(notification != null){
-				notificationRepo.delete(notification.getId());
-			}
-		}
-		else{
-			long dateLiked = utilities.getCurrentDate();
-			postLike.setDateLiked(dateLiked);
-
-			success = postRepo.like(postLike);
-			data.put("action", "added");
-
-			// log.info("notification: " + notification);
-			if(notification == null) {
-				createNotification(post.getAccountId(), account.getId(), Long.parseLong(id), true, false, false);
-			}
+			Map<String, Object> respData = new HashMap<>();
+			respData.put("error", "authentication required");
+			return gson.toJson(respData);
 		}
 
-		long likes = postRepo.likes(Long.parseLong(id));
-
-		data.put("success", success);
-		data.put("likes", likes);
-		data.put("id", id);
-
-		String json = gson.toJson(data);
-		return json;
+		Map<String, Object> respData = postService.likePost(id);
+		return gson.toJson(respData);
 	}
 
 
@@ -764,8 +618,6 @@ public class PostController {
 		}
 
 		List<Post> posts = postRepo.getFlaggedPosts();
-		// log.info("flagged : " + posts.size());
-
 		model.addAttribute("posts", posts);
 
 		return "admin/flagged";
@@ -782,7 +634,6 @@ public class PostController {
 
 		Post post = postRepo.getFlaggedPost(Long.parseLong(id));
 		Account account = accountRepo.get(post.getAccountId());
-//		Post populatedPost = postService.populatePost(post, account, authService.getAccount());
 		Post populatedPost = postService.setPostData(post, account);
 		model.addAttribute("post", populatedPost);
 		return "admin/review_post";

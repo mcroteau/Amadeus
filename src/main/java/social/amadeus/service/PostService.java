@@ -8,6 +8,7 @@ import social.amadeus.common.SessionManager;
 import social.amadeus.common.Utilities;
 import social.amadeus.repository.AccountRepo;
 import social.amadeus.repository.FlyerRepo;
+import social.amadeus.repository.NotificationRepo;
 import social.amadeus.repository.PostRepo;
 import social.amadeus.model.*;
 
@@ -32,7 +33,71 @@ public class PostService {
     private FlyerRepo flyerRepo;
 
     @Autowired
+    private AuthService authService;
+
+    @Autowired
+    private NotificationRepo notificationRepo;
+
+    @Autowired
     private SessionManager sessionManager;
+
+
+    public Post getPost(String id){
+        Post postPre = postRepo.get(Long.parseLong(id));
+        Account authdAccount = authService.getAccount();
+        Post post = setPostData(postPre, authdAccount);
+        return post;
+    }
+
+
+    public Map<String, Object> likePost(String id){
+        Account authdAccount = authService.getAccount();
+
+        PostLike postLike = new PostLike();
+        postLike.setAccountId(authdAccount.getId());
+        postLike.setPostId(Long.parseLong(id));
+
+        boolean existingPostLike = postRepo.liked(postLike);
+        Post post = postRepo.get(Long.parseLong(id));
+
+        Notification notification = notificationRepo.getLikeNotification(Long.parseLong(id), post.getAccountId(), authdAccount.getId());
+
+        if(existingPostLike) {
+            postRepo.unlike(postLike);
+
+            if(notification != null){
+                notificationRepo.delete(notification.getId());
+            }
+        }else{
+            long dateLiked = utilities.getCurrentDate();
+            postLike.setDateLiked(dateLiked);
+            postRepo.like(postLike);
+
+            if(notification == null) {
+                createNotification(post.getAccountId(), authdAccount.getId(), Long.parseLong(id), true, false, false);
+            }
+        }
+
+        long likes = postRepo.likes(Long.parseLong(id));
+        Map<String, Object> respData = new HashMap<>();
+        respData.put("likes", likes);
+        respData.put("id", id);
+        return respData;
+    }
+
+    private void createNotification(long postAccountId, long authenticatedAccountId, long postId, boolean liked, boolean shared, boolean commented){
+        Notification notification = new Notification();
+        notification.setDateCreated(utilities.getCurrentDate());
+
+        notification.setPostAccountId(postAccountId);
+        notification.setAuthenticatedAccountId(authenticatedAccountId);
+        notification.setPostId(postId);
+        notification.setLiked(liked);
+        notification.setShared(shared);
+        notification.setCommented(commented);
+
+        notificationRepo.save(notification);
+    }
 
     public List<Post> getUserActivity(Account profileAccount, Account authdAccount){
         List<Post> postsPre = postRepo.getUserPosts(profileAccount.getId());
@@ -343,15 +408,6 @@ public class PostService {
 
 
 
-
-//
-//
-//
-//
-//
-//
-//
-//
 //    public Map<String, Object> getActivityD(Account authenticatedAccount, HttpServletRequest request){
 //
 //        Map<String, Object> activityData = new HashMap<>();

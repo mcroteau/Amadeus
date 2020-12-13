@@ -19,9 +19,9 @@ import social.amadeus.common.Utilities;
 
 import javax.annotation.PostConstruct;
 
-public class AppRunner {
+public class AppStartup {
 
-	private static final Logger log = Logger.getLogger(AppRunner.class);
+	private static final Logger log = Logger.getLogger(AppStartup.class);
 
 	@Autowired
 	public RoleRepo roleRepo;
