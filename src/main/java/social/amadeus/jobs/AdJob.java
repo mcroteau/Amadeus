@@ -19,7 +19,6 @@ public class AdJob implements Job {
     @Override
     public void execute(JobExecutionContext context) {
         try {
-            log.info("************ executing ad job ************");
             JobKey jobKey = new JobKey(Constants.AD_JOB, Constants.AMADEUS_GROUP);
             JobDetail jobDetail = context.getScheduler().getJobDetail(jobKey);
 
@@ -38,9 +37,6 @@ public class AdJob implements Job {
                     flyerRepo.crumpleUp(flyer.getId());
                 }
             }
-
-
-            log.info("************ ad job complete ************");
 
         } catch (Exception e) {
             e.printStackTrace();
