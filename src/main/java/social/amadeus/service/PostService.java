@@ -134,7 +134,7 @@ public class PostService {
         List<Post> activityFeed = getFlyerPosts(activityFeedPre);
         List<Post> activityFeedSorted = getSortedActivities(activityFeed);
 
-//        activityFeedSorted.stream().forEach(post -> setActive(post));
+        activityFeedSorted.stream().forEach(post -> setActive(post));
 
         List<Account> femalesMales = getFemalesMales(activityFeed);
 
@@ -160,9 +160,8 @@ public class PostService {
     }
 
     private Post setActive(Post post){
-        post.setStatus("inactive");
         if (sessionManager.sessions.containsKey(post.getUsername())) {
-            post.setStatus("active");
+            post.setStatus("online");
         }
         return post;
     }

@@ -101,12 +101,6 @@ h3{
     font-family:Roboto-Bold;
 }
 
-body{
-    background:#fff;
-    background: rgb(253,254,3);
-    background: linear-gradient(76deg, rgba(253,254,3,1) 2%, rgba(159,237,3,1) 4%, rgba(84,175,255,1) 46%, rgba(84,175,255,1) 59%, rgba(208,48,138,1) 94%)
-}
-
 .feed-content-container{
     background:rgba(56,255,255,0.1) !important;
 }

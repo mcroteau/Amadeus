@@ -89,7 +89,7 @@
             <div id="profile-posts" ng-controller="mixController">
                 <div class="feed-content-container" ng-repeat="post in activities" id="post-{{post.id}}" ng-if="!post.hidden && !post.flagged">
 
-                    <span ng-if="post.postEditable && post.content != null" class="edit-click tiny yella edit-fade-in">Click Post to Edit</span>
+                    <span ng-if="post.postEditable && post.content != null" class="edit-click tiny yella edit-fade-in">Click to Edit</span>
                     <span ng-if="post.postEditable && post.content != null"  class="author-ref tiny">Author</span>
 
                     <div ng-if="post.shared" class="shared-post-container" >
