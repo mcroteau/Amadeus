@@ -2,8 +2,8 @@ package social.amadeus.jobs;
 
 import org.apache.log4j.Logger;
 import org.quartz.*;
-import social.amadeus.dao.FlyerDao;
-import social.amadeus.dao.jdbc.FlyerJdbcDao;
+import social.amadeus.repository.FlyerRepo;
+import social.amadeus.repository.jdbc.FlyerJdbcRepo;
 import social.amadeus.model.Flyer;
 import social.amadeus.common.Constants;
 
@@ -23,19 +23,19 @@ public class AdJob implements Job {
             JobKey jobKey = new JobKey(Constants.AD_JOB, Constants.AMADEUS_GROUP);
             JobDetail jobDetail = context.getScheduler().getJobDetail(jobKey);
 
-            FlyerDao flyerDao = (FlyerJdbcDao) jobDetail.getJobDataMap().get(Constants.FLYER_DAO_KEY);
+            FlyerRepo flyerRepo = (FlyerJdbcRepo) jobDetail.getJobDataMap().get(Constants.FLYER_DAO_KEY);
 
             Calendar cal = Calendar.getInstance();
             DateFormat df = new SimpleDateFormat(Constants.DATE_SEARCH_FORMAT);
             String dateStr = df.format(cal.getTime());
             long now = Long.parseLong(dateStr);
             
-            List<Flyer> activeFlyers = flyerDao.getActiveFlyers();
+            List<Flyer> activeFlyers = flyerRepo.getActiveFlyers();
 
             for(Flyer flyer : activeFlyers){
                 long difference = now - flyer.getStartDate();
                 if(difference > Constants.AD_DURATION_DIFFERENCE){
-                    flyerDao.crumpleUp(flyer.getId());
+                    flyerRepo.crumpleUp(flyer.getId());
                 }
             }
 

@@ -1,18 +1,18 @@
-package social.amadeus.dao.jdbc;
+package social.amadeus.repository.jdbc;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import social.amadeus.dao.NotificationDao;
+import social.amadeus.repository.NotificationRepo;
 import social.amadeus.model.Account;
 import social.amadeus.model.Notification;
 
 import java.util.List;
 
-public class NotificationJdbcDao implements NotificationDao {
+public class NotificationJdbcRepo implements NotificationRepo {
 
-    private static final Logger log = Logger.getLogger(NotificationJdbcDao.class);
+    private static final Logger log = Logger.getLogger(NotificationJdbcRepo.class);
 
     @Autowired
     public JdbcTemplate jdbcTemplate;

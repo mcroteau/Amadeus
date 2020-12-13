@@ -3,7 +3,7 @@ package social.amadeus.service;
 import io.github.mcroteau.Parakeet;
 import org.springframework.beans.factory.annotation.Autowired;
 import social.amadeus.common.Constants;
-import social.amadeus.dao.AccountDao;
+import social.amadeus.repository.AccountRepo;
 import social.amadeus.model.Account;
 
 public class AuthService {
@@ -12,7 +12,7 @@ public class AuthService {
     private Parakeet parakeet;
 
     @Autowired
-    private AccountDao accountDao;
+    private AccountRepo accountRepo;
 
     public boolean isAuthenticated(){
         return parakeet.isAuthenticated();
@@ -32,7 +32,7 @@ public class AuthService {
 
     public Account getAccount(){
         String username = parakeet.getUser();
-        Account account = accountDao.findByUsername(username);
+        Account account = accountRepo.findByUsername(username);
         return account;
     }
 

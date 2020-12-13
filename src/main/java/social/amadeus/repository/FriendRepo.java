@@ -1,4 +1,4 @@
-package social.amadeus.dao;
+package social.amadeus.repository;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import social.amadeus.model.Account;
 import social.amadeus.model.Friend;
 import social.amadeus.model.FriendInvite;
 
-public interface FriendDao {
+public interface FriendRepo {
 
 	long count();
 

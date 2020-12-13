@@ -1,4 +1,4 @@
-package social.amadeus.dao.jdbc;
+package social.amadeus.repository.jdbc;
 
 import java.util.*;
 
@@ -11,18 +11,18 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import social.amadeus.common.Constants;
-import social.amadeus.dao.RoleDao;
+import social.amadeus.repository.RoleRepo;
 import social.amadeus.model.*;
 
-import social.amadeus.dao.AccountDao;
+import social.amadeus.repository.AccountRepo;
 
 
-public class AccountJdbcDao implements AccountDao {
+public class AccountJdbcRepo implements AccountRepo {
 
-	private static final Logger log = Logger.getLogger(AccountJdbcDao.class);
+	private static final Logger log = Logger.getLogger(AccountJdbcRepo.class);
 
 	@Autowired
-	private RoleDao roleDao;
+	private RoleRepo roleRepo;
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -158,7 +158,7 @@ public class AccountJdbcDao implements AccountDao {
 	}
 
 	public boolean checkSaveAdministratorRole(long accountId){
-		Role role = roleDao.find(Constants.ROLE_ADMIN);
+		Role role = roleRepo.find(Constants.ROLE_ADMIN);
 		AccountRole existing = getAccountRole(accountId, role.getId());
 		if(existing == null){
 			saveAccountRole(accountId, role.getId());
@@ -167,7 +167,7 @@ public class AccountJdbcDao implements AccountDao {
 	}
 
 	public boolean checkSaveDefaultAccountRole(long accountId){
-		Role role = roleDao.find(Constants.ROLE_ACCOUNT);
+		Role role = roleRepo.find(Constants.ROLE_ACCOUNT);
 		AccountRole existing = getAccountRole(accountId, role.getId());
 		if(existing == null){
 			saveAccountRole(accountId, role.getId());

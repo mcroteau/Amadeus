@@ -2,7 +2,7 @@ package social.amadeus.model;
 
 import org.springframework.context.ApplicationContext;
 import social.amadeus.common.BeanLookup;
-import social.amadeus.dao.MusicDao;
+import social.amadeus.repository.MusicRepo;
 
 public class AccountMusic {
 
@@ -103,8 +103,8 @@ public class AccountMusic {
 
 	public MusicFile getMusicFile(){
 		ApplicationContext applicationContext = BeanLookup.getApplicationContext();
-		MusicDao musicDao = (MusicDao)applicationContext.getBean("musicDao");
-		return musicDao.get(musicFileId);
+		MusicRepo musicRepo = (MusicRepo)applicationContext.getBean("musicDao");
+		return musicRepo.get(musicFileId);
 	}
 
 	public String getDuration(){

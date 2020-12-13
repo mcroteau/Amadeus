@@ -1,18 +1,18 @@
-package social.amadeus.dao.jdbc;
+package social.amadeus.repository.jdbc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import social.amadeus.model.Account;
 import social.amadeus.model.Message;
-import social.amadeus.dao.MessageDao;
+import social.amadeus.repository.MessageRepo;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class MessageJdbcDao implements MessageDao {
+public class MessageJdbcDao implements MessageRepo {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

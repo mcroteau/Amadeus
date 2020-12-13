@@ -1,11 +1,11 @@
-package social.amadeus.dao;
+package social.amadeus.repository;
 
 import java.util.List;
 
 import social.amadeus.model.MusicFile;
 import social.amadeus.model.AccountMusic;
 
-public interface MusicDao {
+public interface MusicRepo {
 		
 	public long id();
 

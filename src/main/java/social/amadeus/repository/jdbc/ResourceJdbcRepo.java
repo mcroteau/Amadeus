@@ -1,15 +1,15 @@
-package social.amadeus.dao.jdbc;
+package social.amadeus.repository.jdbc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import social.amadeus.dao.ResourceDao;
+import social.amadeus.repository.ResourceRepo;
 import social.amadeus.model.Resource;
 import social.amadeus.model.ResourceLike;
 import social.amadeus.model.ResourceShare;
 
-public class ResourceJdbcDao implements ResourceDao {
+public class ResourceJdbcRepo implements ResourceRepo {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

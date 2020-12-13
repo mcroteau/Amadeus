@@ -1,10 +1,10 @@
-package social.amadeus.dao;
+package social.amadeus.repository;
 
 import java.util.List;
 
 import social.amadeus.model.*;
 
-public interface PostDao {
+public interface PostRepo {
 
 	public long id();
 

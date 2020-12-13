@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import social.amadeus.common.SessionManager;
-import social.amadeus.dao.AccountDao;
+import social.amadeus.repository.AccountRepo;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +20,7 @@ public class AppInterceptor implements HandlerInterceptor {
     private static final Logger log = Logger.getLogger(AppInterceptor.class);
 
     @Autowired
-    private AccountDao accountDao;
+    private AccountRepo accountRepo;
 
     @Autowired
     private SessionManager sessionManager;
@@ -63,7 +63,7 @@ public class AppInterceptor implements HandlerInterceptor {
 
         if(parakeet.isAuthenticated()){
             String user = parakeet.getUser();
-            Account sessionAaccount = accountDao.findByUsername(user);
+            Account sessionAaccount = accountRepo.findByUsername(user);
             req.getSession().setAttribute("account", sessionAaccount);
             req.getSession().setAttribute("imageUri", sessionAaccount.getImageUri());
         }

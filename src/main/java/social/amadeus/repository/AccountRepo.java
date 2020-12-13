@@ -1,4 +1,4 @@
-package social.amadeus.dao;
+package social.amadeus.repository;
 
 import java.util.List;
 import java.util.Set;
@@ -8,18 +8,18 @@ import social.amadeus.model.AccountBlock;
 import social.amadeus.model.ProfileLike;
 import social.amadeus.model.ProfileView;
 
-public interface AccountDao {
+public interface AccountRepo {
 
 	public long id();
 
 	public long count();
-	
+
 	public Account get(long id);
-	
+
 	public Account findByUsername(String username);
-	
+
 	public List<Account> findAll();
-	
+
 	public List<Account> findAllOffset(int max, int offset);
 
 	public Account save(Account account);

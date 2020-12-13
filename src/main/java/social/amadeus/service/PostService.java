@@ -6,12 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import social.amadeus.common.Constants;
 import social.amadeus.common.SessionManager;
 import social.amadeus.common.Utilities;
-import social.amadeus.dao.AccountDao;
-import social.amadeus.dao.FlyerDao;
-import social.amadeus.dao.PostDao;
+import social.amadeus.repository.AccountRepo;
+import social.amadeus.repository.FlyerRepo;
+import social.amadeus.repository.PostRepo;
 import social.amadeus.model.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -24,22 +23,22 @@ public class PostService {
     private Utilities utilities;
 
     @Autowired
-    private PostDao postDao;
+    private PostRepo postRepo;
 
     @Autowired
-    private AccountDao accountDao;
+    private AccountRepo accountRepo;
 
     @Autowired
-    private FlyerDao flyerDao;
+    private FlyerRepo flyerRepo;
 
     @Autowired
     private SessionManager sessionManager;
 
     public List<Post> getUserActivity(Account profileAccount, Account authdAccount){
-        List<Post> postsPre = postDao.getUserPosts(profileAccount.getId());
+        List<Post> postsPre = postRepo.getUserPosts(profileAccount.getId());
         List<Post> posts = populatePostData(postsPre, authdAccount);
 
-        List<PostShare> postSharesPre = postDao.getUserPostShares(profileAccount.getId());
+        List<PostShare> postSharesPre = postRepo.getUserPostShares(profileAccount.getId());
         List<Post> postsShares = getPopulatedSharedPosts(authdAccount, postSharesPre);
 
         List<Post> activityFeedPre = new ArrayList<>();
@@ -57,10 +56,10 @@ public class PostService {
         long start = utilities.getPreviousDay(14);
         long end = utilities.getCurrentDate();
 
-        List<Post> postsPre = postDao.getActivity(start, end, authdAccount.getId());
+        List<Post> postsPre = postRepo.getActivity(start, end, authdAccount.getId());
         List<Post> posts = populatePostData(postsPre, authdAccount);
 
-        List<PostShare> postSharesPre = postDao.getPostShares(start, end, authdAccount.getId());
+        List<PostShare> postSharesPre = postRepo.getPostShares(start, end, authdAccount.getId());
         List<Post> sharedPosts = getPopulatedSharedPosts(authdAccount, postSharesPre);
 
         List<Post> activityFeedPre = new ArrayList<>();
@@ -145,7 +144,7 @@ public class PostService {
     private List<Post> getPopulatedSharedPosts(Account authdAccount, List<PostShare> postShares){
         List<Post> sharedPosts = new ArrayList<Post>();
         for(PostShare postShare: postShares){
-            Post post = postDao.get(postShare.getPostId());
+            Post post = postRepo.get(postShare.getPostId());
             setPostShareData(post, postShare, authdAccount);
             sharedPosts.add(post);
         }
@@ -154,20 +153,20 @@ public class PostService {
 
 
     private Post setLikes(Post post, Account authdAccount){
-        long likes = postDao.likes(post.getId());
+        long likes = postRepo.likes(post.getId());
         post.setLikes(likes);
 
         PostLike postLike = new PostLike();
         postLike.setPostId(post.getId());
         postLike.setAccountId(authdAccount.getId());
 
-        if (postDao.liked(postLike)) post.setLiked(true);
+        if (postRepo.liked(postLike)) post.setLiked(true);
 
         return post;
     }
 
     private Post setShares(Post post){
-        long shares = postDao.shares(post.getId());
+        long shares = postRepo.shares(post.getId());
         post.setShares(shares);
         return post;
     }
@@ -189,7 +188,7 @@ public class PostService {
 
     private Post setPostComments(Post post, Account authdAccount){
 
-        List<PostComment> postComments = postDao.getPostComments(post.getId());
+        List<PostComment> postComments = postRepo.getPostComments(post.getId());
         for (PostComment postComment : postComments) {
             if(postComment.getAccountId() == authdAccount.getId()){
                 postComment.setCommentDeletable(true);
@@ -203,7 +202,7 @@ public class PostService {
     }
 
     private Post setPostShareComments(Post post, PostShare postShare, Account authdAccount){
-        List<PostShareComment> postShareComments = postDao.getPostShareComments(postShare.getId());
+        List<PostShareComment> postShareComments = postRepo.getPostShareComments(postShare.getId());
 
         for (PostShareComment postShareComment : postShareComments) {
             if(postShareComment.getAccountId() == authdAccount.getId()){
@@ -218,7 +217,7 @@ public class PostService {
     }
 
     private Post setMultimedia(Post post){
-        List<PostImage> postImages = postDao.getImages(post.getId());
+        List<PostImage> postImages = postRepo.getImages(post.getId());
         List<String> imageUris = new ArrayList<String>();
 
         for(PostImage postImage : postImages){
@@ -231,7 +230,7 @@ public class PostService {
 
 
     private Post setShareAccountData(Post post, PostShare postShare){
-        Account account = accountDao.get(postShare.getAccountId());
+        Account account = accountRepo.get(postShare.getAccountId());
         post.setSharedAccountId(account.getId());
         post.setSharedAccount(account.getName());
         post.setSharedImageUri(account.getImageUri());
@@ -239,7 +238,7 @@ public class PostService {
     }
 
     private Post setAccountData(Post post){
-        Account account = accountDao.get(post.getAccountId());
+        Account account = accountRepo.get(post.getAccountId());
         post.setAccountId(account.getId());
         post.setImageUri(account.getImageUri());
         post.setName(account.getName());
@@ -280,7 +279,7 @@ public class PostService {
         int adIdx = rand.nextInt(4);
         if (adIdx == 2) {
             List<Post> flyerPosts = new ArrayList<Post>();
-            List<Flyer> activeFlyers = flyerDao.getActiveFlyers();
+            List<Flyer> activeFlyers = flyerRepo.getActiveFlyers();
 
             int flyerIdx = 0;
             if (activeFlyers.size() > 0) {
@@ -306,7 +305,7 @@ public class PostService {
                     activityFeed.add(adPost);
                 }
                 long views = flyer.getAdViews() + 1;
-                flyerDao.updateViews(views, flyer.getId());
+                flyerRepo.updateViews(views, flyer.getId());
             }
         }
         return activityFeed;

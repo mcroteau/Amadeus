@@ -1,10 +1,10 @@
-package social.amadeus.dao;
+package social.amadeus.repository;
 
 import social.amadeus.model.Resource;
 import social.amadeus.model.ResourceLike;
 import social.amadeus.model.ResourceShare;
 
-public interface ResourceDao {
+public interface ResourceRepo {
 
     public Resource get(String uri);
 

@@ -10,8 +10,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import social.amadeus.common.Constants;
 import social.amadeus.common.Utilities;
-import social.amadeus.dao.AccountDao;
-import social.amadeus.dao.PostDao;
+import social.amadeus.repository.AccountRepo;
+import social.amadeus.repository.PostRepo;
 import social.amadeus.model.Account;
 import social.amadeus.model.Post;
 import social.amadeus.model.PostShare;
@@ -35,10 +35,10 @@ public class ActivityTest {
     private Utilities utilities;
 
     @Autowired
-    private PostDao postDao;
+    private PostRepo postRepo;
 
     @Autowired
-    private AccountDao accountDao;
+    private AccountRepo accountRepo;
 
     @Autowired
     private PostService postService;
@@ -53,22 +53,22 @@ public class ActivityTest {
 
     @Before
     public void before(){
-        authdAccount = accountDao.findByUsername(Constants.ADMIN_USERNAME);
+        authdAccount = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
         Post postUno = TestUtils.getPost(authdAccount.getId(), utilities.getPreviousDay(3));
         Post postDos = TestUtils.getPost(authdAccount.getId(), utilities.getPreviousDay(1));
         Post postTres = TestUtils.getPost(authdAccount.getId(), utilities.getPreviousDay(21));
         Post postQuatro = TestUtils.getPost(authdAccount.getId(), utilities.getPreviousDay(9));
 
-        savedPostUno = postDao.save(postUno);
-        postDao.publish(savedPostUno.getId());//uno
+        savedPostUno = postRepo.save(postUno);
+        postRepo.publish(savedPostUno.getId());//uno
 
-        savedPostDos = postDao.save(postDos);
-        postDao.publish(savedPostDos.getId());//dos
+        savedPostDos = postRepo.save(postDos);
+        postRepo.publish(savedPostDos.getId());//dos
 
-        savedPostTres = postDao.save(postTres);
-        postDao.publish(savedPostTres.getId());
+        savedPostTres = postRepo.save(postTres);
+        postRepo.publish(savedPostTres.getId());
 
-        savedPostQuatro = postDao.save(postQuatro);
+        savedPostQuatro = postRepo.save(postQuatro);
     }
 
     @Test
@@ -79,7 +79,7 @@ public class ActivityTest {
 
     @Test
     public void testGetActivityHidePost(){
-        postDao.hide(savedPostUno.getId());
+        postRepo.hide(savedPostUno.getId());
         List<Post> activities = getActivities();
         assertEquals(1, activities.size());
     }
@@ -87,14 +87,14 @@ public class ActivityTest {
     @Test
     public void testGetActivityFlagPost(){
         savedPostUno.setFlagged(true);
-        postDao.updateFlagged(savedPostUno);
+        postRepo.updateFlagged(savedPostUno);
         List<Post> activities = getActivities();
         assertEquals(1, activities.size());
     }
 
     @Test
     public void testGetActivityDeletePost(){
-        postDao.delete(savedPostUno.getId());
+        postRepo.delete(savedPostUno.getId());
         List<Post> activities = getActivities();
         assertEquals(1, activities.size());
     }
@@ -107,7 +107,7 @@ public class ActivityTest {
 
     @Test
     public void testGetUserActivityOneHidden(){
-        postDao.hide(savedPostUno.getId());
+        postRepo.hide(savedPostUno.getId());
         List<Post> userActivity = postService.getUserActivity(authdAccount, authdAccount);
         assertEquals(3, userActivity.size());
     }
@@ -115,14 +115,14 @@ public class ActivityTest {
     @Test
     public void testGetUserActivityOneFlagged(){
         savedPostUno.setFlagged(true);
-        postDao.updateFlagged(savedPostUno);
+        postRepo.updateFlagged(savedPostUno);
         List<Post> userActivity = postService.getUserActivity(authdAccount, authdAccount);
         assertEquals(3, userActivity.size());
     }
 
     @Test
     public void testGetUserActivityOneDeleted(){
-        postDao.delete(savedPostUno.getId());
+        postRepo.delete(savedPostUno.getId());
         List<Post> userActivity = postService.getUserActivity(authdAccount, authdAccount);
         assertEquals(3, userActivity.size());
     }
@@ -135,14 +135,14 @@ public class ActivityTest {
         postShare.setComment("Mock");
         postShare.setPostId(savedPostUno.getId());
         postShare.setDateShared(utilities.getCurrentDate());
-        savedPostShare = postDao.sharePost(postShare);
+        savedPostShare = postRepo.sharePost(postShare);
         List<Post> activity = getActivities();
         assertEquals(3, activity.size());
     }
 
 
     private List<Post> getActivities(){
-        Account mockAuthdAccount = accountDao.findByUsername(Constants.ADMIN_USERNAME);
+        Account mockAuthdAccount = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
         Map<String, Object> activityData = postService.getActivity(mockAuthdAccount);
         List<Post> activities = (ArrayList) activityData.get("activities");
         return activities;
@@ -152,10 +152,10 @@ public class ActivityTest {
     @After
     public void after(){
         if(savedPostShare != null)
-            postDao.deletePostShare(savedPostShare.getId());
-        postDao.delete(savedPostUno.getId());
-        postDao.delete(savedPostDos.getId());
-        postDao.delete(savedPostTres.getId());
-        postDao.delete(savedPostQuatro.getId());
+            postRepo.deletePostShare(savedPostShare.getId());
+        postRepo.delete(savedPostUno.getId());
+        postRepo.delete(savedPostDos.getId());
+        postRepo.delete(savedPostTres.getId());
+        postRepo.delete(savedPostQuatro.getId());
     }
 }

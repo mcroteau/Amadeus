@@ -6,10 +6,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import social.amadeus.dao.FlyerDao;
+import social.amadeus.repository.FlyerRepo;
 import social.amadeus.common.Constants;
 import social.amadeus.common.Utilities;
-import social.amadeus.dao.AccountDao;
+import social.amadeus.repository.AccountRepo;
 import social.amadeus.model.Account;
 import social.amadeus.model.Flyer;
 import social.amadeus.service.AuthService;
@@ -26,10 +26,10 @@ public class FlyerController {
     private Utilities utilities;
 
     @Autowired
-    private FlyerDao flyerDao;
+    private FlyerRepo flyerRepo;
 
     @Autowired
-    private AccountDao accountDao;
+    private AccountRepo accountRepo;
 
     @Autowired
     private StripeService stripeService;
@@ -75,8 +75,8 @@ public class FlyerController {
         Account authenticatedAccount = authService.getAccount();
         flyer.setAccountId(authenticatedAccount.getId());
 
-        Flyer persistedFlyer = flyerDao.save(flyer);
-        accountDao.savePermission(authenticatedAccount.getId(), Constants.FLYER_MAINTENANCE  + persistedFlyer.getId());
+        Flyer persistedFlyer = flyerRepo.save(flyer);
+        accountRepo.savePermission(authenticatedAccount.getId(), Constants.FLYER_MAINTENANCE  + persistedFlyer.getId());
 
         return "redirect:/flyer/edit/" + persistedFlyer.getId();
     }
@@ -87,7 +87,7 @@ public class FlyerController {
 
         String permission = Constants.FLYER_MAINTENANCE + id;
         if(authService.hasPermission(permission)) {
-            Flyer flyer = flyerDao.get(Long.parseLong(id));
+            Flyer flyer = flyerRepo.get(Long.parseLong(id));
             modelMap.put("flyer", flyer);
         }else{
             return "redirect:/unauthorized";
@@ -101,7 +101,7 @@ public class FlyerController {
 
         String permission = Constants.FLYER_MAINTENANCE + id;
         if(authService.hasPermission(permission)) {
-            Flyer flyer = flyerDao.get(Long.parseLong(id));
+            Flyer flyer = flyerRepo.get(Long.parseLong(id));
             modelMap.put("flyer", flyer);
         }else{
             return "redirect:/unauthorized";
@@ -121,12 +121,12 @@ public class FlyerController {
 
             long date = utilities.getCurrentDate();
 
-            Flyer flyer = flyerDao.get(Long.parseLong(id));
+            Flyer flyer = flyerRepo.get(Long.parseLong(id));
             flyer.setStartDate(date);
             flyer.setActive(true);
             long adRuns = flyer.getAdRuns() + 1;
             flyer.setAdRuns(adRuns);
-            flyerDao.update(flyer);
+            flyerRepo.update(flyer);
 
             stripeService.charge(stripeToken);
 
@@ -146,7 +146,7 @@ public class FlyerController {
 
         String permission = Constants.FLYER_MAINTENANCE + id;
         if(authService.hasPermission(permission)) {
-            Flyer flyer = flyerDao.get(Long.parseLong(id));
+            Flyer flyer = flyerRepo.get(Long.parseLong(id));
             modelMap.put("flyer", flyer);
         }else{
             return "redirect:/unauthorized";
@@ -175,7 +175,7 @@ public class FlyerController {
                 String imageUri = utilities.write(flyerImage, Constants.IMAGE_DIRECTORY);
                 flyer.setImageUri(imageUri);
             }
-            flyerDao.update(flyer);
+            flyerRepo.update(flyer);
         }else{
             return "redirect:/unauthorized";
         }
@@ -190,7 +190,7 @@ public class FlyerController {
             return "redirect:/unauthorized";
         }
 
-        List<Flyer> flyers = flyerDao.getFlyers();
+        List<Flyer> flyers = flyerRepo.getFlyers();
         modelMap.put("flyers", flyers);
 
         return "flyer/list";
@@ -203,7 +203,7 @@ public class FlyerController {
             return "redirect:/uno";
         }
 
-        List<Flyer> flyers = flyerDao.getFlyers(Long.parseLong(id));
+        List<Flyer> flyers = flyerRepo.getFlyers(Long.parseLong(id));
         modelMap.put("flyers", flyers);
 
         return "flyer/list";

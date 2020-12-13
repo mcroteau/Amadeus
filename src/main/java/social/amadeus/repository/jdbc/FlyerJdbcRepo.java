@@ -1,13 +1,13 @@
-package social.amadeus.dao.jdbc;
+package social.amadeus.repository.jdbc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import social.amadeus.dao.FlyerDao;
+import social.amadeus.repository.FlyerRepo;
 import social.amadeus.model.Flyer;
 import java.util.List;
 
-public class FlyerJdbcDao implements FlyerDao {
+public class FlyerJdbcRepo implements FlyerRepo {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

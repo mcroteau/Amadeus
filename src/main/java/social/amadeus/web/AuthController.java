@@ -20,7 +20,7 @@ import java.util.HashMap;
 
 import io.github.mcroteau.Parakeet;
 import social.amadeus.model.Account;
-import social.amadeus.dao.AccountDao;
+import social.amadeus.repository.AccountRepo;
 import social.amadeus.service.AuthService;
 
 @Controller
@@ -34,7 +34,7 @@ public class AuthController {
 	private Parakeet parakeet;
 
 	@Autowired
-	private AccountDao accountDao;
+	private AccountRepo accountRepo;
 
 	@Autowired
 	private AuthService authService;
@@ -54,7 +54,7 @@ public class AuthController {
 				return "redirect:/";
 			}
 
-			Account sessionAccount = accountDao.findByUsername(account.getUsername());
+			Account sessionAccount = accountRepo.findByUsername(account.getUsername());
 
 			request.getSession().setAttribute("account", sessionAccount);
 			request.getSession().setAttribute("imageUri", sessionAccount.getImageUri());
