@@ -2,7 +2,6 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-
 	xsi:schemaLocation="
         http://www.springframework.org/schema/beans     
         http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
@@ -11,18 +10,28 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-4.1.xsd">
 
-	<context:annotation-config/>
-	<context:component-scan base-package="social.amadeus" />
+	<bean id="roleDao" class="social.amadeus.dao.jdbc.RoleJdbcDao"/>
+	<bean id="accountDao" class="social.amadeus.dao.jdbc.AccountJdbcDao"/>
+	<bean id="postDao" class="social.amadeus.dao.jdbc.PostJdbcDao"/>
+	<bean id="connectionDao" class="social.amadeus.dao.jdbc.FriendJdbcDao"/>
+	<bean id="musicDao" class="social.amadeus.dao.jdbc.MusicJdbcDao"/>
+	<bean id="notificationDao" class="social.amadeus.dao.jdbc.NotificationJdbcDao"/>
+	<bean id="resourceDao" class="social.amadeus.dao.jdbc.ResourceJdbcDao"/>
+	<bean id="messageDao" class="social.amadeus.dao.jdbc.MessageJdbcDao"/>
+	<bean id="flyerDao" class="social.amadeus.dao.jdbc.FlyerJdbcDao"/>
 
-	<bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations">
-			<list>
-				<value>classpath:application.properties</value>
-			</list>
-		</property>
-	</bean>  
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
 
-	
+	<bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="dataSource"/>
+	</bean>
+
+	<jdbc:embedded-database id="dataSource" type="H2">
+		<jdbc:script location="classpath:create-db.sql" />
+	</jdbc:embedded-database>
+
 	<bean id="utilities" class="social.amadeus.common.Utilities"/>
 
 	<bean id="emailService" class="social.amadeus.service.EmailService"/>
@@ -32,11 +41,7 @@
 	<bean id="authService" class="social.amadeus.service.AuthService"/>
 	<bean id="postService" class="social.amadeus.service.PostService"/>
 	<bean id="syncService" class="social.amadeus.service.SyncService"/>
-
 	<bean id="appRunner" class="social.amadeus.AppRunner" scope="singleton"/>
-
-	<bean id="publishJob" class="social.amadeus.jobs.PublishJob"/>
-	<bean id="adJob" class="social.amadeus.jobs.AdJob"/>
 
 	<bean id="sessionManager" class="social.amadeus.common.SessionManager" scope="singleton"/>
 

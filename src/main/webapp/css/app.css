@@ -2636,13 +2636,13 @@ p{
     background:transparent;
     display:inline-block;
     position:absolute;
-    bottom:4px;
-    right:0px;
+    bottom:14px;
+    right:10px;
 	border-radius: 7px;
 	-moz-border-radius: 7px;
 	-webkit-border-radius: 7px;
 }
-.activity-status.active{
+.activity-status.online{
     background:#23fd78;
     background:#05dd59;
 }

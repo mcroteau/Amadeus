@@ -1,6 +1,6 @@
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
 <%@ page import="io.github.mcroteau.Parakeet" %>
-<%@ page import="xyz.ioc.common.BeanLookup" %>
+<%@ page import="social.amadeus.common.BeanLookup" %>
 
 <html>
 <head>

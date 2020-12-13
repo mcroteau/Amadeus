@@ -2,10 +2,10 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="java.util.Calendar"%>
 <%@ page import="java.util.Date"%>
-<%@ page import="xyz.ioc.model.Account"%>
+<%@ page import="social.amadeus.model.Account"%>
 <%@ page import="io.github.mcroteau.Parakeet" %>
-<%@ page import="xyz.ioc.common.BeanLookup" %>
-<%@ page import="xyz.ioc.common.Constants" %>
+<%@ page import="social.amadeus.common.BeanLookup" %>
+<%@ page import="social.amadeus.common.Constants" %>
 
 <div id="edit-account-form">
 

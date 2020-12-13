@@ -20,10 +20,10 @@
 	<mvc:resources mapping="/media/**" location="/media/"/>
 	<mvc:resources mapping="/pages/**" location="/pages/"/>
 
-	<context:component-scan base-package="xyz.ioc.web"/>
+	<context:component-scan base-package="social.amadeus.web"/>
 
 	<mvc:interceptors>
-		<bean id="appSessionInterceptor" class="xyz.ioc.interceptors.AppInterceptor"/>
+		<bean id="appSessionInterceptor" class="social.amadeus.interceptors.AppInterceptor"/>
 		<bean id="deviceResolverHandlerInterceptor" class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor"/>
 	</mvc:interceptors>
 
