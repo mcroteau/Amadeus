@@ -109,6 +109,11 @@ body{
 
 .feed-content-container{
     background:rgba(56,255,255,0.1) !important;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.top-outer-container{
+    background:inherit !important;
 }
 
 #uno{
@@ -454,13 +459,13 @@ textarea::-moz-placeholder { /* Firefox 19+ */
     color:#00374f;
     text-shadow: 0px 0px #fff;
 }
-textarea:-ms-input-placeholder { /* IE 10+ */
+textarea::-ms-input-placeholder { /* IE 10+ */
     font-family:Roboto-Thin !important;
     color: #E34B86;
     color:#00374f;
     text-shadow: 0px 0px #fff;
 }
-textarea:-moz-placeholder { /* Firefox 18- */
+textarea::-moz-placeholder { /* Firefox 18- */
     font-family:Roboto-Thin !important;
     color: #E34B86;
     color:#00374f;
@@ -544,6 +549,7 @@ input[type="password"]::placeholder {
     /*-webkit-animation: verb 121s ease infinite;*/
     /*-moz-animation: verb 121s ease infinite;*/
     /*animation: verb 121s ease infinite;*/
+    background: inherit;
 }
 
 @-webkit-keyframes verb {
@@ -580,7 +586,7 @@ input[type="password"]::placeholder {
 }
 
 #search-box{
-    color:#2b2b34;
+    color:#fff;
 	font-size:19px;
 	width:559px;
 	width:431px;
@@ -626,7 +632,9 @@ input[type="password"]::placeholder {
     background:#657d84 !important;
     background:#f8f8f8 !important;
     background:#fff !important;
+    color:#fff !important;
     border:solid 1px #84c5ff !important;
+    background: rgba(255, 255, 255, 0.1) !important;
 }
 #search-box:hover{
     -webkit-box-shadow: 1px 2px 3px 0px rgba(0,0,0,.09);
@@ -636,11 +644,12 @@ input[type="password"]::placeholder {
     border:solid 1px #FD7300 !important;
     border:none !important;
     border:solid 1px #54afff !important;
+    color:#fff !important;
 }
 
 
 #search-box::placeholder{
-    color:#2b2b34 !important;
+    color:#fff !important;
     font-size:17px !important;
     font-family:Roboto !important;
 }
@@ -658,8 +667,6 @@ input[type="password"]::placeholder {
     border:none !important
 }
 
-#music-search-box,
-#music-search-box:focus,
 #search-box:focus,
 #search-box:active {
 	outline:none;
@@ -676,8 +683,10 @@ input[type="password"]::placeholder {
     border:solid 1px #5AB2FF !important;
     border:solid 1px #17161b !important;
     background:#fff !important;
-    color:#2b2b34 !important;
     border:solid 1px #54AFFF !important;
+    border:solid 1px #84c5ff !important;
+    color:#fff !important;
+    background: rgba(255, 255, 255, 0.1) !important;
 }
 
 
@@ -685,29 +694,30 @@ input[type="password"]::placeholder {
 #search-box:-webkit-autofill:hover,
 #search-box:-webkit-autofill:focus{
     font-size:19px !important;
-    background:#fff !important;
+    color:#fff !important;
+    background: rgba(255,255,255,0.1) !important;
     border:solid 1px #54AFFF !important;
   -webkit-text-fill-color: #2b2b34;
-  -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+  -webkit-box-shadow: 0 0 0px 1000px #54AFFF inset;
 }
 
 #search-box::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    color:#2b2b34 !important;
+    color:#fff !important;
     font-size:24px;
     font-family:Roboto-Light !important;
 }
 #search-box::-moz-placeholder { /* Firefox 19+ */
-    color:#2b2b34 !important;
+    color:#fff !important;
     font-size:24px;
     font-family:Roboto-Light !important;
 }
 #search-box:-ms-input-placeholder { /* IE 10+ */
-    color:#2b2b34 !important;
+    color:#fff !important;
     font-size:24px;
     font-family:Roboto-Light !important;
 }
 #search-box:-moz-placeholder { /* Firefox 18- */
-    color:#2b2b34 !important;
+    color:#fff !important;
     font-size:24px;
     font-family:Roboto-Light !important;
 }
@@ -804,7 +814,9 @@ input[type="submit"]#search-button,
 	text-decoration: none;
 }
 
-
+.navigation-href:hover{
+	color:#fff !important;
+}
 
 #feed-href,
 #music-href{
@@ -1308,7 +1320,7 @@ input[type="button"].button.retro{
 	color:#fff;
 	background:#2cafed;
 	background:#13B1FF;
-	background:#54afff;
+	background:#54afff !imoprtant;
 	border:solid 1px #1f9bc4;
 	border:solid 1px #1792b7;
 	border:solid 1px #54afff;
@@ -1475,7 +1487,7 @@ h3#share-something span{
 }
 
 #whatsup{
-    color:#D954A0;
+    color:#fff;
     width:359px;
     width:340px;
     height:212px;
@@ -1487,7 +1499,7 @@ h3#share-something span{
     background:#fff;
     color:#fff;
     color:#00374f;
-    color:#000;
+    color:#fff;
     width: 319px;
     height: 241px;
     width: 323px;
@@ -1527,7 +1539,10 @@ h3#share-something span{
     box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);
     /*border: solid 1px #ff8cce !important;*/
     background:#fff;
-    border:solid 1px #fff !important;
+    color:#fff;
+    border:solid 0px #fff !important;
+    border:solid 1px #9b79ce !important;
+    background: rgba(255,255,255, 0.1) !important;
 }
 
 #whatsup:hover{
@@ -1552,7 +1567,8 @@ h3#share-something span{
 	background:#fff;
 
     border:solid 1px #17161b !important;
-    border:solid 1px #fff !important;
+    border:solid 1px #9b79ce !important;
+    background: rgba(255,255,255, 0.1);
 
 }
 
@@ -1560,7 +1576,8 @@ h3#share-something span{
 
 	border-bottom:solid 1px #a6b3b9;
 	border:solid 1px #17161b !important;
-    border:solid 1px #fff !important;
+    border:solid 0px #54AFFF !important;
+    border:solid 1px #9b79ce !important;
 
 	background:#fff;
 
@@ -1568,7 +1585,28 @@ h3#share-something span{
     -moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);
     box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);
 
+    color:#fff !important;
+
 }
+
+#whatsup::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color:#fff !important;
+    font-family:Roboto-Thin !important;
+}
+#whatsup::-moz-placeholder { /* Firefox 19+ */
+    color:#fff !important;
+    font-family:Roboto-Thin !important;
+}
+#whatsup:-ms-input-placeholder { /* IE 10+ */
+    color:#fff !important;
+    font-family:Roboto-Thin !important;
+}
+#whatsup:placeholder { /* Firefox 18- */
+    color:#fff !important;
+    font-family:Roboto-Thin !important;
+}
+
+
 
 #music-player-container{
     bottom:7px;
@@ -2046,11 +2084,9 @@ p{
     -moz-box-shadow: 1px 3px 7px 0px rgba(0,0,0,.07);
     box-shadow: 1px 3px 7px 0px rgba(0,0,0,.07);
 
-    -webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);
-    -moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);
-    box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);
-
-    border-top: solid 3px #54afff;
+    -webkit-box-shadow: 0px 3px 32px 0px rgba(0,0,0,.09);
+    -moz-box-shadow: 0px 3px 32px 0px rgba(0,0,0,.09);
+    box-shadow: 0px 3px 32px 0px rgba(0,0,0,.09);
 
     -moz-border-radius-topleft: 4px !important;
     -moz-border-radius-topright: 4px !important;
@@ -2077,9 +2113,10 @@ p{
 }
 
 .feed-content{
-    padding:0px;
+    color:#fff;
+    padding:3px 0px 0px 0px;
     margin:0px 0px 30px 0px;
-    background:inherit !important;
+    background:rgba(255,255, 255, 0.1)
 }
 
 #latest-feed-total{
@@ -2161,6 +2198,7 @@ p{
 .post-comment p{
     margin:0px;
     padding:0px;
+    color:#fff;
     font-family:Roboto-Light !important;
     line-height:1.6em;
 }
@@ -2288,10 +2326,10 @@ p{
 }
 .share-comment-container{
     padding:20px 0px 20px 62px;
-    background:#f8f8f8;
-    border-top:solid 1px #ddd;
+    background:inherit;
 }
 .share-comment-container textarea{
+    color:#fff;
     font-size:16px !important;
     font-family:Roboto-Thin !important;
     height:67px !important;
@@ -2299,12 +2337,11 @@ p{
     width: 87% !important;
     margin:0px 0px 10px 0px;
     padding:10px 30px 10px 10px !important;
-    background:#fff;
+    background:rgba(255,255,255,0.1);
     border-radius: 3px !important;
     -moz-border-radius: 3px !important;
     -webkit-border-radius: 3px !important;
-    border:solid 2px #fff553;
-    border:solid 1px #ccc !important;
+    border:solid 1px #54AFFF !important;
 
     -webkit-box-shadow: none !important;
     -moz-box-shadow:  none !important;
@@ -2402,6 +2439,7 @@ p{
     /*box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);*/
     background: rgb(249,249,249);
     background: linear-gradient(160deg, rgba(249,249,249,1) 0%, rgba(249,249,249,1) 30%, rgba(255,255,255,1) 58%, rgba(255,255,255,1) 100%);
+    background: rgba(255,255,255, 0.1);
 }
 
 .post-admin-actions-wrapper,
@@ -2475,13 +2513,9 @@ p{
     margin-top:0px;
     padding:0px 10px 0px 62px;
     margin-left:0px !important;
-    background:#f9f9f9;
     animation: fadeEffect 1s;
 }
 
-.comments-container input{
-    background:#fff !important;
-}
 
 .feed-content-container:hover .comments-container{
     display:block;
@@ -2503,19 +2537,21 @@ p{
 
 .comment-input,
 .comment-shared-input{
-    border: solid 1px #ddd;
     background: #fff;
     padding: 10px 20px;
     width: 80%;
     font-size: 14px !important;
     padding: 9px 8px !important;
     margin-bottom: 6px;
+    background:rgba(255,255,255, 0.1) !important;
 }
+.comment-input,
 .comment-input:hover,
 .comment-input:focus,
 .comment-shared-input:hover,
 .comment-shared-input:focus{
-    background:#fff !important;
+    color:#fff !important;
+    background:rgba(255,255,255, 0.1) !important;
 }
 
 .comments-container{
@@ -2602,7 +2638,7 @@ p{
 
 .posted-by,
 .post-comment-whois{
-    color:#261707;
+    color:#fff !important;
     font-family:Roboto-Bold !important;
     cursor:pointer;
     cursor:hand;
@@ -3084,9 +3120,9 @@ input[type="password"]:focus{
     text-decoration:none;
     text-align: center;
     background: #54afff !important;
-	-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.27) !important;
-	-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.26) !important;
-	box-shadow: 0px 2px 3px 0px rgba(0,0,0,.27) !important;
+	/*-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.27) !important;*/
+	/*-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.26) !important;*/
+	/*box-shadow: 0px 2px 3px 0px rgba(0,0,0,.27) !important;*/
     border:none;
     -webkit-border-radius: 4px !important;
     -moz-border-radius: 4px !important;
@@ -3096,9 +3132,9 @@ input[type="password"]:focus{
 
 .post-button:hover{
     background: #54afff !important;
-	-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.37) !important;
-	-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.36) !important;
-	box-shadow: 0px 2px 3px 0px rgba(0,0,0,.37) !important;
+	-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.07) !important;
+	-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.07) !important;
+	box-shadow: 0px 2px 3px 0px rgba(0,0,0,.07) !important;
 }
 
 .post-button.beautiful{
@@ -3511,6 +3547,7 @@ a.information{
     border-bottom-left-radius: 3px;
     font-family: Roboto-Light !important;
     font-size: 13px;
+    background:rgba(255,255,255,0.1);
 }
 .post-separators{
     width:100%;
@@ -3558,7 +3595,8 @@ a.information{
     background:#ffff2b;
     background:#54AFFF;
     background:#0AD6FC;
-    background:#54afff;
+    background:#19ff93;
+    background: #17161b;
 }
 
 #accounts-results-table{
@@ -3896,24 +3934,24 @@ h1.gray span{
 }
 
 .edit-click{
-    top:28px;
+    top:25px;
     right:0px;
     z-index:101;
-    padding:2px 7px;
+    padding:0px 3px;
     display:block;
     line-height:1.6em;
     position:absolute;
     box-shadow:none !important;
-    border-top-left-radius: 7px;
-    border-bottom-left-radius: 7px;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
 }
 
 .author-ref{
     top:4px;
     right:0px;
     color:#fff;
-    background:#ccc;
-    padding:2px 7px;
+    background:rgba(255,255,255,0.4);
+    padding:0px 3px;
     display:block;
     line-height:1.6em;
     position:absolute;
