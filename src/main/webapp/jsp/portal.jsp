@@ -25,7 +25,7 @@
         <svg id="amadeus-modal-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
             <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>
         </svg>
-        <p class="tiny">Rock me...</p>
+<%--        <p class="tiny">Processing...</p>--%>
     </div>
 
 
@@ -160,7 +160,7 @@
             </svg>
         </p>
 
-        <div style="text-align:center;margin:20px auto 560px auto">
+        <div style="text-align:center;margin:20px auto 109px auto">
             <p style="text-align: center; font-size:12px;">&copy; 2020 Amadeus</p>
             <a href="http://tomcat.apache.org/" target="_blank" class="information">Powered by<br/>Tomcat</a>
         </div>
@@ -804,6 +804,24 @@
                 comment.innerHTML = hyperlinked
             })
         }
+
+        // var b = document.getElementsByTagName("body")[0];
+        // var deg = 76;
+        // var decrement;
+        // setInterval(function(){
+        //     b.style.background = 'linear-gradient(' + deg + 'deg, rgba(253,254,3,1) 2%, rgba(159,237,3,1) 16%, rgba(84,175,255,1) 46%, rgba(62,148,224,1) 52%, rgba(84,175,255,1) 69%, rgba(208,48,138,1) 94%)'
+        //     if(decrement)
+        //         deg--
+        //
+        //     if(!decrement)
+        //         deg++
+        //
+        //     if(deg >= 180){
+        //         decrement = true
+        //     }else{
+        //         decrement = false
+        //     }
+        // }, 10)
 
 </script>
 </body>
