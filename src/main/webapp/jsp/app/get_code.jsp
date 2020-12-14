@@ -7,6 +7,9 @@
         #copy-message{
             display:none;
         }
+        #code-wrapper{
+            font-size:13px !important;
+        }
     </style>
 
     <a href="/o" class="href-dotted">Home</a>
@@ -20,7 +23,6 @@
             <a href="javascript:" id="launch-amadeus"><img src="https://www.amadeus.social/o/images/amadeus-launcher.png"/></a>
             <span id="amadeus-likes"><span id="likes-span"></span> likes</span>
             <span id="amadeus-shares"><span id="shares-span"></span> shares</span>
-            <span id="amadeus">Amadeus</span>
         </div>
     </div>
     <script type="text/javascript" src="https://www.amadeus.social/o/js/Resource.js"></script>

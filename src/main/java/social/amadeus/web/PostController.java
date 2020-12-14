@@ -86,9 +86,9 @@ public class PostController {
 
 		Account authdAccount = authService.getAccount();
 		req.getSession().setAttribute(Constants.ACTIVITY_REQUEST_TIME, utilities.getCurrentDate());
-		Map<String, Object> respData = postService.getActivity(authdAccount);
+		Map<String, Object> activityData = postService.getActivity(authdAccount);
 
-		return gson.toJson(respData);
+		return gson.toJson(activityData);
 	}
 
 

@@ -101,16 +101,6 @@ h3{
     font-family:Roboto-Bold;
 }
 
-body{
-    background:#fff;
-    background: rgb(253,254,3);
-    background: linear-gradient(76deg, rgba(253,254,3,1) 2%, rgba(159,237,3,1) 4%, rgba(84,175,255,1) 46%, rgba(84,175,255,1) 59%, rgba(208,48,138,1) 94%)
-}
-
-.feed-content-container{
-    background:rgba(56,255,255,0.1) !important;
-}
-
 #uno{
     background:#efefef;
 }
@@ -150,6 +140,10 @@ body{
     background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 33%, rgba(253,254,3,1) 70%, rgba(84,175,255,1) 70%, rgba(192,225,255,1) 100%);/*-moz-box-shadow: 0px 4px 17px 0px rgba(0,0,0,.9);*/
     background: rgb(192,225,255);
     background: linear-gradient(36deg, rgba(192,225,255,1) 0%, rgba(84,175,255,1) 15%, rgba(253,254,3,1) 15%, rgba(253,254,3,1) 90%, rgba(84,175,255,1) 90%, rgba(192,225,255,1) 100%);
+    background: rgb(253,254,3);
+    background: linear-gradient(36deg, rgba(253,254,3,1) 22%, rgba(159,237,3,1) 44%, rgba(84,175,255,1) 66%, rgba(84,175,255,1) 79%, rgba(208,48,138,1) 94%);
+    background: rgb(253,254,3);
+    background: linear-gradient(36deg, rgba(253,254,3,1) 19%, rgba(159,237,3,1) 30%, rgba(62,148,224,1) 60%, rgba(84,175,255,1) 100%);
 }
 
 #amadeus-model-content{
@@ -171,27 +165,28 @@ body{
     height:59px;
     width:59px;
     margin-top:100px;
-    -webkit-animation-name: logo-logo; /* Safari 4.0 - 8.0 */
+    fill:#fff;
+    -webkit-animation-name: loading; /* Safari 4.0 - 8.0 */
     -webkit-animation-duration: 1.40s; /* Safari 4.0 - 8.0 */
-    animation-name: logo-logo;
+    animation-name: loading;
     animation-iteration-count: infinite;
     animation-duration: 1.40s;
 }
 
-@keyframes logo-logo {
-    0%  {fill:#17161b}
-    1%  {fill:#FDFE03}
-    19%  {fill:#54afff}
-    49% {fill:#17161b}
-    100%{fill:#17161b}
+@keyframes loading {
+    0%  {fill:#fff}
+    1%  {fill:#54afff}
+    9%  {fill:#54afff}
+    49% {fill:#fff}
+    100%{fill:#fff}
 }
 
-@keyframes logo-logo {
-    0%  {fill:#17161b}
-    1%  {fill:#FDFE03}
-    19%  {fill:#54afff}
-    49% {fill:#17161b}
-    100%{fill:#17161b}
+@keyframes loading {
+    0%  {fill:#fff}
+    1%  {fill:#54afff}
+    9%  {fill:#54afff}
+    49% {fill:#fff}
+    100%{fill:#fff}
 }
 
 #linear-indicator {
@@ -2050,6 +2045,11 @@ p{
     -moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);
     box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);
 
+    -webkit-box-shadow: 0px 7px 32px 0px rgba(0,0,0,.09);
+    -moz-box-shadow: 0px 7px 32px 0px rgba(0,0,0,.09);
+    box-shadow: 0px 7px 32px 0px rgba(0,0,0,.09);
+
+
     border-top: solid 3px #54afff;
 
     -moz-border-radius-topleft: 4px !important;
@@ -2475,7 +2475,6 @@ p{
     margin-top:0px;
     padding:0px 10px 0px 62px;
     margin-left:0px !important;
-    background:#f9f9f9;
     animation: fadeEffect 1s;
 }
 
