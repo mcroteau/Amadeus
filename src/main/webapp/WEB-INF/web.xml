@@ -42,7 +42,7 @@
 	<context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-			/WEB-INF/o-data-dev.xml,
+			/WEB-INF/o-data-live.xml,
 			/WEB-INF/o-context.xml,
 			/WEB-INF/o-servlet.xml
 		</param-value>
