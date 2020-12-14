@@ -805,23 +805,5 @@
             })
         }
 
-        // var b = document.getElementsByTagName("body")[0];
-        // var deg = 76;
-        // var decrement;
-        // setInterval(function(){
-        //     b.style.background = 'linear-gradient(' + deg + 'deg, rgba(253,254,3,1) 2%, rgba(159,237,3,1) 16%, rgba(84,175,255,1) 46%, rgba(62,148,224,1) 52%, rgba(84,175,255,1) 69%, rgba(208,48,138,1) 94%)'
-        //     if(decrement)
-        //         deg--
-        //
-        //     if(!decrement)
-        //         deg++
-        //
-        //     if(deg >= 180){
-        //         decrement = true
-        //     }else{
-        //         decrement = false
-        //     }
-        // }, 10)
-
 </script>
 </body>
