@@ -13,7 +13,7 @@
     <script type="text/javascript" src="/o/js/packages/angular-route.js"></script>
     <script type="text/javascript" src="/o/js/packages/anchorme.js"></script>
 
-    <link rel="stylesheet" href="/o/css/app.mode.css?v=<%=System.currentTimeMillis()%>"/>
+    <link rel="stylesheet" href="/o/css/app.css?v=<%=System.currentTimeMillis()%>"/>
     <link rel="stylesheet" href="/o/css/app.mobile.css?v=<%=System.currentTimeMillis()%>"/>
 
 </head>
