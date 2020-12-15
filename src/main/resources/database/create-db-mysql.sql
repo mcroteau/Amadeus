@@ -160,14 +160,14 @@ create table resources(
     date_added bigint NOT NULL
 );
 
-create table resource_likes(
+create table action_likes(
 	id bigint PRIMARY KEY AUTO_INCREMENT,
 	resource_id bigint NOT NULL REFERENCES resources(id),
 	account_id bigint NOT NULL REFERENCES account(id),
     date_liked bigint NOT NULL
 );
 
-create table resource_shares(
+create table action_shares(
 	id bigint PRIMARY KEY AUTO_INCREMENT,
 	resource_id bigint NOT NULL REFERENCES resources(id),
 	post_id bigint NOT NULL REFERENCES posts(id),
