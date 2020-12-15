@@ -42,11 +42,11 @@ addActionStyles()
 var req = new ResourceRequest()
 var uri = actionsWrapper.getAttribute("data-uri")
 
-var likesUri = "https://www.amadeus.social/o/resource/likes?uri=" + encodeURIComponent(uri);
-var sharesUri = "https://www.amadeus.social/o/resource/shares?uri=" + encodeURIComponent(uri);
+var likesUriProd = "https://www.amadeus.social/o/resource/likes?uri=" + encodeURIComponent(uri);
+var sharesUriProd = "https://www.amadeus.social/o/resource/shares?uri=" + encodeURIComponent(uri);
 
-var likesUriDev = "/o/resource/likes?uri=" + encodeURIComponent(uri);
-var sharesUriDev = "/o/resource/shares?uri=" + encodeURIComponent(uri);
+var likesUri = "/o/resource/likes?uri=" + encodeURIComponent(uri);
+var sharesUri = "/o/resource/shares?uri=" + encodeURIComponent(uri);
 
 req.http(likesUri).then(updateLikes).catch(error)
 req.http(sharesUri).then(updateShares).catch(error)
@@ -57,22 +57,21 @@ launcher.addEventListener("click", function(){
 
     var uri = actionsWrapper.getAttribute("data-uri")
 
-    var src = "https://www.amadeus.social/o/resource?uri=" + encodeURIComponent(uri)
-    var srcDev = "http://localhost:8080/o/resource?uri=" + encodeURIComponent(uri)
+    var srcPrd = "https://www.amadeus.social/o/resource?uri=" + encodeURIComponent(uri)
+    var src = "http://localhost:8080/o/resource?uri=" + encodeURIComponent(uri)
 
-    var height = 575;
-    var width = 437
+    var height = 175;
+    var width = 637
     var top = (screen.height - height) / 4;
     var left = (screen.width - width) / 2;
 
-    popup = window.open("", "AmadeusResourceAction", 'top=100 left=' + left + ' width=437 height=575')
+    popup = window.open("", "AmadeusResourceAction", 'top=100 left=' + left + ' width='  + width + ' height=' + height)
     popup.document.write('<iframe width="' + width + '" height="' + height + '"  allowTransparency="true" frameborder="0" scrolling="yes" style="width:100%;" src="'+ src +'" type="text/javascript"></iframe>');
 
 });
 
 function updateLikes(request){
     var data = JSON.parse(request.responseText)
-    console.log(data)
     likesSpan.innerHTML = data.likes
 }
 

@@ -86,7 +86,7 @@ public class ResourceController {
             resourceRepo.like(resourceLike);
 
         model.addAttribute("message", "Successfully liked!");
-        return "resource/resource_success";
+        return "resource/success";
     }
 
 
@@ -129,7 +129,7 @@ public class ResourceController {
 
         model.addAttribute("message", "Successfully shared!");
 
-        return "resource/resource_success";
+        return "resource/success";
     }
 
     @CrossOrigin(origins="*")

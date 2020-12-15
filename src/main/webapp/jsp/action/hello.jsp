@@ -1,12 +1,8 @@
 <html>
     <head>
-        <title>Amadeus : Like. Share. Rock Me Amadeus!</title>
+        <title>Amadeus : Like. Share. Go!</title>
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <script type="text/javascript" src="${pageContext.request.contextPath}/js/request.js"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath}/js/web_form.js"></script>
-
 	    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/app.css?v=<%=System.currentTimeMillis()%>">
 
     </head>
