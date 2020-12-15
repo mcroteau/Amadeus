@@ -19,7 +19,7 @@
 	<mvc:resources mapping="/icons/**" location="/icons/"/>
 	<mvc:resources mapping="/media/**" location="/media/"/>
 	<mvc:resources mapping="/pages/**" location="/pages/"/>
-	<mvc:resources mapping="/resources/**" location="/i18n/" />
+	<mvc:resources mapping="/i18n/**" location="/i18n/" />
 
 	<context:component-scan base-package="social.amadeus.web"/>
 

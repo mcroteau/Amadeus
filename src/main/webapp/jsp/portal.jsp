@@ -1,6 +1,6 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!doctype html>
-<html>
+<html lang="fr" dir="i18n">
 <head>
     <title>Amadeus : Like. Share. Rock Me Amadeus!</title>
 
@@ -13,6 +13,9 @@
     <script type="text/javascript" src="/o/js/packages/angular-animate.js"></script>
     <script type="text/javascript" src="/o/js/packages/angular-route.js"></script>
     <script type="text/javascript" src="/o/js/packages/anchorme.js"></script>
+    <script type="text/javascript" src="/o/js/packages/jquery.js"></script>
+    <script type="text/javascript" src="/o/js/packages/jquery.i18n.js"></script>
+    <script type="text/javascript" src="/o/js/packages/jquery.i18n.messagestore.js"></script>
 
     <link rel="stylesheet" href="/o/css/app.css?v=<%=System.currentTimeMillis()%>"/>
     <link rel="stylesheet" href="/o/css/app.mobile.css?v=<%=System.currentTimeMillis()%>"/>
@@ -205,7 +208,22 @@
                 $rootScope.profilePage = false;
                 $rootScope.renderFooter = true;
             }
+
+            $rootScope.internationalize();
         });
+
+        $rootScope.internationalize = function(){
+            $.i18n.debug = true;
+            i18n = $.i18n()
+            i18n.load().done(function(){
+                $('[data-i18n]').each(function(idx, keyElm){
+                    var key = $(keyElm).attr('data-i18n')
+                    var value = $.i18n(key)
+                    $(keyElm).html(value)
+                })
+            })
+        }
+
     })
 
     app.config(function($routeProvider) {
