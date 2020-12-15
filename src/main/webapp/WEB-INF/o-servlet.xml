@@ -19,19 +19,24 @@
 	<mvc:resources mapping="/icons/**" location="/icons/"/>
 	<mvc:resources mapping="/media/**" location="/media/"/>
 	<mvc:resources mapping="/pages/**" location="/pages/"/>
+	<mvc:resources mapping="/resources/**" location="/i18n/" />
 
 	<context:component-scan base-package="social.amadeus.web"/>
 
+
 	<mvc:interceptors>
 		<bean id="appSessionInterceptor" class="social.amadeus.interceptors.AppInterceptor"/>
-		<bean id="deviceResolverHandlerInterceptor" class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor"/>
+<!--		<bean id="deviceResolverHandlerInterceptor" class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor"/>-->
+		<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="lang" />
+		</bean>
 	</mvc:interceptors>
 
-	<mvc:annotation-driven>
-		<mvc:argument-resolvers>
-			<bean id="deviceHandlerMethodArgumentResolver" class="org.springframework.mobile.device.DeviceHandlerMethodArgumentResolver"/>
-		</mvc:argument-resolvers>
-	</mvc:annotation-driven>
+<!--	<mvc:annotation-driven>-->
+<!--		<mvc:argument-resolvers>-->
+<!--			<bean id="deviceHandlerMethodArgumentResolver" class="org.springframework.mobile.device.DeviceHandlerMethodArgumentResolver"/>-->
+<!--		</mvc:argument-resolvers>-->
+<!--	</mvc:annotation-driven>-->
 
 	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
 		<property name="viewResolvers">
@@ -48,5 +53,13 @@
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="maxUploadSize" value="350000000" />
 	</bean>
-	
+
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="messages" />
+	</bean>
+
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<property name="defaultLocale" value="en" />
+	</bean>
+
 </beans>

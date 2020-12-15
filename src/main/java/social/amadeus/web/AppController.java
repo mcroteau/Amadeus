@@ -16,6 +16,7 @@ import social.amadeus.service.PhoneService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Locale;
 
 
 @Controller
@@ -37,7 +38,8 @@ public class AppController {
 
 
 	@RequestMapping(value="/", method=RequestMethod.GET)
-	public String portal(Device device,
+	public String portal(Locale locale,
+//						 Device device,
 						 ModelMap model,
 						 HttpServletRequest req,
 						 HttpServletResponse resp,

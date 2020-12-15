@@ -340,6 +340,13 @@
                     <include>create-db.sql</include>
                 </includes>
             </resource>
+			<resource>
+				<directory>src/main/resources/i18n</directory>
+				<includes>
+					<include>messages.properties</include>
+					<include>messages_en.properties</include>
+				</includes>
+			</resource>
         </resources>
 
 

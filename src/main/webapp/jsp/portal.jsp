@@ -1,3 +1,4 @@
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!doctype html>
 <html>
 <head>
@@ -47,7 +48,7 @@
 			<div id="top-inner-container">
 
                 <div ng-if="!$root.profilePage" id="search-container" class="float-left" style="z-index:100">
-                    <div id="search-label">Search:</div>
+                    <div id="search-label"><spring:message code="search.label"/>:</div>
                     <input ng-keyup="navigateSearch($event)" type="text" class="search-input" id="search-box" placeholder=""/>
 				</div>
 
