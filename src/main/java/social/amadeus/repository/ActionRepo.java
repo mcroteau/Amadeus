@@ -1,20 +1,20 @@
 package social.amadeus.repository;
 
 import social.amadeus.model.Resource;
-import social.amadeus.model.ResourceLike;
-import social.amadeus.model.ResourceShare;
+import social.amadeus.model.ActionLike;
+import social.amadeus.model.ActionShare;
 
-public interface ResourceRepo {
+public interface ActionRepo {
 
     public Resource get(String uri);
 
     public boolean save(Resource resource);
 
-    public boolean like(ResourceLike resourceLike);
+    public boolean like(ActionLike actionLike);
 
-    public boolean liked(ResourceLike resourceLike);
+    public boolean liked(ActionLike actionLike);
 
-    public boolean share(ResourceShare resourceShare);
+    public boolean share(ActionShare actionShare);
 
     public long likesCount(long resourceId);
 

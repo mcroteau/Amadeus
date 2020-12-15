@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <div style="padding:20px;">
 
     <style>
@@ -8,24 +10,39 @@
             display:none;
         }
         #code-wrapper{
-            font-size:13px !important;
+            font-size:10px !important;
+            font-family: Monaco !important;
+            height:160px;
+            width:100%;
+            background:#f9f9f9;
         }
     </style>
+
+
+    <c:set var="dev" value="true" scope="page" />
+    <c:if test="${dev}">
+        <c:set var="launcherUrl" value="/o/images/launcher-tres.png" scope="page" />
+        <c:set var="jsUrl" value="/o/js/Actions.js" scope="page" />
+    </c:if>
+    <c:if test="${!dev}">
+        <c:set var="launcherUrl" value="https://www.amadeus.social/o/images/launcher-tres.png" scope="page" />
+        <c:set var="jsUrl" value="https://www.amadeus.social/o/js/Actions.js" scope="page" />
+    </c:if>
 
     <a href="/o" class="href-dotted">Home</a>
 
     <h1>Get Code</h1>
 
-    <span class="information" style="position:absolute; top:100; right:359px;">Generates</span>
+    <span class="information" style="position:absolute; top:100; right:159px;">Generates</span>
 
-    <div id="amadeus-actions-wrapper" data-uri="{{NOT READY, ENTER URL}}" style="position:absolute; top:100px;right:200px;">
+    <div id="amadeus-actions-wrapper" data-uri="NOT READY, GO BACK ENTER URL!" style="position:absolute; top:100px;right:0px;">
         <div id="amadeus-inner-wrapper">
-            <a href="javascript:" id="launch-amadeus"><img src="https://www.amadeus.social/o/images/amadeus-launcher.png"/></a>
+            <a href="javascript:" id="launch-amadeus"><img src="${launcherUrl}" style="width:45px"/></a>
             <span id="amadeus-likes"><span id="likes-span"></span> likes</span>
             <span id="amadeus-shares"><span id="shares-span"></span> shares</span>
         </div>
     </div>
-    <script type="text/javascript" src="https://www.amadeus.social/o/js/Resource.js"></script>
+    <script type="text/javascript" src="${jsUrl}"></script>
 
 
     <div style="float:left;margin-bottom:20px;">
@@ -37,17 +54,21 @@
 
     <p class="yella" id="copy-message">Copy &amp; paste code below to your website</p>
 
-    <textarea style="width:100%;height:349px;" id="code-wrapper" disabled="disabled">
+    <textarea id="code-wrapper">
 <div id="amadeus-actions-wrapper" data-uri="{{uri}}">
     <div id="amadeus-inner-wrapper">
-        <a href="javascript:" id="launch-amadeus"><img src="https://www.amadeus.social/o/images/amadeus-launcher.png"/></a>
+        <a href="javascript:" id="launch-amadeus">
+            <img src="https://amadeus.social/o/images/launcher-tres.png"/></a>
         <span id="amadeus-likes"><span id="likes-span"></span> likes</span>
         <span id="amadeus-shares"><span id="shares-span"></span> shares</span>
-        <span id="amadeus">Amadeus</span>
     </div>
 </div>
-<script type="text/javascript" src="https://www.amadeus.social/o/js/Resource.js"></script>
+<script type="text/javascript" src="https://amadeus.social/o/js/Actions.js"></script>
     </textarea>
+
+    <div style="text-align: right">
+        <button class="button retro tiny" onclick="copy()">Copy Code</button>
+    </div>
 
 </div>
 
@@ -68,10 +89,17 @@
             code.value = output
             copyMessage.style.display = "block"
             amadeusActions.setAttribute("data-uri", value)
-            console.log(amadeusActions, amadeusActions.getAttribute("data-uri"))
         }else{
             alert("enter valid web address")
         }
+    }
+
+    function copy(event){
+        code.select();
+        code.setSelectionRange(0, 99999); /* For mobile devices */
+
+        document.execCommand("copy");
+        alert('Successfully copied code!')
     }
 
     function validUri(str) {

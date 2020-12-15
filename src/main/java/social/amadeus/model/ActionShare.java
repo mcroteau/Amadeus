@@ -1,6 +1,6 @@
 package social.amadeus.model;
 
-public class ResourceShare {
+public class ActionShare {
 
     long id;
 

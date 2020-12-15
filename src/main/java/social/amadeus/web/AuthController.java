@@ -64,7 +64,7 @@ public class AuthController {
 
 			if(uri != null &&
 					!uri.equals("")) {
-				return "redirect:/resource?uri=" + uri;
+				return "redirect:/action?uri=" + uri;
 			} else {
 				return "redirect:/";
 			}

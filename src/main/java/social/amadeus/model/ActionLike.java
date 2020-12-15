@@ -1,6 +1,6 @@
 package social.amadeus.model;
 
-public class ResourceLike {
+public class ActionLike {
 
     long id;
 

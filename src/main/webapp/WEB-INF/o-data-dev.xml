@@ -16,7 +16,7 @@
 	<bean id="connectionDao" class="social.amadeus.repository.jdbc.FriendJdbcRepo"/>
 	<bean id="musicRepo" class="social.amadeus.repository.jdbc.MusicJdbcRepo"/>
 	<bean id="notificationDao" class="social.amadeus.repository.jdbc.NotificationJdbcRepo"/>
-	<bean id="resourceDao" class="social.amadeus.repository.jdbc.ResourceJdbcRepo"/>
+	<bean id="resourceDao" class="social.amadeus.repository.jdbc.ActionJdbcRepo"/>
 	<bean id="messageDao" class="social.amadeus.repository.jdbc.MessageJdbcDao"/>
 	<bean id="flyerRepo" class="social.amadeus.repository.jdbc.FlyerJdbcRepo"/>
 
