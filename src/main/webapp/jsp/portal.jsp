@@ -71,7 +71,7 @@
                 </a>
 
                 <div ng-show="showProfile" id="profile-picture-actions-container" class="global-shadow">
-                    <a href="#!/profile/${sessionScope.account.id}" id="profile-href"  class="profile-popup-action"><span class="space"></span> Profile</a>
+                    <a href="#!/profile/${sessionScope.account.id}" id="profile-href"  class="profile-popup-action"><span class="space"></span> <spring:message code="profile.text"/></a>
                     <a ng-click="openChat()" href="javascript:" id="messages-href" class="profile-popup-action" ng-click="renderMessages(${sessionScope.account.id})"><span id="latest-messages-total" class="space">{{data.messagesCount}}</span> Unread</a>
                     <a href="/o/signout" class="profile-popup-action" ><span class="space"></span> Logout</a>
                 </div>
@@ -99,7 +99,7 @@
             </a>
 
             <div ng-show="showProfile" id="profile-picture-actions-container" class="global-shadow">
-                <a href="#!/profile/${sessionScope.account.id}" id="profile-href"  class="profile-popup-action"><span class="space"></span> Profile</a>
+                <a href="#!/profile/${sessionScope.account.id}" id="profile-href"  class="profile-popup-action"><span class="space"></span> <spring:message code="profile.text"/></a>
                 <a ng-click="openChat()" href="javascript:" id="messages-href" class="profile-popup-action render-desktop" ng-click="renderMessages(${sessionScope.account.id})"><span id="latest-messages-total" class="space">{{data.messagesCount}}</span> Unread</a>
                 <a href="/o/signout" class="profile-popup-action" ><span class="space"></span> Logout</a>
             </div>
