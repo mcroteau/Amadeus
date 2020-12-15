@@ -140,11 +140,14 @@ body{
     /*background:#CC0273;*/
     /*background: #9fed03;*/
     /*background:#9E0059;*/
-
+    background: #33354E;
+    background: rgb(27,28,43);
+    background: linear-gradient(36deg, rgba(27,28,43,1) 0%, rgba(78,81,111,1) 56%, rgba(31,32,50,1) 100%);
+    background: #272531;
 }
 
 .feed-content-container{
-    background: rgba(255, 255, 255, 0.1) !important;
+    background: rgba(255,255,255, 0.009) !important;
 }
 
 .top-outer-container{
@@ -1015,8 +1018,6 @@ input[type="submit"]#search-button,
 .feed-content{
 	padding:0px 0px 0px 0px;
 	margin:0px 0px 30px 0px;
-	background:#f3f3f7;
-	background:#fff;
 }
 
 .feed-content:hover{
@@ -2159,7 +2160,7 @@ p{
     color:#fff;
     padding:3px 0px 0px 0px;
     margin:0px 0px 30px 0px;
-    background:rgba(255,255, 255, 0.1)
+    background:inherit;
 }
 
 #latest-feed-total{
@@ -2485,7 +2486,7 @@ p{
     /*box-shadow: 0px 2px 3px 0px rgba(0,0,0,.09);*/
     background: rgb(249,249,249);
     background: linear-gradient(160deg, rgba(249,249,249,1) 0%, rgba(249,249,249,1) 30%, rgba(255,255,255,1) 58%, rgba(255,255,255,1) 100%);
-    background: rgba(255,255,255, 0.1);
+    background: rgba(255,255,255, 0.0);
 }
 
 .post-admin-actions-wrapper,

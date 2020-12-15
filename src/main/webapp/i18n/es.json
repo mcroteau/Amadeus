@@ -6,6 +6,10 @@
     "last-updated": "2020-12-14",
     "locale": "es"
   },
+  "search.text": "Buscar",
+  "profile.text": "Perfil",
+  "unread.text": "No leído",
+  "logout.text": "Cerrar sesión",
   "ad.text": "Anuncio",
   "media.selected": "Medios seleccionados!",
   "not.live.text": "No vivo",

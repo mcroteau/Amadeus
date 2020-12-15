@@ -1,6 +1,6 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!doctype html><%--${pageContext.response.locale}--%>
-<html lang="es" dir="i18n">
+<html lang="en" dir="i18n">
 <head>
     <title>Amadeus : Like. Share. Rock Me Amadeus!</title>
 
@@ -17,7 +17,7 @@
     <script type="text/javascript" src="/o/js/packages/jquery.i18n.js"></script>
     <script type="text/javascript" src="/o/js/packages/jquery.i18n.messagestore.js"></script>
 
-    <link rel="stylesheet" href="/o/css/app.css?v=<%=System.currentTimeMillis()%>"/>
+    <link rel="stylesheet" href="/o/css/app.dark.css?v=<%=System.currentTimeMillis()%>"/>
     <link rel="stylesheet" href="/o/css/app.mobile.css?v=<%=System.currentTimeMillis()%>"/>
 
 </head>
@@ -51,7 +51,7 @@
 			<div id="top-inner-container">
 
                 <div ng-if="!$root.profilePage" id="search-container" class="float-left" style="z-index:100">
-                    <div id="search-label"><spring:message code="search.label"/>:</div>
+                    <div id="search-label" data-i18n="search.text">Search:</div>
                     <input ng-keyup="navigateSearch($event)" type="text" class="search-input" id="search-box" placeholder=""/>
 				</div>
 
@@ -71,9 +71,9 @@
                 </a>
 
                 <div ng-show="showProfile" id="profile-picture-actions-container" class="global-shadow">
-                    <a href="#!/profile/${sessionScope.account.id}" id="profile-href"  class="profile-popup-action"><span class="space"></span> <spring:message code="profile.text"/></a>
-                    <a ng-click="openChat()" href="javascript:" id="messages-href" class="profile-popup-action" ng-click="renderMessages(${sessionScope.account.id})"><span id="latest-messages-total" class="space">{{data.messagesCount}}</span> Unread</a>
-                    <a href="/o/signout" class="profile-popup-action" ><span class="space"></span> Logout</a>
+                    <a href="#!/profile/${sessionScope.account.id}" id="profile-href"  class="profile-popup-action"><span class="space"></span> <span data-i18n="profile.text">Profile</span></a>
+                    <a ng-click="openChat()" href="javascript:" id="messages-href" class="profile-popup-action" ng-click="renderMessages(${sessionScope.account.id})"><span id="latest-messages-total" class="space">{{data.messagesCount}}</span> <span data-i18n="unread.text">Unread</span></a>
+                    <a href="/o/signout" class="profile-popup-action" ><span class="space"></span> <span data-i18n="logout.text">Logout</span></a>
                 </div>
             </div>
 
@@ -86,7 +86,7 @@
         <div id="mobile-search-outer-container" style="position:relative;">
 
             <div id="mobile-search-container" class="float-left">
-                <div id="search-label">Search:</div>
+                <div id="search-label" data-i18n="search.text">Search:</div>
                 <input ng-keyup="navigateSearch($event)" type="text" class="search-input" id="search-box" placeholder=""/>
                 <br class="clear"/>
             </div>
@@ -99,9 +99,9 @@
             </a>
 
             <div ng-show="showProfile" id="profile-picture-actions-container" class="global-shadow">
-                <a href="#!/profile/${sessionScope.account.id}" id="profile-href"  class="profile-popup-action"><span class="space"></span> <spring:message code="profile.text"/></a>
-                <a ng-click="openChat()" href="javascript:" id="messages-href" class="profile-popup-action render-desktop" ng-click="renderMessages(${sessionScope.account.id})"><span id="latest-messages-total" class="space">{{data.messagesCount}}</span> Unread</a>
-                <a href="/o/signout" class="profile-popup-action" ><span class="space"></span> Logout</a>
+                <a href="#!/profile/${sessionScope.account.id}" id="profile-href"  class="profile-popup-action"><span class="space"></span> <span data-i18n="profile.text">Profile</span></a>
+                <a ng-click="openChat()" href="javascript:" id="messages-href" class="profile-popup-action render-desktop" ng-click="renderMessages(${sessionScope.account.id})"><span id="latest-messages-total" class="space">{{data.messagesCount}}</span> <span data-i18n="unread.text">Profile</span></a>
+                <a href="/o/signout" class="profile-popup-action" ><span class="space"></span> <span data-i18n="logout.text">Logout</span></a>
             </div>
         </div>
         <br class="clear"/>
