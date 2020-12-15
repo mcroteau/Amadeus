@@ -139,6 +139,7 @@ body{
     /*background:#FDFE03;*/
     /*background:#CC0273;*/
     /*background: #9fed03;*/
+    /*background:#9E0059;*/
 
 }
 
@@ -680,7 +681,7 @@ input[type="password"]::placeholder {
 	border:solid 1px #c0cdd0 !important;
     border:solid 1px #FD7300 !important;
     border:none !important;
-    border:solid 1px #54afff !important;
+    border:solid 1px rgba(255, 255, 255, 0.2) !important;
     color:#fff !important;
 }
 
@@ -939,8 +940,8 @@ input[type="submit"]#search-button,
 
 #profile-ref-image{
     z-index:1;
-    height:53px;
-    width:53px;
+    height:59px;
+    width:59px;
     margin-top:-4px;
     border-radius: 30px;
     -moz-border-radius: 30px;
@@ -1607,7 +1608,7 @@ h3#share-something span{
 	background:#fff;
 
     border:solid 1px #17161b !important;
-    border:solid 1px #9b79ce !important;
+    border:solid 1px rgba(255,255,255, 0.3) !important;
     background: rgba(255,255,255, 0.1);
 
 }
@@ -1619,7 +1620,7 @@ h3#share-something span{
     border:solid 0px #54AFFF !important;
     border:solid 1px #9b79ce !important;
     border:solid 1px rgba(0,0,0,0.1) !important;
-    border:solid 1px rgba(255,255,255,0.1) !important;
+    border:solid 1px rgba(255,255,255, 0.1) !important;
 
 	background:#fff;
 
@@ -2588,7 +2589,7 @@ p{
     font-size: 14px !important;
     padding: 9px 8px !important;
     margin-bottom: 6px;
-    border:solid 1px #84c5ff !important;
+    border:solid 1px rgba(255,255,255, 0.1) !important;
     background:rgba(255,255,255, 0.1) !important;
 }
 .comment-input,
@@ -2597,7 +2598,7 @@ p{
 .comment-shared-input:hover,
 .comment-shared-input:focus{
     color:#fff !important;
-    border:solid 1px #84c5ff !important;
+    border:solid 1px rgba(255,255,255, 0.1) !important;
     background:rgba(255,255,255, 0.1) !important;
 }
 

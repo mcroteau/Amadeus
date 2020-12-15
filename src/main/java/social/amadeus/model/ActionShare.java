@@ -1,14 +1,19 @@
 package social.amadeus.model;
 
-public class ResourceLike {
+public class ActionShare {
 
     long id;
+
+    long postId;
 
     long resourceId;
 
     long accountId;
 
-    long dateLiked;
+    String comment;
+
+    long dateShared;
+
 
     public long getId() {
         return id;
@@ -16,6 +21,14 @@ public class ResourceLike {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getPostId() {
+        return postId;
+    }
+
+    public void setPostId(long postId) {
+        this.postId = postId;
     }
 
     public long getResourceId() {
@@ -34,12 +47,20 @@ public class ResourceLike {
         this.accountId = accountId;
     }
 
-    public long getDateLiked() {
-        return dateLiked;
+    public String getComment() {
+        return comment;
     }
 
-    public void setDateLiked(long dateLiked) {
-        this.dateLiked = dateLiked;
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public long getDateShared() {
+        return dateShared;
+    }
+
+    public void setDateShared(long dateShared) {
+        this.dateShared = dateShared;
     }
 
 }

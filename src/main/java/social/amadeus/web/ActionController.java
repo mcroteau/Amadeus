@@ -15,13 +15,12 @@ import social.amadeus.service.AuthService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Controller
-public class ResourceController {
+public class ActionController {
 
-    private static final Logger log = Logger.getLogger(ResourceController.class);
+    private static final Logger log = Logger.getLogger(ActionController.class);
 
     @Autowired
     private Utilities utilities;
@@ -39,13 +38,13 @@ public class ResourceController {
     private PostRepo postRepo;
 
     @Autowired
-    private ResourceRepo resourceRepo;
+    private ActionRepo actionRepo;
 
     @Autowired
     private AuthService authService;
 
-    @RequestMapping(value="/resource", method=RequestMethod.GET)
-    public String resource(ModelMap model,
+    @RequestMapping(value="/action", method=RequestMethod.GET)
+    public String action(ModelMap model,
                                          HttpServletRequest request,
                                          final RedirectAttributes redirect,
                                          @RequestParam(value="uri", required = false ) String uri){
@@ -54,45 +53,45 @@ public class ResourceController {
             return "redirect:/uno?uri=" + uri;
 
         model.addAttribute("uri", uri);
-        return "resource/resource";
+        return "action/hello";
     }
 
 
-    @CrossOrigin(origins="*")
-    @RequestMapping(value="/resource/like", method=RequestMethod.POST)
-    public String save(ModelMap model, HttpServletRequest request,
+    @CrossOrigin(origins="*")//Thank you!
+    @RequestMapping(value="/action/like", method=RequestMethod.POST)
+    public String like(ModelMap model, HttpServletRequest request,
                                          final RedirectAttributes redirect,
                                          @RequestParam(value="uri", required = true ) String uri){
 
         if(!authService.isAuthenticated())
             return "redirect:/signin?uri=" + uri;
 
-        Resource existingResource = resourceRepo.get(uri);
+        Resource existingResource = actionRepo.get(uri);
         if(existingResource == null){
             Resource resource = new Resource();
             resource.setUri(uri);
             resource.setAccountId(authService.getAccount().getId());
             resource.setDateAdded(utilities.getCurrentDate());
-            resourceRepo.save(resource);
+            actionRepo.save(resource);
         }
 
-        Resource savedResource = resourceRepo.get(uri);
-        ResourceLike resourceLike = new ResourceLike();
-        resourceLike.setResourceId(savedResource.getId());
-        resourceLike.setAccountId(authService.getAccount().getId());
-        resourceLike.setDateLiked(utilities.getCurrentDate());
+        Resource savedResource = actionRepo.get(uri);
+        ActionLike actionLike = new ActionLike();
+        actionLike.setResourceId(savedResource.getId());
+        actionLike.setAccountId(authService.getAccount().getId());
+        actionLike.setDateLiked(utilities.getCurrentDate());
 
-        if(!resourceRepo.liked(resourceLike))
-            resourceRepo.like(resourceLike);
+        if(!actionRepo.liked(actionLike))
+            actionRepo.like(actionLike);
 
         model.addAttribute("message", "Successfully liked!");
-        return "resource/resource_success";
+        return "action/success";
     }
 
 
     @CrossOrigin(origins="*")
-    @RequestMapping(value="/resource/share", method=RequestMethod.POST)
-    public String save(ModelMap model, HttpServletRequest request,
+    @RequestMapping(value="/action/share", method=RequestMethod.POST)
+    public String share(ModelMap model, HttpServletRequest request,
                                      final RedirectAttributes redirect,
                                      @RequestParam(value="uri", required = true ) String uri,
                                      @RequestParam(value="comment", required = true ) String comment){
@@ -100,16 +99,16 @@ public class ResourceController {
         if(!authService.isAuthenticated())
             return "redirect:/signin?uri=" + uri;
 
-        Resource resource = resourceRepo.get(uri);
+        Resource resource = actionRepo.get(uri);
         if(resource == null){
             Resource r = new Resource();
             r.setUri(uri);
             r.setAccountId(authService.getAccount().getId());
             r.setDateAdded(utilities.getCurrentDate());
-            resourceRepo.save(r);
+            actionRepo.save(r);
         }
 
-        Resource savedResource = resourceRepo.get(uri);
+        Resource savedResource = actionRepo.get(uri);
 
         Post post = new Post();
         post.setAccountId(authService.getAccount().getId());
@@ -119,30 +118,30 @@ public class ResourceController {
 
         accountRepo.savePermission(authService.getAccount().getId(), Constants.POST_MAINTENANCE + savedPost.getId());
 
-        ResourceShare resourceShare = new ResourceShare();
-        resourceShare.setComment(comment);
-        resourceShare.setResourceId(savedResource.getId());
-        resourceShare.setPostId(savedPost.getId());
-        resourceShare.setAccountId(authService.getAccount().getId());
-        resourceShare.setDateShared(utilities.getCurrentDate());
-        resourceRepo.share(resourceShare);
+        ActionShare actionShare = new ActionShare();
+        actionShare.setComment(comment);
+        actionShare.setResourceId(savedResource.getId());
+        actionShare.setPostId(savedPost.getId());
+        actionShare.setAccountId(authService.getAccount().getId());
+        actionShare.setDateShared(utilities.getCurrentDate());
+        actionRepo.share(actionShare);
 
         model.addAttribute("message", "Successfully shared!");
 
-        return "resource/resource_success";
+        return "action/success";
     }
 
     @CrossOrigin(origins="*")
-    @RequestMapping(value="/resource/likes", method=RequestMethod.GET, produces="application/json")
+    @RequestMapping(value="/action/likes", method=RequestMethod.GET, produces="application/json")
     public @ResponseBody String data(ModelMap model,
                                        HttpServletRequest request,
                                        final RedirectAttributes redirect,
                                        @RequestParam(value="uri", required = true ) String uri){
 
-        Resource resource = resourceRepo.get(uri);
+        Resource resource = actionRepo.get(uri);
         long likes = 0;
         if(resource != null){
-            likes = resourceRepo.likesCount(resource.getId());
+            likes = actionRepo.likesCount(resource.getId());
         }
 
         Map<String, Object> data = new HashMap<String, Object>();
@@ -155,16 +154,16 @@ public class ResourceController {
 
 
     @CrossOrigin(origins="*")
-    @RequestMapping(value="/resource/shares", method=RequestMethod.GET, produces="application/json")
+    @RequestMapping(value="/action/shares", method=RequestMethod.GET, produces="application/json")
     public @ResponseBody String shares(ModelMap model,
                                       HttpServletRequest request,
                                       final RedirectAttributes redirect,
                                       @RequestParam(value="uri", required = false ) String uri){
 
-        Resource resource = resourceRepo.get(uri);
+        Resource resource = actionRepo.get(uri);
         long shares = 0;
         if(resource != null){
-            shares = resourceRepo.sharesCount(resource.getId());
+            shares = actionRepo.sharesCount(resource.getId());
         }
 
         Map<String, Object> data = new HashMap<String, Object>();
@@ -173,63 +172,6 @@ public class ResourceController {
         data.put("shares", shares);
 
         return gson.toJson(data);
-    }
-
-
-    @RequestMapping(value="/search", method=RequestMethod.GET, produces="application/json")
-    public @ResponseBody String search(ModelMap model,
-                  HttpServletRequest request,
-                  final RedirectAttributes redirect,
-                  @RequestParam(value="q", required = false ) String q){
-
-        Map<String, Object> data = new HashMap<String, Object>();
-        Gson gson = new Gson();
-
-        if(!authService.isAuthenticated()){
-            data.put("error", "Authentication required");
-            return gson.toJson(data);
-        }
-
-        Account account = authService.getAccount();
-
-        if(q != null){
-
-            List<Account>  accounts = accountRepo.search(q, 0);
-
-            for(Account a : accounts){
-                a.setIsFriend(friendRepo.isFriend(account.getId(), a.getId()));
-                a.setInvited(friendRepo.invited(account.getId(), a.getId()));
-
-                AccountBlock accountBlock = new AccountBlock();
-                accountBlock.setPersonId(account.getId());
-                accountBlock.setBlockerId(a.getId());
-
-                boolean blocked = accountRepo.blocked(accountBlock);
-                a.setBlocked(blocked);
-            }
-            Map<String, Object> d = new HashMap<String, Object>();
-
-            for(Account a : accounts){
-                if(a.getId() == account.getId()){
-                    a.setOwnersAccount(true);
-                }
-            }
-
-            List<MusicFile> music = musicRepo.search(q);
-            for(MusicFile musicFile : music){
-                if(musicFile.getAccountId() == account.getId()){
-                    musicFile.setEditable(true);
-                }
-            }
-
-            d.put("accounts", accounts);
-            d.put("music", music);
-
-            return gson.toJson(d);
-
-        } else {
-            return gson.toJson(data);
-        }
     }
 
 }
