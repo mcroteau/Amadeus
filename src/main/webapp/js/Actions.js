@@ -42,11 +42,11 @@ addActionStyles()
 var req = new ResourceRequest()
 var uri = actionsWrapper.getAttribute("data-uri")
 
-var likesUriProd = "https://www.amadeus.social/o/action/likes?uri=" + encodeURIComponent(uri);
-var sharesUriProd = "https://www.amadeus.social/o/action/shares?uri=" + encodeURIComponent(uri);
+var likesUri = "https://www.amadeus.social/o/action/likes?uri=" + encodeURIComponent(uri);
+var sharesUri = "https://www.amadeus.social/o/action/shares?uri=" + encodeURIComponent(uri);
 
-var likesUri = "/o/action/likes?uri=" + encodeURIComponent(uri);
-var sharesUri = "/o/action/shares?uri=" + encodeURIComponent(uri);
+var likesUriDev = "/o/action/likes?uri=" + encodeURIComponent(uri);
+var sharesUriDev = "/o/action/shares?uri=" + encodeURIComponent(uri);
 
 req.http(likesUri).then(updateLikes).catch(error)
 req.http(sharesUri).then(updateShares).catch(error)
@@ -57,8 +57,8 @@ launcher.addEventListener("click", function(){
 
     var uri = actionsWrapper.getAttribute("data-uri")
 
-    var srcPrd = "https://www.amadeus.social/o/action?uri=" + encodeURIComponent(uri)
-    var src = "http://localhost:8080/o/action?uri=" + encodeURIComponent(uri)
+    var src = "https://www.amadeus.social/o/action?uri=" + encodeURIComponent(uri)
+    var srcDev = "http://localhost:8080/o/action?uri=" + encodeURIComponent(uri)
 
     var mainHeight = 391;
     var mainWidth = 837;
