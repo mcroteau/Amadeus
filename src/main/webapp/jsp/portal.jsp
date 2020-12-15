@@ -1,6 +1,6 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<!doctype html>
-<html lang="fr" dir="i18n">
+<!doctype html><%--${pageContext.response.locale}--%>
+<html lang="es" dir="i18n">
 <head>
     <title>Amadeus : Like. Share. Rock Me Amadeus!</title>
 
@@ -422,6 +422,7 @@
                 response.data.published = false
                 $scope.activities.unshift(response.data)
                 $rootScope.renderModal = false
+                $rootScope.internationalize()
             })
         }
 

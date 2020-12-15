@@ -1,0 +1,38 @@
+{
+  "@metadata": {
+    "authors": [
+      "Alabaster"
+    ],
+    "last-updated": "2020-12-14",
+    "locale": "es"
+  },
+  "ad.text": "Anuncio",
+  "media.selected": "Medios seleccionados!",
+  "not.live.text": "No vivo",
+  "share.button": "Compartir!",
+  "express.text": "Exprésate!",
+  "video.button": "Video",
+  "images.button": "Imagenes",
+  "update.button": "Actualizar",
+  "likes": "Gustos",
+  "click.edit": "Haz click para editar",
+  "author": "Autor",
+  "delete.text": "Eliminar",
+  "delete.post": "Eliminar mensaje",
+  "flag.post": "Mensaje de bandera",
+  "hide.post": "Esconder la publicación",
+  "publish.button": "Publicar",
+  "comment.text": "Comentario",
+  "share.post": "Compartir post",
+  "enter.key.text": "Introducir clave",
+  "latest.activity": "Última actividad",
+  "click.filter": "Haga clic para filtrar",
+  "clear.text": "Claro",
+  "liked.post.text": "le gustó tu publicación!",
+  "shared.post.text": "compartió tu publicación!",
+  "commented.post.text": "comentó tu publicación!",
+  "invited.connect.text": "te invitó a conectarte!",
+  "no.notifications": "No hay notificaciones nuevas",
+  "welcome.header": "Amadeus le da la bienvenida!!",
+  "welcome.text": "Somos muy nuevos! Estamos ansiosos por complacer, <br/> esperamos que disfrutes ... ¡adelante, comienza a compartir!"
+}
