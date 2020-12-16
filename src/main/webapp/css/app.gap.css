@@ -276,23 +276,6 @@ body{
 
     font-size:39px;
 
-    color:#2cafed;
-    color:#f8f8f8;
-    color:#828E95;
-    color:#e24682;
-    color:#1f9bc4;
-    color:#2cafed;
-    color:#1e9fdb;
-    color:#617078;
-    color:#2b2b34;
-    color:#617078;
-    color:#1e9fdb;
-    color:#2b2b34;
-    color:#5e787f;
-    color:#E34B86;
-    color:#4c6368;
-    color:#13B1FF;
-
     font-family: Roboto-Medium !important;
     display:inline-block;
 
@@ -305,6 +288,7 @@ body{
 
     background:#FF1F28;
     background:#FF4F01 !important;
+    /*background:#ff2401 !important;*/
 }
 
 #logo-logo:hover{
@@ -2120,17 +2104,18 @@ p{
     -webkit-border-radius-topright: 4px !important;
     border-top-left-radius: 4px !important;
     border-top-right-radius: 4px !important;
+    border-radius: 12px;
 }
 
 
 .feed-content-container,
 .shared-post-container{
-    /*-moz-border-radius-topleft: 4px !important;*/
-    /*-moz-border-radius-topright: 4px !important;*/
-    /*-webkit-border-radius-topleft: 4px !important;*/
-    /*-webkit-border-radius-topright: 4px !important;*/
-    /*border-top-left-radius: 4px !important;*/
-    /*border-top-right-radius: 4px !important;*/
+    -moz-border-radius-topleft: 3px !important;
+    -moz-border-radius-topright: 3px !important;
+    -webkit-border-radius-topleft: 3px !important;
+    -webkit-border-radius-topright: 3px !important;
+    border-top-left-radius: 3px !important;
+    border-top-right-radius: 3px !important;
 }
 
 .shared-post-container{

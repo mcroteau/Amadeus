@@ -188,7 +188,7 @@ public class PostService {
         setSharedTimeAgo(post, postShare);
         setLikes(post, authdAccount);
         setShares(post);
-        setSharedPostActions(post, authdAccount);
+        setSharedPostActions(post, postShare, authdAccount);
         setPostShareComments(post, postShare, authdAccount);
         setMultimedia(post);
         setAccountData(post);
@@ -243,8 +243,8 @@ public class PostService {
         return post;
     }
 
-    private Post setSharedPostActions(Post post, Account authdAccount){
-        if(post.getAccountId() == authdAccount.getId()){
+    private Post setSharedPostActions(Post post, PostShare postShare, Account authdAccount){
+        if(postShare.getAccountId() == authdAccount.getId()){
             post.setDeletable(true);
         }
         return post;
