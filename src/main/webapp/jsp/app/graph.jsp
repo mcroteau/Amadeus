@@ -1,16 +1,16 @@
 <html>
 <head>
-    <script type="text/javascript" src="/o/js/packages/raphael.js"></script>
+    <script type="text/javascript" src="/o/js/packages/paper.full.js"></script>
     <style>
-        #awesome{
+        #questionmark{
             width:100%;
         }
     </style>
 </head>
 <body>
-<canvas id="awesome" resize></canvas>
+<canvas id="questionmark" resize></canvas>
 
-<script type="text/paperscript" canvas="awesome">
+<script type="text/paperscript" canvas="questionmark">
 
     var width, height, center;
     var points = 10;
