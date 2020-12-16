@@ -1,6 +1,6 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!doctype html><%--${pageContext.response.locale}--%>
-<html lang="en" dir="i18n">
+<html lang="es" dir="i18n">
 <head>
     <title>Amadeus : Like. Share. Rock Me Amadeus!</title>
 
@@ -17,7 +17,7 @@
     <script type="text/javascript" src="/o/js/packages/jquery.i18n.js"></script>
     <script type="text/javascript" src="/o/js/packages/jquery.i18n.messagestore.js"></script>
 
-    <link rel="stylesheet" href="/o/css/app.dark.css?v=<%=System.currentTimeMillis()%>"/>
+    <link rel="stylesheet" href="/o/css/app.css?v=<%=System.currentTimeMillis()%>"/>
     <link rel="stylesheet" href="/o/css/app.mobile.css?v=<%=System.currentTimeMillis()%>"/>
 
 </head>
@@ -209,11 +209,11 @@
                 $rootScope.renderFooter = true;
             }
 
-            $rootScope.internationalize();
+
         });
 
         $rootScope.internationalize = function(){
-            $.i18n.debug = true;
+            // $.i18n.debug = true;
             i18n = $.i18n()
             i18n.load().done(function(){
                 $('[data-i18n]').each(function(idx, keyElm){
@@ -287,7 +287,6 @@
         }
 
         $scope.reloadActivities = function(){
-            console.log('reload activities', $route.current.loadedTemplateUrl)
             if($route.current.loadedTemplateUrl != "pages/activity.html"){
                 $location.path("/")
             }else{
@@ -355,7 +354,6 @@
         }
 
         $scope.hideAll = function(){
-            console.log("hide all")
         }
     });
 
@@ -823,6 +821,5 @@
                 comment.innerHTML = hyperlinked
             })
         }
-
 </script>
 </body>
