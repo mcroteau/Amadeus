@@ -16,7 +16,6 @@
     <script type="text/javascript" src="/o/js/packages/jquery.js"></script>
     <script type="text/javascript" src="/o/js/packages/jquery.i18n.js"></script>
     <script type="text/javascript" src="/o/js/packages/jquery.i18n.messagestore.js"></script>
-    <script type="text/javascript" src="/o/js/packages/raphael.js"></script>
 
     <link rel="stylesheet" href="/o/css/app.gap.css?v=<%=System.currentTimeMillis()%>"/>
     <link rel="stylesheet" href="/o/css/app.gap.mobile.css?v=<%=System.currentTimeMillis()%>"/>
@@ -26,8 +25,9 @@
 <body ng-app="app" ng-controller="baseController">
 
 <%--    <div style="background:#efefef;z-index:1; height:17px;width:100%;position:absolute;top:500px;"></div>--%>
+<%--    <div id="holder" style="position:fixed;bottom:0px;left:0px;right:0px;height:490px;background:url('/o/images/g.png');"></div>--%>
+    <iframe src="/o/jsp/app/graph.jsp" style="z-index:1;position:fixed;bottom:0px;width:100%;height:430px;"></iframe>
 
-    <div id="holder" style="position:fixed;bottom:0px;left:0px;right:0px;height:490px;background:url('/o/images/g.png');"></div>
 
     <div ng-if="$root.renderModal" id="amadeus-modal">
         <div id="amadeus-model-content">
