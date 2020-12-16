@@ -145,6 +145,7 @@ body{
 
 .feed-content-container{
     background: rgba(255,255,255, 0.009) !important;
+    background:#fff !important;
 }
 
 .top-outer-container{
@@ -708,7 +709,11 @@ input[type="password"]::placeholder {
     background: rgba(255,255,255,0.1) !important;
     border:solid 1px #fff !important;
   -webkit-text-fill-color: #17161b;
-  -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+  /*-webkit-box-shadow: 0 0 0px 1000px #fff inset;*/
+}
+
+#content-container{
+    z-index: 3;
 }
 
 #search-box::-webkit-input-placeholder { /* Chrome/Opera/Safari */

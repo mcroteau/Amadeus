@@ -16,6 +16,7 @@
     <script type="text/javascript" src="/o/js/packages/jquery.js"></script>
     <script type="text/javascript" src="/o/js/packages/jquery.i18n.js"></script>
     <script type="text/javascript" src="/o/js/packages/jquery.i18n.messagestore.js"></script>
+    <script type="text/javascript" src="/o/js/packages/raphael.js"></script>
 
     <link rel="stylesheet" href="/o/css/app.gap.css?v=<%=System.currentTimeMillis()%>"/>
     <link rel="stylesheet" href="/o/css/app.gap.mobile.css?v=<%=System.currentTimeMillis()%>"/>
@@ -23,6 +24,10 @@
 </head>
 
 <body ng-app="app" ng-controller="baseController">
+
+<%--    <div style="background:#efefef;z-index:1; height:17px;width:100%;position:absolute;top:500px;"></div>--%>
+
+    <div id="holder" style="position:fixed;bottom:0px;left:0px;right:0px;height:490px;background:url('/o/images/g.png');"></div>
 
     <div ng-if="$root.renderModal" id="amadeus-modal">
         <div id="amadeus-model-content">
@@ -52,15 +57,10 @@
 
                 <div ng-if="!$root.profilePage" id="search-container" class="float-left" style="z-index:100">
 <%--                    <div id="search-label" data-i18n="search.text">Search:</div>--%>
-                    <input ng-keyup="navigateSearch($event)" type="text" class="search-input" id="search-box" placeholder="Search:"/>
-				</div>
+                    <input ng-keyup="navigateSearch($event)" type="text" class="search-input" id="search-box" placeholder="Search:" autocomplete="off"/>
+                </div>
 
 				<br class="clear"/>
-
-<%--                <div id="page-processing">--%>
-<%--	                <img src="/o/images/processing-dos.gif" style="height:50px; width:50px; position:absolute; right:240px; top:3px;"/>--%>
-<%--                    <span class="information" id="processing-message"></span>--%>
-<%--                </div>--%>
 
 			</div>
 
@@ -819,5 +819,8 @@
                 comment.innerHTML = hyperlinked
             })
         }
+
+
+
 </script>
 </body>
