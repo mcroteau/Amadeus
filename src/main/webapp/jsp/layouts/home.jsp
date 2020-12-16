@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/images/favicon.png?v=<%=System.currentTimeMillis()%>">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/app.css?v=<%=System.currentTimeMillis()%>">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/app.gap.css?v=<%=System.currentTimeMillis()%>">
 
 </head>
 <body>
@@ -21,42 +21,27 @@
         body{
             /**background-image:url("/b/images/amadeus-home.jpg");**/
             background-position:0px 0px;
-            background-color:#fcfcfc;
-            background-position:0px 0px;
-            background: rgb(253,254,3);
-            background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 50%, rgba(84,175,255,1) 100%);
-            background: rgb(253,254,3);
-            background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 13%, rgba(253,254,3,1) 20%, rgba(84,175,255,1) 20%, rgba(192,225,255,1) 100%) !important;/*-moz-box-shadow: 0px 4px 17px 0px rgba(0,0,0,.9);*/
-            background: rgb(192,225,255);
-            background: linear-gradient(36deg, rgba(192,225,255,1) 0%, rgba(84,175,255,1) 15%, rgba(253,254,3,1) 15%, rgba(253,254,3,1) 90%, rgba(84,175,255,1) 90%, rgba(192,225,255,1) 100%) !important;
-            background: rgb(253,254,3);
-            background: linear-gradient(60deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 33%, rgba(253,254,3,1) 60%, rgba(84,175,255,1) 90%, rgba(192,225,255,1) 100%) !important;/*-moz-box-shadow: 0px 4px 17px 0px rgba(0,0,0,.9);*/
+            background-color:#fff;
         }
 
         #guest-content-left{
-            float:left;
+            padding-bottom:0px !important;
         }
 
         #guest-content-right{
-            float:right;
             color:#2b2b34 !important;
-            width:27%;
             margin-right:4%;
-            margin-top:3px;
             text-align:left;
             background:rgba(67, 167, 251, 1);
             background: linear-gradient(-31deg, rgba(67,136,251,1) 0%, rgba(67,179,251,1) 100%);
             background:rgba(255,255,255, 1);
 
-            padding:20px 30px;
-
+            padding:3% 5%;
+            padding-top:0px;
+            width:30%;
             border-radius: 7px !important;
             -moz-border-radius: 7px !important;
             -webkit-border-radius: 7px !important;
-
-            -webkit-box-shadow: 1px 3px 12px 0px rgba(0,0,0,.17)
-            -moz-box-shadow: 1px 3px 12px 0px rgba(0,0,0,.17);
-            box-shadow: 1px 3px 12px 0px rgba(0,0,0,.17);
         }
 
         #guest-content-right p,
@@ -171,9 +156,10 @@
             <%}%>
         }
 
-        #amadeus-logo-home{
-            width:173px;
-            height:173px;
+        #amadeus-logo-hp{
+            width:54px;
+            height:54px;
+            fill:#fff;
         }
     </style>
 
@@ -181,9 +167,9 @@
     <div id="guest-content-container">
 
         <div id="guest-content-left" style="padding:3% 5%; width:46%;">
-            <a href="/o/uno">
+            <a href="/o/uno" style="background:#FF4F01;display:inline-block;padding:20px;">
                 <span style="display:inline-block;">
-                    <svg id="amadeus-logo-home" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
+                    <svg id="amadeus-logo-hp" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
                         <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>
                     </svg>
                 </span>
@@ -193,10 +179,7 @@
 
             <div id="amadeus-words">
 
-                <p>Amadeus is a Social Networking app built with Love.</p>
-
-                <p>Why should there be many to rule social
-                    media when there is <strong>Amadeus</strong>! <a href="${pageContext.request.contextPath}/signup" class="href-dotted-black">Signup!</a></p>
+                <p>Amadeus is a very new social networking app built with Love. <a href="${pageContext.request.contextPath}/signup" class="href-dotted-black">Signup!</a></p>
 
             </div>
 

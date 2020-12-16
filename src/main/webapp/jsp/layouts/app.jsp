@@ -12,8 +12,6 @@
     <style>
         #logo-logo,
         #logo-logo:hover{
-            background: rgb(253,254,3) !important;
-            background: linear-gradient(60deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 33%, rgba(253,254,3,1) 60%, rgba(84,175,255,1) 90%, rgba(192,225,255,1) 100%) !important;/*-moz-box-shadow: 0px 4px 17px 0px rgba(0,0,0,.9);*/
         }
         #content-header{
             text-align: center;

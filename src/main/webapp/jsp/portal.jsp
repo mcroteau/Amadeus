@@ -17,7 +17,7 @@
     <script type="text/javascript" src="/o/js/packages/jquery.i18n.js"></script>
     <script type="text/javascript" src="/o/js/packages/jquery.i18n.messagestore.js"></script>
 
-    <link rel="stylesheet" href="/o/css/app.css?v=<%=System.currentTimeMillis()%>"/>
+    <link rel="stylesheet" href="/o/css/app.gap.css?v=<%=System.currentTimeMillis()%>"/>
     <link rel="stylesheet" href="/o/css/app.mobile.css?v=<%=System.currentTimeMillis()%>"/>
 
 </head>
@@ -51,8 +51,8 @@
 			<div id="top-inner-container">
 
                 <div ng-if="!$root.profilePage" id="search-container" class="float-left" style="z-index:100">
-                    <div id="search-label" data-i18n="search.text">Search:</div>
-                    <input ng-keyup="navigateSearch($event)" type="text" class="search-input" id="search-box" placeholder=""/>
+<%--                    <div id="search-label" data-i18n="search.text">Search:</div>--%>
+                    <input ng-keyup="navigateSearch($event)" type="text" class="search-input" id="search-box" placeholder="Search:"/>
 				</div>
 
 				<br class="clear"/>
@@ -420,7 +420,6 @@
                 response.data.published = false
                 $scope.activities.unshift(response.data)
                 $rootScope.renderModal = false
-                $rootScope.internationalize()
             })
         }
 

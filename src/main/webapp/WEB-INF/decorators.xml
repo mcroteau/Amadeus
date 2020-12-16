@@ -3,7 +3,6 @@
     <decorator name="home" page="home.jsp">
         <pattern>*/uno</pattern>
         <pattern>*/signup</pattern>
-        <pattern>*/registration</pattern>
     </decorator>
     <decorator name="guest" page="guest.jsp">
         <pattern>*/signin</pattern>
