@@ -39,10 +39,7 @@
 
     <br class="clear"/>
 
-    <a href="${pageContext.request.contextPath}/signup" class="button beauty-light large" style="display:block;">Sign Up !</a>
+    <a href="${pageContext.request.contextPath}/signup" class="button beauty-light large">Sign Up !</a>
 
 <%--    <a href="${pageContext.request.contextPath}/account/guest" class="button light large" style="display:block;margin-top:10px;margin-bottom:70px;">Check it Out !</a>--%>
-
-    <p id="get_code">Want to add like & share to your web page? <br/><a href="${pageContext.request.contextPath}/get_code" class="href-dotted-amadeus">Get Code</a></p>
-
 </div>

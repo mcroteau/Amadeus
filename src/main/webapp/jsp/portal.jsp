@@ -1,5 +1,6 @@
-<!doctype html>
-<html>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<!doctype html><%--${pageContext.response.locale}--%>
+<html lang="en" dir="i18n">
 <head>
     <title>Amadeus : Like. Share. Rock Me Amadeus!</title>
 
@@ -12,21 +13,24 @@
     <script type="text/javascript" src="/o/js/packages/angular-animate.js"></script>
     <script type="text/javascript" src="/o/js/packages/angular-route.js"></script>
     <script type="text/javascript" src="/o/js/packages/anchorme.js"></script>
+    <script type="text/javascript" src="/o/js/packages/jquery.js"></script>
+    <script type="text/javascript" src="/o/js/packages/jquery.i18n.js"></script>
+    <script type="text/javascript" src="/o/js/packages/jquery.i18n.messagestore.js"></script>
 
-    <link rel="stylesheet" href="/o/css/app.css?v=<%=System.currentTimeMillis()%>"/>
-    <link rel="stylesheet" href="/o/css/app.mobile.css?v=<%=System.currentTimeMillis()%>"/>
+    <link rel="stylesheet" href="/o/css/app.gap.css?v=<%=System.currentTimeMillis()%>"/>
+    <link rel="stylesheet" href="/o/css/app.gap.mobile.css?v=<%=System.currentTimeMillis()%>"/>
 
 </head>
 
 <body ng-app="app" ng-controller="baseController">
 
-    <div ng-if="$root.renderModal" id="amadeus-modal"></div>
-    <div ng-if="$root.renderModal" id="amadeus-model-content">
-        <svg id="amadeus-modal-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
-            <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>
-        </svg>
+    <div ng-if="$root.renderModal" id="amadeus-modal">
+        <div id="amadeus-model-content">
+            <svg id="amadeus-modal-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
+                <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>
+            </svg>
+        </div>
     </div>
-
 
     <div id="linear-indicator">
         <div class="indeterminate" style="width: 100%"></div>
@@ -47,8 +51,8 @@
 			<div id="top-inner-container">
 
                 <div ng-if="!$root.profilePage" id="search-container" class="float-left" style="z-index:100">
-                    <div id="search-label">Search:</div>
-                    <input ng-keyup="navigateSearch($event)" type="text" class="search-input" id="search-box" placeholder=""/>
+<%--                    <div id="search-label" data-i18n="search.text">Search:</div>--%>
+                    <input ng-keyup="navigateSearch($event)" type="text" class="search-input" id="search-box" placeholder="Search:"/>
 				</div>
 
 				<br class="clear"/>
@@ -67,9 +71,9 @@
                 </a>
 
                 <div ng-show="showProfile" id="profile-picture-actions-container" class="global-shadow">
-                    <a href="#!/profile/${sessionScope.account.id}" id="profile-href"  class="profile-popup-action"><span class="space"></span> Profile</a>
-                    <a ng-click="openChat()" href="javascript:" id="messages-href" class="profile-popup-action" ng-click="renderMessages(${sessionScope.account.id})"><span id="latest-messages-total" class="space">{{data.messagesCount}}</span> Unread</a>
-                    <a href="/o/signout" class="profile-popup-action" ><span class="space"></span> Logout</a>
+                    <a href="#!/profile/${sessionScope.account.id}" id="profile-href"  class="profile-popup-action"><span class="space"></span> <span data-i18n="profile.text">Profile</span></a>
+                    <a ng-click="openChat()" href="javascript:" id="messages-href" class="profile-popup-action" ng-click="renderMessages(${sessionScope.account.id})"><span id="latest-messages-total" class="space">{{data.messagesCount}}</span> <span data-i18n="unread.text">Unread</span></a>
+                    <a href="/o/signout" class="profile-popup-action" ><span class="space"></span> <span data-i18n="logout.text">Logout</span></a>
                 </div>
             </div>
 
@@ -82,8 +86,7 @@
         <div id="mobile-search-outer-container" style="position:relative;">
 
             <div id="mobile-search-container" class="float-left">
-                <div id="search-label">Search:</div>
-                <input ng-keyup="navigateSearch($event)" type="text" class="search-input" id="search-box" placeholder=""/>
+                <input ng-keyup="navigateSearch($event)" type="text" class="search-input" id="search-box" placeholder="Search:"/>
                 <br class="clear"/>
             </div>
         </div>
@@ -95,9 +98,9 @@
             </a>
 
             <div ng-show="showProfile" id="profile-picture-actions-container" class="global-shadow">
-                <a href="#!/profile/${sessionScope.account.id}" id="profile-href"  class="profile-popup-action"><span class="space"></span> Profile</a>
-                <a ng-click="openChat()" href="javascript:" id="messages-href" class="profile-popup-action render-desktop" ng-click="renderMessages(${sessionScope.account.id})"><span id="latest-messages-total" class="space">{{data.messagesCount}}</span> Unread</a>
-                <a href="/o/signout" class="profile-popup-action" ><span class="space"></span> Logout</a>
+                <a href="#!/profile/${sessionScope.account.id}" id="profile-href"  class="profile-popup-action"><span class="space"></span> <span data-i18n="profile.text">Profile</span></a>
+                <a ng-click="openChat()" href="javascript:" id="messages-href" class="profile-popup-action render-desktop" ng-click="renderMessages(${sessionScope.account.id})"><span id="latest-messages-total" class="space">{{data.messagesCount}}</span> <span data-i18n="unread.text">Profile</span></a>
+                <a href="/o/signout" class="profile-popup-action" ><span class="space"></span> <span data-i18n="logout.text">Logout</span></a>
             </div>
         </div>
         <br class="clear"/>
@@ -204,7 +207,22 @@
                 $rootScope.profilePage = false;
                 $rootScope.renderFooter = true;
             }
+
+
         });
+
+        $rootScope.internationalize = function(){
+            // $.i18n.debug = true;
+            i18n = $.i18n()
+            i18n.load().done(function(){
+                $('[data-i18n]').each(function(idx, keyElm){
+                    var key = $(keyElm).attr('data-i18n')
+                    var value = $.i18n(key)
+                    $(keyElm).html(value)
+                })
+            })
+        }
+
     })
 
     app.config(function($routeProvider) {
@@ -268,7 +286,6 @@
         }
 
         $scope.reloadActivities = function(){
-            console.log('reload activities', $route.current.loadedTemplateUrl)
             if($route.current.loadedTemplateUrl != "pages/activity.html"){
                 $location.path("/")
             }else{
@@ -336,7 +353,6 @@
         }
 
         $scope.hideAll = function(){
-            console.log("hide all")
         }
     });
 
@@ -803,6 +819,5 @@
                 comment.innerHTML = hyperlinked
             })
         }
-
 </script>
 </body>

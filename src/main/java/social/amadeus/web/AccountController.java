@@ -138,10 +138,11 @@ public class AccountController {
 
 
 	@RequestMapping(value="/account/edit/{id}", method=RequestMethod.GET)
-	public String edit(ModelMap model, 
-	                     HttpServletRequest request,
-						 final RedirectAttributes redirect,
-					     @PathVariable String id){
+	public String edit(Locale locale,
+					   ModelMap model,
+	                   HttpServletRequest request,
+					   final RedirectAttributes redirect,
+					   @PathVariable String id){
 
 		String permission = Constants.ACCOUNT_MAINTENANCE + id;
 		if(authService.isAdministrator() ||

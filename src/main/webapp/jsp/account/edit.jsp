@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="java.util.Calendar"%>
 <%@ page import="java.util.Date"%>
@@ -123,7 +124,7 @@
 	    <div class="notify">${error}</div>
 	</c:if>
 
-
+    <h1><spring:message code="profile.text"/></h1>
 	<div id="edit-user-container">
 
         <form action="${pageContext.request.contextPath}/account/update/${account.id}" class="pure-form pure-form-stacked" modelAttribute="account" method="post" enctype="multipart/form-data">

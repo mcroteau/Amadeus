@@ -524,11 +524,12 @@ input[type="password"]::placeholder {
     background: rgb(253,254,3);
     background: linear-gradient(36deg, rgba(253,254,3,1) 22%, rgba(254,211,4,1) 38%, rgba(84,175,255,1) 51%, rgba(208,48,138,1) 74%);
     background: rgb(253,254,3);
-    background: linear-gradient(36deg, rgba(253,254,3,1) 22%, rgba(254,211,4,1) 39%, rgba(159,237,3,1) 53%, rgba(84,175,255,1) 68%, rgba(208,48,138,1) 93%);
-    background: rgb(253,254,3);
-    background: linear-gradient(79deg, rgba(253,254,3,1) 22%, rgba(159,237,3,1) 44%, rgba(84,175,255,1) 61%, rgba(84,175,255,1) 74%, rgba(208,48,138,1) 94%);
-    background: rgb(253,254,3);
-    background: linear-gradient(36deg, rgba(253,254,3,1) 22%, rgba(159,237,3,1) 44%, rgba(84,175,255,1) 66%, rgba(84,175,255,1) 79%, rgba(208,48,138,1) 94%);
+    background: linear-gradient(76deg, rgba(253,254,3,1) 22%, rgba(254,211,4,1) 39%, rgba(159,237,3,1) 53%, rgba(84,175,255,1) 68%, rgba(208,48,138,1) 93%);
+    /*background: rgb(253,254,3);*/
+    /*background: linear-gradient(79deg, rgba(253,254,3,1) 22%, rgba(159,237,3,1) 44%, rgba(84,175,255,1) 61%, rgba(84,175,255,1) 74%, rgba(208,48,138,1) 94%);*/
+    /*background: rgb(253,254,3);*/
+    /*background: linear-gradient(36deg, rgba(253,254,3,1) 22%, rgba(159,237,3,1) 44%, rgba(84,175,255,1) 66%, rgba(84,175,255,1) 79%, rgba(208,48,138,1) 94%);*/
+    /*background: #FDFE03;*/
     /*background: rgb(253,254,3);*/
     /*background: linear-gradient(36deg, rgba(253,254,3,1) 35%, rgba(254,211,4,1) 100%);*/
     /*background-size: 300% 300%;*/
@@ -1133,7 +1134,7 @@ input[type="submit"].button{
 
 .edit-update-button{
     z-index: 23;
-    left:116px;
+    left:124px;
     display: none;
     position:absolute;
     -webkit-box-shadow: 0px 3px 5px 0px rgba(179,179,179,0.23) !important;
@@ -1491,8 +1492,8 @@ h3#share-something span{
     width: 321px;
     height: 244px;
     width:248px;
-    height:90px;
-    font-size:19px !important;
+    height:59px;
+    font-size:17px !important;
     font-family: Roboto-Light !important;
     padding: 9px 47px 27px 11px;
     padding-bottom:81px;
@@ -1566,22 +1567,22 @@ h3#share-something span{
 
 
 #whatsup::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    font-size:19px !important;
+    font-size:18px !important;
     color:#17161b !important;
     font-family:Roboto-Thin !important;
 }
 #whatsup::-moz-placeholder { /* Firefox 19+ */
-    font-size:19px !important;
+    font-size:18px !important;
     color:#17161b !important;
     font-family:Roboto-Thin !important;
 }
 #whatsup:-ms-input-placeholder { /* IE 10+ */
-    font-size:19px !important;
+    font-size:18px !important;
     color:#17161b !important;
     font-family:Roboto-Thin !important;
 }
 #whatsup:placeholder { /* Firefox 18- */
-    font-size:19px !important;
+    font-size:18px !important;
     color:#17161b !important;
     font-family:Roboto-Thin !important;
 }
@@ -2379,7 +2380,7 @@ p{
 .file-upload-container{
     height:50px;
     height:39px;
-    width:82px;
+    width:89px;
     position:relative;
     border:solid 0px #ddd;
     float:right;
@@ -2387,7 +2388,7 @@ p{
 .upload-button{
     top:0px;
     left:4px;
-    width: 41px;
+    width: 48px;
     display:block;
     text-align:center;
     position:absolute;
