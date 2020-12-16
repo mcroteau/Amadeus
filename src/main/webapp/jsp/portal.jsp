@@ -1,6 +1,6 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!doctype html><%--${pageContext.response.locale}--%>
-<html lang="es" dir="i18n">
+<html lang="en" dir="i18n">
 <head>
     <title>Amadeus : Like. Share. Rock Me Amadeus!</title>
 
@@ -18,19 +18,19 @@
     <script type="text/javascript" src="/o/js/packages/jquery.i18n.messagestore.js"></script>
 
     <link rel="stylesheet" href="/o/css/app.gap.css?v=<%=System.currentTimeMillis()%>"/>
-    <link rel="stylesheet" href="/o/css/app.mobile.css?v=<%=System.currentTimeMillis()%>"/>
+    <link rel="stylesheet" href="/o/css/app.gap.mobile.css?v=<%=System.currentTimeMillis()%>"/>
 
 </head>
 
 <body ng-app="app" ng-controller="baseController">
 
-    <div ng-if="$root.renderModal" id="amadeus-modal"></div>
-    <div ng-if="$root.renderModal" id="amadeus-model-content">
-        <svg id="amadeus-modal-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
-            <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>
-        </svg>
+    <div ng-if="$root.renderModal" id="amadeus-modal">
+        <div id="amadeus-model-content">
+            <svg id="amadeus-modal-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
+                <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>
+            </svg>
+        </div>
     </div>
-
 
     <div id="linear-indicator">
         <div class="indeterminate" style="width: 100%"></div>
@@ -86,8 +86,7 @@
         <div id="mobile-search-outer-container" style="position:relative;">
 
             <div id="mobile-search-container" class="float-left">
-                <div id="search-label" data-i18n="search.text">Search:</div>
-                <input ng-keyup="navigateSearch($event)" type="text" class="search-input" id="search-box" placeholder=""/>
+                <input ng-keyup="navigateSearch($event)" type="text" class="search-input" id="search-box" placeholder="Search:"/>
                 <br class="clear"/>
             </div>
         </div>

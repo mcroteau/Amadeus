@@ -183,7 +183,6 @@ body{
     right:0px;
     position:fixed;
     z-index:2001;
-    opacity:0.4;
     background: rgb(253,254,3);
     background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 50%, rgba(84,175,255,1) 100%);
     background: rgb(253,254,3);
@@ -191,7 +190,8 @@ body{
     background: rgb(192,225,255);
     background: linear-gradient(36deg, rgba(192,225,255,1) 0%, rgba(84,175,255,1) 15%, rgba(253,254,3,1) 15%, rgba(253,254,3,1) 90%, rgba(84,175,255,1) 90%, rgba(192,225,255,1) 100%);
     background: rgb(253,254,3);
-    background: linear-gradient(60deg, rgba(253,254,3,1) 24%, rgba(84,175,255,1) 56%, rgba(84,175,255,1) 89%, rgba(208,48,138,1) 100%)
+    background: linear-gradient(60deg, rgba(253,254,3,1) 24%, rgba(84,175,255,1) 56%, rgba(84,175,255,1) 89%, rgba(208,48,138,1) 100%);
+    background:rgba(255,255,255,.7);
 }
 
 #amadeus-model-content{
@@ -212,26 +212,19 @@ body{
 #amadeus-modal-icon{
     height:49px;
     width:49px;
+    fill:#17161b;
     margin-top:100px;
     -webkit-animation-name: logo-logo; /* Safari 4.0 - 8.0 */
     -webkit-animation-duration: 1.40s; /* Safari 4.0 - 8.0 */
-    animation-name: logo-logo;
+    animation-name: amadeus-modal-icon;
     animation-iteration-count: infinite;
     animation-duration: 1.40s;
 }
 
-@keyframes logo-logo {
+@keyframes amadeus-modal-icon {
     0%  {fill:#17161b}
     1%  {fill:#FDFE03}
-    19%  {fill:#54afff}
-    49% {fill:#17161b}
-    100%{fill:#17161b}
-}
-
-@keyframes logo-logo {
-    0%  {fill:#17161b}
-    1%  {fill:#FDFE03}
-    19%  {fill:#54afff}
+    3%  {fill:#FDFE03}
     49% {fill:#17161b}
     100%{fill:#17161b}
 }
@@ -628,7 +621,7 @@ input[type="password"]::placeholder {
     height:49px;
 	line-height:1.0;
 	z-index:1;
-	padding: 0px 20px 4px 20px !important;
+	padding: 0px 20px 0px 20px !important;
 	vertical-align:middle;
 	font-family: Roboto;
 
@@ -647,6 +640,11 @@ input[type="password"]::placeholder {
     -webkit-box-shadow: 0px 1px 2px 0px rgba(0,0,0,.07);
     -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,.07);
     box-shadow: 0px 1px 2px 0px rgba(0,0,0,.07);
+
+    -webkit-box-shadow: 0px 3px 19px 0px rgba(0,0,0,.09);
+    -moz-box-shadow: 0px 3px 19px 0px rgba(0,0,0,.09);
+    box-shadow: 0px 3px 19px 0px rgba(0,0,0,.09);
+    border:solid 1px rgba(0, 0, 0, 0.1) !important;
 }
 #search-box{
     background:#c0cdd0 !important;
@@ -659,7 +657,7 @@ input[type="password"]::placeholder {
     color:#17161b !important;
     border:solid 1px #84c5ff !important;
     border:solid 1px rgba(0, 0, 0, 0.01) !important;
-    background: #f9f9f9 !important;
+    background: #fff !important;
 }
 #search-box:hover{
 	border:solid 1px #c0cdd0 !important;
@@ -713,7 +711,6 @@ input[type="password"]::placeholder {
     border:solid 1px #54AFFF !important;
     border:solid 1px #84c5ff !important;
     color:#17161b !important;
-    background: rgba(255, 255, 255, 0.1) !important;
 }
 
 
@@ -1536,12 +1533,11 @@ h3#share-something span{
     width: 321px;
     height: 244px;
     width:248px;
-    height:56px;
+    height:96px;
     font-size: 27px !important;
     font-size:17px !important;
     font-family: Roboto-Light !important;
-    padding: 9px 47px 27px 11px;
-    padding-bottom:81px;
+    padding: 9px 47px 9px 11px;
     border:solid 2px #efefef;
     border-radius: 4px;
 	-moz-border-radius: 4px;
@@ -1570,7 +1566,7 @@ h3#share-something span{
     color:#17161b !important;
     border:solid 0px #fff !important;
     border:solid 1px rgba(255,255,255, 0.1) !important;
-    background: rgba(0,0,0, 0.01) !important;
+    background: rgba(0,0,0, 0.009) !important;
 }
 
 #whatsup:hover{
@@ -1609,7 +1605,7 @@ h3#share-something span{
     border:solid 1px rgba(0,0,0,0.1) !important;
     border:solid 1px rgba(255,255,255, 0.1) !important;
 
-	background:#fff;
+    background: rgba(0,0,0, 0.0) !important;
 
     -webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.07);
     -moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.07);
@@ -2114,9 +2110,9 @@ p{
     -moz-box-shadow: 1px 3px 7px 0px rgba(0,0,0,.07);
     box-shadow: 1px 3px 7px 0px rgba(0,0,0,.07);
 
-    -webkit-box-shadow: 0px 3px 23px 0px rgba(0,0,0,.09);
-    -moz-box-shadow: 0px 3px 23px 0px rgba(0,0,0,.09);
-    box-shadow: 0px 3px 23px 0px rgba(0,0,0,.09);
+    -webkit-box-shadow: 0px 3px 29px 0px rgba(0,0,0,.09);
+    -moz-box-shadow: 0px 3px 29px 0px rgba(0,0,0,.09);
+    box-shadow: 0px 3px 29px 0px rgba(0,0,0,.09);
 
     -moz-border-radius-topleft: 4px !important;
     -moz-border-radius-topright: 4px !important;
@@ -2721,8 +2717,8 @@ p{
     background:transparent;
     display:inline-block;
     position:absolute;
-    bottom:14px;
-    right:10px;
+    bottom:10px;
+    right:12px;
 	border-radius: 7px;
 	-moz-border-radius: 7px;
 	-webkit-border-radius: 7px;
