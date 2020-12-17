@@ -202,6 +202,7 @@
     })
 
     app.run(function ($rootScope, $location) {
+        $rootScope.gettingData = false;
         $rootScope.indicator = document.querySelector("#linear-indicator")
 
         $rootScope.$on("$routeChangeStart", function () {
@@ -284,9 +285,11 @@
         }
 
         var getData = function(){
+            $rootScope.gettingData = true
             $http.get("/o/profile/data").then(function(data){
                 if(data.error)$window.location.href= "/"
                 $scope.data = data.data
+                $rootScope.gettingData = false
             })
         }
 
@@ -421,18 +424,21 @@
             });
 
             fd.append('content', content)
-            $http({
-                method: 'post',
-                url: '/o/post/share',
-                data: fd,
-                headers: {'Content-Type': undefined},
-            }).then(function(response){
-                document.querySelector('#whatsup').value = ''
-                $scope.beautiful = $scope.beautiful ? false : true
-                response.data.published = false
-                $scope.activities.unshift(response.data)
-                $rootScope.renderModal = false
-            })
+
+            if(!$rootScope.gettingData) {
+                $http({
+                    method: 'post',
+                    url: '/o/post/share',
+                    data: fd,
+                    headers: {'Content-Type': undefined},
+                }).then(function (response) {
+                    document.querySelector('#whatsup').value = ''
+                    $scope.beautiful = $scope.beautiful ? false : true
+                    response.data.published = false
+                    $scope.activities.unshift(response.data)
+                    $rootScope.renderModal = false
+                })
+            }
         }
 
         $scope.maintainView = function(list, id){
