@@ -174,4 +174,9 @@
     #chat-launcher-popup{
         display: none;
     }
+
+    #viz{
+        display:none
+    }
+
 }

@@ -2,34 +2,26 @@
 <head>
     <script type="text/javascript" src="/o/js/packages/paper.full.js"></script>
     <style>
-        #space{
+        #wethank{
             width:100%;
         }
     </style>
 </head>
 <body>
-<canvas id="space" resize></canvas>
+<canvas id="wethank" resize></canvas>
 
-<script type="text/paperscript" canvas="space">
+<script type="text/paperscript" canvas="wethank">
     // The amount of symbol we want to place;
-    var count = 150;
+    var count = 131;
 
-    // Create a symbol, which we will use to place instances of later:
-    // var path = new Path.Circle({
-    //     center: new Point(0, 0),
-    //     radius: 5,
-    //     fillColor: 'grey',
-    //     strokeColor: 'white'
-    // });
 
-    var path = new Path.RegularPolygon(new Point(0, 0), 3, 5);
-    path.fillColor = 'white';
-    path.strokeColor = 'grey';
-    path.strokeWidth = 2;
-    path.selected = true;
+    var text = new PointText(new Point(200, 50))
+    text.content = "You inspired us."
+    text.fillColor = "black"
 
-    var symbol = new SymbolDefinition(path);
+    var symbol = new SymbolDefinition(text);
 
+    var symbols = []
     // Place the instances of the symbol:
     for (var i = 0; i < count; i++) {
         // The center position is a random point in the view:
