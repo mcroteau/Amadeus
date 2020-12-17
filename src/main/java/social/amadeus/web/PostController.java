@@ -115,8 +115,8 @@ public class PostController {
 
 	@RequestMapping(value="/post/share", method=RequestMethod.POST, produces="application/json")
 	public @ResponseBody String share(@ModelAttribute("post") Post post,
-									  @RequestParam(value="imageFiles", required = false) CommonsMultipartFile[] uploadedImageFiles,
-									  @RequestParam(value="videoFile", required = false) CommonsMultipartFile uploadedVideoFile){
+									  @RequestParam(value="imageFiles", required = false) CommonsMultipartFile[] imageFiles,
+									  @RequestParam(value="videoFile", required = false) CommonsMultipartFile videoFile){
 
 
 		Map<String, Object> data = new HashMap<String, Object>();
@@ -129,12 +129,12 @@ public class PostController {
 		Account account = authService.getAccount();
 		post.setAccountId(account.getId());
 
-		List<String> imageUris = new ArrayList<String>();
+		List<String> imageUris = new ArrayList<>();
 
-		if(uploadedImageFiles != null &&
-				uploadedImageFiles.length > 0) {
+		if(imageFiles != null &&
+				imageFiles.length > 0) {
 
-			for (CommonsMultipartFile imageFile : uploadedImageFiles){
+			for (CommonsMultipartFile imageFile : imageFiles){
 				String imageUri = utilities.write(imageFile, Constants.IMAGE_DIRECTORY);
 
 				if(imageUri.equals("")){
@@ -146,10 +146,10 @@ public class PostController {
 			}
 		}
 
-		if(uploadedVideoFile != null  &&
-				!uploadedVideoFile.isEmpty()) {
+		if(videoFile != null  &&
+				!videoFile.isEmpty()) {
 
-			String videoFileUri = utilities.writeVideo(uploadedVideoFile, Constants.VIDEO_DIRECTORY);
+			String videoFileUri = utilities.writeVideo(videoFile, Constants.VIDEO_DIRECTORY);
 
 			if(videoFileUri.equals("")){
 				utilities.deleteUploadedFile(videoFileUri);
@@ -174,7 +174,7 @@ public class PostController {
 		}
 
 
-		List<String> youtubes = new ArrayList<String>();
+		List<String> youtubes = new ArrayList<>();
 		if(post.getContent().contains(YOUTUBE_URL) &&
 				!post.getContent().contains("<iframe")) {
 
