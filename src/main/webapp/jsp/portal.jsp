@@ -25,11 +25,7 @@
 
 <body ng-app="app" ng-controller="baseController">
 
-<%--    <div style="background:#efefef;z-index:1; height:17px;width:100%;position:absolute;top:500px;"></div>--%>
-<%--    <div id="holder" style="position:fixed;bottom:0px;left:0px;right:0px;height:490px;background:url('/o/images/g.png');"></div>--%>
-
 <%
-
     String[] vizs = {"/o/jsp/app/vis/candy.jsp",
                     "/o/jsp/app/vis/graph.jsp",
                     "/o/jsp/app/vis/pond.jsp",
@@ -164,29 +160,27 @@
         </div>
     </div>
 
-<%--    <h1 style="transform:  rotate(-90deg); opacity:0.1; position:absolute; left:-50px; top:270px;">Activity</h1>--%>
 
-    <div ng-if="$root.renderFooter" id="footer">
-        <div id="footer">
-            <div style="text-align:center;margin-top:10px;">
-                <a href="${pageContext.request.contextPath}/get_code" class="page-ref href-dotted" >Get Code</a>
-                <a href="javascript:" class="page-ref href-dotted" data-ref="about">About</a>
-                <a href="${pageContext.request.contextPath}/invite" class="href-dotted" id="invite-people">Invite</a>
-            </div>
+<%--    <div ng-if="$root.renderFooter" id="footer">--%>
+<%--        <div id="footer" style="z-index:2001">--%>
+<%--            <div style="text-align:center;margin-top:10px;">--%>
+<%--                <a href="${pageContext.request.contextPath}/get_code" class="page-ref href-dotted" >Get Code</a>--%>
+<%--                <a href="javascript:" class="page-ref href-dotted" data-ref="about">About</a>--%>
+<%--                <a href="${pageContext.request.contextPath}/invite" class="href-dotted" id="invite-people">Invite</a>--%>
+<%--            </div>--%>
 
-            <p style="text-align:center;"><a href="mailto:support@amadeus.social" style="color:#17161b" class="href-dotted">support@amadeus.social</a>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 134 134" id="amadeus-icon">
-                    <path d="M49 1L21 88L57 88L42 134L84 134L113 47L92 47L79 47L75 47L91 1L49 1Z" />
-                </svg>
-            </p>
+<%--            <p style="text-align:center;"><a href="mailto:support@amadeus.social" style="color:#17161b" class="href-dotted">support@amadeus.social</a>--%>
+<%--                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 134 134" id="amadeus-icon">--%>
+<%--                    <path d="M49 1L21 88L57 88L42 134L84 134L113 47L92 47L79 47L75 47L91 1L49 1Z" />--%>
+<%--                </svg>--%>
+<%--            </p>--%>
 
-            <div style="text-align:center;margin:20px auto 109px auto">
-                <p style="text-align: center; font-size:12px;">&copy; 2020 Amadeus</p>
-                <a href="http://tomcat.apache.org/" target="_blank" class="information">Powered by<br/>Tomcat</a>
-            </div>
-        </div>
-
-    </div>
+<%--            <div style="text-align:center;margin:20px auto 109px auto">--%>
+<%--                <p style="text-align: center; font-size:12px;">&copy; 2020 Amadeus</p>--%>
+<%--                <a href="http://tomcat.apache.org/" target="_blank" class="information">Powered by<br/>Tomcat</a>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
 <script>
 
