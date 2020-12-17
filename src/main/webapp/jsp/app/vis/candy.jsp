@@ -28,6 +28,8 @@
                 saturation: 1,
                 brightness: 1
             },
+            fillColor: "white",
+            strokeColor: "grey",
             blendMode: 'lighter'
         });
 
@@ -41,6 +43,8 @@
             }));
         }
     }
+
+
 
     Ball.prototype = {
         iterate: function() {
@@ -133,7 +137,7 @@
             angle: 360 * Math.random(),
             length: Math.random() * 10
         });
-        var radius = Math.random() * 60;
+        var radius = Math.random() * 40;
         balls.push(new Ball(radius, position, vector));
     }
 
