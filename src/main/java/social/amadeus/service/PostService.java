@@ -68,10 +68,9 @@ public class PostService {
         return post;
     }
 
-    public Post savePost(Post post, CommonsMultipartFile[] imageFiles, CommonsMultipartFile videoFile){
+    public Post savePost(Post post, Account authdAccount, CommonsMultipartFile[] imageFiles, CommonsMultipartFile videoFile){
 
-        Account account = authService.getAccount();
-        post.setAccountId(account.getId());
+        post.setAccountId(authdAccount.getId());
 
         List<String> imageUris = new ArrayList<>();
 
@@ -155,8 +154,8 @@ public class PostService {
         }
 
         Post savedPost = postRepo.save(post);
-        accountRepo.savePermission(account.getId(), Constants.POST_MAINTENANCE  + savedPost.getId());
-        Post populatedPost = setPostData(savedPost, account);
+        accountRepo.savePermission(authdAccount.getId(), Constants.POST_MAINTENANCE  + savedPost.getId());
+        Post populatedPost = setPostData(savedPost, authdAccount);
 
         for(String imageUri: imageUris){
             PostImage postImage = new PostImage();

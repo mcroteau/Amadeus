@@ -106,7 +106,8 @@ public class PostController {
 			post.setFailMessage("authentication required");
 		}
 
-		Post savedPost = postService.savePost(post, imageFiles, videoFile);
+		Account authdAccount = authService.getAccount();
+		Post savedPost = postService.savePost(post, authdAccount, imageFiles, videoFile);
         return gson.toJson(savedPost);
 	}
 

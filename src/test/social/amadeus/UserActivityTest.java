@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import social.amadeus.common.Constants;
 import social.amadeus.common.Utils;
 import social.amadeus.repository.AccountRepo;
@@ -27,9 +28,9 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:o-combined-test.xml")
-public class ActivityTest {
+public class UserActivityTest {
 
-    private static final Logger log = Logger.getLogger(ActivityTest.class);
+    private static final Logger log = Logger.getLogger(UserActivityTest.class);
 
     @Autowired
     private Utils utils;
@@ -47,6 +48,7 @@ public class ActivityTest {
     Post savedPostDos;
     Post savedPostTres;
     Post savedPostQuatro;
+    Post savedPostCinco;
     PostShare savedPostShare;
 
     Account authdAccount;
@@ -54,10 +56,10 @@ public class ActivityTest {
     @Before
     public void before(){
         authdAccount = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
-        Post postUno = TestUtils.getPost(authdAccount.getId(), utils.getPreviousDay(3));
-        Post postDos = TestUtils.getPost(authdAccount.getId(), utils.getPreviousDay(1));
-        Post postTres = TestUtils.getPost(authdAccount.getId(), utils.getPreviousDay(21));
-        Post postQuatro = TestUtils.getPost(authdAccount.getId(), utils.getPreviousDay(9));
+        Post postUno = MockUtils.getPost(authdAccount.getId(), utils.getPreviousDay(3));
+        Post postDos = MockUtils.getPost(authdAccount.getId(), utils.getPreviousDay(1));
+        Post postTres = MockUtils.getPost(authdAccount.getId(), utils.getPreviousDay(21));
+        Post postQuatro = MockUtils.getPost(authdAccount.getId(), utils.getPreviousDay(9));
 
         savedPostUno = postRepo.save(postUno);
         postRepo.publish(savedPostUno.getId());//uno
@@ -141,6 +143,18 @@ public class ActivityTest {
     }
 
 
+    @Test
+    public void testSaveUnpubd(){
+        Account authdAccount = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
+        Post post = MockUtils.getPost(authdAccount.getId(), utils.getCurrentDate());
+        savedPostCinco = postService.savePost(post, authdAccount, null, null);
+        postRepo.publish(savedPostCinco.getId());
+        List<Post> activity = getActivities();
+        assertEquals(3, activity.size());
+    }
+
+
+
     private List<Post> getActivities(){
         Account mockAuthdAccount = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
         Map<String, Object> activityData = postService.getActivity(mockAuthdAccount);
@@ -151,6 +165,8 @@ public class ActivityTest {
 
     @After
     public void after(){
+        if(savedPostCinco != null)
+            postRepo.delete(savedPostCinco.getId());
         if(savedPostShare != null)
             postRepo.deletePostShare(savedPostShare.getId());
         postRepo.delete(savedPostUno.getId());

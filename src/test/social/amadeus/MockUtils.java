@@ -3,9 +3,9 @@ package social.amadeus;
 import org.apache.log4j.Logger;
 import social.amadeus.model.Post;
 
-public class TestUtils {
+public class MockUtils {
 
-    private static final Logger log = Logger.getLogger(TestUtils.class);
+    private static final Logger log = Logger.getLogger(MockUtils.class);
 
     public static Post getPost(long accountId, long date){
         Post post = new Post();
