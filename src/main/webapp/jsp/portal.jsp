@@ -578,7 +578,7 @@
                     // $scope.removePost(id, activityModel.get('memory'))
                     // $scope.removePost(id, activityModel.get('activities'))
                     $rootScope.renderModal = false
-                    $route.reload()
+                    $window.location.reload()
                 });
             }
         }
@@ -595,44 +595,56 @@
         $scope.unsharePost = function(shareId){
             var confirmed = confirm("Are you sure you want to unshare this post?")
             if(confirmed) {
-                $http.delete("/o/post/unshare/" + shareId).then($route.reload);
+                $http.delete("/o/post/unshare/" + shareId).then($window.location.reload);
             }
         }
 
         $scope.flagPost = function(id, shared){
             var confirmed = confirm("Are you sure you want to flag this post?")
             if(confirmed) {
-                $http.post("/o/post/flag/" + id + "/" + shared).then($route.reload);
+                $http.post("/o/post/flag/" + id + "/" + shared).then(function(){
+                    $window.location.reload()
+                });
             }
         }
 
         $scope.hidePost = function(id){
             var confirmed = confirm("Are you sure you want to hide this post?")
             if(confirmed) {
-                $http.post("/o/post/hide/" + id).then($route.reload);
+                $http.post("/o/post/hide/" + id).then(function(){
+                    $window.location.reload()
+                });
             }
         }
 
         $scope.saveComment = function(id){
             var comment = document.querySelector("#post-comment-" + id).value
             if(comment != '') {
-                dataService.saveComment(id, comment, $route.reload)
+                dataService.saveComment(id, comment, function(){
+                    $window.location.reload()
+                })
             }
         }
 
         $scope.saveShareComment = function(id){
             var comment = document.querySelector("#post-share-comment-" + id).value
             if(comment != '') {
-                dataService.saveShareComment(id, comment, $route.reload)
+                dataService.saveShareComment(id, comment, function(){
+                    $window.location.reload()
+                })
             }
         }
 
         $scope.deleteComment = function(id){
-            dataService.deleteComment(id, $route.reload)
+            dataService.deleteComment(id, function(){
+                $window.location.reload()
+            })
         }
 
         $scope.deleteShareComment = function(id){
-            dataService.deleteShareComment(id, $route.reload)
+            dataService.deleteShareComment(id, function(){
+                $window.location.reload()
+            })
         }
 
         $scope.uploadImages = function(id, $event){
@@ -649,7 +661,9 @@
                 url: '/o/post/image/add/' + id,
                 data: fd,
                 headers: {'Content-Type': undefined},
-            }).then($route.reload)
+            }).then(function(){
+                $window.location.reload()
+            })
         }
 
         $scope.deleteImage = function(id, imageUri){
@@ -660,7 +674,9 @@
                 url: '/o/post/image/delete/' + id,
                 data: fd,
                 headers: {'Content-Type': undefined},
-            }).then($route.reload)
+            }).then(function(){
+                $window.location.reload()
+            })
         }
 
         $scope.updatePost = function(id){

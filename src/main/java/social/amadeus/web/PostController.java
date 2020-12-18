@@ -403,6 +403,7 @@ public class PostController {
 		hiddenPost.setDateHidden(utils.getCurrentDate());
 
 		postRepo.makeInvisible(hiddenPost);
+		postRepo.hide(Long.parseLong(id));
 
 		resp.put("success", true);
 		return gson.toJson(resp);
