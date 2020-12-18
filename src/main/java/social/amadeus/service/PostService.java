@@ -1,11 +1,13 @@
 package social.amadeus.service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import social.amadeus.common.Constants;
 import social.amadeus.common.SessionManager;
-import social.amadeus.common.Utilities;
+import social.amadeus.common.Utils;
 import social.amadeus.repository.AccountRepo;
 import social.amadeus.repository.FlyerRepo;
 import social.amadeus.repository.NotificationRepo;
@@ -14,14 +16,28 @@ import social.amadeus.model.*;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PostService {
 
     private static final Logger log = Logger.getLogger(PostService.class);
 
+    private static final String YOUTUBE_URL = "https://youtu.be";
+
+    private static final String YOUTUBE_EMBED_URL = "https://youtube.com/embed";
+
+    private static final String YOUTUBE_EMBED = "<iframe style=\"margin-left:-30px;\" width=\"465\" height=\"261\" src=\"{{URL}}\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>";
+
+    private static final Pattern urlPattern = Pattern.compile(
+            "(?:^|[\\W])((ht|f)tp(s?):\\/\\/|www\\.)"
+                    + "(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*"
+                    + "[\\p{Alnum}.,%_=?&#\\-+()\\[\\]\\*$~@!:/{};']*)",
+            Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+
 
     @Autowired
-    private Utilities utilities;
+    private Utils utilities;
 
     @Autowired
     private PostRepo postRepo;
@@ -39,6 +55,9 @@ public class PostService {
     private NotificationRepo notificationRepo;
 
     @Autowired
+    private NotificationService notificationService;
+
+    @Autowired
     private SessionManager sessionManager;
 
 
@@ -47,6 +66,182 @@ public class PostService {
         Account authdAccount = authService.getAccount();
         Post post = setPostData(postPre, authdAccount);
         return post;
+    }
+
+    public Post savePost(Post post, CommonsMultipartFile[] imageFiles, CommonsMultipartFile videoFile){
+
+        Account account = authService.getAccount();
+        post.setAccountId(account.getId());
+
+        List<String> imageUris = new ArrayList<>();
+
+        if(imageFiles != null &&
+                imageFiles.length > 0) {
+
+            for (CommonsMultipartFile imageFile : imageFiles){
+                String imageUri = utilities.write(imageFile, Constants.IMAGE_DIRECTORY);
+
+                if(imageUri.equals("")){
+                    utilities.deleteUploadedFile(imageUri);
+                }else{
+                    imageUris.add(imageUri);
+                }
+            }
+        }
+
+        if(videoFile != null  &&
+                !videoFile.isEmpty()) {
+
+            String videoFileUri = utilities.writeVideo(videoFile, Constants.VIDEO_DIRECTORY);
+
+            if(videoFileUri.equals("")){
+                utilities.deleteUploadedFile(videoFileUri);
+                post.setFailMessage("video upload issue, check format");
+            }else{
+                post.setVideoFileUri(videoFileUri);
+            }
+        }
+
+        if(post.getContent().contains("<style")){
+            post.setContent(post.getContent().replace("style", "") + "<h1>We caught a hacker</h1>");
+        }
+
+        if(post.getContent().contains("<script")){
+            post.setContent(post.getContent().replace("script", "") + "<h1>We caught a hacker</h1>");
+        }
+
+
+        if(post.getContent().contains("<iframe width=\"560\"")){
+            post.setContent(post.getContent().replace("<iframe width=\"560\"" , "<iframe style=\"margin-top:-15px; margin-left:-30px;\" width=\"490\""));
+        }
+
+
+        List<String> youtubes = new ArrayList<>();
+        if(post.getContent().contains(YOUTUBE_URL) &&
+                !post.getContent().contains("<iframe")) {
+
+            Matcher matcher = urlPattern.matcher(post.getContent());
+            while (matcher.find()) {
+                int urlStart = matcher.start(1);
+                int urlEnd = matcher.end();
+                String url = post.getContent().substring(urlStart, urlEnd);
+                if(url.contains(YOUTUBE_URL)){
+                    youtubes.add(url);
+                }
+            }
+        }
+
+        if(!youtubes.isEmpty()){
+            for(int n = 0; n < 1; n++){
+                String bad = youtubes.get(n);
+                String good = bad.replace(YOUTUBE_URL, YOUTUBE_EMBED_URL);
+                String better = StringUtils.stripEnd(good, ",");
+                String best = StringUtils.stripEnd(better, ".");
+                String refactor = StringUtils.stripEnd(best, "!");
+                String embed = YOUTUBE_EMBED.replace("{{URL}}", refactor);
+                post.setContent(post.getContent().replace(bad, embed));
+            }
+        }
+
+        long date = utilities.getCurrentDate();
+        post.setDatePosted(date);
+        post.setUpdateDate(date);
+
+        if(imageUris.size() == 0 &&
+                (post.getVideoFileUri() == null || post.getVideoFileUri().equals("")) &&
+                post.getContent().equals("")){
+            post.setFailMessage("everything is blank");
+            return post;
+        }
+
+        Post savedPost = postRepo.save(post);
+        accountRepo.savePermission(account.getId(), Constants.POST_MAINTENANCE  + savedPost.getId());
+        Post populatedPost = setPostData(savedPost, account);
+
+        for(String imageUri: imageUris){
+            PostImage postImage = new PostImage();
+            postImage.setPostId(populatedPost.getId());
+            postImage.setUri(imageUri);
+            postImage.setDate(date);
+            postRepo.saveImage(postImage);
+        }
+        populatedPost.setImageFileUris(imageUris);
+
+        return savedPost;
+    }
+
+
+    public Post updatePost(String id, Post post){
+        String permission = Constants.POST_MAINTENANCE  + id;
+        if(!authService.hasPermission(permission)) {
+            post.setFailMessage("requires permission");
+            return post;
+        }
+
+        if(post.getContent().contains("<style")){
+            post.setContent(post.getContent().replace("style", "") + "<h1>We caught a hacker</h1>");
+        }
+
+        if(post.getContent().contains("<script")){
+            post.setContent(post.getContent().replace("script", "") + "<h1>We caught a hacker</h1>");
+        }
+
+        List<String> youtubes = new ArrayList<String>();
+        if(post.getContent().contains(YOUTUBE_URL) &&
+                !post.getContent().contains("<iframe")) {
+
+            Matcher matcher = urlPattern.matcher(post.getContent());
+            while (matcher.find()) {
+                int urlStart = matcher.start(1);
+                int urlEnd = matcher.end();
+                String url = post.getContent().substring(urlStart, urlEnd);
+                if(url.contains(YOUTUBE_URL)){
+                    youtubes.add(url);
+                }
+            }
+        }
+
+        if(!youtubes.isEmpty()){
+            int max = youtubes.size() <= 4 ? youtubes.size() : 4;
+            for(int n = 0; n < 1; n++){
+                String bad = youtubes.get(n);
+                String good = bad.replace(YOUTUBE_URL, YOUTUBE_EMBED_URL);
+                String better = StringUtils.stripEnd(good, ",");
+                String best = StringUtils.stripEnd(better, ".");
+                String refactor = StringUtils.stripEnd(best, "!");
+                String embed = YOUTUBE_EMBED.replace("{{URL}}", refactor);
+                post.setContent(post.getContent().replace(bad, embed));
+            }
+        }
+
+        long date = utilities.getCurrentDate();
+        post.setUpdateDate(date);
+
+        postRepo.update(post);
+        return post;
+    }
+
+
+    public boolean deletePost(String id){
+        String permission = Constants.POST_MAINTENANCE  + id;
+        if(!authService.hasPermission(permission)) {
+            return false;
+        }
+
+        Post post = postRepo.get(Long.parseLong(id));
+        postRepo.hide(Long.parseLong(id));
+        return true;
+    }
+
+
+
+    public boolean deletePostImage(String id, String imageUri){
+        String permission = Constants.POST_MAINTENANCE  + id;
+        if(!authService.hasPermission(permission)) {
+            return false;
+        }
+        postRepo.deletePostImage(Long.parseLong(id), imageUri);
+        return true;
     }
 
 
@@ -74,7 +269,8 @@ public class PostService {
             postRepo.like(postLike);
 
             if(notification == null) {
-                createNotification(post.getAccountId(), authdAccount.getId(), Long.parseLong(id), true, false, false);
+                Notification notificationPre = notificationService.createNotification(post.getAccountId(), authdAccount.getId(), Long.parseLong(id), true, false, false);
+                notificationRepo.save(notificationPre);
             }
         }
 
@@ -85,19 +281,6 @@ public class PostService {
         return respData;
     }
 
-    private void createNotification(long postAccountId, long authenticatedAccountId, long postId, boolean liked, boolean shared, boolean commented){
-        Notification notification = new Notification();
-        notification.setDateCreated(utilities.getCurrentDate());
-
-        notification.setPostAccountId(postAccountId);
-        notification.setAuthenticatedAccountId(authenticatedAccountId);
-        notification.setPostId(postId);
-        notification.setLiked(liked);
-        notification.setShared(shared);
-        notification.setCommented(commented);
-
-        notificationRepo.save(notification);
-    }
 
     public List<Post> getUserActivity(Account profileAccount, Account authdAccount){
         List<Post> postsPre = postRepo.getUserPosts(profileAccount.getId());

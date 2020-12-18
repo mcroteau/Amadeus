@@ -427,7 +427,7 @@
             if(!$rootScope.gettingData) {
                 $http({
                     method: 'post',
-                    url: '/o/post/share',
+                    url: '/o/post/save',
                     data: fd,
                     headers: {'Content-Type': undefined},
                 }).then(function (response) {
@@ -573,7 +573,7 @@
             if(confirmed){
                 $rootScope.renderModal = true
 
-                $http.delete("/o/post/remove/" + id).then(function (response) {
+                $http.delete("/o/post/delete/" + id).then(function (response) {
                     // var id = response.data.post.id
                     // $scope.removePost(id, activityModel.get('memory'))
                     // $scope.removePost(id, activityModel.get('activities'))
@@ -657,7 +657,7 @@
             fd.append('imageUri', imageUri)
             $http({
                 method: 'post',
-                url: '/o/image/delete/' + id,
+                url: '/o/post/image/delete/' + id,
                 data: fd,
                 headers: {'Content-Type': undefined},
             }).then($route.reload)

@@ -8,7 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import social.amadeus.common.Constants;
-import social.amadeus.common.Utilities;
+import social.amadeus.common.Utils;
 import social.amadeus.repository.*;
 import social.amadeus.model.*;
 import social.amadeus.service.AuthService;
@@ -23,7 +23,7 @@ public class ActionController {
     private static final Logger log = Logger.getLogger(ActionController.class);
 
     @Autowired
-    private Utilities utilities;
+    private Utils utilities;
 
     @Autowired
     private AccountRepo accountRepo;

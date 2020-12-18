@@ -32,7 +32,7 @@
 		<jdbc:script location="classpath:create-db.sql" />
 	</jdbc:embedded-database>
 
-	<bean id="utilities" class="social.amadeus.common.Utilities"/>
+	<bean id="utilities" class="social.amadeus.common.Utils"/>
 
 	<bean id="emailService" class="social.amadeus.service.EmailService"/>
 	<bean id="phoneService" class="social.amadeus.service.PhoneService"/>

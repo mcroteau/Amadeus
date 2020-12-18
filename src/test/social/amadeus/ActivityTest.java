@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import social.amadeus.common.Constants;
-import social.amadeus.common.Utilities;
+import social.amadeus.common.Utils;
 import social.amadeus.repository.AccountRepo;
 import social.amadeus.repository.PostRepo;
 import social.amadeus.model.Account;
@@ -32,7 +32,7 @@ public class ActivityTest {
     private static final Logger log = Logger.getLogger(ActivityTest.class);
 
     @Autowired
-    private Utilities utilities;
+    private Utils utilities;
 
     @Autowired
     private PostRepo postRepo;

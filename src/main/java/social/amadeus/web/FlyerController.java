@@ -8,7 +8,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import social.amadeus.repository.FlyerRepo;
 import social.amadeus.common.Constants;
-import social.amadeus.common.Utilities;
+import social.amadeus.common.Utils;
 import social.amadeus.repository.AccountRepo;
 import social.amadeus.model.Account;
 import social.amadeus.model.Flyer;
@@ -23,7 +23,7 @@ import java.util.List;
 public class FlyerController {
 
     @Autowired
-    private Utilities utilities;
+    private Utils utilities;
 
     @Autowired
     private FlyerRepo flyerRepo;

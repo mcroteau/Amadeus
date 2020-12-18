@@ -15,7 +15,7 @@ import social.amadeus.jobs.AdJob;
 import social.amadeus.jobs.PublishJob;
 import social.amadeus.model.*;
 import social.amadeus.common.Constants;
-import social.amadeus.common.Utilities;
+import social.amadeus.common.Utils;
 
 import javax.annotation.PostConstruct;
 
@@ -42,7 +42,7 @@ public class AppStartup {
 	public FlyerRepo flyerRepo;
 
 	@Autowired
-	public Utilities utilities;
+	public Utils utilities;
 
 	@Autowired
 	private Environment env;

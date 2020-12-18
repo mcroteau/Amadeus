@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import social.amadeus.common.Constants;
-import social.amadeus.common.Utilities;
+import social.amadeus.common.Utils;
 import social.amadeus.model.Account;
 import social.amadeus.model.Message;
 import social.amadeus.model.OutputMessage;
@@ -26,7 +26,7 @@ public class MessageController {
     private Gson gson = new Gson();
 
     @Autowired
-    private Utilities utilities;
+    private Utils utilities;
 
     @Autowired
     private MessageRepo messageRepo;
