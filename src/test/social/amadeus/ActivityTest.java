@@ -32,7 +32,7 @@ public class ActivityTest {
     private static final Logger log = Logger.getLogger(ActivityTest.class);
 
     @Autowired
-    private Utils utilities;
+    private Utils utils;
 
     @Autowired
     private PostRepo postRepo;
@@ -54,10 +54,10 @@ public class ActivityTest {
     @Before
     public void before(){
         authdAccount = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
-        Post postUno = TestUtils.getPost(authdAccount.getId(), utilities.getPreviousDay(3));
-        Post postDos = TestUtils.getPost(authdAccount.getId(), utilities.getPreviousDay(1));
-        Post postTres = TestUtils.getPost(authdAccount.getId(), utilities.getPreviousDay(21));
-        Post postQuatro = TestUtils.getPost(authdAccount.getId(), utilities.getPreviousDay(9));
+        Post postUno = TestUtils.getPost(authdAccount.getId(), utils.getPreviousDay(3));
+        Post postDos = TestUtils.getPost(authdAccount.getId(), utils.getPreviousDay(1));
+        Post postTres = TestUtils.getPost(authdAccount.getId(), utils.getPreviousDay(21));
+        Post postQuatro = TestUtils.getPost(authdAccount.getId(), utils.getPreviousDay(9));
 
         savedPostUno = postRepo.save(postUno);
         postRepo.publish(savedPostUno.getId());//uno
@@ -134,7 +134,7 @@ public class ActivityTest {
         postShare.setAccountId(authdAccount.getId());
         postShare.setComment("Mock");
         postShare.setPostId(savedPostUno.getId());
-        postShare.setDateShared(utilities.getCurrentDate());
+        postShare.setDateShared(utils.getCurrentDate());
         savedPostShare = postRepo.sharePost(postShare);
         List<Post> activity = getActivities();
         assertEquals(3, activity.size());

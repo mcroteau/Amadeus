@@ -23,7 +23,7 @@ public class ActionController {
     private static final Logger log = Logger.getLogger(ActionController.class);
 
     @Autowired
-    private Utils utilities;
+    private Utils utils;
 
     @Autowired
     private AccountRepo accountRepo;
@@ -71,7 +71,7 @@ public class ActionController {
             Resource resource = new Resource();
             resource.setUri(uri);
             resource.setAccountId(authService.getAccount().getId());
-            resource.setDateAdded(utilities.getCurrentDate());
+            resource.setDateAdded(utils.getCurrentDate());
             actionRepo.save(resource);
         }
 
@@ -79,7 +79,7 @@ public class ActionController {
         ActionLike actionLike = new ActionLike();
         actionLike.setResourceId(savedResource.getId());
         actionLike.setAccountId(authService.getAccount().getId());
-        actionLike.setDateLiked(utilities.getCurrentDate());
+        actionLike.setDateLiked(utils.getCurrentDate());
 
         if(!actionRepo.liked(actionLike))
             actionRepo.like(actionLike);
@@ -104,7 +104,7 @@ public class ActionController {
             Resource r = new Resource();
             r.setUri(uri);
             r.setAccountId(authService.getAccount().getId());
-            r.setDateAdded(utilities.getCurrentDate());
+            r.setDateAdded(utils.getCurrentDate());
             actionRepo.save(r);
         }
 
@@ -113,7 +113,7 @@ public class ActionController {
         Post post = new Post();
         post.setAccountId(authService.getAccount().getId());
         post.setContent("<p class=\"post-comment\" style=\"white-space: pre-line\">" + uri + "<br/>" + comment + "</p>");
-        post.setDatePosted(utilities.getCurrentDate());
+        post.setDatePosted(utils.getCurrentDate());
         Post savedPost = postRepo.save(post);
 
         accountRepo.savePermission(authService.getAccount().getId(), Constants.POST_MAINTENANCE + savedPost.getId());
@@ -123,7 +123,7 @@ public class ActionController {
         actionShare.setResourceId(savedResource.getId());
         actionShare.setPostId(savedPost.getId());
         actionShare.setAccountId(authService.getAccount().getId());
-        actionShare.setDateShared(utilities.getCurrentDate());
+        actionShare.setDateShared(utils.getCurrentDate());
         actionRepo.share(actionShare);
 
         model.addAttribute("message", "Successfully shared!");

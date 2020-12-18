@@ -7,11 +7,11 @@ import social.amadeus.model.Notification;
 public class NotificationService {
 
     @Autowired
-    private Utils utilities;
+    private Utils utils;
 
     public Notification createNotification(long postAccountId, long authenticatedAccountId, long postId, boolean liked, boolean shared, boolean commented){
         Notification notification = new Notification();
-        notification.setDateCreated(utilities.getCurrentDate());
+        notification.setDateCreated(utils.getCurrentDate());
 
         notification.setPostAccountId(postAccountId);
         notification.setAuthenticatedAccountId(authenticatedAccountId);

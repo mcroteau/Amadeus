@@ -37,7 +37,7 @@ public class PostController {
 	private AccountRepo accountRepo;
 
 	@Autowired
-	private Utils utilities;
+	private Utils utils;
 
 	@Autowired
 	private NotificationRepo notificationRepo;
@@ -69,7 +69,7 @@ public class PostController {
 		}
 
 		Account authdAccount = authService.getAccount();
-		req.getSession().setAttribute(Constants.ACTIVITY_REQUEST_TIME, utilities.getCurrentDate());
+		req.getSession().setAttribute(Constants.ACTIVITY_REQUEST_TIME, utils.getCurrentDate());
 		Map<String, Object> activityData = postService.getActivity(authdAccount);
 
 		return gson.toJson(activityData);
@@ -144,7 +144,7 @@ public class PostController {
 		}
 
 		Account account = authService.getAccount();
-		long dateShared = utilities.getCurrentDate();
+		long dateShared = utils.getCurrentDate();
 
 		PostShare postShare = new PostShare();
 		postShare.setAccountId(account.getId());
@@ -244,7 +244,7 @@ public class PostController {
 		}
 
 		Account account = authService.getAccount();
-		long date = utilities.getCurrentDate();
+		long date = utils.getCurrentDate();
 
 		if(comment.getComment().equals("")){
 			data.put("error", "comment is blank");
@@ -294,7 +294,7 @@ public class PostController {
 		}
 
 		Account account = authService.getAccount();
-		long date = utilities.getCurrentDate();
+		long date = utils.getCurrentDate();
 
 		if(comment.getComment().equals("")){
 			data.put("error", "comment is blank");
@@ -399,7 +399,7 @@ public class PostController {
 		HiddenPost hiddenPost = new HiddenPost();
 		hiddenPost.setAccountId(account.getId());
 		hiddenPost.setPostId(Long.parseLong(id));
-		hiddenPost.setDateHidden(utilities.getCurrentDate());
+		hiddenPost.setDateHidden(utils.getCurrentDate());
 
 		postRepo.makeInvisible(hiddenPost);
 
@@ -429,7 +429,7 @@ public class PostController {
 		PostFlag postFlag = new PostFlag();
 		postFlag.setPostId(post.getId());
 		postFlag.setAccountId(authService.getAccount().getId());
-		postFlag.setDateFlagged(utilities.getCurrentDate());
+		postFlag.setDateFlagged(utils.getCurrentDate());
 		postFlag.setShared(shared);
 
 		postRepo.flagPost(postFlag);
@@ -498,7 +498,7 @@ public class PostController {
 		List<PostImage> postImages = postRepo.getImages(post.getId());
 		for(PostImage postImage : postImages){
 			postRepo.deletePostImage(postImage.getId());
-			utilities.deleteUploadedFile(postImage.getUri());
+			utils.deleteUploadedFile(postImage.getUri());
 		}
 
 		return "redirect:/posts/flagged";
@@ -555,10 +555,10 @@ public class PostController {
 					uploadedImageFiles.length > 0) {
 
 				for (CommonsMultipartFile imageFile : uploadedImageFiles){
-					String imageUri = utilities.write(imageFile, Constants.IMAGE_DIRECTORY);
+					String imageUri = utils.write(imageFile, Constants.IMAGE_DIRECTORY);
 
 					if(imageUri.equals("")){
-						utilities.deleteUploadedFile(imageUri);
+						utils.deleteUploadedFile(imageUri);
 					}
 					else{
 						imageUris.add(imageUri);
@@ -572,7 +572,7 @@ public class PostController {
 				PostImage postImage = new PostImage();
 				postImage.setPostId(post.getId());
 				postImage.setUri(imageUri);
-				postImage.setDate(utilities.getCurrentDate());
+				postImage.setDate(utils.getCurrentDate());
 				postRepo.saveImage(postImage);
 			}
 

@@ -37,7 +37,7 @@ public class PostService {
 
 
     @Autowired
-    private Utils utilities;
+    private Utils utils;
 
     @Autowired
     private PostRepo postRepo;
@@ -79,10 +79,10 @@ public class PostService {
                 imageFiles.length > 0) {
 
             for (CommonsMultipartFile imageFile : imageFiles){
-                String imageUri = utilities.write(imageFile, Constants.IMAGE_DIRECTORY);
+                String imageUri = utils.write(imageFile, Constants.IMAGE_DIRECTORY);
 
                 if(imageUri.equals("")){
-                    utilities.deleteUploadedFile(imageUri);
+                    utils.deleteUploadedFile(imageUri);
                 }else{
                     imageUris.add(imageUri);
                 }
@@ -92,10 +92,10 @@ public class PostService {
         if(videoFile != null  &&
                 !videoFile.isEmpty()) {
 
-            String videoFileUri = utilities.writeVideo(videoFile, Constants.VIDEO_DIRECTORY);
+            String videoFileUri = utils.writeVideo(videoFile, Constants.VIDEO_DIRECTORY);
 
             if(videoFileUri.equals("")){
-                utilities.deleteUploadedFile(videoFileUri);
+                utils.deleteUploadedFile(videoFileUri);
                 post.setFailMessage("video upload issue, check format");
             }else{
                 post.setVideoFileUri(videoFileUri);
@@ -143,7 +143,7 @@ public class PostService {
             }
         }
 
-        long date = utilities.getCurrentDate();
+        long date = utils.getCurrentDate();
         post.setDatePosted(date);
         post.setUpdateDate(date);
 
@@ -214,7 +214,7 @@ public class PostService {
             }
         }
 
-        long date = utilities.getCurrentDate();
+        long date = utils.getCurrentDate();
         post.setUpdateDate(date);
 
         postRepo.update(post);
@@ -264,7 +264,7 @@ public class PostService {
                 notificationRepo.delete(notification.getId());
             }
         }else{
-            long dateLiked = utilities.getCurrentDate();
+            long dateLiked = utils.getCurrentDate();
             postLike.setDateLiked(dateLiked);
             postRepo.like(postLike);
 
@@ -301,8 +301,8 @@ public class PostService {
 
     public Map<String, Object> getActivity(Account authdAccount){
 
-        long start = utilities.getPreviousDay(14);
-        long end = utilities.getCurrentDate();
+        long start = utils.getPreviousDay(14);
+        long end = utils.getCurrentDate();
 
         List<Post> postsPre = postRepo.getActivity(start, end, authdAccount.getId());
         List<Post> posts = populatePostData(postsPre, authdAccount);

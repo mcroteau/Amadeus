@@ -23,7 +23,7 @@ import java.util.List;
 public class FlyerController {
 
     @Autowired
-    private Utils utilities;
+    private Utils utils;
 
     @Autowired
     private FlyerRepo flyerRepo;
@@ -68,7 +68,7 @@ public class FlyerController {
         }
 
         if(!flyerImage.isEmpty()){
-            String imageUri = utilities.write(flyerImage, Constants.IMAGE_DIRECTORY);
+            String imageUri = utils.write(flyerImage, Constants.IMAGE_DIRECTORY);
             flyer.setImageUri(imageUri);
         }
 
@@ -119,7 +119,7 @@ public class FlyerController {
         String permission = Constants.FLYER_MAINTENANCE + id;
         if(authService.hasPermission(permission)) {
 
-            long date = utilities.getCurrentDate();
+            long date = utils.getCurrentDate();
 
             Flyer flyer = flyerRepo.get(Long.parseLong(id));
             flyer.setStartDate(date);
@@ -172,7 +172,7 @@ public class FlyerController {
 
             if(flyerImage != null &&
                     flyerImage.getSize() > 0){
-                String imageUri = utilities.write(flyerImage, Constants.IMAGE_DIRECTORY);
+                String imageUri = utils.write(flyerImage, Constants.IMAGE_DIRECTORY);
                 flyer.setImageUri(imageUri);
             }
             flyerRepo.update(flyer);

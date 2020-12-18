@@ -25,7 +25,7 @@ public class AppController {
 	private static final Logger log = Logger.getLogger(AppController.class);
 
 	@Autowired
-	private Utils utilities;
+	private Utils utils;
 
 	@Autowired
 	private PhoneService phoneService;

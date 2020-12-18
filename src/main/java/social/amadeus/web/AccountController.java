@@ -39,7 +39,7 @@ public class AccountController {
 	private Parakeet parakeet;
 
 	@Autowired
-	private Utils utilities;
+	private Utils utils;
 
 	@Autowired
 	private AccountRepo accountRepo;
@@ -204,9 +204,9 @@ public class AccountController {
 
 			if(uploadedProfileImage != null &&
 					uploadedProfileImage.getSize() > 0) {
-				imageFileUri = utilities.write(uploadedProfileImage, Constants.PROFILE_IMAGE_DIRECTORY);
+				imageFileUri = utils.write(uploadedProfileImage, Constants.PROFILE_IMAGE_DIRECTORY);
 				if(imageFileUri.equals("")){
-					utilities.deleteUploadedFile(imageFileUri);
+					utils.deleteUploadedFile(imageFileUri);
 					redirect.addFlashAttribute("account", account);
 					redirect.addFlashAttribute("error", "Something went wrong while processing image. PNG, JPG or GIF only.");
 					return "redirect:/account/edit/" + id;
@@ -215,7 +215,7 @@ public class AccountController {
 
 				if(!storedAccount.getImageUri().equals(Constants.DEFAULT_IMAGE_URI) &&
 						!storedAccount.getImageUri().equals(Constants.FRESCO)) {
-					utilities.deleteUploadedFile(storedAccount.getImageUri());
+					utils.deleteUploadedFile(storedAccount.getImageUri());
 				}
 			}
 
@@ -285,7 +285,7 @@ public class AccountController {
 				authService.hasPermission(permission)){
 			
 			if(!account.getPassword().equals("")){
-				String password = utilities.hash(account.getPassword());
+				String password = utils.hash(account.getPassword());
 				account.setPassword(password);
 				accountRepo.updatePassword(account);
 			}
@@ -318,7 +318,7 @@ public class AccountController {
 		}
 
 		account.setDisabled(true);
-		account.setDateDisabled(utilities.getCurrentDate());
+		account.setDateDisabled(utils.getCurrentDate());
 		accountRepo.suspend(account);
 
 		redirect.addFlashAttribute("message", "Successfully disabled account");
@@ -347,7 +347,7 @@ public class AccountController {
 			return "redirect:/signup?uri=" + uri;
 		}
 
-		if(!utilities.validEmail(account.getUsername())){
+		if(!utils.validEmail(account.getUsername())){
 			redirect.addFlashAttribute("account", account);
 			redirect.addFlashAttribute("error", "Username must be a valid email.");
 			return "redirect:/signup?uri=" + uri;
@@ -379,7 +379,7 @@ public class AccountController {
 		}
 
 		String password = account.getPassword();
-		String passwordHashed = utilities.hash(account.getPassword());
+		String passwordHashed = utils.hash(account.getPassword());
 
         try{
 
@@ -449,7 +449,7 @@ public class AccountController {
 			return gson.toJson(data);
 		}
 
-		if(!utilities.validEmail(account.getUsername())){
+		if(!utils.validEmail(account.getUsername())){
 			data.put("error", "Username must be a valid email");
 		}
 
@@ -469,7 +469,7 @@ public class AccountController {
 			data.put("error", "Passwords must be at least 7 characters long.");
 		}
 
-		String passwordHashed = utilities.hash(account.getPassword());
+		String passwordHashed = utils.hash(account.getPassword());
 
         try{
 
@@ -552,7 +552,7 @@ public class AccountController {
 			ProfileView view = new ProfileView.Builder()
 					.profile(account.getId())
 					.viewer(authenticatedAccount.getId())
-					.date(utilities.getCurrentDate())
+					.date(utils.getCurrentDate())
 					.build();
 
 			accountRepo.incrementViews(view);
@@ -580,7 +580,7 @@ public class AccountController {
 				return ("redirect:/account/reset");
 			}
 
-			String resetUuid = utilities.generateRandomString(13);
+			String resetUuid = utils.generateRandomString(13);
 			account.setUuid(resetUuid);
 			accountRepo.updateUuid(account);
 
@@ -641,7 +641,7 @@ public class AccountController {
 		}
 
 		if(!account.getPassword().equals("")){
-			String password = utilities.hash(account.getPassword());
+			String password = utils.hash(account.getPassword());
 			account.setPassword(password);
 			accountRepo.updatePassword(account);
 		}
@@ -675,7 +675,7 @@ public class AccountController {
 
 	private void preloadConnections(Account authenticatedAccount){
 		Account adminAccount = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
-		friendRepo.saveConnection(adminAccount.getId(), authenticatedAccount.getId(), utilities.getCurrentDate());
+		friendRepo.saveConnection(adminAccount.getId(), authenticatedAccount.getId(), utils.getCurrentDate());
 	}
 
 
@@ -698,7 +698,7 @@ public class AccountController {
 		ProfileLike profileLike = new ProfileLike();
 		profileLike.setLikerId(account.getId());
 		profileLike.setProfileId(Long.parseLong(id));
-		profileLike.setDateLiked(utilities.getCurrentDate());
+		profileLike.setDateLiked(utils.getCurrentDate());
 
 		boolean result = false;
 
@@ -749,7 +749,7 @@ public class AccountController {
 		AccountBlock blok = new AccountBlock.Builder()
 				.forPerson(Long.parseLong(id))
 				.byBlocker(account.getId())
-				.atDateBlocked(utilities.getCurrentDate())
+				.atDateBlocked(utils.getCurrentDate())
 				.build();
 
 		if(accountRepo.blocked(blok)){
@@ -784,7 +784,7 @@ public class AccountController {
 		long newestCount = 0;
 		if (request.getSession().getAttribute(Constants.ACTIVITY_REQUEST_TIME) != null) {
 			long start = (Long) request.getSession().getAttribute(Constants.ACTIVITY_REQUEST_TIME);
-			long end = utilities.getCurrentDate();
+			long end = utils.getCurrentDate();
 			newestCount = postRepo.getNewestCount(start, end, account.getId());
 		}
 
@@ -864,29 +864,29 @@ public class AccountController {
 
 		Account account = authService.getAccount();
 
-		long end = utilities.getCurrentDate();
+		long end = utils.getCurrentDate();
 
 		List<String> labels = new ArrayList<String>();
 		List<Long> counts = new ArrayList<Long>();
 		;
 		int day = 31;
-		long currentDate = utilities.getPreviousDay(day);
+		long currentDate = utils.getPreviousDay(day);
 
 		for(int n = 32; n != 0; n--){
-			long date = utilities.getPreviousDay(n);
+			long date = utils.getPreviousDay(n);
 			long count = accountRepo.getViews(account, date, currentDate);
 
-			String datef = utilities.getGraphDate(n);
+			String datef = utils.getGraphDate(n);
 			labels.add(datef);
 			counts.add(count);
 
 			day--;
-			currentDate = utilities.getPreviousDay(day);
+			currentDate = utils.getPreviousDay(day);
 		}
 
 
-		long weekCount = accountRepo.getViews(account, utilities.getPreviousDay(7), end);
-		long monthCount = accountRepo.getViews(account, utilities.getPreviousDay(31), end);
+		long weekCount = accountRepo.getViews(account, utils.getPreviousDay(7), end);
+		long monthCount = accountRepo.getViews(account, utils.getPreviousDay(31), end);
 		long allTimeCount = accountRepo.getAllViews(account);
 
 		viewsData.put("labels", labels);
@@ -909,7 +909,7 @@ public class AccountController {
 		}
 
 		Account account = accountRepo.get(Long.parseLong(id));
-		account.setDateDisabled(utilities.getCurrentDate());
+		account.setDateDisabled(utils.getCurrentDate());
 		accountRepo.suspend(account);
 
 		model.addAttribute("message", "Account suspended.");
