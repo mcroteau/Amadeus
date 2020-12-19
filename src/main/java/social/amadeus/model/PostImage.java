@@ -3,13 +3,10 @@ package social.amadeus.model;
 public class PostImage {
 
     long id;
-
     long postId;
-
     long accountId;
-
     String uri;
-
+    String fileName;
     long date;
 
     public long getId() {
@@ -42,6 +39,14 @@ public class PostImage {
 
     public void setUri(String uri) {
         this.uri = uri;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     public long getDate() {

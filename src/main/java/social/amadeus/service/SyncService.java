@@ -8,8 +8,10 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.PutObjectResult;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
+import social.amadeus.common.Constants;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,15 +27,12 @@ public class SyncService {
     @Value("${digital.ocean.secret}")
     private String secret;
 
-    private static final String DO_REGION = "sfo2";
-    private static final String DO_ENDPOINT = "rad.sfo2.digitaloceanspaces.com";
-
-    public boolean send(String name, String bucket, InputStream stream){
+    public PutObjectResult send(String name, String bucket, InputStream stream){
         try {
-            log.info(key  + " : " + secret);
+
             BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(key, secret);
             AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
-                    .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(DO_ENDPOINT, DO_REGION))
+                    .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(Constants.DO_ENDPOINT, Constants.DO_REGION))
                     .withCredentials(new AWSStaticCredentialsProvider(basicAWSCredentials)).build();
 
             ObjectMetadata metadata = new ObjectMetadata();
@@ -42,14 +41,12 @@ public class SyncService {
             PutObjectRequest obj = new PutObjectRequest("", name, stream, metadata)
                     .withCannedAcl(CannedAccessControlList.PublicRead);
 
-            s3Client.putObject(obj);
-
-            return true;
+            return s3Client.putObject(obj);
 
         }catch(Exception e){
             e.printStackTrace();
         }
-
-        return false;
+        return null;
     }
+
 }

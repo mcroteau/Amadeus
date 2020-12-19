@@ -1,5 +1,6 @@
 package social.amadeus.service;
 
+import com.amazonaws.services.s3.model.PutObjectResult;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.ocpsoft.prettytime.PrettyTime;
@@ -14,6 +15,7 @@ import social.amadeus.repository.NotificationRepo;
 import social.amadeus.repository.PostRepo;
 import social.amadeus.model.*;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -58,6 +60,9 @@ public class PostService {
     private NotificationService notificationService;
 
     @Autowired
+    private SyncService syncService;
+
+    @Autowired
     private SessionManager sessionManager;
 
 
@@ -70,34 +75,32 @@ public class PostService {
 
     public Post savePost(Post post, Account authdAccount, CommonsMultipartFile[] imageFiles, CommonsMultipartFile videoFile){
 
-        post.setAccountId(authdAccount.getId());
 
-        List<String> imageUris = new ArrayList<>();
+        Map<String, String> imageLookup = new HashMap<>();
 
         if(imageFiles != null &&
                 imageFiles.length > 0) {
-
-            for (CommonsMultipartFile imageFile : imageFiles){
-                String imageUri = utils.write(imageFile, Constants.IMAGE_DIRECTORY);
-
-                if(imageUri.equals("")){
-                    utils.deleteUploadedFile(imageUri);
-                }else{
-                    imageUris.add(imageUri);
-                }
-            }
+            synchronizeImages(imageFiles, imageLookup);
         }
 
         if(videoFile != null  &&
                 !videoFile.isEmpty()) {
 
-            String videoFileUri = utils.writeVideo(videoFile, Constants.VIDEO_DIRECTORY);
+            try{
+                String videoFileName = utils.generateFileName(videoFile);
 
-            if(videoFileUri.equals("")){
-                utils.deleteUploadedFile(videoFileUri);
-                post.setFailMessage("video upload issue, check format");
-            }else{
-                post.setVideoFileUri(videoFileUri);
+                String[] contentTypes = new String[]{"video/mp4"};
+                List<String> list = Arrays.asList(contentTypes);
+
+                if(!utils.correctMimeType(list, videoFile)){
+                    post.setFailMessage("Video file must be mp4.");
+                }else{
+                    syncService.send(videoFileName, "", videoFile.getInputStream());
+                    post.setVideoFileUri(Constants.HTTPS + Constants.DO_ENDPOINT + "/" + videoFileName);
+                    post.setVideoFileName(videoFileName);
+                }
+            }catch(IOException ex){
+                ex.printStackTrace();
             }
         }
 
@@ -142,31 +145,38 @@ public class PostService {
             }
         }
 
-        long date = utils.getCurrentDate();
-        post.setDatePosted(date);
-        post.setUpdateDate(date);
 
-        if(imageUris.size() == 0 &&
+        if(imageLookup.size() == 0 &&
                 (post.getVideoFileUri() == null || post.getVideoFileUri().equals("")) &&
                 post.getContent().equals("")){
             post.setFailMessage("everything is blank");
             return post;
         }
 
+        long date = utils.getCurrentDate();
+        post.setDatePosted(date);
+        post.setUpdateDate(date);
+        post.setAccountId(authdAccount.getId());
+
         Post savedPost = postRepo.save(post);
         accountRepo.savePermission(authdAccount.getId(), Constants.POST_MAINTENANCE  + savedPost.getId());
         Post populatedPost = setPostData(savedPost, authdAccount);
 
-        for(String imageUri: imageUris){
-            PostImage postImage = new PostImage();
-            postImage.setPostId(populatedPost.getId());
-            postImage.setUri(imageUri);
-            postImage.setDate(date);
-            postRepo.saveImage(postImage);
-        }
+        List<String> imageUris = savePostImages(imageLookup, populatedPost);
+
+        //for the view yo!
         populatedPost.setImageFileUris(imageUris);
 
         return savedPost;
+    }
+
+    public PostImage getPostImage(String fileName, String imageUri, Post populatedPost){
+        PostImage postImage = new PostImage();
+        postImage.setPostId(populatedPost.getId());
+        postImage.setUri(imageUri);
+        postImage.setFileName(fileName);
+        postImage.setDate(utils.getCurrentDate());
+        return postImage;
     }
 
 
@@ -325,6 +335,34 @@ public class PostService {
         data.put("femsfellas", femalesMales);
 
         return data;
+    }
+
+    public List<String> savePostImages(Map<String, String> imageLookup, Post populatedPost){
+        List<String> imageUris = new ArrayList<>();
+        for (Map.Entry<String,String> image : imageLookup.entrySet()){
+            PostImage postImage = getPostImage(image.getKey(), image.getValue(), populatedPost);
+            postRepo.saveImage(postImage);
+            imageUris.add(image.getValue());
+        }
+        return imageUris;
+    }
+
+
+    public Map<String, String> synchronizeImages(CommonsMultipartFile[] imageFiles, Map<String, String> imageLookup) {
+
+        for (CommonsMultipartFile imageFile : imageFiles){
+            try {
+                String fileName = utils.generateFileName(imageFile);
+                String imageUri = Constants.HTTPS + Constants.DO_ENDPOINT + "/" + fileName;
+
+                syncService.send(fileName, "", imageFile.getInputStream());
+                imageLookup.put(fileName, imageUri);
+            }catch(IOException ex){
+                ex.printStackTrace();
+            }
+        }
+
+        return imageLookup;
     }
 
 

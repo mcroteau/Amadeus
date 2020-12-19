@@ -33,6 +33,7 @@ create table posts(
 	image_file_uri text,
 	music_file_uri text,
 	video_file_uri text,
+	video_file_name character varying(154),
 	hidden boolean,
 	flagged boolean,
 	published boolean,
@@ -124,6 +125,7 @@ create table post_images(
 	id bigint PRIMARY KEY AUTO_INCREMENT,
 	post_id bigint NOT NULL REFERENCES posts(id),
 	uri text,
+	file_name character varying(154),
     date_uploaded bigint NOT NULL
 );
 

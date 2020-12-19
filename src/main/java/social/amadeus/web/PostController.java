@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import java.io.IOException;
 import java.util.*;
 
 import social.amadeus.common.Constants;
@@ -21,6 +22,7 @@ import social.amadeus.model.*;
 import social.amadeus.service.AuthService;
 import social.amadeus.service.NotificationService;
 import social.amadeus.service.PostService;
+import social.amadeus.service.SyncService;
 
 
 @Controller
@@ -50,6 +52,9 @@ public class PostController {
 
 	@Autowired
 	private NotificationService notificationService;
+
+	@Autowired
+	private SyncService syncService;
 
 
 	@GetMapping(value="/post/{id}", produces="application/json")
@@ -531,7 +536,7 @@ public class PostController {
 	public @ResponseBody String share(ModelMap model,
 									  HttpServletRequest request,
 									  final RedirectAttributes redirect,
-									  @RequestParam(value="imageFiles", required = false) CommonsMultipartFile[] uploadedImageFiles,
+									  @RequestParam(value="imageFiles", required = false) CommonsMultipartFile[] imageFiles,
 									  @PathVariable String id) {
 
 
@@ -547,32 +552,14 @@ public class PostController {
 		String permission = Constants.POST_MAINTENANCE  + id;
 		if(authService.hasPermission(permission)) {
 
-			List<String> imageUris = new ArrayList<String>();
-
-			if(uploadedImageFiles != null &&
-					uploadedImageFiles.length > 0) {
-
-				for (CommonsMultipartFile imageFile : uploadedImageFiles){
-					String imageUri = utils.write(imageFile, Constants.IMAGE_DIRECTORY);
-
-					if(imageUri.equals("")){
-						utils.deleteUploadedFile(imageUri);
-					}
-					else{
-						imageUris.add(imageUri);
-					}
-				}
+			Map<String, String> imageLookup = new HashMap<>();
+			if(imageFiles != null &&
+					imageFiles.length > 0) {
+				postService.synchronizeImages(imageFiles, imageLookup);
 			}
 
 			Post post = postRepo.get(Long.parseLong(id));
-
-			for(String imageUri: imageUris){
-				PostImage postImage = new PostImage();
-				postImage.setPostId(post.getId());
-				postImage.setUri(imageUri);
-				postImage.setDate(utils.getCurrentDate());
-				postRepo.saveImage(postImage);
-			}
+			postService.savePostImages(imageLookup, post);
 
 			response.put("success", true);
 

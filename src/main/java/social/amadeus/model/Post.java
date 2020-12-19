@@ -26,6 +26,7 @@ public class Post {
 	List<String> musicFileUris;
 	String musicFileUri;
     String videoFileUri;
+	String videoFileName;
     String status;
 	List<PostComment> comments;
 	List<PostShareComment> shareComments;
@@ -199,6 +200,14 @@ public class Post {
     public void setVideoFileUri(String videoFileUri) {
         this.videoFileUri = videoFileUri;
     }
+
+	public String getVideoFileName() {
+		return videoFileName;
+	}
+
+	public void setVideoFileName(String videoFileName) {
+		this.videoFileName = videoFileName;
+	}
 
 	public String getStatus() {
 		return status;

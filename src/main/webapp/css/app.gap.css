@@ -2668,8 +2668,8 @@ p{
 	-webkit-border-radius: 34px;
 }
 .activity-status{
-    height:12px;
-    width:12px;
+    height:7px;
+    width:7px;
     background:transparent;
     display:inline-block;
     position:absolute;
@@ -2680,8 +2680,8 @@ p{
 	-webkit-border-radius: 7px;
 }
 .user-status{
-    height:9px;
-    width:9px;
+    height:7px;
+    width:7px;
     top:7px;
     right:7px;
     position:absolute;
@@ -3875,16 +3875,18 @@ h1.gray span{
 
 .delete-image{
     top:0px;
-    right:-10px;
+    right:-5px;
     color:#fff;
+    font-size: 13px !important;
     display:none;
     position:absolute;
     text-align: center;
     text-decoration:none;
-    padding:0px 9px;
+    padding: 0px 4px 2px 4px;
+    line-height: 1.0em;
     z-index:1002;
     border-radius:25px;
-    font-family:Roboto-Bold !important;
+    font-family:Roboto-Medium !important;
     border-radius:15px;
     -moz-border-radius:15px;
     -webkit-border-radius:15px;

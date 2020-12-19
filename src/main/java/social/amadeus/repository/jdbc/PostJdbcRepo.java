@@ -192,16 +192,15 @@ public class PostJdbcRepo implements PostRepo {
 
 
 	public Post save(Post post){
-		String sql = "insert into posts (account_id, content, video_file_uri, date_posted, update_date, hidden, flagged, published ) values ( ?, ?, ?, ?, ?, ?, ?, ? )";
+		String sql = "insert into posts (account_id, content, video_file_uri, video_file_name, date_posted, update_date, hidden, flagged, published ) values ( ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 		jdbcTemplate.update(sql, new Object[] { 
-			post.getAccountId(), post.getContent(), post.getVideoFileUri(), post.getDatePosted(), post.getUpdateDate(), post.isHidden(), false, false
+			post.getAccountId(), post.getContent(), post.getVideoFileUri(), post.getVideoFileName(), post.getDatePosted(), post.getUpdateDate(), post.isHidden(), false, false
 		});
 		long id = id();
 		Post savedPost = get(id);
 		
 		return savedPost;
 	}
-
 
 	public boolean update(Post post) {
 		String sql = "update posts set content = ?, update_date = ? where id = ?";
@@ -500,9 +499,9 @@ public class PostJdbcRepo implements PostRepo {
 	}
 
 	public boolean saveImage(PostImage postImage) {
-		String sql = "insert into post_images (post_id, uri, date_uploaded) values ( ?, ?, ? )";
+		String sql = "insert into post_images (post_id, uri, file_name, date_uploaded) values ( ?, ?, ?, ? )";
 		jdbcTemplate.update(sql, new Object[] {
-			postImage.getPostId(), postImage.getUri(), postImage.getDate()
+			postImage.getPostId(), postImage.getUri(), postImage.getFileName(), postImage.getDate()
 		});
 		return true;
 	}

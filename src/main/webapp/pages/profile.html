@@ -132,16 +132,16 @@
 
                             <div ng-repeat="imageUri in post.imageFileUris" class="image-post-container" data-image-uri="{{imageUri}}" style="position:relative;">
                                 <a ng-click="deleteImage(post.id, imageUri)" ng-href="javascript:" ng-if="post.postEditable" class="delete-image modern edit-fade-in" data-uri="{{imageUri}}" data-id="{{post.id}}">x</a>
-                                <a ng-if="!post.advertisement" href="/o/{{imageUri}}" target="_blank">
-                                    <img ng-src="/o/{{imageUri}}" style="width:100%;"/>
+                                <a ng-if="!post.advertisement" href="{{imageUri}}" target="_blank">
+                                    <img ng-src="{{imageUri}}" style="width:100%;"/>
                                 </a>
 
                                 <a ng-if="post.advertisement" href="http://{{post.advertisementUri}}" target="_blank">
-                                    <img ng-src="/o/{{imageUri}}" style="width:100%"/>
+                                    <img ng-src="{{imageUri}}" style="width:100%"/>
                                 </a>
                             </div>
 
-                            <video controls ng-if="post.videoFileUri" ng-src="/o/{{post.videoFileUri}}" style="width:100%" data-video-uri="{{post.videoFileUri}}"></video>
+                            <video controls ng-if="post.videoFileUri" ng-src="{{post.videoFileUri}}" style="width:100%" data-video-uri="{{post.videoFileUri}}"></video>
 
                             <div ng-if="post.postEditable" style="white-space: pre-line;" class="post-comment" contenteditable="true" id="post-content-{{post.id}}" ng-bind-html="post.content"></div>
 

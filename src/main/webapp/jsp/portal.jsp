@@ -434,6 +434,9 @@
                     response.data.published = false
                     $scope.activities.unshift(response.data)
                     $rootScope.renderModal = false
+                    $scope.mediaSelected = false
+                    document.querySelector("#post-upload-image-files").value = ''
+                    document.querySelector("#post-upload-video-files").value = ''
                 })
             }
         }
@@ -647,6 +650,8 @@
 
         $scope.uploadImages = function(id, $event){
 
+            $rootScope.renderModal = true
+
             var images = $event.target.files;
 
             var fd = new FormData();
@@ -660,21 +665,27 @@
                 data: fd,
                 headers: {'Content-Type': undefined},
             }).then(function(){
+                $rootScope.renderModal = false
                 $window.location.reload()
             })
         }
 
         $scope.deleteImage = function(id, imageUri){
-            var fd = new FormData();
-            fd.append('imageUri', imageUri)
-            $http({
-                method: 'post',
-                url: '/o/post/image/delete/' + id,
-                data: fd,
-                headers: {'Content-Type': undefined},
-            }).then(function(){
-                $window.location.reload()
-            })
+
+            var confirmed = confirm("Are you sure you want to delete this image?")
+
+            if(confirmed) {
+                var fd = new FormData();
+                fd.append('imageUri', imageUri)
+                $http({
+                    method: 'post',
+                    url: '/o/post/image/delete/' + id,
+                    data: fd,
+                    headers: {'Content-Type': undefined},
+                }).then(function () {
+                    $window.location.reload()
+                })
+            }
         }
 
         $scope.updatePost = function(id){
