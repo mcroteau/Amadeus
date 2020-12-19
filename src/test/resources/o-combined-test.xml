@@ -32,7 +32,7 @@
 		<jdbc:script location="classpath:create-db.sql" />
 	</jdbc:embedded-database>
 
-	<bean id="utilities" class="social.amadeus.common.Utilities"/>
+	<bean id="utils" class="social.amadeus.common.Utils"/>
 
 	<bean id="emailService" class="social.amadeus.service.EmailService"/>
 	<bean id="phoneService" class="social.amadeus.service.PhoneService"/>
@@ -41,7 +41,8 @@
 	<bean id="authService" class="social.amadeus.service.AuthService"/>
 	<bean id="postService" class="social.amadeus.service.PostService"/>
 	<bean id="syncService" class="social.amadeus.service.SyncService"/>
-	<bean id="appRunner" class="social.amadeus.AppStartup" scope="singleton"/>
+	<bean id="notificationService" class="social.amadeus.service.NotificationService"/>
+	<bean id="appStartup" class="social.amadeus.AppStartup" scope="singleton"/>
 
 	<bean id="sessionManager" class="social.amadeus.common.SessionManager" scope="singleton"/>
 

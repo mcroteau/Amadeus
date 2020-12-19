@@ -2,15 +2,15 @@
 <head>
     <script type="text/javascript" src="/o/js/packages/paper.full.js"></script>
     <style>
-        #questionmark{
+        #awesome{
             width:100%;
         }
     </style>
 </head>
 <body>
-<canvas id="questionmark" resize></canvas>
+<canvas id="awesome" resize></canvas>
 
-<script type="text/paperscript" canvas="questionmark">
+<script type="text/paperscript" canvas="awesome">
 
     var width, height, center;
     var points = 10;

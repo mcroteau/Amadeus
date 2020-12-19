@@ -11,8 +11,10 @@ public interface PostRepo {
 	public long getCount();
 	
 	public Post get(long id);
-	
-	public List<Post> getActivity(long start, long end, long accountId);
+
+	public List<Post> getPosts(Account authdAccount);
+
+	public List<Post> getActivity(long start, long end, Account authdAccount);
 
 	public long getNewestCount(long start, long end, long accountId);
 
@@ -35,6 +37,8 @@ public interface PostRepo {
 	public boolean like(PostLike postLike);
 
 	public boolean liked(PostLike postLike);
+
+	public PostLike getPostLike(long postId, long accountId);
 
 	public boolean unlike(PostLike postLike);
 

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import social.amadeus.common.Constants;
-import social.amadeus.common.Utilities;
+import social.amadeus.common.Utils;
 import social.amadeus.model.Account;
 import social.amadeus.model.Message;
 import social.amadeus.model.OutputMessage;
@@ -26,7 +26,7 @@ public class MessageController {
     private Gson gson = new Gson();
 
     @Autowired
-    private Utilities utilities;
+    private Utils utils;
 
     @Autowired
     private MessageRepo messageRepo;
@@ -42,7 +42,7 @@ public class MessageController {
     @RequestMapping(value="/chat/info", method=RequestMethod.GET, produces="application/json")
     public @ResponseBody String  info() {
         Map data = new HashMap<String, String>();
-        data.put("current_time", utilities.getCurrentDate());
+        data.put("current_time", utils.getCurrentDate());
         return gson.toJson(data);
     }
 
@@ -120,7 +120,7 @@ public class MessageController {
         Account sender = authService.getAccount();
         Account recipient = accountRepo.get(Long.parseLong(id));
 
-        long time = utilities.getCurrentDate();
+        long time = utils.getCurrentDate();
 
         Message message = new Message();
         message.setSenderId(sender.getId());

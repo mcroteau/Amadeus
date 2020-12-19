@@ -1,7 +1,6 @@
 package social.amadeus.web;
 
 import com.google.gson.Gson;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import org.springframework.stereotype.Controller;
@@ -13,37 +12,23 @@ import org.springframework.ui.ModelMap;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import java.io.IOException;
 import java.util.*;
 
 import social.amadeus.common.Constants;
-import social.amadeus.common.Utilities;
+import social.amadeus.common.Utils;
 import social.amadeus.repository.*;
 import social.amadeus.model.*;
 import social.amadeus.service.AuthService;
-import social.amadeus.service.EmailService;
+import social.amadeus.service.NotificationService;
 import social.amadeus.service.PostService;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import social.amadeus.service.SyncService;
 
 
 @Controller
 public class PostController {
 
 	private static final Logger log = Logger.getLogger(PostController.class);
-
-	private static final String YOUTUBE_URL = "https://youtu.be";
-
-	private static final String YOUTUBE_EMBED_URL = "https://youtube.com/embed";
-
-	private static final String YOUTUBE_EMBED = "<iframe style=\"margin-left:-30px;\" width=\"465\" height=\"261\" src=\"{{URL}}\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>";
-
-	private static final Pattern urlPattern = Pattern.compile(
-			"(?:^|[\\W])((ht|f)tp(s?):\\/\\/|www\\.)"
-					+ "(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*"
-					+ "[\\p{Alnum}.,%_=?&#\\-+()\\[\\]\\*$~@!:/{};']*)",
-			Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
-
 
 	Gson gson = new Gson();
 
@@ -54,7 +39,7 @@ public class PostController {
 	private AccountRepo accountRepo;
 
 	@Autowired
-	private Utilities utilities;
+	private Utils utils;
 
 	@Autowired
 	private NotificationRepo notificationRepo;
@@ -65,11 +50,15 @@ public class PostController {
 	@Autowired
 	private PostService postService;
 
+	@Autowired
+	private NotificationService notificationService;
+
+	@Autowired
+	private SyncService syncService;
 
 
-	@RequestMapping(value="/post/{id}", method=RequestMethod.GET, produces="application/json")
-	public @ResponseBody String postData(HttpServletRequest request,
-									  @PathVariable String id){
+	@GetMapping(value="/post/{id}", produces="application/json")
+	public @ResponseBody String postData(@PathVariable String id){
 		Post post = postService.getPost(id);
 		return gson.toJson(post);
 	}
@@ -85,7 +74,7 @@ public class PostController {
 		}
 
 		Account authdAccount = authService.getAccount();
-		req.getSession().setAttribute(Constants.ACTIVITY_REQUEST_TIME, utilities.getCurrentDate());
+		req.getSession().setAttribute(Constants.ACTIVITY_REQUEST_TIME, utils.getCurrentDate());
 		Map<String, Object> activityData = postService.getActivity(authdAccount);
 
 		return gson.toJson(activityData);
@@ -113,151 +102,23 @@ public class PostController {
 
 
 
-	@RequestMapping(value="/post/share", method=RequestMethod.POST, produces="application/json")
+	@RequestMapping(value="/post/save", method=RequestMethod.POST, produces="application/json")
 	public @ResponseBody String share(@ModelAttribute("post") Post post,
-									  @RequestParam(value="imageFiles", required = false) CommonsMultipartFile[] uploadedImageFiles,
-									  @RequestParam(value="videoFile", required = false) CommonsMultipartFile uploadedVideoFile){
-
-
-		Map<String, Object> data = new HashMap<String, Object>();
+									  @RequestParam(value="imageFiles", required = false) CommonsMultipartFile[] imageFiles,
+									  @RequestParam(value="videoFile", required = false) CommonsMultipartFile videoFile){
 
 		if(!authService.isAuthenticated()){
-			data.put("error", "authentication required");
-			return gson.toJson(data);
+			post.setFailMessage("authentication required");
 		}
 
-		Account account = authService.getAccount();
-		post.setAccountId(account.getId());
-
-		List<String> imageUris = new ArrayList<String>();
-
-		if(uploadedImageFiles != null &&
-				uploadedImageFiles.length > 0) {
-
-			for (CommonsMultipartFile imageFile : uploadedImageFiles){
-				String imageUri = utilities.write(imageFile, Constants.IMAGE_DIRECTORY);
-
-				if(imageUri.equals("")){
-					utilities.deleteUploadedFile(imageUri);
-				}
-				else{
-					imageUris.add(imageUri);
-				}
-			}
-		}
-
-		if(uploadedVideoFile != null  &&
-				!uploadedVideoFile.isEmpty()) {
-
-			String videoFileUri = utilities.writeVideo(uploadedVideoFile, Constants.VIDEO_DIRECTORY);
-
-			if(videoFileUri.equals("")){
-				utilities.deleteUploadedFile(videoFileUri);
-				data.put("error", "video upload issue, check format");
-				return gson.toJson(data);
-			}else{
-				post.setVideoFileUri(videoFileUri);
-			}
-		}
-
-		if(post.getContent().contains("<style")){
-			post.setContent(post.getContent().replace("style", "") + "<h1>We caught a hacker</h1>");
-		}
-
-		if(post.getContent().contains("<script")){
-			post.setContent(post.getContent().replace("script", "") + "<h1>We caught a hacker</h1>");
-		}
-
-
-		if(post.getContent().contains("<iframe width=\"560\"")){
-			post.setContent(post.getContent().replace("<iframe width=\"560\"" , "<iframe style=\"margin-top:-15px; margin-left:-30px;\" width=\"490\""));
-		}
-
-
-		List<String> youtubes = new ArrayList<String>();
-		if(post.getContent().contains(YOUTUBE_URL) &&
-				!post.getContent().contains("<iframe")) {
-
-			Matcher matcher = urlPattern.matcher(post.getContent());
-			while (matcher.find()) {
-				int urlStart = matcher.start(1);
-				int urlEnd = matcher.end();
-				String url = post.getContent().substring(urlStart, urlEnd);
-				if(url.contains(YOUTUBE_URL)){
-					youtubes.add(url);
-				}
-			}
-		}
-
-		if(!youtubes.isEmpty()){
-			for(int n = 0; n < 1; n++){
-				String bad = youtubes.get(n);
-				String good = bad.replace(YOUTUBE_URL, YOUTUBE_EMBED_URL);
-				String better = StringUtils.stripEnd(good, ",");
-				String best = StringUtils.stripEnd(better, ".");
-				String refactor = StringUtils.stripEnd(best, "!");
-				String embed = YOUTUBE_EMBED.replace("{{URL}}", refactor);
-				post.setContent(post.getContent().replace(bad, embed));
-			}
-		}
-
-		long date = utilities.getCurrentDate();
-		post.setDatePosted(date);
-		post.setUpdateDate(date);
-
-		if(imageUris.size() == 0 && 
-				(post.getVideoFileUri() == null || post.getVideoFileUri().equals("")) && 
-				post.getContent().equals("")){
-			data.put("error", true);
-			return gson.toJson(data);
-		}
-
-		Post savedPost = postRepo.save(post);
-		accountRepo.savePermission(account.getId(), Constants.POST_MAINTENANCE  + savedPost.getId());
-		Post populatedPost = postService.setPostData(savedPost, account);
-
-		for(String imageUri: imageUris){
-			PostImage postImage = new PostImage();
-			postImage.setPostId(populatedPost.getId());
-			postImage.setUri(imageUri);
-			postImage.setDate(date);
-			postRepo.saveImage(postImage);
-		}
-		populatedPost.setImageFileUris(imageUris);
-
+		Account authdAccount = authService.getAccount();
+		Post savedPost = postService.savePost(post, authdAccount, imageFiles, videoFile);
         return gson.toJson(savedPost);
 	}
 
 
-	@RequestMapping(value="/image/delete/{id}", method=RequestMethod.POST, produces="application/json")
-	public @ResponseBody String deleteImage(@PathVariable String id,
-									@RequestParam(value="imageUri", required = true) String imageUri){
-
-		Map<String, Object> response = new HashMap<String, Object>();
-
-		if(!authService.isAuthenticated()){
-			response.put("error", "authentication required");
-			String responseData = gson.toJson(response);
-			return responseData;
-		}
-
-		String permission = Constants.POST_MAINTENANCE  + id;
-		if(authService.hasPermission(permission)) {
-			postRepo.deletePostImage(Long.parseLong(id), imageUri);
-			response.put("success", true);
-		}else{
-			response.put("error", "user does not have required permissions");
-		}
-
-		return gson.toJson(response);
-	}
-
-
 	@RequestMapping(value="/post/like/{id}", method=RequestMethod.POST,  produces="application/json")
-	public @ResponseBody String like(ModelMap model,
-									  HttpServletRequest request,
-									  final RedirectAttributes redirect,
-									 @PathVariable String id){
+	public @ResponseBody String like(@PathVariable String id){
 
 		if(!authService.isAuthenticated()){
 			Map<String, Object> respData = new HashMap<>();
@@ -289,7 +150,7 @@ public class PostController {
 		}
 
 		Account account = authService.getAccount();
-		long dateShared = utilities.getCurrentDate();
+		long dateShared = utils.getCurrentDate();
 
 		PostShare postShare = new PostShare();
 		postShare.setAccountId(account.getId());
@@ -314,39 +175,30 @@ public class PostController {
 
 		Post existingPost = postRepo.get(Long.parseLong(id));
 
-		createNotification(existingPost.getAccountId(), account.getId(), Long.parseLong(id), false, true, false);
+		Notification notification = notificationService.createNotification(existingPost.getAccountId(), account.getId(), Long.parseLong(id), false, true, false);
+		notificationRepo.save(notification);
 
 		return gson.toJson(response);
 
 	}
 
 
-	@RequestMapping(value="/post/remove/{id}", method=RequestMethod.DELETE,  produces="application/json")
+	@RequestMapping(value="/post/delete/{id}", method=RequestMethod.DELETE,  produces="application/json")
 	public @ResponseBody String remove(ModelMap model,
 									 HttpServletRequest request,
 									 final RedirectAttributes redirect,
 									 @PathVariable String id){
 
-		Map<String, Object> data = new HashMap<String, Object>();
-		Gson gson = new Gson();
+		Map<String, Object> respData = new HashMap<String, Object>();
 
 		if(!authService.isAuthenticated()){
-			data.put("error", "authentication required");
-			return gson.toJson(data);
+			respData.put("error", "authentication required");
+			return gson.toJson(respData);
 		}
 
-		String permission = Constants.POST_MAINTENANCE  + id;
-		if(authService.hasPermission(permission)) {
-
-			Post post = postRepo.get(Long.parseLong(id));
-			postRepo.hide(Long.parseLong(id));
-			data.put("post", post);
-
-		}else{
-			data.put("error", "user doesn't have permission");
-		}
-
-		return gson.toJson(data);
+		boolean deleted = postService.deletePost(id);
+		respData.put("success", deleted);
+		return gson.toJson(respData);
 	}
 
 
@@ -398,7 +250,7 @@ public class PostController {
 		}
 
 		Account account = authService.getAccount();
-		long date = utilities.getCurrentDate();
+		long date = utils.getCurrentDate();
 
 		if(comment.getComment().equals("")){
 			data.put("error", "comment is blank");
@@ -426,7 +278,8 @@ public class PostController {
 
 		Post post = postRepo.get(Long.parseLong(id));
 
-		createNotification(post.getAccountId(), account.getId(), Long.parseLong(id), false, false, true);
+		Notification notification = notificationService.createNotification(post.getAccountId(), account.getId(), Long.parseLong(id), false, false, true);
+		notificationRepo.save(notification);
 
 		return gson.toJson(data);
 
@@ -447,7 +300,7 @@ public class PostController {
 		}
 
 		Account account = authService.getAccount();
-		long date = utilities.getCurrentDate();
+		long date = utils.getCurrentDate();
 
 		if(comment.getComment().equals("")){
 			data.put("error", "comment is blank");
@@ -473,7 +326,8 @@ public class PostController {
 		accountRepo.savePermission(account.getId(), Constants.COMMENT_MAINTENANCE  + savedComment.getId());
 		PostShare postShare = postRepo.getPostShare(Long.parseLong(id));
 
-		createNotification(postShare.getAccountId(), account.getId(), Long.parseLong(id), false, false, true);
+		Notification notification = notificationService.createNotification(postShare.getAccountId(), account.getId(), Long.parseLong(id), false, false, true);
+		notificationRepo.save(notification);
 
 		return gson.toJson(data);
 
@@ -530,19 +384,7 @@ public class PostController {
 
 	}
 
-	private void createNotification(long postAccountId, long authenticatedAccountId, long postId, boolean liked, boolean shared, boolean commented){
-		Notification notification = new Notification();
-		notification.setDateCreated(utilities.getCurrentDate());
 
-		notification.setPostAccountId(postAccountId);
-		notification.setAuthenticatedAccountId(authenticatedAccountId);
-		notification.setPostId(postId);
-		notification.setLiked(liked);
-		notification.setShared(shared);
-		notification.setCommented(commented);
-
-		notificationRepo.save(notification);
-	}
 
 
 	@RequestMapping(value="/post/hide/{id}", method=RequestMethod.POST,  produces="application/json")
@@ -563,9 +405,10 @@ public class PostController {
 		HiddenPost hiddenPost = new HiddenPost();
 		hiddenPost.setAccountId(account.getId());
 		hiddenPost.setPostId(Long.parseLong(id));
-		hiddenPost.setDateHidden(utilities.getCurrentDate());
+		hiddenPost.setDateHidden(utils.getCurrentDate());
 
 		postRepo.makeInvisible(hiddenPost);
+		postRepo.hide(Long.parseLong(id));
 
 		resp.put("success", true);
 		return gson.toJson(resp);
@@ -593,7 +436,7 @@ public class PostController {
 		PostFlag postFlag = new PostFlag();
 		postFlag.setPostId(post.getId());
 		postFlag.setAccountId(authService.getAccount().getId());
-		postFlag.setDateFlagged(utilities.getCurrentDate());
+		postFlag.setDateFlagged(utils.getCurrentDate());
 		postFlag.setShared(shared);
 
 		postRepo.flagPost(postFlag);
@@ -623,11 +466,10 @@ public class PostController {
 		return "admin/flagged";
 	}
 
+
 	@RequestMapping(value="/post/review/{id}", method=RequestMethod.GET)
 	public String postReview(ModelMap model,
-											  HttpServletRequest request,
-											  final RedirectAttributes redirect,
-											  @PathVariable String id){
+							 @PathVariable String id){
 		if(!authService.isAdministrator()){
 			return "redirect:/unauthorized";
 		}
@@ -641,9 +483,7 @@ public class PostController {
 
 	@RequestMapping(value="/post/flag/approve/{id}", method=RequestMethod.POST,  produces="application/json")
 	public String approvePostFlag(ModelMap model,
-											  HttpServletRequest request,
-											  final RedirectAttributes redirect,
-											  @PathVariable String id){
+								  @PathVariable String id){
 		if(!authService.isAdministrator()){
 			return "redirect:/unauthorized";
 		}
@@ -661,7 +501,7 @@ public class PostController {
 		List<PostImage> postImages = postRepo.getImages(post.getId());
 		for(PostImage postImage : postImages){
 			postRepo.deletePostImage(postImage.getId());
-			utilities.deleteUploadedFile(postImage.getUri());
+			utils.deleteUploadedFile(postImage.getUri());
 		}
 
 		return "redirect:/posts/flagged";
@@ -696,7 +536,7 @@ public class PostController {
 	public @ResponseBody String share(ModelMap model,
 									  HttpServletRequest request,
 									  final RedirectAttributes redirect,
-									  @RequestParam(value="imageFiles", required = false) CommonsMultipartFile[] uploadedImageFiles,
+									  @RequestParam(value="imageFiles", required = false) CommonsMultipartFile[] imageFiles,
 									  @PathVariable String id) {
 
 
@@ -712,32 +552,14 @@ public class PostController {
 		String permission = Constants.POST_MAINTENANCE  + id;
 		if(authService.hasPermission(permission)) {
 
-			List<String> imageUris = new ArrayList<String>();
-
-			if(uploadedImageFiles != null &&
-					uploadedImageFiles.length > 0) {
-
-				for (CommonsMultipartFile imageFile : uploadedImageFiles){
-					String imageUri = utilities.write(imageFile, Constants.IMAGE_DIRECTORY);
-
-					if(imageUri.equals("")){
-						utilities.deleteUploadedFile(imageUri);
-					}
-					else{
-						imageUris.add(imageUri);
-					}
-				}
+			Map<String, String> imageLookup = new HashMap<>();
+			if(imageFiles != null &&
+					imageFiles.length > 0) {
+				postService.synchronizeImages(imageFiles, imageLookup);
 			}
 
 			Post post = postRepo.get(Long.parseLong(id));
-
-			for(String imageUri: imageUris){
-				PostImage postImage = new PostImage();
-				postImage.setPostId(post.getId());
-				postImage.setUri(imageUri);
-				postImage.setDate(utilities.getCurrentDate());
-				postRepo.saveImage(postImage);
-			}
+			postService.savePostImages(imageLookup, post);
 
 			response.put("success", true);
 
@@ -747,6 +569,25 @@ public class PostController {
 
 		return gson.toJson(response);
 	}
+
+
+
+	@RequestMapping(value="/post/image/delete/{id}", method=RequestMethod.POST, produces="application/json")
+	public @ResponseBody String deleteImage(@PathVariable String id,
+											@RequestParam(value="imageUri", required = true) String imageUri){
+
+		Map<String, Object> respData = new HashMap<String, Object>();
+		if(!authService.isAuthenticated()){
+			respData.put("fail", "authentication required");
+			return gson.toJson(respData);
+		}
+
+		boolean deleted = postService.deletePostImage(id, imageUri);
+		respData.put("success", deleted);
+
+		return gson.toJson(respData);
+	}
+
 
 	@RequestMapping(value="/post/publish/{id}", method=RequestMethod.POST)
 	public @ResponseBody String publish(ModelMap model,
@@ -770,67 +611,21 @@ public class PostController {
 		return gson.toJson(resp);
 	}
 
+
 	@RequestMapping(value="/post/update/{id}", method=RequestMethod.POST)
 	public @ResponseBody String update(ModelMap model,
 						 @ModelAttribute("post") Post post,
 						 @PathVariable String id){
 
-		Gson gson = new Gson();
-		Map<String, Object> resp = new HashMap<String, Object>();
+		Map<String, Object> respData = new HashMap<String, Object>();
 
 		if(!authService.isAuthenticated()){
-			resp.put("error", "authentication required");
-			return gson.toJson(resp);
+			respData.put("fail", "authentication required");
+			return gson.toJson(respData);
 		}
 
-		String permission = Constants.POST_MAINTENANCE  + id;
-		if(authService.hasPermission(permission)) {
-
-			if(post.getContent().contains("<style")){
-				post.setContent(post.getContent().replace("style", "") + "<h1>We caught a hacker</h1>");
-			}
-
-			if(post.getContent().contains("<script")){
-				post.setContent(post.getContent().replace("script", "") + "<h1>We caught a hacker</h1>");
-			}
-
-			List<String> youtubes = new ArrayList<String>();
-			if(post.getContent().contains(YOUTUBE_URL) &&
-					!post.getContent().contains("<iframe")) {
-
-				Matcher matcher = urlPattern.matcher(post.getContent());
-				while (matcher.find()) {
-					int urlStart = matcher.start(1);
-					int urlEnd = matcher.end();
-					String url = post.getContent().substring(urlStart, urlEnd);
-					if(url.contains(YOUTUBE_URL)){
-						youtubes.add(url);
-					}
-				}
-			}
-
-			if(!youtubes.isEmpty()){
-				int max = youtubes.size() <= 4 ? youtubes.size() : 4;
-				for(int n = 0; n < 1; n++){
-					String bad = youtubes.get(n);
-					String good = bad.replace(YOUTUBE_URL, YOUTUBE_EMBED_URL);
-					String better = StringUtils.stripEnd(good, ",");
-					String best = StringUtils.stripEnd(better, ".");
-					String refactor = StringUtils.stripEnd(best, "!");
-					String embed = YOUTUBE_EMBED.replace("{{URL}}", refactor);
-					post.setContent(post.getContent().replace(bad, embed));
-				}
-			}
-
-			long date = utilities.getCurrentDate();
-			post.setUpdateDate(date);
-
-			postRepo.update(post);
-			resp.put("post", post);
-		}else{
-			resp.put("error", true);
-		}
-		return gson.toJson(resp);
+		Post updatedPost = postService.updatePost(id, post);
+		return gson.toJson(updatedPost);
 	}
 
 

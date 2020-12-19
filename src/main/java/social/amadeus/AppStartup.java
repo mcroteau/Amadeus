@@ -15,7 +15,7 @@ import social.amadeus.jobs.AdJob;
 import social.amadeus.jobs.PublishJob;
 import social.amadeus.model.*;
 import social.amadeus.common.Constants;
-import social.amadeus.common.Utilities;
+import social.amadeus.common.Utils;
 
 import javax.annotation.PostConstruct;
 
@@ -42,7 +42,7 @@ public class AppStartup {
 	public FlyerRepo flyerRepo;
 
 	@Autowired
-	public Utilities utilities;
+	public Utils utils;
 
 	@Autowired
 	private Environment env;
@@ -115,7 +115,7 @@ public class AppStartup {
 
 	private void createApplicationGuest(){
 		Account existing = accountRepo.findByUsername(Constants.GUEST_USERNAME);
-		String password = utilities.hash(Constants.GUEST_PASSWORD);
+		String password = utils.hash(Constants.GUEST_PASSWORD);
 
 		if(existing == null){
 			Account account = new Account();
@@ -198,12 +198,12 @@ public class AppStartup {
 		if(count == 2){
 			for(int m = 0; m < Constants.MOCK_ACCOUNTS; m++){
 				Account account = new Account();
-				String name = "Prometheus " + utilities.generateRandomString(9);
+				String name = "Prometheus " + utils.generateRandomString(9);
 				account.setName(name);
 				account.setUsername("croteau.mike+"+ m + "@gmail.com");
-				account.setLocation(utilities.generateRandomString(7));
+				account.setLocation(utils.generateRandomString(7));
 				account.setAge("33");
-				String password = utilities.hash(Constants.PASSWORD);
+				String password = utils.hash(Constants.PASSWORD);
 				account.setPassword(password);
 				account.setImageUri(Constants.DEFAULT_IMAGE_URI);
 				Account savedAccount = accountRepo.save(account);
@@ -223,7 +223,7 @@ public class AppStartup {
 			List<Account> accounts = accountRepo.findAll();
 
 			int possibilities = accounts.size() * accounts.size();
-			long currentDate = utilities.getCurrentDate();
+			long currentDate = utils.getCurrentDate();
 
 			for (int n = 0; n < possibilities; n++) {
 				for (Account account : accounts) {
@@ -248,7 +248,7 @@ public class AppStartup {
 				List<Account> accounts = accountRepo.findAll();
 
 				int possibilities = accounts.size() * accounts.size();
-				long currentDate = utilities.getCurrentDate();
+				long currentDate = utils.getCurrentDate();
 
 				for (int n = 0; n < possibilities; n++) {
 
@@ -302,7 +302,7 @@ public class AppStartup {
 					}
 					post.setContent(sb.toString());
 
-					long datePosted = utilities.getCurrentDate();
+					long datePosted = utils.getCurrentDate();
 					
 					post.setDatePosted(datePosted);
 					Post savedPost = postRepo.save(post);
@@ -329,8 +329,8 @@ public class AppStartup {
 						Message message = new Message();
 						message.setSenderId(account.getId());
 						message.setRecipientId(recipient.getId());
-						message.setContent(utilities.generateRandomString(15));
-						message.setDateSent(utilities.getCurrentDate());
+						message.setContent(utils.generateRandomString(15));
+						message.setDateSent(utils.getCurrentDate());
 						message.setViewed(false);
 						messageRepo.send(message);
 					}
@@ -350,8 +350,8 @@ public class AppStartup {
 			for (Account account : accounts) {
 				for (int n = 0; n < 61; n++) {
 
-					long time = utilities.getPreviousDay(n);
-					int views = utilities.generateRandomNumber(170);
+					long time = utils.getPreviousDay(n);
+					int views = utils.generateRandomNumber(170);
 
 					for (int m = 0; m < views; m++) {
 						ProfileView view = new ProfileView.Builder()
@@ -376,7 +376,7 @@ public class AppStartup {
 			flyer.setImageUri(Constants.DEFAULT_FLYER_IMAGE_URI);
 			flyer.setActive(true);
 			flyer.setPageUri("www.microsoft.org");
-			flyer.setStartDate(utilities.getCurrentDate());
+			flyer.setStartDate(utils.getCurrentDate());
 			flyer.setAccountId(account.getId());
 			Flyer savedFlyer = flyerRepo.save(flyer);
 			log.info("saved flyer " + savedFlyer.getId());
@@ -389,7 +389,7 @@ public class AppStartup {
 		Account admin = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
 		Account guest = accountRepo.findByUsername(Constants.GUEST_USERNAME);
 		if(!friendRepo.isFriend(admin.getId(), guest.getId())) {
-			friendRepo.saveConnection(admin.getId(), guest.getId(), utilities.getCurrentDate());
+			friendRepo.saveConnection(admin.getId(), guest.getId(), utils.getCurrentDate());
 		}
 	}
 }

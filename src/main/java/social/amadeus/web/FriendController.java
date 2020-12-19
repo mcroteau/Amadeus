@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import social.amadeus.common.Utilities;
+import social.amadeus.common.Utils;
 import social.amadeus.model.Account;
 import social.amadeus.model.Friend;
 import social.amadeus.model.FriendInvite;
@@ -32,7 +32,7 @@ public class FriendController {
 
 
     @Autowired
-    private Utilities utilities;
+    private Utils utils;
 
     @Autowired
     private EmailService emailService;
@@ -91,7 +91,7 @@ public class FriendController {
 
         Account authenticatedAccount = authService.getAccount();
 
-        if(friendRepo.invite(authenticatedAccount.getId(), Long.parseLong(id), utilities.getCurrentDate())){
+        if(friendRepo.invite(authenticatedAccount.getId(), Long.parseLong(id), utils.getCurrentDate())){
             response.put("success", true);
         }else{
             response.put("error", true);
@@ -119,7 +119,7 @@ public class FriendController {
 
         Account authenticatedAccount = authService.getAccount();
 
-        if(friendRepo.accept(Long.parseLong(id), authenticatedAccount.getId(), utilities.getCurrentDate())) {
+        if(friendRepo.accept(Long.parseLong(id), authenticatedAccount.getId(), utils.getCurrentDate())) {
             data.put("success", true);
             return gson.toJson(data);
         }
@@ -148,7 +148,7 @@ public class FriendController {
 
         Account account = authService.getAccount();
 
-        boolean ignored = friendRepo.ignore(Long.parseLong(id), account.getId(), utilities.getCurrentDate());
+        boolean ignored = friendRepo.ignore(Long.parseLong(id), account.getId(), utils.getCurrentDate());
 
         data.put("success", ignored);
         return gson.toJson(data);

@@ -1,3 +1,4 @@
+<%@ page import="java.util.Random" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!doctype html><%--${pageContext.response.locale}--%>
 <html lang="en" dir="i18n">
@@ -24,9 +25,18 @@
 
 <body ng-app="app" ng-controller="baseController">
 
-<%--    <div style="background:#efefef;z-index:1; height:17px;width:100%;position:absolute;top:500px;"></div>--%>
-<%--    <div id="holder" style="position:fixed;bottom:0px;left:0px;right:0px;height:490px;background:url('/o/images/g.png');"></div>--%>
-    <iframe src="/o/jsp/app/graph.jsp" style="z-index:1;position:fixed;bottom:0px;width:100%;height:430px;"></iframe>
+<%
+    String[] vizs = {"/o/jsp/app/vis/candy.jsp",
+                    "/o/jsp/app/vis/graph.jsp",
+                    "/o/jsp/app/vis/space.jsp"};
+
+    Random ran = new Random();
+    int idx = ran.nextInt(vizs.length);
+    String viz = vizs[idx];
+%>
+
+    <iframe id="viz" src="<%=viz%>" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>
+<%--    <iframe src="/o/jsp/app/vis/pond.jsp" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>--%>
 
 
     <div ng-if="$root.renderModal" id="amadeus-modal">
@@ -147,27 +157,27 @@
         </div>
     </div>
 
-<%--    <h1 style="transform:  rotate(-90deg); opacity:0.1; position:absolute; left:-50px; top:270px;">Activity</h1>--%>
 
-    <div ng-if="$root.renderFooter" id="footer">
-        <div style="text-align:center;margin-top:10px;">
-            <a href="${pageContext.request.contextPath}/get_code" class="page-ref href-dotted" >Get Code</a>
-            <a href="javascript:" class="page-ref href-dotted" data-ref="about">About</a>
-            <a href="${pageContext.request.contextPath}/invite" class="href-dotted" id="invite-people">Invite</a>
-        </div>
+<%--    <div ng-if="$root.renderFooter" id="footer">--%>
+<%--        <div id="footer" style="z-index:2001">--%>
+<%--            <div style="text-align:center;margin-top:10px;">--%>
+<%--                <a href="${pageContext.request.contextPath}/get_code" class="page-ref href-dotted" >Get Code</a>--%>
+<%--                <a href="javascript:" class="page-ref href-dotted" data-ref="about">About</a>--%>
+<%--                <a href="${pageContext.request.contextPath}/invite" class="href-dotted" id="invite-people">Invite</a>--%>
+<%--            </div>--%>
 
-        <p style="text-align:center;"><a href="mailto:support@amadeus.social" style="color:#17161b" class="href-dotted">support@amadeus.social</a>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 134 134" id="amadeus-icon">
-                <path d="M49 1L21 88L57 88L42 134L84 134L113 47L92 47L79 47L75 47L91 1L49 1Z" />
-            </svg>
-        </p>
+<%--            <p style="text-align:center;"><a href="mailto:support@amadeus.social" style="color:#17161b" class="href-dotted">support@amadeus.social</a>--%>
+<%--                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 134 134" id="amadeus-icon">--%>
+<%--                    <path d="M49 1L21 88L57 88L42 134L84 134L113 47L92 47L79 47L75 47L91 1L49 1Z" />--%>
+<%--                </svg>--%>
+<%--            </p>--%>
 
-        <div style="text-align:center;margin:20px auto 109px auto">
-            <p style="text-align: center; font-size:12px;">&copy; 2020 Amadeus</p>
-            <a href="http://tomcat.apache.org/" target="_blank" class="information">Powered by<br/>Tomcat</a>
-        </div>
-
-    </div>
+<%--            <div style="text-align:center;margin:20px auto 109px auto">--%>
+<%--                <p style="text-align: center; font-size:12px;">&copy; 2020 Amadeus</p>--%>
+<%--                <a href="http://tomcat.apache.org/" target="_blank" class="information">Powered by<br/>Tomcat</a>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
 <script>
 
@@ -189,6 +199,7 @@
     })
 
     app.run(function ($rootScope, $location) {
+        $rootScope.gettingData = false;
         $rootScope.indicator = document.querySelector("#linear-indicator")
 
         $rootScope.$on("$routeChangeStart", function () {
@@ -271,9 +282,11 @@
         }
 
         var getData = function(){
+            $rootScope.gettingData = true
             $http.get("/o/profile/data").then(function(data){
                 if(data.error)$window.location.href= "/"
                 $scope.data = data.data
+                $rootScope.gettingData = false
             })
         }
 
@@ -408,18 +421,24 @@
             });
 
             fd.append('content', content)
-            $http({
-                method: 'post',
-                url: '/o/post/share',
-                data: fd,
-                headers: {'Content-Type': undefined},
-            }).then(function(response){
-                document.querySelector('#whatsup').value = ''
-                $scope.beautiful = $scope.beautiful ? false : true
-                response.data.published = false
-                $scope.activities.unshift(response.data)
-                $rootScope.renderModal = false
-            })
+
+            if(!$rootScope.gettingData) {
+                $http({
+                    method: 'post',
+                    url: '/o/post/save',
+                    data: fd,
+                    headers: {'Content-Type': undefined},
+                }).then(function (response) {
+                    document.querySelector('#whatsup').value = ''
+                    $scope.beautiful = $scope.beautiful ? false : true
+                    response.data.published = false
+                    $scope.activities.unshift(response.data)
+                    $rootScope.renderModal = false
+                    $scope.mediaSelected = false
+                    document.querySelector("#post-upload-image-files").value = ''
+                    document.querySelector("#post-upload-video-files").value = ''
+                })
+            }
         }
 
         $scope.maintainView = function(list, id){
@@ -555,12 +574,12 @@
             if(confirmed){
                 $rootScope.renderModal = true
 
-                $http.delete("/o/post/remove/" + id).then(function (response) {
+                $http.delete("/o/post/delete/" + id).then(function (response) {
                     // var id = response.data.post.id
                     // $scope.removePost(id, activityModel.get('memory'))
                     // $scope.removePost(id, activityModel.get('activities'))
                     $rootScope.renderModal = false
-                    $route.reload()
+                    $window.location.reload()
                 });
             }
         }
@@ -577,47 +596,61 @@
         $scope.unsharePost = function(shareId){
             var confirmed = confirm("Are you sure you want to unshare this post?")
             if(confirmed) {
-                $http.delete("/o/post/unshare/" + shareId).then($route.reload);
+                $http.delete("/o/post/unshare/" + shareId).then($window.location.reload);
             }
         }
 
         $scope.flagPost = function(id, shared){
             var confirmed = confirm("Are you sure you want to flag this post?")
             if(confirmed) {
-                $http.post("/o/post/flag/" + id + "/" + shared).then($route.reload);
+                $http.post("/o/post/flag/" + id + "/" + shared).then(function(){
+                    $window.location.reload()
+                });
             }
         }
 
         $scope.hidePost = function(id){
             var confirmed = confirm("Are you sure you want to hide this post?")
             if(confirmed) {
-                $http.post("/o/post/hide/" + id).then($route.reload);
+                $http.post("/o/post/hide/" + id).then(function(){
+                    $window.location.reload()
+                });
             }
         }
 
         $scope.saveComment = function(id){
             var comment = document.querySelector("#post-comment-" + id).value
             if(comment != '') {
-                dataService.saveComment(id, comment, $route.reload)
+                dataService.saveComment(id, comment, function(){
+                    $window.location.reload()
+                })
             }
         }
 
         $scope.saveShareComment = function(id){
             var comment = document.querySelector("#post-share-comment-" + id).value
             if(comment != '') {
-                dataService.saveShareComment(id, comment, $route.reload)
+                dataService.saveShareComment(id, comment, function(){
+                    $window.location.reload()
+                })
             }
         }
 
         $scope.deleteComment = function(id){
-            dataService.deleteComment(id, $route.reload)
+            dataService.deleteComment(id, function(){
+                $window.location.reload()
+            })
         }
 
         $scope.deleteShareComment = function(id){
-            dataService.deleteShareComment(id, $route.reload)
+            dataService.deleteShareComment(id, function(){
+                $window.location.reload()
+            })
         }
 
         $scope.uploadImages = function(id, $event){
+
+            $rootScope.renderModal = true
 
             var images = $event.target.files;
 
@@ -631,18 +664,28 @@
                 url: '/o/post/image/add/' + id,
                 data: fd,
                 headers: {'Content-Type': undefined},
-            }).then($route.reload)
+            }).then(function(){
+                $rootScope.renderModal = false
+                $window.location.reload()
+            })
         }
 
         $scope.deleteImage = function(id, imageUri){
-            var fd = new FormData();
-            fd.append('imageUri', imageUri)
-            $http({
-                method: 'post',
-                url: '/o/image/delete/' + id,
-                data: fd,
-                headers: {'Content-Type': undefined},
-            }).then($route.reload)
+
+            var confirmed = confirm("Are you sure you want to delete this image?")
+
+            if(confirmed) {
+                var fd = new FormData();
+                fd.append('imageUri', imageUri)
+                $http({
+                    method: 'post',
+                    url: '/o/post/image/delete/' + id,
+                    data: fd,
+                    headers: {'Content-Type': undefined},
+                }).then(function () {
+                    $window.location.reload()
+                })
+            }
         }
 
         $scope.updatePost = function(id){

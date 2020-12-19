@@ -90,7 +90,7 @@
                 <div class="feed-content-container" ng-repeat="post in activities" id="post-{{post.id}}" ng-if="!post.hidden && !post.flagged">
 
                     <span ng-if="post.postEditable && post.content != null" class="edit-click tiny yella edit-fade-in" data-i18n="click.edit">Click to Edit</span>
-                    <span ng-if="post.postEditable && post.content != null"  class="author-ref tiny" data-i18n="author">Author</span>
+                    <span ng-if="post.status == 'online'" class="user-status online">&nbsp;</span>
 
                     <div ng-if="post.shared" class="shared-post-container" >
 
@@ -132,16 +132,16 @@
 
                             <div ng-repeat="imageUri in post.imageFileUris" class="image-post-container" data-image-uri="{{imageUri}}" style="position:relative;">
                                 <a ng-click="deleteImage(post.id, imageUri)" ng-href="javascript:" ng-if="post.postEditable" class="delete-image modern edit-fade-in" data-uri="{{imageUri}}" data-id="{{post.id}}">x</a>
-                                <a ng-if="!post.advertisement" href="/o/{{imageUri}}" target="_blank">
-                                    <img ng-src="/o/{{imageUri}}" style="width:100%;"/>
+                                <a ng-if="!post.advertisement" href="{{imageUri}}" target="_blank">
+                                    <img ng-src="{{imageUri}}" style="width:100%;"/>
                                 </a>
 
                                 <a ng-if="post.advertisement" href="http://{{post.advertisementUri}}" target="_blank">
-                                    <img ng-src="/o/{{imageUri}}" style="width:100%"/>
+                                    <img ng-src="{{imageUri}}" style="width:100%"/>
                                 </a>
                             </div>
 
-                            <video controls ng-if="post.videoFileUri" ng-src="/o/{{post.videoFileUri}}" style="width:100%" data-video-uri="{{post.videoFileUri}}"></video>
+                            <video controls ng-if="post.videoFileUri" ng-src="{{post.videoFileUri}}" style="width:100%" data-video-uri="{{post.videoFileUri}}"></video>
 
                             <div ng-if="post.postEditable" style="white-space: pre-line;" class="post-comment" contenteditable="true" id="post-content-{{post.id}}" ng-bind-html="post.content"></div>
 
@@ -281,7 +281,7 @@
                     <div ng-if="!post.advertisement && !post.shared" ng-click="toggleActions($index)" class="post-admin-actions-wrapper">&Xi;
                         <div ng-show="showActions[$index]"  class="post-admin-actions-inner" style="position:relative;">
                             <div class="post-admin-actions">
-                                <a ng-click="deletePost(post.id)" ng-if="post.deletable" href="javascript:" class="delete-post" data-id="{{post.id}}" data-i18n="delete.post">Unshare Post</a>
+                                <a ng-click="deletePost(post.id)" ng-if="post.deletable" href="javascript:" class="delete-post" data-id="{{post.id}}" data-i18n="delete.post">Delete Post</a>
                                 <a ng-click="flagPost(post.id, false)" href="javascript:" class="flag-post" data-id="{{post.id}}" data-shared="false" data-i18n="flag.post">Flag Post</a>
                                 <a ng-click="hidePost(post.id)" href="javascript:" class="hide-post" data-id="{{post.id}}" data-i18n="hide.post">Hide Post</a>
                             </div>

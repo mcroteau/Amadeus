@@ -1,27 +1,45 @@
 package social.amadeus.service;
 
+import com.amazonaws.services.s3.model.PutObjectResult;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import social.amadeus.common.Constants;
 import social.amadeus.common.SessionManager;
-import social.amadeus.common.Utilities;
+import social.amadeus.common.Utils;
 import social.amadeus.repository.AccountRepo;
 import social.amadeus.repository.FlyerRepo;
 import social.amadeus.repository.NotificationRepo;
 import social.amadeus.repository.PostRepo;
 import social.amadeus.model.*;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PostService {
 
     private static final Logger log = Logger.getLogger(PostService.class);
 
+    private static final String YOUTUBE_URL = "https://youtu.be";
+
+    private static final String YOUTUBE_EMBED_URL = "https://youtube.com/embed";
+
+    private static final String YOUTUBE_EMBED = "<iframe style=\"margin-left:-30px;\" width=\"465\" height=\"261\" src=\"{{URL}}\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>";
+
+    private static final Pattern urlPattern = Pattern.compile(
+            "(?:^|[\\W])((ht|f)tp(s?):\\/\\/|www\\.)"
+                    + "(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*"
+                    + "[\\p{Alnum}.,%_=?&#\\-+()\\[\\]\\*$~@!:/{};']*)",
+            Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+
 
     @Autowired
-    private Utilities utilities;
+    private Utils utils;
 
     @Autowired
     private PostRepo postRepo;
@@ -39,6 +57,12 @@ public class PostService {
     private NotificationRepo notificationRepo;
 
     @Autowired
+    private NotificationService notificationService;
+
+    @Autowired
+    private SyncService syncService;
+
+    @Autowired
     private SessionManager sessionManager;
 
 
@@ -47,6 +71,186 @@ public class PostService {
         Account authdAccount = authService.getAccount();
         Post post = setPostData(postPre, authdAccount);
         return post;
+    }
+
+    public Post savePost(Post post, Account authdAccount, CommonsMultipartFile[] imageFiles, CommonsMultipartFile videoFile){
+
+
+        Map<String, String> imageLookup = new HashMap<>();
+
+        if(imageFiles != null &&
+                imageFiles.length > 0) {
+            synchronizeImages(imageFiles, imageLookup);
+        }
+
+        if(videoFile != null  &&
+                !videoFile.isEmpty()) {
+
+            try{
+                String videoFileName = utils.generateFileName(videoFile);
+
+                String[] contentTypes = new String[]{"video/mp4"};
+                List<String> list = Arrays.asList(contentTypes);
+
+                if(!utils.correctMimeType(list, videoFile)){
+                    post.setFailMessage("Video file must be mp4.");
+                }else{
+                    syncService.send(videoFileName, "", videoFile.getInputStream());
+                    post.setVideoFileUri(Constants.HTTPS + Constants.DO_ENDPOINT + "/" + videoFileName);
+                    post.setVideoFileName(videoFileName);
+                }
+            }catch(IOException ex){
+                ex.printStackTrace();
+            }
+        }
+
+        if(post.getContent().contains("<style")){
+            post.setContent(post.getContent().replace("style", "") + "<h1>We caught a hacker</h1>");
+        }
+
+        if(post.getContent().contains("<script")){
+            post.setContent(post.getContent().replace("script", "") + "<h1>We caught a hacker</h1>");
+        }
+
+
+        if(post.getContent().contains("<iframe width=\"560\"")){
+            post.setContent(post.getContent().replace("<iframe width=\"560\"" , "<iframe style=\"margin-top:-15px; margin-left:-30px;\" width=\"490\""));
+        }
+
+
+        List<String> youtubes = new ArrayList<>();
+        if(post.getContent().contains(YOUTUBE_URL) &&
+                !post.getContent().contains("<iframe")) {
+
+            Matcher matcher = urlPattern.matcher(post.getContent());
+            while (matcher.find()) {
+                int urlStart = matcher.start(1);
+                int urlEnd = matcher.end();
+                String url = post.getContent().substring(urlStart, urlEnd);
+                if(url.contains(YOUTUBE_URL)){
+                    youtubes.add(url);
+                }
+            }
+        }
+
+        if(!youtubes.isEmpty()){
+            for(int n = 0; n < 1; n++){
+                String bad = youtubes.get(n);
+                String good = bad.replace(YOUTUBE_URL, YOUTUBE_EMBED_URL);
+                String better = StringUtils.stripEnd(good, ",");
+                String best = StringUtils.stripEnd(better, ".");
+                String refactor = StringUtils.stripEnd(best, "!");
+                String embed = YOUTUBE_EMBED.replace("{{URL}}", refactor);
+                post.setContent(post.getContent().replace(bad, embed));
+            }
+        }
+
+
+        if(imageLookup.size() == 0 &&
+                (post.getVideoFileUri() == null || post.getVideoFileUri().equals("")) &&
+                post.getContent().equals("")){
+            post.setFailMessage("everything is blank");
+            return post;
+        }
+
+        long date = utils.getCurrentDate();
+        post.setDatePosted(date);
+        post.setUpdateDate(date);
+        post.setAccountId(authdAccount.getId());
+
+        Post savedPost = postRepo.save(post);
+        accountRepo.savePermission(authdAccount.getId(), Constants.POST_MAINTENANCE  + savedPost.getId());
+        Post populatedPost = setPostData(savedPost, authdAccount);
+
+        List<String> imageUris = savePostImages(imageLookup, populatedPost);
+
+        //for the view yo!
+        populatedPost.setImageFileUris(imageUris);
+
+        return savedPost;
+    }
+
+    public PostImage getPostImage(String fileName, String imageUri, Post populatedPost){
+        PostImage postImage = new PostImage();
+        postImage.setPostId(populatedPost.getId());
+        postImage.setUri(imageUri);
+        postImage.setFileName(fileName);
+        postImage.setDate(utils.getCurrentDate());
+        return postImage;
+    }
+
+
+    public Post updatePost(String id, Post post){
+        String permission = Constants.POST_MAINTENANCE  + id;
+        if(!authService.hasPermission(permission)) {
+            post.setFailMessage("requires permission");
+            return post;
+        }
+
+        if(post.getContent().contains("<style")){
+            post.setContent(post.getContent().replace("style", "") + "<h1>We caught a hacker</h1>");
+        }
+
+        if(post.getContent().contains("<script")){
+            post.setContent(post.getContent().replace("script", "") + "<h1>We caught a hacker</h1>");
+        }
+
+        List<String> youtubes = new ArrayList<String>();
+        if(post.getContent().contains(YOUTUBE_URL) &&
+                !post.getContent().contains("<iframe")) {
+
+            Matcher matcher = urlPattern.matcher(post.getContent());
+            while (matcher.find()) {
+                int urlStart = matcher.start(1);
+                int urlEnd = matcher.end();
+                String url = post.getContent().substring(urlStart, urlEnd);
+                if(url.contains(YOUTUBE_URL)){
+                    youtubes.add(url);
+                }
+            }
+        }
+
+        if(!youtubes.isEmpty()){
+            int max = youtubes.size() <= 4 ? youtubes.size() : 4;
+            for(int n = 0; n < 1; n++){
+                String bad = youtubes.get(n);
+                String good = bad.replace(YOUTUBE_URL, YOUTUBE_EMBED_URL);
+                String better = StringUtils.stripEnd(good, ",");
+                String best = StringUtils.stripEnd(better, ".");
+                String refactor = StringUtils.stripEnd(best, "!");
+                String embed = YOUTUBE_EMBED.replace("{{URL}}", refactor);
+                post.setContent(post.getContent().replace(bad, embed));
+            }
+        }
+
+        long date = utils.getCurrentDate();
+        post.setUpdateDate(date);
+
+        postRepo.update(post);
+        return post;
+    }
+
+
+    public boolean deletePost(String id){
+        String permission = Constants.POST_MAINTENANCE  + id;
+        if(!authService.hasPermission(permission)) {
+            return false;
+        }
+
+        Post post = postRepo.get(Long.parseLong(id));
+        postRepo.hide(Long.parseLong(id));
+        return true;
+    }
+
+
+
+    public boolean deletePostImage(String id, String imageUri){
+        String permission = Constants.POST_MAINTENANCE  + id;
+        if(!authService.hasPermission(permission)) {
+            return false;
+        }
+        postRepo.deletePostImage(Long.parseLong(id), imageUri);
+        return true;
     }
 
 
@@ -69,12 +273,13 @@ public class PostService {
                 notificationRepo.delete(notification.getId());
             }
         }else{
-            long dateLiked = utilities.getCurrentDate();
+            long dateLiked = utils.getCurrentDate();
             postLike.setDateLiked(dateLiked);
             postRepo.like(postLike);
 
             if(notification == null) {
-                createNotification(post.getAccountId(), authdAccount.getId(), Long.parseLong(id), true, false, false);
+                Notification notificationPre = notificationService.createNotification(post.getAccountId(), authdAccount.getId(), Long.parseLong(id), true, false, false);
+                notificationRepo.save(notificationPre);
             }
         }
 
@@ -85,19 +290,6 @@ public class PostService {
         return respData;
     }
 
-    private void createNotification(long postAccountId, long authenticatedAccountId, long postId, boolean liked, boolean shared, boolean commented){
-        Notification notification = new Notification();
-        notification.setDateCreated(utilities.getCurrentDate());
-
-        notification.setPostAccountId(postAccountId);
-        notification.setAuthenticatedAccountId(authenticatedAccountId);
-        notification.setPostId(postId);
-        notification.setLiked(liked);
-        notification.setShared(shared);
-        notification.setCommented(commented);
-
-        notificationRepo.save(notification);
-    }
 
     public List<Post> getUserActivity(Account profileAccount, Account authdAccount){
         List<Post> postsPre = postRepo.getUserPosts(profileAccount.getId());
@@ -118,10 +310,10 @@ public class PostService {
 
     public Map<String, Object> getActivity(Account authdAccount){
 
-        long start = utilities.getPreviousDay(14);
-        long end = utilities.getCurrentDate();
+        long start = utils.getPreviousDay(14);
+        long end = utils.getCurrentDate();
 
-        List<Post> postsPre = postRepo.getActivity(start, end, authdAccount.getId());
+        List<Post> postsPre = postRepo.getActivity(start, end, authdAccount);
         List<Post> posts = populatePostData(postsPre, authdAccount);
 
         List<PostShare> postSharesPre = postRepo.getPostShares(start, end, authdAccount.getId());
@@ -143,6 +335,34 @@ public class PostService {
         data.put("femsfellas", femalesMales);
 
         return data;
+    }
+
+    public List<String> savePostImages(Map<String, String> imageLookup, Post populatedPost){
+        List<String> imageUris = new ArrayList<>();
+        for (Map.Entry<String,String> image : imageLookup.entrySet()){
+            PostImage postImage = getPostImage(image.getKey(), image.getValue(), populatedPost);
+            postRepo.saveImage(postImage);
+            imageUris.add(image.getValue());
+        }
+        return imageUris;
+    }
+
+
+    public Map<String, String> synchronizeImages(CommonsMultipartFile[] imageFiles, Map<String, String> imageLookup) {
+
+        for (CommonsMultipartFile imageFile : imageFiles){
+            try {
+                String fileName = utils.generateFileName(imageFile);
+                String imageUri = Constants.HTTPS + Constants.DO_ENDPOINT + "/" + fileName;
+
+                syncService.send(fileName, "", imageFile.getInputStream());
+                imageLookup.put(fileName, imageUri);
+            }catch(IOException ex){
+                ex.printStackTrace();
+            }
+        }
+
+        return imageLookup;
     }
 
 

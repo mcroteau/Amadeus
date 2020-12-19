@@ -8,7 +8,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import social.amadeus.repository.FlyerRepo;
 import social.amadeus.common.Constants;
-import social.amadeus.common.Utilities;
+import social.amadeus.common.Utils;
 import social.amadeus.repository.AccountRepo;
 import social.amadeus.model.Account;
 import social.amadeus.model.Flyer;
@@ -23,7 +23,7 @@ import java.util.List;
 public class FlyerController {
 
     @Autowired
-    private Utilities utilities;
+    private Utils utils;
 
     @Autowired
     private FlyerRepo flyerRepo;
@@ -68,7 +68,7 @@ public class FlyerController {
         }
 
         if(!flyerImage.isEmpty()){
-            String imageUri = utilities.write(flyerImage, Constants.IMAGE_DIRECTORY);
+            String imageUri = utils.write(flyerImage, Constants.IMAGE_DIRECTORY);
             flyer.setImageUri(imageUri);
         }
 
@@ -119,7 +119,7 @@ public class FlyerController {
         String permission = Constants.FLYER_MAINTENANCE + id;
         if(authService.hasPermission(permission)) {
 
-            long date = utilities.getCurrentDate();
+            long date = utils.getCurrentDate();
 
             Flyer flyer = flyerRepo.get(Long.parseLong(id));
             flyer.setStartDate(date);
@@ -172,7 +172,7 @@ public class FlyerController {
 
             if(flyerImage != null &&
                     flyerImage.getSize() > 0){
-                String imageUri = utilities.write(flyerImage, Constants.IMAGE_DIRECTORY);
+                String imageUri = utils.write(flyerImage, Constants.IMAGE_DIRECTORY);
                 flyer.setImageUri(imageUri);
             }
             flyerRepo.update(flyer);

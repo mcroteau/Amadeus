@@ -26,6 +26,7 @@ public class Post {
 	List<String> musicFileUris;
 	String musicFileUri;
     String videoFileUri;
+	String videoFileName;
     String status;
 	List<PostComment> comments;
 	List<PostShareComment> shareComments;
@@ -40,6 +41,7 @@ public class Post {
 	long updateDate;
 	boolean advertisement;
 	String advertisementUri;
+	String failMessage;
 
 	public long getId(){
 		return id;
@@ -199,6 +201,14 @@ public class Post {
         this.videoFileUri = videoFileUri;
     }
 
+	public String getVideoFileName() {
+		return videoFileName;
+	}
+
+	public void setVideoFileName(String videoFileName) {
+		this.videoFileName = videoFileName;
+	}
+
 	public String getStatus() {
 		return status;
 	}
@@ -309,6 +319,14 @@ public class Post {
 
 	public void setAdvertisementUri(String advertisementUri) {
 		this.advertisementUri = advertisementUri;
+	}
+
+	public String getFailMessage() {
+		return failMessage;
+	}
+
+	public void setFailMessage(String failMessage) {
+		this.failMessage = failMessage;
 	}
 
 }

@@ -179,7 +179,7 @@
 
             <div id="amadeus-words">
 
-                <p>Amadeus is a very new social networking app built with Love. <a href="${pageContext.request.contextPath}/signup" class="href-dotted-black">Signup!</a></p>
+                <p>Amadeus is a very new social networking app built with Care. <a href="${pageContext.request.contextPath}/signup" class="href-dotted">Signup!</a></p>
 
             </div>
 
