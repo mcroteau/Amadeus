@@ -135,7 +135,7 @@
         var position = Point.random() * view.size;
         var vector = new Point({
             angle: 360 * Math.random(),
-            length: Math.random() * 10
+            length: Math.random() 
         });
         var radius = Math.random() * 40;
         balls.push(new Ball(radius, position, vector));
@@ -149,6 +149,27 @@
         }
         for (var i = 0, l = balls.length; i < l; i++) {
             balls[i].iterate();
+        }
+    }
+
+    function keepInView(item) {
+        var position = item.position;
+        var itemBounds = item.bounds;
+        var bounds = view.bounds;
+        if (itemBounds.left > bounds.width) {
+            position.x = -item.bounds.width;
+        }
+
+        if (position.x < -itemBounds.width) {
+            position.x = bounds.width + itemBounds.width;
+        }
+
+        if (itemBounds.top > view.size.height) {
+            position.y = -itemBounds.height;
+        }
+
+        if (position.y < -itemBounds.height) {
+            position.y = bounds.height  + itemBounds.height / 2;
         }
     }
 </script>

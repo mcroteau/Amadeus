@@ -18,8 +18,11 @@
     <script type="text/javascript" src="/o/js/packages/jquery.i18n.js"></script>
     <script type="text/javascript" src="/o/js/packages/jquery.i18n.messagestore.js"></script>
 
+
     <link rel="stylesheet" href="/o/css/app.gap.css?v=<%=System.currentTimeMillis()%>"/>
     <link rel="stylesheet" href="/o/css/app.gap.mobile.css?v=<%=System.currentTimeMillis()%>"/>
+
+
 
 </head>
 
@@ -28,15 +31,21 @@
 <%
     String[] vizs = {"/o/jsp/app/vis/candy.jsp",
                     "/o/jsp/app/vis/graph.jsp",
+                    "/o/jsp/app/vis/pond.jsp",
+                    "/o/jsp/app/vis/mucho.jsp",
+                    "/o/jsp/app/vis/correct.jsp",
                     "/o/jsp/app/vis/space.jsp"};
 
     Random ran = new Random();
-    int idx = ran.nextInt(vizs.length);
-    String viz = vizs[idx];
+    int inx = ran.nextInt(vizs.length);
+    String viz = vizs[inx];
 %>
 
-    <iframe id="viz" src="<%=viz%>" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>
-<%--    <iframe src="/o/jsp/app/vis/pond.jsp" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>--%>
+    <!-- <iframe id="viz" src="<%=viz%>" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe> -->
+<iframe src="/o/jsp/app/vis/pond.jsp" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>
+
+    <canvas id="sugarcookie" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></canvas>
+
 
 
     <div ng-if="$root.renderModal" id="amadeus-modal">
