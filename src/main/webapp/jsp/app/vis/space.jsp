@@ -14,14 +14,6 @@
     // The amount of symbol we want to place;
     var count = 150;
 
-    // Create a symbol, which we will use to place instances of later:
-    // var path = new Path.Circle({
-    //     center: new Point(0, 0),
-    //     radius: 5,
-    //     fillColor: 'grey',
-    //     strokeColor: 'white'
-    // });
-
     var path = new Path.RegularPolygon(new Point(0, 0), 3, 5);
     path.fillColor = 'white';
     path.strokeColor = 'grey';

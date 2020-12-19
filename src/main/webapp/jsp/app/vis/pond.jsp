@@ -73,7 +73,7 @@
 
             this.path = new Path({
                 strokeColor: 'black',
-                strokeWidth: 3,
+                strokeWidth: 2,
                 strokeCap: 'round'
             });
             for (var i = 0; i < this.amount; i++)

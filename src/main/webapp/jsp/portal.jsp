@@ -37,8 +37,8 @@
     String viz = vizs[idx];
 %>
 
-    <iframe id="viz" src="<%=viz%>" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>
-<%--    <iframe src="/o/jsp/app/vis/space.jsp" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>--%>
+<%--    <iframe id="viz" src="<%=viz%>" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>--%>
+    <iframe src="/o/jsp/app/vis/space.jsp" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>
 
 
     <div ng-if="$root.renderModal" id="amadeus-modal">

@@ -2730,9 +2730,8 @@ p{
 }
 .user-status.online,
 .activity-status.online{
-    background:#23fd78;
-    background:#9FED03;
     background:#31f500;
+    border: solid 2px #efefef;
 }
 .activity-status.logged-out{
     background:#e24682;

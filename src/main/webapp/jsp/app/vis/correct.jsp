@@ -16,7 +16,7 @@
 
 
     var text = new PointText(new Point(200, 50))
-    text.content = "You inspired us."
+    text.content = "You inspire."
     text.fillColor = "black"
 
     var symbol = new SymbolDefinition(text);
