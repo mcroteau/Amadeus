@@ -238,25 +238,27 @@
 
     app.config(function($routeProvider) {
 
+        var t = new Date().getTime()
+
         $routeProvider
             .when('/', {
-                templateUrl: 'pages/activity.html',
+                templateUrl: 'pages/activity.html?v=' + t,
                 controller: 'activityController'
             })
             .when('/profile/:id', {
-                templateUrl: 'pages/profile.html',
+                templateUrl: 'pages/profile.html?v=' + t,
                 controller: 'profileController'
             })
             .when('/search/:q', {
-                templateUrl: 'pages/search.html',
+                templateUrl: 'pages/search.html?v=' + t,
                 controller: 'searchController'
             })
             .when('/search', {
-                templateUrl: 'pages/search.html',
+                templateUrl: 'pages/search.html?v=' + t,
                 controller: 'searchController'
             })
             .when('/invitations', {
-                templateUrl: 'pages/invitations.html',
+                templateUrl: 'pages/invitations.html?v=' + t,
                 controller: 'invitationController'
             })
             .otherwise({redirectTo:'/'});
