@@ -41,8 +41,8 @@
     String viz = vizs[inx];
 %>
 
-    <!-- <iframe id="viz" src="<%=viz%>" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe> -->
-<iframe src="/o/jsp/app/vis/pond.jsp" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>
+    <iframe id="viz" src="<%=viz%>" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>
+<!-- <iframe src="/o/jsp/app/vis/pond.jsp" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe> -->
 
     <canvas id="sugarcookie" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></canvas>
 
@@ -144,7 +144,7 @@
                 </div>
             </div>
             <form id="chat-session-frm">
-                <textarea ng-keyup="sendChat(recipientId, $event)" id="chat-input" placeholder="Beginning chat..." name="content" style="width:186px;"></textarea>
+                <textarea ng-keyup="sendChat(recipientId, $event)" id="chat-input" placeholder="Begin chat..." name="content" style="width:186px;"></textarea>
             </form>
         </div>
     </div>
