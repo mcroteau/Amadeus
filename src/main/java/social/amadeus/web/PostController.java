@@ -464,9 +464,7 @@ public class PostController {
 
 	@RequestMapping(value="/post/review/{id}", method=RequestMethod.GET)
 	public String postReview(ModelMap model,
-											  HttpServletRequest request,
-											  final RedirectAttributes redirect,
-											  @PathVariable String id){
+							 @PathVariable String id){
 		if(!authService.isAdministrator()){
 			return "redirect:/unauthorized";
 		}
@@ -480,9 +478,7 @@ public class PostController {
 
 	@RequestMapping(value="/post/flag/approve/{id}", method=RequestMethod.POST,  produces="application/json")
 	public String approvePostFlag(ModelMap model,
-											  HttpServletRequest request,
-											  final RedirectAttributes redirect,
-											  @PathVariable String id){
+								  @PathVariable String id){
 		if(!authService.isAdministrator()){
 			return "redirect:/unauthorized";
 		}

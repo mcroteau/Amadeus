@@ -303,7 +303,7 @@ public class PostService {
         long start = utils.getPreviousDay(14);
         long end = utils.getCurrentDate();
 
-        List<Post> postsPre = postRepo.getActivity(start, end, authdAccount.getId());
+        List<Post> postsPre = postRepo.getActivity(start, end, authdAccount);
         List<Post> posts = populatePostData(postsPre, authdAccount);
 
         List<PostShare> postSharesPre = postRepo.getPostShares(start, end, authdAccount.getId());

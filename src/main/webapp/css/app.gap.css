@@ -270,44 +270,6 @@ body{
 
 
 
-#logo-logo{
-
-    font-size:57px;
-    font-size:48px;
-
-    font-size:39px;
-
-    font-family: Roboto-Medium !important;
-    display:inline-block;
-
-    -webkit-animation-name: logo-logo-bg; /* Safari 4.0 - 8.0 */
-    -webkit-animation-duration: 19s; /* Safari 4.0 - 8.0 */
-
-    animation-name: logo-logo-bg;
-    animation-iteration-count: infinite;
-    animation-duration: 19s;
-
-    background:#FF1F28;
-    background:#FF4F01 !important;
-    /*background:#ff2401 !important;*/
-}
-
-#logo-logo:hover{
-    opacity:1;
-    color:#E34B86;
-    color:#FDFE03;
-    background: #FF4F01 !important;
-}
-#logo-logo:hover #amadeus-logo {
-    animation-play-state: paused;
-    fill:#fff;
-}
-
-#logo-logo:active{
-    color:#07a4ed;
-}
-
-
 /* Safari 4.0 - 8.0 */
 @-webkit-keyframes logo-logo {
     0%  {fill:#54afff}
@@ -3198,10 +3160,6 @@ h1, h2, h3{
     font-family:Roboto-Bold;
 }
 
-#logo-logo{
-    font-family:Roboto-Medium !important;
-}
-
 .href{
     margin-top:11px;
     margin-right:20px;
@@ -3389,7 +3347,7 @@ textarea{
     animation:spind 124s linear infinite;
     transform: rotate(39deg);
 }
-
+/** they wont let me clean this up, they are bad people, they selected the wrong person. but im here, so I guess maybe I am the right person**/
 
 
 .duo{
@@ -3510,19 +3468,16 @@ a.information{
     padding:0px;
 }
 #logo-logo{
-    height:37px;
     height:45px;
-    margin-top:0px !important;
     display:block;
-    background:#768fa5;
-    background:#fff;
-    background:#FDFE01;
     padding:11px 17px 0px 24px;
     line-height:1.0;
     vertical-align:middle;
     text-decoration:none;
-    border-right: solid 0px #e1e200;
+    background:#FF4F01 !important;
+    /*background:#ff2401 !important;*/
 }
+
 #amadeus-logo{
     padding:0px;
     display:block !important;

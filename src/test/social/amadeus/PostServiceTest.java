@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import social.amadeus.common.Constants;
 import social.amadeus.common.Utils;
 import social.amadeus.repository.AccountRepo;
@@ -28,9 +27,9 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:o-combined-test.xml")
-public class UserActivityTest {
+public class PostServiceTest {
 
-    private static final Logger log = Logger.getLogger(UserActivityTest.class);
+    private static final Logger log = Logger.getLogger(PostServiceTest.class);
 
     @Autowired
     private Utils utils;
@@ -56,10 +55,10 @@ public class UserActivityTest {
     @Before
     public void before(){
         authdAccount = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
-        Post postUno = MockUtils.getPost(authdAccount.getId(), utils.getPreviousDay(3));
-        Post postDos = MockUtils.getPost(authdAccount.getId(), utils.getPreviousDay(1));
-        Post postTres = MockUtils.getPost(authdAccount.getId(), utils.getPreviousDay(21));
-        Post postQuatro = MockUtils.getPost(authdAccount.getId(), utils.getPreviousDay(9));
+        Post postUno = PostMock.mock(authdAccount, utils.getPreviousDay(3));
+        Post postDos = PostMock.mock(authdAccount, utils.getPreviousDay(1));
+        Post postTres = PostMock.mock(authdAccount, utils.getPreviousDay(21));
+        Post postQuatro = PostMock.mock(authdAccount, utils.getPreviousDay(9));
 
         savedPostUno = postRepo.save(postUno);
         postRepo.publish(savedPostUno.getId());//uno
@@ -146,7 +145,7 @@ public class UserActivityTest {
     @Test
     public void testSaveUnpubd(){
         Account authdAccount = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
-        Post post = MockUtils.getPost(authdAccount.getId(), utils.getCurrentDate());
+        Post post = PostMock.mock(authdAccount, utils.getCurrentDate());
         savedPostCinco = postService.savePost(post, authdAccount, null, null);
         postRepo.publish(savedPostCinco.getId());
         List<Post> activity = getActivities();

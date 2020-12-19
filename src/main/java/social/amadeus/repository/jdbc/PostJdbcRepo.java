@@ -100,16 +100,27 @@ public class PostJdbcRepo implements PostRepo {
 	}
 
 
-	public List<Post> getActivity(long start, long end, long accountId){
+	public List<Post> getPosts(Account authdAccount){
+
+		String sql = "select * from posts " +
+				"where account_id = " + authdAccount.getId();
+
+		List<Post> posts = jdbcTemplate.query(sql, new BeanPropertyRowMapper<Post>(Post.class));
+
+		return posts;
+	}
+
+
+	public List<Post> getActivity(long start, long end, Account authdAccount){
 		
-		List<Friend> friends = friendRepo.getFriends(accountId);
+		List<Friend> friends = friendRepo.getFriends(authdAccount.getId());
 		Set<Long> ids = new HashSet<Long>();
 
 		for(Friend connection : friends) {
 			ids.add(connection.getFriendId());
 		}
 
-		ids.add(accountId);
+		ids.add(authdAccount.getId());
 
 		String idsString = StringUtils.join(ids, ",");
 
@@ -119,9 +130,9 @@ public class PostJdbcRepo implements PostRepo {
 							"where p.flagged = false and p.hidden = false and published = true and account_id in (" + idsString + ") " +
 								"and p.date_posted between " + start + " and " + end + " order by p.date_posted desc";
 
-		List<Post> feed = jdbcTemplate.query(sql, new BeanPropertyRowMapper<Post>(Post.class));
+		List<Post> activity = jdbcTemplate.query(sql, new BeanPropertyRowMapper<Post>(Post.class));
 
-		return feed;
+		return activity;
 	}
 
 
@@ -254,6 +265,18 @@ public class PostJdbcRepo implements PostRepo {
 
 		if(existinPostLike != null) return true;
 		return false;
+	}
+
+
+	public PostLike getPostLike(long postId, long accountId){
+		String sql = "select * from post_likes where post_id = ? and account_id = ?";
+		PostLike postLike = null;
+
+		try {
+			postLike = jdbcTemplate.queryForObject(sql, new Object[]{ postId, accountId }, new BeanPropertyRowMapper<PostLike>(PostLike.class));
+		}catch(Exception e){}
+
+		return postLike;
 	}
 
 
