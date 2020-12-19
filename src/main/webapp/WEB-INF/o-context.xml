@@ -23,7 +23,7 @@
 	</bean>  
 
 	
-	<bean id="utilities" class="social.amadeus.common.Utils"/>
+	<bean id="utils" class="social.amadeus.common.Utils"/>
 
 	<bean id="emailService" class="social.amadeus.service.EmailService"/>
 	<bean id="phoneService" class="social.amadeus.service.PhoneService"/>
