@@ -12,7 +12,7 @@
 
 <script type="text/paperscript" canvas="wethank">
     // The amount of symbol we want to place;
-    var count = 131;
+    var count = 10;
 
 
     var text = new PointText(new Point(200, 50))
