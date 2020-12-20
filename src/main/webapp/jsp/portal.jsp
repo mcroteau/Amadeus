@@ -396,8 +396,8 @@
         }
 
         var setData = function(response){
-            $scope.activities = response.data.activities
-            $scope.femsfellas = response.data.femsfellas
+            $scope.activities = response.data.posts
+            $scope.femsfellas = response.data.accounts
             $scope.memory = $scope.activities
 
             activityModel.set('memory', $scope.memory)
@@ -575,7 +575,7 @@
             var postId = $event.target.attributes['data-id'].value
             dataService.sharePost(postId, comment, function(){
                 $rootScope.renderModal = false
-                $route.reload()
+                $window.location.reload()
             })
         }
 
@@ -759,7 +759,7 @@
             $scope.friends = response.data.friends
 
             $http.get("/o/post/account/" + self.id).then(function(response){
-                $scope.activities = response.data
+                $scope.activities = response.data.posts
                 $timeout(setAnchors, 1300)
             })
             $http.get("/o/profile/data/views").then(function(response){

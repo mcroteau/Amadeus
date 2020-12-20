@@ -53,53 +53,25 @@ public class PostController {
 	@Autowired
 	private NotificationService notificationService;
 
-	@Autowired
-	private SyncService syncService;
 
 
 	@GetMapping(value="/post/{id}", produces="application/json")
 	public @ResponseBody String postData(@PathVariable String id){
-		Post post = postService.getPost(id);
-		return gson.toJson(post);
+		return gson.toJson(postService.getPost(id));
 	}
-	
 
 	@RequestMapping(value="/post/activity", method=RequestMethod.GET, produces="application/json")
 	public @ResponseBody String posts(HttpServletRequest req){
-
-		if(!authService.isAuthenticated()){
-			Map<String, Object> responseData = new HashMap<String, Object>();
-			responseData.put("error", "authentication required");
-			return gson.toJson(responseData);
-		}
-
-		Account authdAccount = authService.getAccount();
 		req.getSession().setAttribute(Constants.ACTIVITY_REQUEST_TIME, utils.getCurrentDate());
-		Map<String, Object> activityData = postService.getActivity(authdAccount);
-
-		return gson.toJson(activityData);
+		return gson.toJson(postService.getActivity());
 	}
-
 
 
 	@RequestMapping(value="/post/account/{id}", method=RequestMethod.GET, produces="application/json")
 	public @ResponseBody String posts(HttpServletRequest request,
 									  @PathVariable String id){
-
-
-		if(!authService.isAuthenticated()){
-			Map<String, Object> responseData = new HashMap<String, Object>();
-			responseData.put("error", "authentication required");
-			return gson.toJson(responseData);
-		}
-
-		Account authdAccount = authService.getAccount();
-		Account profileAccount = accountRepo.get(Long.parseLong(id));
-		List<Post> userActivity = postService.getUserActivity(profileAccount, authdAccount);
-
-		return gson.toJson(userActivity);
+		return gson.toJson(postService.getUserActivity(id));
 	}
-
 
 
 	@RequestMapping(value="/post/save", method=RequestMethod.POST, produces="application/json")
@@ -124,70 +96,16 @@ public class PostController {
 	}
 
 
-
 	@RequestMapping(value="/post/like/{id}", method=RequestMethod.POST,  produces="application/json")
 	public @ResponseBody String like(@PathVariable String id){
-
-		if(!authService.isAuthenticated()){
-			Map<String, Object> respData = new HashMap<>();
-			respData.put("error", "authentication required");
-			return gson.toJson(respData);
-		}
-
-		Map<String, Object> respData = postService.likePost(id);
-		return gson.toJson(respData);
+		return gson.toJson(postService.likePost(id));
 	}
 
 
-
-
 	@RequestMapping(value="/post/share/{id}", method=RequestMethod.POST,  produces="application/json")
-	public @ResponseBody String sharePost(HttpServletRequest request,
-									 		final RedirectAttributes redirect,
-									 		@PathVariable String id,
-										  	@RequestBody PostShare postShareComment){
-
-
-		Gson gson = new Gson();
-		Map<String, Object> response = new HashMap<String, Object>();
-
-		if(!authService.isAuthenticated()){
-			response.put("error", "authentication required");
-			String responseData = gson.toJson(response);
-			return responseData;
-		}
-
-		Account account = authService.getAccount();
-		long dateShared = utils.getCurrentDate();
-
-		PostShare postShare = new PostShare();
-		postShare.setAccountId(account.getId());
-		postShare.setPostId(Long.parseLong(id));
-		postShare.setComment(postShareComment.getComment());
-		if(postShare.getComment().contains("<style")){
-			postShare.setComment(postShare.getComment().replace("style", "") + "We caught a hacker!");
-		}
-
-		if(postShare.getComment().contains("<script")){
-			postShare.setComment(postShare.getComment().replace("script", "") + "We caught a hacker!");
-		}
-
-		postShare.setDateShared(dateShared);
-
-		PostShare savedPostShare = postRepo.sharePost(postShare);
-
-		response.put("success", savedPostShare);
-
-		String permission = Constants.POST_MAINTENANCE  + postShare.getAccountId() + ":" + savedPostShare.getId();
-		accountRepo.savePermission(account.getId(), permission);
-
-		Post existingPost = postRepo.get(Long.parseLong(id));
-
-		Notification notification = notificationService.createNotification(existingPost.getAccountId(), account.getId(), Long.parseLong(id), false, true, false);
-		notificationRepo.save(notification);
-
-		return gson.toJson(response);
-
+	public @ResponseBody String sharePost(@PathVariable String id,
+										  @RequestBody PostShare postShare){
+		return gson.toJson(postService.sharePost(id, postShare));
 	}
 
 
@@ -198,36 +116,8 @@ public class PostController {
 
 
 	@RequestMapping(value="/post/unshare/{id}", method=RequestMethod.DELETE,  produces="application/json")
-	public @ResponseBody String unshare(ModelMap model,
-									   HttpServletRequest request,
-									   final RedirectAttributes redirect,
-									   @PathVariable String id){
-
-		Map<String, Object> data = new HashMap<String, Object>();
-		Gson gson = new Gson();
-
-		if(!authService.isAuthenticated()){
-			data.put("error", "authentication required");
-			return gson.toJson(data);
-		}
-
-		Account authenticatedAccount = authService.getAccount();
-		String permission = Constants.POST_MAINTENANCE  + authenticatedAccount.getId() + ":" + id;
-		if(authService.hasPermission(permission)){
-			if(postRepo.deletePostShareComments(Long.parseLong(id))){
-				if(!postRepo.deletePostShare(Long.parseLong(id))){
-					data.put("error", "something went wrong...");
-					return gson.toJson(data);
-				}
-			}
-			data.put("success", true);
-		}else{
-			data.put("error", "permission required");
-		}
-
-
-		String json = gson.toJson(data);
-		return json;
+	public @ResponseBody String unshare(@PathVariable String id){
+		return gson.toJson(postService.unsharePost(id));
 	}
 
 
