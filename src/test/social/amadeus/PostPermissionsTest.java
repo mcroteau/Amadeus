@@ -54,6 +54,7 @@ public class PostPermissionsTest {
 
     /**
      * create post
+     * try to publish post with wrong user
      * try to update with wrong user
      * try to delete with wrong user
      * try to add images with wrong user
@@ -63,14 +64,25 @@ public class PostPermissionsTest {
     //-> drop created entities <-//
     @Before
     public void before() throws Exception{
-        Account adminAccount = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
-        Post post = PostMock.mock(adminAccount, utils.getCurrentDate());
-        savedPost = postService.savePost(post, adminAccount, null, null);
 
-        initRequestCycle();
+        mockRequestCycle();
+        parakeet.login(Constants.ADMIN_USERNAME, Constants.ADMIN_USERNAME);
+        Account adminAccount = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
+
+        Post post = PostMock.mock(adminAccount, utils.getCurrentDate());
+        savedPost = postService.savePost(post, null, null);
+
+        mockRequestCycle();
         parakeet.login(Constants.GUEST_USERNAME, Constants.GUEST_PASSWORD);
     }
 
+
+    @Test
+    public void testPublishWithWrongUser(){
+        String result = postService.publishPost(Long.toString(savedPost.getId()));
+        assertTrue(result.equals(Constants.REQUIRES_PERMISSION));
+        postRepo.delete(savedPost.getId());
+    }
 
     @Test
     public void testUpdateWithWrongUser(){
@@ -94,7 +106,7 @@ public class PostPermissionsTest {
     }
 
 
-    private void initRequestCycle(){
+    private void mockRequestCycle(){
         try {
             HttpServletRequest req = new MockHttpServletRequest();
             HttpServletResponse resp = new MockHttpServletResponse();

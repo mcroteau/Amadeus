@@ -106,15 +106,23 @@ public class PostController {
 	public @ResponseBody String share(@ModelAttribute("post") Post post,
 									  @RequestParam(value="imageFiles", required = false) CommonsMultipartFile[] imageFiles,
 									  @RequestParam(value="videoFile", required = false) CommonsMultipartFile videoFile){
-
-		if(!authService.isAuthenticated()){
-			post.setFailMessage("authentication required");
-		}
-
-		Account authdAccount = authService.getAccount();
-		Post savedPost = postService.savePost(post, authdAccount, imageFiles, videoFile);
-        return gson.toJson(savedPost);
+        return gson.toJson(postService.savePost(post, imageFiles, videoFile));
 	}
+
+
+	@RequestMapping(value="/post/publish/{id}", method=RequestMethod.POST)
+	public @ResponseBody String publish(ModelMap model,
+										@PathVariable String id) {
+		return gson.toJson(postService.publishPost(id));
+	}
+
+
+	@RequestMapping(value="/post/update/{id}", method=RequestMethod.POST)
+	public @ResponseBody String update(@ModelAttribute("post") Post post,
+									   @PathVariable String id){
+		return gson.toJson(postService.updatePost(id, post));
+	}
+
 
 
 	@RequestMapping(value="/post/like/{id}", method=RequestMethod.POST,  produces="application/json")
@@ -531,46 +539,6 @@ public class PostController {
 	public @ResponseBody String deleteImage(@PathVariable String id,
 											@RequestParam(value="imageUri", required = true) String imageUri){
 		return gson.toJson(postService.deletePostImage(id, imageUri));
-	}
-
-
-	@RequestMapping(value="/post/publish/{id}", method=RequestMethod.POST)
-	public @ResponseBody String publish(ModelMap model,
-									   @PathVariable String id) {
-
-		Gson gson = new Gson();
-		Map<String, Object> resp = new HashMap<String, Object>();
-
-		if (!authService.isAuthenticated()) {
-			resp.put("error", "authentication required");
-			return gson.toJson(resp);
-		}
-
-		String permission = Constants.POST_MAINTENANCE + id;
-		if (authService.hasPermission(permission)) {
-			postRepo.publish(Long.parseLong(id));
-			resp.put("success", true);
-		}else{
-			resp.put("error", "permission required");
-		}
-		return gson.toJson(resp);
-	}
-
-
-	@RequestMapping(value="/post/update/{id}", method=RequestMethod.POST)
-	public @ResponseBody String update(ModelMap model,
-						 @ModelAttribute("post") Post post,
-						 @PathVariable String id){
-
-		Map<String, Object> respData = new HashMap<String, Object>();
-
-		if(!authService.isAuthenticated()){
-			respData.put("fail", "authentication required");
-			return gson.toJson(respData);
-		}
-
-		Post updatedPost = postService.updatePost(id, post);
-		return gson.toJson(updatedPost);
 	}
 
 

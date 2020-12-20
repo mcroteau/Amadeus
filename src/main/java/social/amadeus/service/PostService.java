@@ -1,6 +1,7 @@
 package social.amadeus.service;
 
 import com.amazonaws.services.s3.model.PutObjectResult;
+import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.ocpsoft.prettytime.PrettyTime;
@@ -73,8 +74,14 @@ public class PostService {
         return post;
     }
 
-    public Post savePost(Post post, Account authdAccount, CommonsMultipartFile[] imageFiles, CommonsMultipartFile videoFile){
+    public Post savePost(Post post, CommonsMultipartFile[] imageFiles, CommonsMultipartFile videoFile){
 
+        if(!authService.isAuthenticated()){
+            post.setFailMessage("authentication required");
+            return post;
+        }
+
+        Account authdAccount = authService.getAccount();
 
         Map<String, String> imageLookup = new HashMap<>();
 
@@ -168,6 +175,22 @@ public class PostService {
         return savedPost;
     }
 
+
+    public String publishPost(String id){
+        if (!authService.isAuthenticated()) {
+            return Constants.AUTHENTICATION_REQUIRED;
+        }
+
+        String permission = Constants.POST_MAINTENANCE + id;
+        if (!authService.hasPermission(permission)) {
+            return Constants.REQUIRES_PERMISSION;
+        }
+        postRepo.publish(Long.parseLong(id));
+
+        return Constants.SUCCESS_MESSAGE;
+    }
+
+
     public PostImage getPostImage(String fileName, String imageUri, Post populatedPost){
         PostImage postImage = new PostImage();
         postImage.setPostId(populatedPost.getId());
@@ -179,6 +202,11 @@ public class PostService {
 
 
     public Post updatePost(String id, Post post){
+        if (!authService.isAuthenticated()) {
+            post.setFailMessage(Constants.AUTHENTICATION_REQUIRED);
+            return post;
+        }
+
         String permission = Constants.POST_MAINTENANCE  + id;
         if(!authService.hasPermission(permission)) {
             post.setFailMessage(Constants.REQUIRES_PERMISSION);
