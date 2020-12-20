@@ -162,7 +162,7 @@ public class PostService {
         accountRepo.savePermission(authdAccount.getId(), Constants.POST_MAINTENANCE  + savedPost.getId());
         Post populatedPost = setPostData(savedPost, authdAccount);
 
-        List<String> imageUris = savePostImages(imageLookup, populatedPost);
+        List<String> imageUris = savePostImages(populatedPost, imageLookup);
         populatedPost.setImageFileUris(imageUris);
 
         return savedPost;
@@ -181,7 +181,7 @@ public class PostService {
     public Post updatePost(String id, Post post){
         String permission = Constants.POST_MAINTENANCE  + id;
         if(!authService.hasPermission(permission)) {
-            post.setFailMessage("requires permission");
+            post.setFailMessage(Constants.REQUIRES_PERMISSION);
             return post;
         }
 
@@ -229,28 +229,36 @@ public class PostService {
     }
 
 
-    public boolean deletePost(String id){
+    public String deletePost(String id){
+
+        if(!authService.isAuthenticated()){
+            return Constants.AUTHENTICATION_REQUIRED;
+        }
+
         String permission = Constants.POST_MAINTENANCE  + id;
         if(!authService.hasPermission(permission)) {
-            return false;
+            return Constants.REQUIRES_PERMISSION;
         }
 
         Post post = postRepo.get(Long.parseLong(id));
         postRepo.hide(Long.parseLong(id));
-        return true;
+        return Constants.SUCCESS_MESSAGE;
     }
 
 
 
-    public boolean deletePostImage(String id, String imageUri){
+    public String deletePostImage(String id, String imageUri){
+        if(!authService.isAuthenticated()){
+            return Constants.AUTHENTICATION_REQUIRED;
+        }
         String permission = Constants.POST_MAINTENANCE  + id;
         if(!authService.hasPermission(permission)) {
-            return false;
+            return Constants.REQUIRES_PERMISSION;
         }
         PostImage postImage = postRepo.getImage(Long.parseLong(id), imageUri);
         syncService.delete(postImage.getFileName());
         postRepo.deletePostImage(Long.parseLong(id), imageUri);
-        return true;
+        return Constants.SUCCESS_MESSAGE;
     }
 
 
@@ -337,10 +345,33 @@ public class PostService {
         return data;
     }
 
-    public List<String> savePostImages(Map<String, String> imageLookup, Post populatedPost){
+    public String addPostImages(String id, CommonsMultipartFile[] imageFiles){
+
+        if(!authService.isAuthenticated()){
+            return Constants.AUTHENTICATION_REQUIRED;
+        }
+
+        String permission = Constants.POST_MAINTENANCE  + id;
+        if(!authService.hasPermission(permission)) {
+            return Constants.REQUIRES_PERMISSION;
+        }
+
+        Map<String, String> imageLookup = new HashMap<>();
+        if(imageFiles != null &&
+                imageFiles.length > 0) {
+            synchronizeImages(imageFiles, imageLookup);
+        }
+
+        Post post = postRepo.get(Long.parseLong(id));
+        savePostImages(post, imageLookup);
+
+        return Constants.SUCCESS_MESSAGE;
+    }
+
+    public List<String> savePostImages(Post post, Map<String, String> imageLookup){
         List<String> imageUris = new ArrayList<>();
         for (Map.Entry<String,String> image : imageLookup.entrySet()){
-            PostImage postImage = getPostImage(image.getKey(), image.getValue(), populatedPost);
+            PostImage postImage = getPostImage(image.getKey(), image.getValue(), post);
             postRepo.saveImage(postImage);
             imageUris.add(image.getValue());
         }

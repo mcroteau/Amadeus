@@ -2,6 +2,10 @@ package social.amadeus.common;
 
 public class Constants {
 
+	public static final String SUCCESS_MESSAGE = "complete";
+	public static final String AUTHENTICATION_REQUIRED = "authentication required";
+	public static final String REQUIRES_PERMISSION = "permission required";
+
 	public static final String AMADEUS_GROUP = "Amadeus";
 	public static final String PUBLISHING_JOB = "AmadeusPublishingJob";
 	public static final String PUBLISHING_JOB_TRIGGER = "AmadeusPublishingTrigger";

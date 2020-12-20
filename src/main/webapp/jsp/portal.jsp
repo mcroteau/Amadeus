@@ -41,10 +41,10 @@
     String viz = vizs[inx];
 %>
 
-    <iframe id="viz" src="<%=viz%>" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>
-<!-- <iframe src="/o/jsp/app/vis/pond.jsp" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe> -->
 
-    <canvas id="sugarcookie" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></canvas>
+<%--    <iframe id="viz" src="<%=viz%>" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>--%>
+<!-- <iframe src="/o/jsp/app/vis/pond.jsp" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe> -->
+<%--    <canvas id="sugarcookie" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></canvas>--%>
 
 
 

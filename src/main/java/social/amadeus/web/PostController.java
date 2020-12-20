@@ -184,21 +184,8 @@ public class PostController {
 
 
 	@RequestMapping(value="/post/delete/{id}", method=RequestMethod.DELETE,  produces="application/json")
-	public @ResponseBody String remove(ModelMap model,
-									 HttpServletRequest request,
-									 final RedirectAttributes redirect,
-									 @PathVariable String id){
-
-		Map<String, Object> respData = new HashMap<String, Object>();
-
-		if(!authService.isAuthenticated()){
-			respData.put("error", "authentication required");
-			return gson.toJson(respData);
-		}
-
-		boolean deleted = postService.deletePost(id);
-		respData.put("success", deleted);
-		return gson.toJson(respData);
+	public @ResponseBody String delete(@PathVariable String id){
+		return gson.toJson(postService.deletePost(id));
 	}
 
 
@@ -533,41 +520,9 @@ public class PostController {
 
 
 	@RequestMapping(value="/post/image/add/{id}", method=RequestMethod.POST, produces="application/json")
-	public @ResponseBody String share(ModelMap model,
-									  HttpServletRequest request,
-									  final RedirectAttributes redirect,
-									  @RequestParam(value="imageFiles", required = false) CommonsMultipartFile[] imageFiles,
-									  @PathVariable String id) {
-
-
-		Map<String, Object> response = new HashMap<String, Object>();
-		Gson gson = new Gson();
-
-		if(!authService.isAuthenticated()){
-			response.put("error", "authentication required");
-			String responseData = gson.toJson(response);
-			return responseData;
-		}
-
-		String permission = Constants.POST_MAINTENANCE  + id;
-		if(authService.hasPermission(permission)) {
-
-			Map<String, String> imageLookup = new HashMap<>();
-			if(imageFiles != null &&
-					imageFiles.length > 0) {
-				postService.synchronizeImages(imageFiles, imageLookup);
-			}
-
-			Post post = postRepo.get(Long.parseLong(id));
-			postService.savePostImages(imageLookup, post);
-
-			response.put("success", true);
-
-		}else{
-			response.put("error", "user does not have required permissions");
-		}
-
-		return gson.toJson(response);
+	public @ResponseBody String addImage(@PathVariable String id,
+									     @RequestParam(value="imageFiles", required=false) CommonsMultipartFile[] imageFiles) {
+		return gson.toJson(postService.addPostImages(id, imageFiles));
 	}
 
 
@@ -575,17 +530,7 @@ public class PostController {
 	@RequestMapping(value="/post/image/delete/{id}", method=RequestMethod.POST, produces="application/json")
 	public @ResponseBody String deleteImage(@PathVariable String id,
 											@RequestParam(value="imageUri", required = true) String imageUri){
-
-		Map<String, Object> respData = new HashMap<String, Object>();
-		if(!authService.isAuthenticated()){
-			respData.put("fail", "authentication required");
-			return gson.toJson(respData);
-		}
-
-		boolean deleted = postService.deletePostImage(id, imageUri);
-		respData.put("success", deleted);
-
-		return gson.toJson(respData);
+		return gson.toJson(postService.deletePostImage(id, imageUri));
 	}
 
 
