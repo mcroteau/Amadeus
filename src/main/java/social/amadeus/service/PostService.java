@@ -323,8 +323,107 @@ public class PostService {
 
         if(postRepo.deletePostShareComments(Long.parseLong(id))){
             if(!postRepo.deletePostShare(Long.parseLong(id)))
-                return Constants.SOMETHING;
+                return Constants.X_MESSAGE;
         }
+        return Constants.SUCCESS_MESSAGE;
+    }
+
+
+    public String savePostComment(String id, PostComment postComment){
+
+        if(!authService.isAuthenticated()){
+            return Constants.AUTHENTICATION_REQUIRED;
+        }
+
+        Account authdAccount = authService.getAccount();
+        if(postComment.getComment().equals("")){
+            return Constants.X_MESSAGE;
+        }
+
+        postComment.setPostId(Long.parseLong(id));
+        postComment.setAccountId(authdAccount.getId());
+        postComment.setDateCreated(utils.getCurrentDate());
+
+        if(postComment.getComment().contains("<style")){
+            postComment.setComment(postComment.getComment().replace("style", "") + "We caught a hacker!");
+        }
+        if(postComment.getComment().contains("<script")){
+            postComment.setComment(postComment.getComment().replace("script", "") + "We caught a hacker!");
+        }
+
+        PostComment savedComment = postRepo.savePostComment(postComment);
+        accountRepo.savePermission(authdAccount.getId(), Constants.COMMENT_MAINTENANCE  + savedComment.getId());
+
+        Post post = postRepo.get(Long.parseLong(id));
+
+        Notification notification = notificationService.createNotification(post.getAccountId(), authdAccount.getId(), Long.parseLong(id), false, false, true);
+        notificationRepo.save(notification);
+
+        return Constants.SUCCESS_MESSAGE;
+    }
+
+    public String deletePostComment(String id){
+        if(!authService.isAuthenticated()){
+            return Constants.AUTHENTICATION_REQUIRED;
+        }
+
+        String permission = Constants.COMMENT_MAINTENANCE + id;
+        if(!authService.hasPermission(permission)){
+            return Constants.REQUIRES_PERMISSION;
+        }
+        postRepo.deletePostComment(Long.parseLong(id));
+        return Constants.SUCCESS_MESSAGE;
+    }
+
+
+    public String savePostShareComment(String id, PostComment postComment){
+
+        if(!authService.isAuthenticated()){
+            return Constants.AUTHENTICATION_REQUIRED;
+        }
+
+        if(postComment.getComment().equals("")){
+            return Constants.X_MESSAGE;
+        }
+
+        Account authdAccount = authService.getAccount();
+
+        PostShareComment postShareComment = new PostShareComment();
+        postShareComment.setPostShareId(Long.parseLong(id));
+        postShareComment.setAccountId(authdAccount.getId());
+
+        if(postShareComment.getComment().contains("<style")){
+            postShareComment.setComment(postShareComment.getComment().replace("style", "") + "We caught a hacker!");
+        }
+        if(postShareComment.getComment().contains("<script")){
+            postShareComment.setComment(postShareComment.getComment().replace("script", "") + "We caught a hacker!");
+        }
+
+        postShareComment.setDateCreated(utils.getCurrentDate());
+        PostShareComment savedComment = postRepo.savePostShareComment(postShareComment);
+
+        accountRepo.savePermission(authdAccount.getId(), Constants.COMMENT_MAINTENANCE  + savedComment.getId());
+        PostShare postShare = postRepo.getPostShare(Long.parseLong(id));
+
+        Notification notification = notificationService.createNotification(postShare.getAccountId(), authdAccount.getId(), Long.parseLong(id), false, false, true);
+        notificationRepo.save(notification);
+
+        return Constants.SUCCESS_MESSAGE;
+    }
+
+
+    public String deletePostShareComment(String id){
+
+        if(!authService.isAuthenticated()){
+            return Constants.AUTHENTICATION_REQUIRED;
+        }
+
+        String permission = Constants.COMMENT_MAINTENANCE + id;
+        if(!authService.hasPermission(permission)){
+            return Constants.REQUIRES_PERMISSION;
+        }
+
+        postRepo.deletePostShareComment(Long.parseLong(id));
         return Constants.SUCCESS_MESSAGE;
     }
 

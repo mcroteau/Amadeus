@@ -105,8 +105,6 @@ create table post_comments(
 	id bigint PRIMARY KEY AUTO_INCREMENT,
 	post_id bigint NOT NULL REFERENCES posts(id),
 	account_id bigint NOT NULL REFERENCES account(id),
-	account_name character varying(155),
-	account_image_uri text,
     date_created bigint NOT NULL,
 	comment text
 );
@@ -115,8 +113,6 @@ create table post_share_comments(
 	id bigint PRIMARY KEY AUTO_INCREMENT,
 	post_share_id bigint NOT NULL REFERENCES post_shares(id),
 	account_id bigint NOT NULL REFERENCES account(id),
-	account_name character varying(155),
-	account_image_uri text,
     date_created bigint NOT NULL,
 	comment text
 );

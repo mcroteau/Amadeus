@@ -1,4 +1,3 @@
-
 CREATE TABLE account (
 	id bigint PRIMARY KEY AUTO_INCREMENT,
 	name varchar(55),
@@ -27,7 +26,6 @@ CREATE TABLE account_roles (
 	account_id bigint NOT NULL REFERENCES account(id)
 );
 
-
 CREATE TABLE posts (
 	id bigint PRIMARY KEY AUTO_INCREMENT,
 	account_id bigint NOT NULL REFERENCES account(id),
@@ -41,7 +39,6 @@ CREATE TABLE posts (
 	date_posted bigint NOT NULL,
 	update_date bigint
 );
-
 
 CREATE TABLE friends (
 	account_id bigint NOT NULL REFERENCES account(id),
@@ -105,24 +102,18 @@ create table mail_messages(
     opened boolean
 );
 
-
 create table post_comments(
 	id bigint PRIMARY KEY AUTO_INCREMENT,
 	post_id bigint NOT NULL REFERENCES posts(id),
 	account_id bigint NOT NULL REFERENCES account(id),
-	account_name varchar(155),
-	account_image_uri text,
     date_created bigint NOT NULL,
 	comment text
 );
-
 
 create table post_share_comments(
 	id bigint PRIMARY KEY AUTO_INCREMENT,
 	post_share_id bigint NOT NULL REFERENCES post_shares(id),
 	account_id bigint NOT NULL REFERENCES account(id),
-	account_name varchar(155),
-	account_image_uri text,
     date_created bigint NOT NULL,
 	comment text
 );

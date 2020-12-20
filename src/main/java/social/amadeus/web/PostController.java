@@ -123,153 +123,28 @@ public class PostController {
 
 	@RequestMapping(value="/post/comment/{id}", method=RequestMethod.POST, produces="application/json")
 	public @ResponseBody String postComment(@PathVariable String id,
-										    @RequestBody PostComment comment){
-
-
-		Map<String, Object> data = new HashMap<String, Object>();
-		Gson gson = new Gson();
-
-		if(!authService.isAuthenticated()){
-			data.put("error", "authentication required");
-			return gson.toJson(data);
-		}
-
-		Account account = authService.getAccount();
-		long date = utils.getCurrentDate();
-
-		if(comment.getComment().equals("")){
-			data.put("error", "comment is blank");
-			return gson.toJson(data);
-		}
-
-		PostComment postComment = new PostComment();
-		postComment.setPostId(Long.parseLong(id));
-		postComment.setAccountId(account.getId());
-		postComment.setAccountName(account.getName());
-		postComment.setAccountImageUri(account.getImageUri());
-		postComment.setComment(comment.getComment());
-		if(postComment.getComment().contains("<style")){
-			postComment.setComment(postComment.getComment().replace("style", "") + "We caught a hacker!");
-		}
-		if(postComment.getComment().contains("<script")){
-			postComment.setComment(postComment.getComment().replace("script", "") + "We caught a hacker!");
-		}
-
-		postComment.setDateCreated(date);
-		PostComment savedComment = postRepo.savePostComment(postComment);
-
-
-		accountRepo.savePermission(account.getId(), Constants.COMMENT_MAINTENANCE  + savedComment.getId());
-
-		Post post = postRepo.get(Long.parseLong(id));
-
-		Notification notification = notificationService.createNotification(post.getAccountId(), account.getId(), Long.parseLong(id), false, false, true);
-		notificationRepo.save(notification);
-
-		return gson.toJson(data);
-
+										    @RequestBody PostComment postComment){
+		return gson.toJson(postService.savePostComment(id, postComment));
 	}
 
 
 	@RequestMapping(value="/post_share/comment/{id}", method=RequestMethod.POST,  produces="application/json")
 	public @ResponseBody String shareComment(@PathVariable String id,
-										     @RequestBody PostComment comment){
-
-
-		Map<String, Object> data = new HashMap<String, Object>();
-		Gson gson = new Gson();
-
-		if(!authService.isAuthenticated()){
-			data.put("error", "authentication required");
-			return gson.toJson(data);
-		}
-
-		Account account = authService.getAccount();
-		long date = utils.getCurrentDate();
-
-		if(comment.getComment().equals("")){
-			data.put("error", "comment is blank");
-			return gson.toJson(data);
-		}
-
-		PostShareComment postShareComment = new PostShareComment();
-		postShareComment.setPostShareId(Long.parseLong(id));
-		postShareComment.setAccountId(account.getId());
-		postShareComment.setAccountName(account.getName());
-		postShareComment.setAccountImageUri(account.getImageUri());
-		postShareComment.setComment(comment.getComment());
-		if(postShareComment.getComment().contains("<style")){
-			postShareComment.setComment(postShareComment.getComment().replace("style", "") + "We caught a hacker!");
-		}
-		if(postShareComment.getComment().contains("<script")){
-			postShareComment.setComment(postShareComment.getComment().replace("script", "") + "We caught a hacker!");
-		}
-
-		postShareComment.setDateCreated(date);
-		PostShareComment savedComment = postRepo.savePostShareComment(postShareComment);
-
-		accountRepo.savePermission(account.getId(), Constants.COMMENT_MAINTENANCE  + savedComment.getId());
-		PostShare postShare = postRepo.getPostShare(Long.parseLong(id));
-
-		Notification notification = notificationService.createNotification(postShare.getAccountId(), account.getId(), Long.parseLong(id), false, false, true);
-		notificationRepo.save(notification);
-
-		return gson.toJson(data);
-
+										     @RequestBody PostComment postComment){
+		return gson.toJson(postService.savePostShareComment(id, postComment));
 	}
 
 
 	@RequestMapping(value="/post/delete_comment/{id}", method=RequestMethod.DELETE,  produces="application/json")
 	public @ResponseBody String deletePostComment(@PathVariable String id) {
-		Map<String, Object> data = new HashMap<String, Object>();
-		Gson gson = new Gson();
-
-		if(!authService.isAuthenticated()){
-			data.put("error", "authentication required");
-			return gson.toJson(data);
-		}
-
-		Long commentId = Long.parseLong(id);
-		String permission = Constants.COMMENT_MAINTENANCE + id;
-		if(authService.hasPermission(permission)){
-			postRepo.deletePostComment(commentId);
-			data.put("success", true);
-		}
-		else{
-			data.put("error", true);
-		}
-
-		return gson.toJson(data);
-
+		return gson.toJson(postService.deletePostComment(id));
 	}
-
 
 
 	@RequestMapping(value="/post_share/delete_comment/{id}", method=RequestMethod.DELETE,  produces="application/json")
 	public @ResponseBody String deletePostShareComment(@PathVariable String id) {
-		Map<String, Object> data = new HashMap<String, Object>();
-		Gson gson = new Gson();
-
-		if(!authService.isAuthenticated()){
-			data.put("error", "authentication required");
-			return gson.toJson(data);
-		}
-
-		Long commentId = Long.parseLong(id);
-		String permission = Constants.COMMENT_MAINTENANCE + id;
-		if(authService.hasPermission(permission)){
-			postRepo.deletePostShareComment(commentId);
-			data.put("success", true);
-		}
-		else{
-			data.put("error", true);
-		}
-
-		return gson.toJson(data);
-
+		return gson.toJson(postService.deletePostShareComment(id));
 	}
-
-
 
 
 	@RequestMapping(value="/post/hide/{id}", method=RequestMethod.POST,  produces="application/json")

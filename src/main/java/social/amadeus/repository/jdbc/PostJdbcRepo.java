@@ -399,44 +399,40 @@ public class PostJdbcRepo implements PostRepo {
 
 	public List<PostComment> getPostComments(long postId){
 		List<PostComment> postComments = null;
-
 		try {
-
-			String sql = "select * from post_comments where post_id = ? order by date_created asc";
-			postComments = jdbcTemplate.query(sql, new Object[]{ postId }, new BeanPropertyRowMapper<PostComment>(PostComment.class));
-
+			String sql = "select pc.id, pc.account_id, pc.date_created, pc.comment, " +
+					"a.name as account_name, a.image_uri as account_image_uri from post_comments " +
+					"inner join post_comments pc inner join account a on pc.account_id = a.id " +
+					"where pc.post_id = ? order by pc.date_created asc";
+			postComments = jdbcTemplate.query(sql, new Object[]{ postId }, new BeanPropertyRowMapper<>(PostComment.class));
 			if (postComments == null) postComments = new ArrayList<PostComment>();
-
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-
 		return postComments;
 	}
 
 
 	public List<PostShareComment> getPostShareComments(long postShareId){
 		List<PostShareComment> postShareComments = null;
-
 		try {
-
-			String sql = "select * from post_share_comments where post_share_id = ? order by date_created asc";
-			postShareComments = jdbcTemplate.query(sql, new Object[]{ postShareId }, new BeanPropertyRowMapper<PostShareComment>(PostShareComment.class));
-
-			if (postShareComments == null) postShareComments = new ArrayList<PostShareComment>();
-
+			String sql = "select psc.id, psc.account_id, psc.date_created, psc.comment, " +
+					"a.name as account_name, a.image_uri as account_image_uri from post_share_comments " +
+					"inner join post_share_comments psc inner join account a on psc.account_id = a.id " +
+					"where psc.post_share_id = ? order by psc.date_created asc";
+			postShareComments = jdbcTemplate.query(sql, new Object[]{ postShareId }, new BeanPropertyRowMapper<>(PostShareComment.class));
+			if (postShareComments == null) postShareComments = new ArrayList<>();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-
 		return postShareComments;
 	}
 
 
 	public PostComment savePostComment(PostComment postComment){
-		String sql = "insert into post_comments (post_id, account_id, account_name, account_image_uri, comment, date_created) values ( ?, ?, ?, ?, ?, ? )";
+		String sql = "insert into post_comments (post_id, account_id, comment, date_created) values ( ?, ?, ?, ? )";
 		jdbcTemplate.update(sql, new Object[] {
-			postComment.getPostId(), postComment.getAccountId(), postComment.getAccountName(), postComment.getAccountImageUri(), postComment.getComment(), postComment.getDateCreated()
+			postComment.getPostId(), postComment.getAccountId(), postComment.getComment(), postComment.getDateCreated()
 		});
 
 		long id = postCommentId();
@@ -446,9 +442,9 @@ public class PostJdbcRepo implements PostRepo {
 
 
 	public PostShareComment savePostShareComment(PostShareComment postShareComment){
-		String sql = "insert into post_share_comments (post_share_id, account_id, account_name, account_image_uri, comment, date_created) values ( ?, ?, ?, ?, ?, ? )";
+		String sql = "insert into post_share_comments (post_share_id, account_id, comment, date_created) values ( ?, ?, ?, ? )";
 		jdbcTemplate.update(sql, new Object[] {
-				postShareComment.getPostShareId(), postShareComment.getAccountId(), postShareComment.getAccountName(), postShareComment.getAccountImageUri(), postShareComment.getComment(), postShareComment.getDateCreated()
+				postShareComment.getPostShareId(), postShareComment.getAccountId(), postShareComment.getComment(), postShareComment.getDateCreated()
 		});
 
 		long id = postShareCommentId();
