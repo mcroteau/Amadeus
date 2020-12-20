@@ -95,7 +95,7 @@ public class PostService {
                 if(!utils.correctMimeType(list, videoFile)){
                     post.setFailMessage("Video file must be mp4.");
                 }else{
-                    syncService.send(videoFileName, "", videoFile.getInputStream());
+                    syncService.send(videoFileName, videoFile.getInputStream());
                     post.setVideoFileUri(Constants.HTTPS + Constants.DO_ENDPOINT + "/" + videoFileName);
                     post.setVideoFileName(videoFileName);
                 }
@@ -163,8 +163,6 @@ public class PostService {
         Post populatedPost = setPostData(savedPost, authdAccount);
 
         List<String> imageUris = savePostImages(imageLookup, populatedPost);
-
-        //for the view yo!
         populatedPost.setImageFileUris(imageUris);
 
         return savedPost;
@@ -249,6 +247,8 @@ public class PostService {
         if(!authService.hasPermission(permission)) {
             return false;
         }
+        PostImage postImage = postRepo.getImage(Long.parseLong(id), imageUri);
+        syncService.delete(postImage.getFileName());
         postRepo.deletePostImage(Long.parseLong(id), imageUri);
         return true;
     }
@@ -355,7 +355,7 @@ public class PostService {
                 String fileName = utils.generateFileName(imageFile);
                 String imageUri = Constants.HTTPS + Constants.DO_ENDPOINT + "/" + fileName;
 
-                syncService.send(fileName, "", imageFile.getInputStream());
+                syncService.send(fileName, imageFile.getInputStream());
                 imageLookup.put(fileName, imageUri);
             }catch(IOException ex){
                 ex.printStackTrace();

@@ -2679,9 +2679,10 @@ p{
 	-moz-border-radius: 7px;
 	-webkit-border-radius: 7px;
 }
-.user-status{
-    height:7px;
-    width:7px;
+.user-status,
+.user-status-shared{
+    height:4px;
+    width:4px;
     top:7px;
     right:7px;
     position:absolute;
@@ -2690,7 +2691,14 @@ p{
     -moz-border-radius: 7px;
     -webkit-border-radius: 7px;
 }
+
+.user-status-shared{
+    height:2px;
+    width:2px;
+}
+
 .user-status.online,
+.user-status-shared.online,
 .activity-status.online{
     background:#31f500;
     border: solid 2px #efefef;

@@ -5,10 +5,7 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.PutObjectResult;
+import com.amazonaws.services.s3.model.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import social.amadeus.common.Constants;
@@ -27,7 +24,7 @@ public class SyncService {
     @Value("${digital.ocean.secret}")
     private String secret;
 
-    public PutObjectResult send(String name, String bucket, InputStream stream){
+    public PutObjectResult send(String name, InputStream stream){
         try {
 
             BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(key, secret);
@@ -47,6 +44,23 @@ public class SyncService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public boolean delete(String name){
+        try {
+
+            BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(key, secret);
+            AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
+                    .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(Constants.DO_ENDPOINT, Constants.DO_REGION))
+                    .withCredentials(new AWSStaticCredentialsProvider(basicAWSCredentials)).build();
+
+            s3Client.deleteObject(new DeleteObjectRequest("", name));
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
 }

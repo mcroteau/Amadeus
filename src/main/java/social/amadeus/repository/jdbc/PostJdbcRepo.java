@@ -294,6 +294,11 @@ public class PostJdbcRepo implements PostRepo {
 		return true;
 	}
 
+	public List<PostShare> getPostShares(long postId){
+		String sql = "select * from post_shares where post_id = ?";
+		List<PostShare> postShares = jdbcTemplate.query(sql, new Object[]{ postId }, new BeanPropertyRowMapper<PostShare>(PostShare.class));
+		return postShares;
+	}
 
 	public List<PostShare> getPostShares(long start, long end, long accountId){
 
@@ -306,9 +311,6 @@ public class PostJdbcRepo implements PostRepo {
 		}
 
 		ids.add(accountId);
-
-		//System.out.println(StringUtils.join(ids, "|"));
-
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("ids", ids);
 
@@ -362,10 +364,8 @@ public class PostJdbcRepo implements PostRepo {
 		List<PostShare> postShares = new ArrayList<PostShare>();
 
 		try {
-
 			String sql = "select * from post_shares where post_id = ?";
 			postShares = jdbcTemplate.query(sql, new Object[]{ postId }, new BeanPropertyRowMapper<PostShare>(PostShare.class));
-
 		}catch(Exception e){
 			return false;
 		}
@@ -484,6 +484,12 @@ public class PostJdbcRepo implements PostRepo {
 		return true;
 	}
 
+	public PostImage getImage(long id, String uri) {
+		String sql = "select * from post_images where post_id = ? and uri = ?";
+		PostImage postImage = jdbcTemplate.queryForObject(sql, new Object[]{ id, uri }, new BeanPropertyRowMapper<PostImage>(PostImage.class));
+		return postImage;
+	}
+
 	public List<PostImage> getImages(long id) {
 		List<PostImage> postImages = null;
 
@@ -491,7 +497,7 @@ public class PostJdbcRepo implements PostRepo {
 			String sql = "select * from post_images where post_id = ?";
 			postImages = jdbcTemplate.query(sql, new Object[]{ id }, new BeanPropertyRowMapper<PostImage>(PostImage.class));
 
-			if (postImages == null) postImages = new ArrayList<PostImage>();
+			if (postImages == null) postImages = new ArrayList<>();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
