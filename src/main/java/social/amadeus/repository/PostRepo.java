@@ -50,6 +50,8 @@ public interface PostRepo {
 
 	public List<PostShare> getPostShares(long start, long end, long accountId);
 
+	public List<PostShare> getPostShares(long postId);
+
 	public List<PostShare> getUserPostShares(long accountId);
 
 	public PostShare getPostShare(long postShareId);
@@ -77,6 +79,8 @@ public interface PostRepo {
 	public boolean deletePostShareComment(long id);
 
 	public boolean deletePostShareComments(long postShareId);//TODO:
+
+	public PostImage getImage(long id, String uri);
 
 	public List<PostImage> getImages(long id);
 

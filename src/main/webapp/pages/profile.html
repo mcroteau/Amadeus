@@ -87,10 +87,11 @@
 
         <div id="profile-posts-container">
             <div id="profile-posts" ng-controller="mixController">
-                <div class="feed-content-container" ng-repeat="post in activities" id="post-{{post.id}}" ng-if="!post.hidden && !post.flagged">
+                <div class="feed-content-container" ng-repeat="post in activities" id="post-{{post.id}}" ng-if="!post.flagged">
 
                     <span ng-if="post.postEditable && post.content != null" class="edit-click tiny yella edit-fade-in" data-i18n="click.edit">Click to Edit</span>
-                    <span ng-if="post.status == 'online'" class="user-status online">&nbsp;</span>
+                    <span ng-if="!post.shared && post.status == 'online'" class="user-status online">&nbsp;</span>
+                    <span ng-if="post.shared && post.status == 'online'" class="user-status-shared online">&nbsp;</span>
 
                     <div ng-if="post.shared" class="shared-post-container" >
 
@@ -114,7 +115,7 @@
 
                     <div ng-class="{'shared': post.shared}" class="feed-content">
 
-                        <div ng-if="!post.advertisement" class="post-meta" style="position: relative">
+                        <div ng-if="!post.advertisement && !post.hidden" class="post-meta" style="position: relative">
 
                             <a ng-href="#!/profile/{{post.accountId}}" href="javascript:" class="post-whois" data-id="{{post.accountId}}">
                                 <img ng-src="/o/{{post.imageUri}}"/>
@@ -141,17 +142,24 @@
                                 </a>
                             </div>
 
+
                             <video controls ng-if="post.videoFileUri" ng-src="{{post.videoFileUri}}" style="width:100%" data-video-uri="{{post.videoFileUri}}"></video>
+
 
                             <div ng-if="post.postEditable" style="white-space: pre-line;" class="post-comment" contenteditable="true" id="post-content-{{post.id}}" ng-bind-html="post.content"></div>
 
-                            <div ng-if="!post.postEditable" style="white-space: pre-line;" class="post-comment" ng-bind-html="post.content"></div>
+                            <div ng-if="!post.postEditable && !post.hidden" style="white-space: pre-line;" class="post-comment" ng-bind-html="post.content"></div>
+
+                            <div ng-if="!post.postEditable && post.hidden" style="white-space: pre-line;" class="post-comment yella">The content may not be available per the user's request any longer.<br/><br/></div>
+
+
+
 
                             <div ng-if="post.advertisement" style="padding:0px 10px 0px 30px;text-align:right"><span class="tiny" data-i18n="ad.text">Ad</span></div>
 
                         </div>
 
-                        <div ng-if="!post.advertisement" class="content-actions">
+                        <div ng-if="!post.advertisement && !post.hidden" class="content-actions">
 
                             <div ng-if="!post.shared && post.postEditable">
                                 <a ng-click="updatePost(post.id)" href="javascript:" class="button small retro edit-update-button edit-fade-in" data-i18n="update.button">Update</a>
@@ -212,7 +220,9 @@
                             <br class="clear"/>
                         </div>
 
-                        <div ng-if="!post.advertisement" class="comments-container" style="margin-left:62px;">
+                        <div ng-if="!post.advertisement && post.hidden" style="height:70px;"></div>
+
+                        <div ng-if="!post.advertisement && !post.hidden" class="comments-container" style="margin-left:62px;">
 
                             <div ng-if="post.commentsOrShareComments" class="comments-header-spacer"></div>
 
@@ -269,21 +279,23 @@
                         </div>
                     </div>
 
-                    <div ng-if="!post.advertisement && post.shared" ng-click="toggleActions($index)" class="post-admin-actions-wrapper">&Xi;
-                        <div ng-show="showActions[$index]" class="post-admin-actions-inner" style="position:relative;">
-                            <div class="post-admin-actions">
-                                <a ng-click="unsharePost(post.postShareId)" ng-if="post.deletable"  href="javascript:" class="delete-post-share" data-id="{{post.postShareId}}" data-i18n="delete.post">Unshare Post</a>
-                                <a ng-click="flagPost(post.id, true)" href="javascript:" class="flag-post" data-id="{{post.id}}" data-shared="true" data-i18n="flag.post">Flag Post</a>
-                                <a ng-click="hidePost(post.id)" href="javascript:" class="hide-post" data-id="{{post.id}}" data-i18n="hide.post">Hide Post</a>
+                    <div ng-if="!post.hidden || post.deletable">
+                        <div ng-if="!post.advertisement && post.shared" ng-click="toggleActions($index)" class="post-admin-actions-wrapper">&Xi;
+                            <div ng-show="showActions[$index]" class="post-admin-actions-inner" style="position:relative;">
+                                <div class="post-admin-actions">
+                                    <a ng-click="unsharePost(post.postShareId)" ng-if="post.deletable"  href="javascript:" class="delete-post-share" data-id="{{post.postShareId}}" data-i18n="delete.post">Unshare Post</a>
+                                    <a ng-click="flagPost(post.id, true)" href="javascript:" class="flag-post" data-id="{{post.id}}" data-shared="true" data-i18n="flag.post">Flag Post</a>
+                                    <a ng-click="hidePost(post.id)" href="javascript:" class="hide-post" data-id="{{post.id}}" data-i18n="hide.post">Hide Post</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div ng-if="!post.advertisement && !post.shared" ng-click="toggleActions($index)" class="post-admin-actions-wrapper">&Xi;
-                        <div ng-show="showActions[$index]"  class="post-admin-actions-inner" style="position:relative;">
-                            <div class="post-admin-actions">
-                                <a ng-click="deletePost(post.id)" ng-if="post.deletable" href="javascript:" class="delete-post" data-id="{{post.id}}" data-i18n="delete.post">Delete Post</a>
-                                <a ng-click="flagPost(post.id, false)" href="javascript:" class="flag-post" data-id="{{post.id}}" data-shared="false" data-i18n="flag.post">Flag Post</a>
-                                <a ng-click="hidePost(post.id)" href="javascript:" class="hide-post" data-id="{{post.id}}" data-i18n="hide.post">Hide Post</a>
+                        <div ng-if="!post.advertisement && !post.shared" ng-click="toggleActions($index)" class="post-admin-actions-wrapper">&Xi;
+                            <div ng-show="showActions[$index]"  class="post-admin-actions-inner" style="position:relative;">
+                                <div class="post-admin-actions">
+                                    <a ng-click="deletePost(post.id)" ng-if="post.deletable" href="javascript:" class="delete-post" data-id="{{post.id}}" data-i18n="delete.post">Delete Post</a>
+                                    <a ng-click="flagPost(post.id, false)" href="javascript:" class="flag-post" data-id="{{post.id}}" data-shared="false" data-i18n="flag.post">Flag Post</a>
+                                    <a ng-click="hidePost(post.id)" href="javascript:" class="hide-post" data-id="{{post.id}}" data-i18n="hide.post">Hide Post</a>
+                                </div>
                             </div>
                         </div>
                     </div>

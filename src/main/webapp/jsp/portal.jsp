@@ -597,7 +597,6 @@
 
         $scope.removePost = function(id, list){
             angular.forEach(list, function(element, index){
-                console.log(element.id, id)
                 if(element.id === id){
                     list.splice(index, 1)
                 }
@@ -607,7 +606,9 @@
         $scope.unsharePost = function(shareId){
             var confirmed = confirm("Are you sure you want to unshare this post?")
             if(confirmed) {
-                $http.delete("/o/post/unshare/" + shareId).then($window.location.reload);
+                $http.delete("/o/post/unshare/" + shareId).then(function(){
+                    $window.location.reload()
+                });
             }
         }
 
