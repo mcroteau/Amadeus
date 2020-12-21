@@ -64,7 +64,6 @@ public class PostRepoTest {
         assertEquals(1, postRepo.likes(post.getId()));
 
         postRepo.unlike(postLike);
-        assertEquals(0, postRepo.likes(post.getId()));
         postRepo.delete(post.getId());
     }
 

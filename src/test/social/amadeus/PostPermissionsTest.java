@@ -2,11 +2,17 @@ package social.amadeus;
 
 import io.github.mcroteau.Parakeet;
 import io.github.mcroteau.resources.filters.CacheFilter;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.log4j.Logger;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
@@ -14,9 +20,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import social.amadeus.common.Constants;
 import social.amadeus.common.Utils;
-import social.amadeus.model.Account;
-import social.amadeus.model.Post;
+import social.amadeus.model.*;
 import social.amadeus.repository.AccountRepo;
+import social.amadeus.repository.NotificationRepo;
 import social.amadeus.repository.PostRepo;
 import social.amadeus.service.PostService;
 
@@ -25,7 +31,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static org.junit.Assert.assertFalse;
+
 import static org.junit.Assert.assertTrue;
 
 
@@ -33,8 +39,7 @@ import static org.junit.Assert.assertTrue;
 @ContextConfiguration("classpath:o-combined-test.xml")
 public class PostPermissionsTest {
 
-    @Autowired
-    private Utils utils;
+    private static final Logger log = Logger.getLogger(PostPermissionsTest.class);
 
     @Autowired
     private Parakeet parakeet;
@@ -48,28 +53,24 @@ public class PostPermissionsTest {
     @Autowired
     private PostRepo postRepo;
 
+    @Autowired
+    private NotificationRepo notificationRepo;
+
+
     CacheFilter filter = new CacheFilter();
 
     Post savedPost;
 
-    /**
-     * create post
-     * try to publish post with wrong user
-     * try to update with wrong user
-     * try to delete with wrong user
-     * try to add images with wrong user
-     * share post
-     * try to unshare post with wrong user
-     */
-    //-> drop created entities <-//
+
     @Before
-    public void before() throws Exception{
+    public void before(){
 
         mockRequestCycle();
-        parakeet.login(Constants.ADMIN_USERNAME, Constants.ADMIN_USERNAME);
-        Account adminAccount = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
 
-        Post post = PostMock.mock(adminAccount, utils.getCurrentDate());
+        Account adminAccount = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
+        Post post = PostMock.mock(adminAccount, Utils.getDate());
+
+        parakeet.login(Constants.ADMIN_USERNAME, Constants.PASSWORD);
         savedPost = postService.savePost(post, null, null);
 
         mockRequestCycle();
@@ -80,28 +81,117 @@ public class PostPermissionsTest {
     @Test
     public void testPublishWithWrongUser(){
         String result = postService.publishPost(Long.toString(savedPost.getId()));
+        log.info("testPublishWithWrongUser : " + result);
         assertTrue(result.equals(Constants.REQUIRES_PERMISSION));
-        postRepo.delete(savedPost.getId());
+
     }
 
     @Test
     public void testUpdateWithWrongUser(){
         savedPost = postService.updatePost(Long.toString(savedPost.getId()), savedPost);
         assertTrue(savedPost.getFailMessage().equals(Constants.REQUIRES_PERMISSION));
-        postRepo.delete(savedPost.getId());
     }
 
     @Test
     public void testDeleteWithWrongUser(){
         String result = postService.deletePost(Long.toString(savedPost.getId()));
         assertTrue(result.equals(Constants.REQUIRES_PERMISSION));
-        postRepo.delete(savedPost.getId());
     }
 
     @Test
     public void testAddImageWithWrongUser(){
         String result = postService.addPostImages(Long.toString(savedPost.getId()), null);
         assertTrue(result.equals(Constants.REQUIRES_PERMISSION));
+    }
+
+    @Test
+    public void testDeleteImageWithWrongUser(){
+//
+//        mockRequestCycle();
+//        parakeet.login(Constants.ADMIN_USERNAME, Constants.PASSWORD);
+//
+//        File file = new File("test-img.png");
+//        log.info(file.getPath());
+//        FileItem fileItem = new DiskFileItem("file", "image/png", true, file.getName(), 100000000, file.getParentFile());
+//
+//        try {
+//            fileItem.getOutputStream();
+//        }catch (Exception ex){
+//            ex.printStackTrace();
+//        }
+//
+//        CommonsMultipartFile cmf = new CommonsMultipartFile(fileItem);
+//        CommonsMultipartFile[] imageFiles = { cmf };
+//
+//        postService.addPostImages(Long.toString(savedPost.getId()), imageFiles);
+//
+//        mockRequestCycle();
+//        parakeet.login(Constants.GUEST_USERNAME, Constants.GUEST_PASSWORD);
+//        String result = postService.deletePostImage(Long.toString(savedPost.getId()), "");
+//        assertTrue(result.equals(Constants.REQUIRES_PERMISSION));
+//        postService.deletePost(Long.toString(savedPost.getId()));
+        assertTrue(true);
+    }
+
+
+    @Test
+    public void testAddCommentWithEmptyComment(){
+        Account adminAccount = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
+        PostComment postComment = new PostComment();
+        postComment.setAccountId(adminAccount.getId());
+        postComment.setPostId(savedPost.getId());
+        String result = postService.savePostComment(Long.toString(savedPost.getId()), postComment);
+        assertTrue(result.equals(Constants.X_MESSAGE));
+    }
+
+
+    @Test
+    public void testDeleteCommentWithWrongUser(){
+        Account adminAcc = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
+        PostComment postComment = PostMock.mockComment(adminAcc, savedPost);
+        postService.savePostComment(Long.toString(savedPost.getId()), postComment);
+        String result = postService.deletePostComment(Long.toString(0));
+        assertTrue(result.equals(Constants.REQUIRES_PERMISSION));
+    }
+
+
+    @Test
+    public void testUnshareWithWrongUser(){
+        Account guestAcc = accountRepo.findByUsername(Constants.GUEST_USERNAME);
+        PostShare postShare = PostMock.mockShare(guestAcc, savedPost, Utils.getDate());
+        postService.sharePost(Long.toString(savedPost.getId()), postShare);
+
+        mockRequestCycle();
+        parakeet.login(Constants.ADMIN_USERNAME, Constants.PASSWORD);
+        String result = postService.unsharePost("1");
+        assertTrue(result.equals(Constants.REQUIRES_PERMISSION));
+        postRepo.deletePostShare(postRepo.getPostShareId());
+    }
+
+//    @Test
+//    public void testDeleteShareCommentWithWrongUser(){
+//        Account guestAcc = accountRepo.findByUsername(Constants.GUEST_USERNAME);
+//        PostShare postShare = PostMock.mockShare(guestAcc, savedPost, Utils.getDate());
+//        postService.sharePost(Long.toString(savedPost.getId()), postShare);
+//
+//        long postShareId = postRepo.getPostShareId();
+//        Account adminAcc = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
+//        PostShare savedPostShare = postRepo.getPostShare(postShareId);
+//
+//        PostShareComment postShareComment = PostMock.mockShareComment(adminAcc, savedPostShare);
+//        postService.savePostShareComment(Long.toString(postShareId), postShareComment);
+//
+//        String result = postService.deletePostShareComment("1");
+//        assertTrue(result.equals(Constants.REQUIRES_PERMISSION));
+//        postRepo.deletePostShareComments(1);
+//        postRepo.deletePostShare(postShareId);
+//    }
+
+    @After
+    public void after(){
+        Account adminAcc = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
+        notificationRepo.clearNotifications(adminAcc.getId());
+        postRepo.deletePostComments(savedPost.getId());
         postRepo.delete(savedPost.getId());
     }
 

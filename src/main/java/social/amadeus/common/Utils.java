@@ -331,6 +331,12 @@ public class Utils {
 
 
 
+	public static long getDate() {
+		Calendar cal = Calendar.getInstance();
+		long date = getSearchDateFormatted(cal);
+		return date;
+	}
+
 	public long getCurrentDate() {
         Calendar cal = Calendar.getInstance();
         long date = getDateFormatted(cal);
@@ -344,24 +350,10 @@ public class Utils {
         return date;
 	}
 
-	public long getPrevious7Days() {
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DAY_OF_MONTH, -7);
-		long date = getDateFormatted(cal);
-		return date;
-	}
-
-	public long getPrevious14Days(){
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DAY_OF_MONTH, -14);
-		long date = getDateFormatted(cal);
-		return date;
-	}
-
-	public long getPreviousMonth() {
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DAY_OF_MONTH, -31);
-		long date = getDateFormatted(cal);
+	private static long getSearchDateFormatted(Calendar cal) {
+		DateFormat df = new SimpleDateFormat(Constants.DATE_SEARCH_FORMAT);
+		String dateStr = df.format(cal.getTime());
+		long date = Long.parseLong(dateStr);
 		return date;
 	}
 

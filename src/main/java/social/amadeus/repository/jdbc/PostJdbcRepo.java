@@ -68,9 +68,7 @@ public class PostJdbcRepo implements PostRepo {
 		String sql = "select * from posts where id = ?";
 		
 		Post post = jdbcTemplate.queryForObject(sql, new Object[] { id }, 
-				new BeanPropertyRowMapper<Post>(Post.class));
-		
-		if(post == null) post = new Post();
+				new BeanPropertyRowMapper<>(Post.class));
 
 		return post;
 	}
@@ -80,9 +78,7 @@ public class PostJdbcRepo implements PostRepo {
 		String sql = "select * from post_comments where id = ?";
 
 		PostComment comment = jdbcTemplate.queryForObject(sql, new Object[] { id },
-				new BeanPropertyRowMapper<PostComment>(PostComment.class));
-
-		if(comment == null) comment = new PostComment();
+				new BeanPropertyRowMapper<>(PostComment.class));
 
 		return comment;
 	}
@@ -154,29 +150,6 @@ public class PostJdbcRepo implements PostRepo {
 		return jdbcTemplate.queryForObject(sql, new Object[] { }, Long.class);
 	}
 
-//Remove
-//	public List<Post> getLatestSkinny(long start, long end, long accountId){
-//
-//		List<Friend> friends = friendRepo.getFriends(accountId);
-//		Set<Long> ids = new HashSet<Long>();
-//
-//		for(Friend connection : friends) {
-//			ids.add(connection.getFriendId());
-//		}
-//
-//		ids.add(accountId);
-//		String idsString = StringUtils.join(ids, ",");
-//
-//		String sql = "select a.name from " +
-//				"posts p inner join account a on p.account_id = a.id " +
-//				"where account_id in (" + idsString + ") " +
-//				"and p.published = true and p.date_posted between " + start + " and " + end + "";
-//
-//		List<Post> latest = jdbcTemplate.query(sql, new BeanPropertyRowMapper<Post>(Post.class));
-//
-//		return latest;
-//	}
-
 
 	@Override
 	public List<Post> getUserPosts(long accountId) {
@@ -194,7 +167,7 @@ public class PostJdbcRepo implements PostRepo {
 	public Post save(Post post){
 		String sql = "insert into posts (account_id, content, video_file_uri, video_file_name, date_posted, update_date, hidden, flagged, published ) values ( ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 		jdbcTemplate.update(sql, new Object[] { 
-			post.getAccountId(), post.getContent(), post.getVideoFileUri(), post.getVideoFileName(), post.getDatePosted(), post.getUpdateDate(), post.isHidden(), false, false
+			post.getAccountId(), post.getContent(), post.getVideoFileUri(), post.getVideoFileName(), post.getDatePosted(), post.getUpdateDate(), false, false, false
 		});
 		long id = id();
 		Post savedPost = get(id);
@@ -349,12 +322,7 @@ public class PostJdbcRepo implements PostRepo {
 
 	public PostShare getPostShare(long postShareId){
 		String sql = "select * from post_shares where id = ?";
-		PostShare postShare = null;
-
-		try {
-			postShare = jdbcTemplate.queryForObject(sql, new Object[]{ postShareId }, new BeanPropertyRowMapper<PostShare>(PostShare.class));
-		}catch(Exception e){}
-
+		PostShare postShare = jdbcTemplate.queryForObject(sql, new Object[]{ postShareId }, new BeanPropertyRowMapper<PostShare>(PostShare.class));
 		return postShare;
 	}
 
@@ -400,7 +368,7 @@ public class PostJdbcRepo implements PostRepo {
 	public List<PostComment> getPostComments(long postId){
 		List<PostComment> postComments = null;
 		try {
-			String sql = "select pc.id, pc.account_id, pc.date_created, pc.comment, " +
+			String sql = "select distinct pc.id, pc.account_id, pc.date_created, pc.comment, " +
 					"a.name as account_name, a.image_uri as account_image_uri from post_comments " +
 					"inner join post_comments pc inner join account a on pc.account_id = a.id " +
 					"where pc.post_id = ? order by pc.date_created asc";
@@ -416,7 +384,7 @@ public class PostJdbcRepo implements PostRepo {
 	public List<PostShareComment> getPostShareComments(long postShareId){
 		List<PostShareComment> postShareComments = null;
 		try {
-			String sql = "select psc.id, psc.account_id, psc.date_created, psc.comment, " +
+			String sql = "select distinct psc.id, psc.account_id, psc.date_created, psc.comment, " +
 					"a.name as account_name, a.image_uri as account_image_uri from post_share_comments " +
 					"inner join post_share_comments psc inner join account a on psc.account_id = a.id " +
 					"where psc.post_share_id = ? order by psc.date_created asc";
@@ -430,6 +398,7 @@ public class PostJdbcRepo implements PostRepo {
 
 
 	public PostComment savePostComment(PostComment postComment){
+		log.info(postComment.getPostId());
 		String sql = "insert into post_comments (post_id, account_id, comment, date_created) values ( ?, ?, ?, ? )";
 		jdbcTemplate.update(sql, new Object[] {
 			postComment.getPostId(), postComment.getAccountId(), postComment.getComment(), postComment.getDateCreated()

@@ -6,23 +6,15 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.ui.ModelMap;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import java.io.IOException;
-import java.util.*;
-
-import social.amadeus.common.Constants;
-import social.amadeus.common.Utils;
-import social.amadeus.repository.*;
-import social.amadeus.model.*;
-import social.amadeus.service.AuthService;
-import social.amadeus.service.NotificationService;
 import social.amadeus.service.PostService;
-import social.amadeus.service.SyncService;
+import social.amadeus.common.Utils;
+import social.amadeus.common.Constants;
+import social.amadeus.model.*;
 
 
 @Controller
@@ -33,26 +25,7 @@ public class PostController {
 	Gson gson = new Gson();
 
 	@Autowired
-	private PostRepo postRepo;
-
-	@Autowired
-	private AccountRepo accountRepo;
-
-	@Autowired
-	private Utils utils;
-
-	@Autowired
-	private NotificationRepo notificationRepo;
-
-	@Autowired
-	private AuthService authService;
-
-	@Autowired
 	private PostService postService;
-
-	@Autowired
-	private NotificationService notificationService;
-
 
 
 	@GetMapping(value="/post/{id}", produces="application/json")
@@ -60,9 +33,10 @@ public class PostController {
 		return gson.toJson(postService.getPost(id));
 	}
 
+
 	@RequestMapping(value="/post/activity", method=RequestMethod.GET, produces="application/json")
 	public @ResponseBody String posts(HttpServletRequest req){
-		req.getSession().setAttribute(Constants.ACTIVITY_REQUEST_TIME, utils.getCurrentDate());
+		req.getSession().setAttribute(Constants.ACTIVITY_REQUEST_TIME, Utils.getDate());
 		return gson.toJson(postService.getActivity());
 	}
 
@@ -130,165 +104,57 @@ public class PostController {
 
 	@RequestMapping(value="/post_share/comment/{id}", method=RequestMethod.POST,  produces="application/json")
 	public @ResponseBody String shareComment(@PathVariable String id,
-										     @RequestBody PostComment postComment){
-		return gson.toJson(postService.savePostShareComment(id, postComment));
+										     @RequestBody PostShareComment postShareComment){
+		return gson.toJson(postService.savePostShareComment(id, postShareComment));
 	}
 
 
-	@RequestMapping(value="/post/delete_comment/{id}", method=RequestMethod.DELETE,  produces="application/json")
+	@RequestMapping(value="/post/comment/delete/{id}", method=RequestMethod.DELETE,  produces="application/json")
 	public @ResponseBody String deletePostComment(@PathVariable String id) {
 		return gson.toJson(postService.deletePostComment(id));
 	}
 
 
-	@RequestMapping(value="/post_share/delete_comment/{id}", method=RequestMethod.DELETE,  produces="application/json")
+	@RequestMapping(value="/post_share/comment/delete/{id}", method=RequestMethod.DELETE,  produces="application/json")
 	public @ResponseBody String deletePostShareComment(@PathVariable String id) {
 		return gson.toJson(postService.deletePostShareComment(id));
 	}
 
 
 	@RequestMapping(value="/post/hide/{id}", method=RequestMethod.POST,  produces="application/json")
-	public @ResponseBody String hidePost(ModelMap model,
-										 HttpServletRequest request,
-										 final RedirectAttributes redirect,
-										 @PathVariable String id){
-
-		Map<String, Object> resp = new HashMap<String, Object>();
-		Gson gson = new Gson();
-
-		if(!authService.isAuthenticated()){
-			resp.put("error", "authentication required");
-			return gson.toJson(resp);
-		}
-
-		Account account = authService.getAccount();
-		HiddenPost hiddenPost = new HiddenPost();
-		hiddenPost.setAccountId(account.getId());
-		hiddenPost.setPostId(Long.parseLong(id));
-		hiddenPost.setDateHidden(utils.getCurrentDate());
-
-		postRepo.makeInvisible(hiddenPost);
-		postRepo.hide(Long.parseLong(id));
-
-		resp.put("success", true);
-		return gson.toJson(resp);
+	public @ResponseBody String hidePost(@PathVariable String id){
+		return gson.toJson(postService.hidePost(id));
 	}
 
 
 	@RequestMapping(value="/post/flag/{id}/{shared}", method=RequestMethod.POST,  produces="application/json")
-	public @ResponseBody String flagPost(ModelMap model,
-									 HttpServletRequest request,
-									 final RedirectAttributes redirect,
-									 @PathVariable String id,
-									 @PathVariable Boolean shared){
-
-		Map<String, Object> response = new HashMap<String, Object>();
-		Gson gson = new Gson();
-
-		if(!authService.isAuthenticated()){
-			response.put("error", "authentication required");
-			return gson.toJson(response);
-		}
-
-		Post post = postRepo.get(Long.parseLong(id));
-		post.setFlagged(true);
-
-		PostFlag postFlag = new PostFlag();
-		postFlag.setPostId(post.getId());
-		postFlag.setAccountId(authService.getAccount().getId());
-		postFlag.setDateFlagged(utils.getCurrentDate());
-		postFlag.setShared(shared);
-
-		postRepo.flagPost(postFlag);
-		postRepo.updateFlagged(post);
-
-		String body = "<h1>Amadeus</h1>"+
-				"<p>" + post.getContent() + "</p>" +
-				"<p><a href=\"amadeus.social\">Login</a></p>";
-		//emailService.send(Constants.ADMIN_USERNAME, "It ain't good.", body);
-
-		response.put("success", true);
-		return gson.toJson(response);
+	public @ResponseBody String flagPost(@PathVariable String id,
+									     @PathVariable Boolean shared){
+		return gson.toJson(postService.flagPost(id, shared));
 	}
 
 
-	@RequestMapping(value="/posts/flagged", method=RequestMethod.GET)
-	public String postsFlagged(ModelMap model,
-							   HttpServletRequest request) {
-
-		if(!authService.isAdministrator()){
-			return "redirect:/unauthorized";
-		}
-
-		List<Post> posts = postRepo.getFlaggedPosts();
-		model.addAttribute("posts", posts);
-
-		return "admin/flagged";
+	@RequestMapping(value="/post/flagged", method=RequestMethod.GET)
+	public String reviewFlaggedPosts(ModelMap modelMap) {
+		return postService.reviewFlaggedPosts(modelMap);
 	}
 
 
 	@RequestMapping(value="/post/review/{id}", method=RequestMethod.GET)
-	public String postReview(ModelMap model,
+	public String postReview(ModelMap modelMap,
 							 @PathVariable String id){
-		if(!authService.isAdministrator()){
-			return "redirect:/unauthorized";
-		}
-
-		Post post = postRepo.getFlaggedPost(Long.parseLong(id));
-		Account account = accountRepo.get(post.getAccountId());
-		Post populatedPost = postService.setPostData(post, account);
-		model.addAttribute("post", populatedPost);
-		return "admin/review_post";
+		return postService.reviewFlaggedPost(id, modelMap);
 	}
 
 	@RequestMapping(value="/post/flag/approve/{id}", method=RequestMethod.POST,  produces="application/json")
-	public String approvePostFlag(ModelMap model,
-								  @PathVariable String id){
-		if(!authService.isAdministrator()){
-			return "redirect:/unauthorized";
-		}
-
-		Post post = postRepo.get(Long.parseLong(id));
-		Account account = accountRepo.get(post.getAccountId());
-
-		account.setDisabled(true);
-		accountRepo.updateDisabled(account);
-
-		postRepo.delete(post.getId());
-		postRepo.removePostShares(post.getId());
-		postRepo.removePostFlags(post.getId());
-
-		List<PostImage> postImages = postRepo.getImages(post.getId());
-		for(PostImage postImage : postImages){
-			postRepo.deletePostImage(postImage.getId());
-			utils.deleteUploadedFile(postImage.getUri());
-		}
-
-		return "redirect:/posts/flagged";
+	public String approveFlaggedPost(@PathVariable String id){
+		return postService.approveFlaggedPost(id);
 	}
 
 
 	@RequestMapping(value="/post/flag/revoke/{id}", method=RequestMethod.POST,  produces="application/json")
-	public String revokePostFlag(ModelMap model,
-								  HttpServletRequest request,
-								  final RedirectAttributes redirect,
-								  @PathVariable String id){
-
-		if(!authService.isAdministrator()){
-			return "redirect:/unauthorized";
-		}
-
-		Post post = postRepo.get(Long.parseLong(id));
-		Account account = accountRepo.get(post.getAccountId());
-
-		account.setDisabled(false);
-		accountRepo.updateDisabled(account);
-
-		post.setFlagged(false);
-		postRepo.updateFlagged(post);
-		postRepo.removePostFlags(post.getId());
-
-		return "redirect:/posts/flagged";
+	public String revokePostFlag(@PathVariable String id){
+		return postService.revokeFlag(id);
 	}
 
 
@@ -297,7 +163,6 @@ public class PostController {
 									     @RequestParam(value="imageFiles", required=false) CommonsMultipartFile[] imageFiles) {
 		return gson.toJson(postService.addPostImages(id, imageFiles));
 	}
-
 
 
 	@RequestMapping(value="/post/image/delete/{id}", method=RequestMethod.POST, produces="application/json")

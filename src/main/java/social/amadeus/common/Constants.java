@@ -6,6 +6,7 @@ public class Constants {
 	public static final String SUCCESS_MESSAGE = "complete";
 	public static final String AUTHENTICATION_REQUIRED = "authentication required";
 	public static final String REQUIRES_PERMISSION = "permission required";
+	public static final String UNAUTHORIZED_REDIRECT = "redirect:/unauthorized";
 
 	public static final String AMADEUS_GROUP = "Amadeus";
 	public static final String PUBLISHING_JOB = "AmadeusPublishingJob";
@@ -43,8 +44,11 @@ public class Constants {
 	public static final String DEFAULT_IMAGE_URI       = "media/profiles/amadeus.png";
 	public static final String DEFAULT_FLYER_IMAGE_URI = "images/figma-ad.jpg";
 
+	public static final String DELIMITER = ":";
+
 	public static final String ACCOUNT_MAINTENANCE = "permission:accounts:";
 	public static final String POST_MAINTENANCE    = "permission:posts:";
+	public static final String POST_SHARE_MAINTENANCE    = "permission:posts_shared:";
 	public static final String COMMENT_MAINTENANCE = "permission:comments:";
 	public static final String FLYER_MAINTENANCE   = "permission:flyer:";
 

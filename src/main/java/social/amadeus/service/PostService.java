@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import social.amadeus.common.Constants;
 import social.amadeus.common.SessionManager;
@@ -38,6 +39,8 @@ public class PostService {
             Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 
 
+    boolean notify = false;
+
     @Autowired
     private Utils utils;
 
@@ -61,6 +64,9 @@ public class PostService {
 
     @Autowired
     private SyncService syncService;
+
+    @Autowired
+    private EmailService emailService;
 
     @Autowired
     private SessionManager sessionManager;
@@ -263,7 +269,8 @@ public class PostService {
         }
 
         String permission = Constants.POST_MAINTENANCE  + id;
-        if(!authService.hasPermission(permission)) {
+        if(!authService.isAdministrator() ||
+                !authService.hasPermission(permission)) {
             return Constants.REQUIRES_PERMISSION;
         }
 
@@ -295,9 +302,7 @@ public class PostService {
 
         PostShare savedPostShare = postRepo.sharePost(postShare);
 
-        String permission = Constants.POST_MAINTENANCE  +
-                authdAccount.getId() + ":" +
-                savedPostShare.getId();
+        String permission = Constants.POST_SHARE_MAINTENANCE  + Constants.DELIMITER + savedPostShare.getId();
         accountRepo.savePermission(authdAccount.getId(), permission);
 
         Post existingPost = postRepo.get(Long.parseLong(id));
@@ -315,8 +320,7 @@ public class PostService {
             return Constants.AUTHENTICATION_REQUIRED;
         }
 
-        Account authenticatedAccount = authService.getAccount();
-        String permission = Constants.POST_MAINTENANCE  + authenticatedAccount.getId() + ":" + id;
+        String permission = Constants.POST_SHARE_MAINTENANCE  + Constants.DELIMITER + id;
         if(!authService.hasPermission(permission)) {
             return Constants.REQUIRES_PERMISSION;
         }
@@ -329,6 +333,53 @@ public class PostService {
     }
 
 
+    public String hidePost(String id) {
+
+        if(!authService.isAuthenticated()){
+            return Constants.AUTHENTICATION_REQUIRED;
+        }
+
+        Account authdAccount = authService.getAccount();
+        HiddenPost hiddenPost = new HiddenPost();
+        hiddenPost.setAccountId(authdAccount.getId());
+        hiddenPost.setPostId(Long.parseLong(id));
+        hiddenPost.setDateHidden(utils.getCurrentDate());
+
+        postRepo.makeInvisible(hiddenPost);
+        postRepo.hide(Long.parseLong(id));
+
+        return Constants.SUCCESS_MESSAGE;
+    }
+
+    public String flagPost(String id, boolean shared){
+
+        if(!authService.isAuthenticated()){
+            return Constants.AUTHENTICATION_REQUIRED;
+        }
+
+        Post post = postRepo.get(Long.parseLong(id));
+        post.setFlagged(true);
+
+        PostFlag postFlag = new PostFlag();
+        postFlag.setPostId(post.getId());
+        postFlag.setAccountId(authService.getAccount().getId());
+        postFlag.setDateFlagged(utils.getCurrentDate());
+        postFlag.setShared(shared);
+
+        postRepo.flagPost(postFlag);
+        postRepo.updateFlagged(post);
+
+        if(notify) {
+            String body = "<h1>Amadeus</h1>"+
+                    "<p>" + post.getContent() + "</p>" +
+                    "<p><a href=\"amadeus.social\">Signin</a></p>";
+            emailService.send(Constants.ADMIN_USERNAME, "It ain't good...", body);
+        }
+
+        return Constants.SUCCESS_MESSAGE;
+    }
+
+
     public String savePostComment(String id, PostComment postComment){
 
         if(!authService.isAuthenticated()){
@@ -336,7 +387,8 @@ public class PostService {
         }
 
         Account authdAccount = authService.getAccount();
-        if(postComment.getComment().equals("")){
+        if(postComment.getComment() == null ||
+                postComment.getComment().equals("")){
             return Constants.X_MESSAGE;
         }
 
@@ -352,7 +404,9 @@ public class PostService {
         }
 
         PostComment savedComment = postRepo.savePostComment(postComment);
-        accountRepo.savePermission(authdAccount.getId(), Constants.COMMENT_MAINTENANCE  + savedComment.getId());
+
+        String permission = Constants.COMMENT_MAINTENANCE  + savedComment.getId();
+        accountRepo.savePermission(authdAccount.getId(), permission);
 
         Post post = postRepo.get(Long.parseLong(id));
 
@@ -371,24 +425,25 @@ public class PostService {
         if(!authService.hasPermission(permission)){
             return Constants.REQUIRES_PERMISSION;
         }
+
         postRepo.deletePostComment(Long.parseLong(id));
         return Constants.SUCCESS_MESSAGE;
     }
 
 
-    public String savePostShareComment(String id, PostComment postComment){
+    public String savePostShareComment(String id, PostShareComment postShareComment){
 
         if(!authService.isAuthenticated()){
             return Constants.AUTHENTICATION_REQUIRED;
         }
 
-        if(postComment.getComment().equals("")){
+        if(postShareComment.getComment() == null ||
+                postShareComment.getComment().equals("")){
             return Constants.X_MESSAGE;
         }
 
         Account authdAccount = authService.getAccount();
 
-        PostShareComment postShareComment = new PostShareComment();
         postShareComment.setPostShareId(Long.parseLong(id));
         postShareComment.setAccountId(authdAccount.getId());
 
@@ -866,4 +921,71 @@ public class PostService {
         return femalesMales;
     }
 
+
+    public String reviewFlaggedPosts(ModelMap modelMap){
+        if(!authService.isAdministrator()){
+            return Constants.UNAUTHORIZED_REDIRECT;
+        }
+
+        List<Post> posts = postRepo.getFlaggedPosts();
+        modelMap.addAttribute("posts", posts);
+
+        return "admin/flagged";
+    }
+
+    public String reviewFlaggedPost(String id, ModelMap modelMap){
+        if(!authService.isAdministrator()){
+            return Constants.UNAUTHORIZED_REDIRECT;
+        }
+
+        Post post = postRepo.getFlaggedPost(Long.parseLong(id));
+        Account account = accountRepo.get(post.getAccountId());
+        Post populatedPost = setPostData(post, account);
+        modelMap.addAttribute("post", populatedPost);
+
+        return "admin/review_post";
+    }
+
+    public String approveFlaggedPost(String id) {
+        if(!authService.isAdministrator()){
+            return Constants.UNAUTHORIZED_REDIRECT;
+        }
+
+        Post post = postRepo.get(Long.parseLong(id));
+        Account account = accountRepo.get(post.getAccountId());
+
+        account.setDisabled(true);
+        accountRepo.updateDisabled(account);
+
+        postRepo.delete(post.getId());
+        postRepo.removePostShares(post.getId());
+        postRepo.removePostFlags(post.getId());
+
+        List<PostImage> postImages = postRepo.getImages(post.getId());
+        for(PostImage postImage : postImages){
+            postRepo.deletePostImage(postImage.getId());
+            utils.deleteUploadedFile(postImage.getUri());
+        }
+
+        return "redirect:/posts/flagged";
+    }
+
+    public String revokeFlag(String id) {
+
+        if(!authService.isAdministrator()){
+            return Constants.UNAUTHORIZED_REDIRECT;
+        }
+
+        Post post = postRepo.get(Long.parseLong(id));
+        Account account = accountRepo.get(post.getAccountId());
+
+        account.setDisabled(false);
+        accountRepo.updateDisabled(account);
+
+        post.setFlagged(false);
+        postRepo.updateFlagged(post);
+        postRepo.removePostFlags(post.getId());
+
+        return "redirect:/posts/flagged";
+    }
 }

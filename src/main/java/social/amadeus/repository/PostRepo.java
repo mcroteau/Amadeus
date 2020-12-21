@@ -8,6 +8,8 @@ public interface PostRepo {
 
 	public long id();
 
+	public long getPostShareId();
+
 	public long getCount();
 	
 	public Post get(long id);

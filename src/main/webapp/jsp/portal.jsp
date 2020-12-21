@@ -642,7 +642,7 @@
         $scope.saveShareComment = function(id){
             var comment = document.querySelector("#post-share-comment-" + id).value
             if(comment != '') {
-                dataService.saveShareComment(id, comment, function(){
+                dataService.saveShareComment(id, comment, function(resp){
                     $window.location.reload()
                 })
             }
@@ -802,12 +802,15 @@
             };
 
             this.deleteComment = function(id, callback){
-                $http.delete("/o/post/delete_comment/" + id).then(callback);
+                $http.delete("/o/post/comment/delete/" + id).then(callback);
             }
-
             this.saveShareComment = function(id, comment, callback){
                 var postComment = { comment : comment };
                 $http.post("/o/post_share/comment/" + id, postComment).then(callback);
+            }
+
+            this.deleteShareComment = function(id, callback){
+                $http.delete("/o/post_share/comment/delete/" + id).then(callback);
             }
 
             this.sharePost = function(id, comment, callback){
