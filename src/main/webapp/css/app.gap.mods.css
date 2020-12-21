@@ -541,7 +541,7 @@ input[type="password"]::placeholder {
     width:981px;
     width:947px !important;
     width: 890px !important;
-    margin:0px auto 0px 194px;
+    margin:0px auto 0px 182px;
     text-align: left;
     position:relative;
 }
@@ -908,6 +908,7 @@ input[type="submit"]#search-button,
 	text-align: left;
 	position:relative;
 	margin:1px auto 119px 194px;
+    margin:1px auto 119px 182px;
 }
 
 
@@ -2108,42 +2109,6 @@ p{
     left: 56px !important;
 }
 
-/*.feed-content.maroon{*/
-/*    border-top:solid 4px #e24682;*/
-/*    border-top:solid 2px #13B1FF;*/
-/*    border-top:solid 2px #17161b;*/
-/*}*/
-/*.feed-content.blue{*/
-/*    border-top:solid 4px #04adfd;*/
-/*    border-top:solid 2px #13B1FF;*/
-/*    border-top:solid 2px #17161b;*/
-/*}*/
-/*.feed-content.yellow{*/
-/*    border-top:solid 2px #fff553;*/
-/*    border-top:solid 2px #17161b;*/
-/*}*/
-/*.feed-content.shared.maroon{*/
-/*    border-top:solid 4px #fff553;*/
-/*    border-top:solid 4px #13B1FF;*/
-/*    border-top:solid 4px #ca326d;*/
-/*    border-top:solid 4px #13B1FF;*/
-/*    border-top:solid 4px #10A0E0;*/
-/*    border-top:solid 4px #617078;*/
-/*    border-top:solid 4px #486970;*/
-/*    border-top:solid 4px #e24682;*/
-/*    border-top:solid 4px #3ac0ff;*/
-/*    border-top:solid 2px #17161b;*/
-/*}*/
-
-/*.feed-content.sky{*/
-/*    border-top:solid 2px #13B1FF;*/
-/*    border-top:solid 2px #17161b;*/
-/*}*/
-/*.feed-content.shared.maroon{*/
-/*    border-radius:0px !important;*/
-/*    -moz-border-radius:0px !important;*/
-/*    -webkit-border-radius:0px !important;*/
-/*}*/
 
 .post-whois{
     height:50px;
@@ -2237,11 +2202,13 @@ p{
 .post-meta{
     margin:0px auto 0px auto;
     padding:10px 12px;
+    background:#FDFE03;
+    position: relative;
 }
 
-/*.post-meta.shared{*/
-/*    background:#d8d8d8;*/
-/*}*/
+.post-meta.shared{
+    background:#d8d8d8;
+}
 
 .post-comment-meta{
     padding:3px 0px;
@@ -3486,7 +3453,7 @@ a.information{
     line-height:1.0;
     vertical-align:middle;
     text-decoration:none;
-    background:#FF4F01 !important;
+    background:#fff !important;
     /*background:#ff2401 !important;*/
 }
 
@@ -3499,7 +3466,7 @@ a.information{
     fill:#43a7fb;
     fill:#ff821c;
     fill:#5AB2FF;
-    fill:#fff;
+    fill:#17161b;
     z-index: 3;
     background-size: cover;
 }
@@ -3848,6 +3815,7 @@ h1.gray span{
     position:absolute;
     top:0px;
     left:1023px;
+    left:1004px;
 }
 
 #posts-fellows-fems-container{

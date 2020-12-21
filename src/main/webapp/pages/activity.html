@@ -126,9 +126,9 @@
                 </div>
             </div>
 
-            <div ng-class="{'shared': post.shared}" class="feed-content">
+            <div ng-class="{'shared': post.shared, 'feed-content' : true}">
 
-                <div ng-if="!post.advertisement && !post.hidden" class="post-meta" style="position: relative">
+                <div ng-if="!post.advertisement && !post.hidden" ng-class="{'post-meta' : true, 'shared' : post.shared}">
 
                     <a ng-href="#!/profile/{{post.accountId}}" href="javascript:" class="post-whois" data-id="{{post.accountId}}">
                         <img ng-src="/o/{{post.imageUri}}"/>

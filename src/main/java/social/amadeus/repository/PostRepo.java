@@ -32,6 +32,8 @@ public interface PostRepo {
 
 	public boolean hide(long id);
 
+	public boolean deleteHiddenPost(long postId, long accountId);
+
 	public boolean delete(long id);
 
 	public long likes(long id);
@@ -107,6 +109,8 @@ public interface PostRepo {
 	public boolean updateFlagged(Post post);
 
 	public boolean removePostFlags(long postId);
+
+	public boolean deletePostFlag(long postId, long accountId);
 
 	public boolean makeInvisible(HiddenPost hiddenPost);
 

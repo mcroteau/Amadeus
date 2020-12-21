@@ -201,6 +201,11 @@ public class PostJdbcRepo implements PostRepo {
 		return true;
 	}
 
+	public boolean deleteHiddenPost(long postId, long accountId){
+		String sql = "delete from hidden_posts where post_id = ? and account_id = ?";
+		jdbcTemplate.update(sql, new Object[] { postId, accountId });
+		return true;
+	}
 
 	public boolean delete(long id){
 		String sql = "delete from posts where id = ?";
@@ -554,6 +559,12 @@ public class PostJdbcRepo implements PostRepo {
 	public boolean removePostFlags(long postId){
 		String sql = "delete from post_flags where post_id = ?";
 		jdbcTemplate.update(sql, new Object[] { postId });
+		return true;
+	}
+
+	public boolean deletePostFlag(long postId, long accountId){
+		String sql = "delete from post_flags where post_id = ? and account_id = ?";
+		jdbcTemplate.update(sql, new Object[] { postId, accountId });
 		return true;
 	}
 

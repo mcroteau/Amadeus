@@ -1,9 +1,18 @@
 package social.amadeus;
 
+import io.github.mcroteau.resources.filters.CacheFilter;
+import org.mockito.Mockito;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 import social.amadeus.common.Utils;
 import social.amadeus.model.*;
 
-public class PostMock {
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class MockUtils {
 
     public static Post mock(Account account, long date){
         Post post = new Post();
@@ -41,5 +50,23 @@ public class PostMock {
         postShareComment.setDateCreated(Utils.getDate());
         return postShareComment;
     }
+
+    public static CacheFilter mockRequestCycle(){
+        CacheFilter filter = new CacheFilter();
+        try {
+            HttpServletRequest req = new MockHttpServletRequest();
+            HttpServletResponse resp = new MockHttpServletResponse();
+
+            FilterChain filterChain = Mockito.mock(FilterChain.class);
+            FilterConfig config = Mockito.mock(FilterConfig.class);
+
+            filter.init(config);
+            filter.doFilter(req, resp, filterChain);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return filter;
+    }
+
 
 }

@@ -2,9 +2,6 @@ package social.amadeus;
 
 import io.github.mcroteau.Parakeet;
 import io.github.mcroteau.resources.filters.CacheFilter;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
@@ -12,12 +9,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import social.amadeus.common.Constants;
 import social.amadeus.common.Utils;
 import social.amadeus.model.*;
@@ -68,7 +63,7 @@ public class PostPermissionsTest {
         mockRequestCycle();
 
         Account adminAccount = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
-        Post post = PostMock.mock(adminAccount, Utils.getDate());
+        Post post = MockUtils.mock(adminAccount, Utils.getDate());
 
         parakeet.login(Constants.ADMIN_USERNAME, Constants.PASSWORD);
         savedPost = postService.savePost(post, null, null);
@@ -148,7 +143,7 @@ public class PostPermissionsTest {
     @Test
     public void testDeleteCommentWithWrongUser(){
         Account adminAcc = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
-        PostComment postComment = PostMock.mockComment(adminAcc, savedPost);
+        PostComment postComment = MockUtils.mockComment(adminAcc, savedPost);
         postService.savePostComment(Long.toString(savedPost.getId()), postComment);
         String result = postService.deletePostComment(Long.toString(0));
         assertTrue(result.equals(Constants.REQUIRES_PERMISSION));
@@ -158,7 +153,7 @@ public class PostPermissionsTest {
     @Test
     public void testUnshareWithWrongUser(){
         Account guestAcc = accountRepo.findByUsername(Constants.GUEST_USERNAME);
-        PostShare postShare = PostMock.mockShare(guestAcc, savedPost, Utils.getDate());
+        PostShare postShare = MockUtils.mockShare(guestAcc, savedPost, Utils.getDate());
         postService.sharePost(Long.toString(savedPost.getId()), postShare);
 
         mockRequestCycle();
@@ -171,14 +166,14 @@ public class PostPermissionsTest {
 //    @Test
 //    public void testDeleteShareCommentWithWrongUser(){
 //        Account guestAcc = accountRepo.findByUsername(Constants.GUEST_USERNAME);
-//        PostShare postShare = PostMock.mockShare(guestAcc, savedPost, Utils.getDate());
+//        PostShare postShare = MockUtils.mockShare(guestAcc, savedPost, Utils.getDate());
 //        postService.sharePost(Long.toString(savedPost.getId()), postShare);
 //
 //        long postShareId = postRepo.getPostShareId();
 //        Account adminAcc = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
 //        PostShare savedPostShare = postRepo.getPostShare(postShareId);
 //
-//        PostShareComment postShareComment = PostMock.mockShareComment(adminAcc, savedPostShare);
+//        PostShareComment postShareComment = MockUtils.mockShareComment(adminAcc, savedPostShare);
 //        postService.savePostShareComment(Long.toString(postShareId), postShareComment);
 //
 //        String result = postService.deletePostShareComment("1");
