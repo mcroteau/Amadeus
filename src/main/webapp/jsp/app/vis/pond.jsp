@@ -55,7 +55,7 @@
                 var vector = segments[i].point - point;
                 this.count += speed * 10;
                 var wave = Math.sin((this.count + i * 3) / 300);
-                var sway = lastVector.rotate(0).normalize(wave);
+                var sway = lastVector.rotate(360).normalize(wave);
                 point += lastVector.normalize(pieceLength) + sway;
                 segments[i].point = point;
                 if (i < 3)

@@ -18,11 +18,8 @@
     <script type="text/javascript" src="/o/js/packages/jquery.i18n.js"></script>
     <script type="text/javascript" src="/o/js/packages/jquery.i18n.messagestore.js"></script>
 
-
     <link rel="stylesheet" href="/o/css/app.gap.css?v=<%=System.currentTimeMillis()%>"/>
     <link rel="stylesheet" href="/o/css/app.gap.mobile.css?v=<%=System.currentTimeMillis()%>"/>
-
-
 
 </head>
 
@@ -43,7 +40,7 @@
 
 
 <%--    <iframe id="viz" src="<%=viz%>" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>--%>
-<!-- <iframe src="/o/jsp/app/vis/pond.jsp" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe> -->
+<iframe src="/o/jsp/app/vis/pond.jsp" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>
 <%--    <canvas id="sugarcookie" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></canvas>--%>
 
 
