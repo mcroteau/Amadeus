@@ -55,8 +55,6 @@ public class AppStartup {
 		createApplicationGuest();
 		connectEm();
 
-		generateAppData();
-
 		if(!isTestEnvironment()) {
 			startupBackgroundJobs();
 		}

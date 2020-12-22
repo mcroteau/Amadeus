@@ -320,7 +320,7 @@
                 if(!$scope.chatOpened)$interval.cancel($scope.chatInterval)
             })
         }
-        
+
         $scope.startChat = function(friendId){
             $scope.friendId = friendId
             $http.get('/o/messages/' + friendId).then(function(response){

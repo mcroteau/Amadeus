@@ -6,18 +6,18 @@ import social.amadeus.model.ActionShare;
 
 public interface ActionRepo {
 
-    public Resource get(String uri);
+    public Resource getWebsite(String uri);
 
-    public boolean save(Resource resource);
+    public boolean saveWebsite(Resource resource);
 
-    public boolean like(ActionLike actionLike);
+    public boolean likeWebsite(ActionLike actionLike);
 
-    public boolean liked(ActionLike actionLike);
+    public boolean isLiked(ActionLike actionLike);
 
-    public boolean share(ActionShare actionShare);
+    public boolean shareWebsite(ActionShare actionShare);
 
-    public long likesCount(long resourceId);
+    public long getLikesCount(long resourceId);
 
-    public long sharesCount(long resourceId);
+    public long getSharesCount(long resourceId);
 
 }
