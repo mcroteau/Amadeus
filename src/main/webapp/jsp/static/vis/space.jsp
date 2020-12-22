@@ -15,8 +15,8 @@
     var count = 150;
 
     var path = new Path.RegularPolygon(new Point(0, 0), 3, 5);
-    path.fillColor = 'white';
-    path.strokeColor = 'grey';
+    path.fillColor = 'black';
+    path.strokeColor = 'white';
     path.strokeWidth = 1;
     path.selected = true;
 

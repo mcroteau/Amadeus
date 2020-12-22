@@ -46,9 +46,10 @@
 
     <div ng-if="$root.renderModal" id="amadeus-modal">
         <div id="amadeus-model-content">
-            <svg id="amadeus-modal-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
-                <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>
-            </svg>
+<%--            <svg id="amadeus-modal-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">--%>
+<%--                <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>--%>
+<%--            </svg>--%>
+            <span id="amadeus-symbol-color" style="margin-top:142px;color:#17161b;font-size:41px;display:block;font-family:Roboto-Medium !important;">&Delta;</span>
         </div>
     </div>
 
@@ -185,6 +186,8 @@
 
 <script>
 
+    var t = new Date().getTime()
+
     var app = angular.module("app", ['ngRoute', 'ngAnimate', 'ngSanitize'])
 
     app.config(function($sceProvider) {
@@ -242,7 +245,6 @@
 
     app.config(function($routeProvider) {
 
-        var t = new Date().getTime()
 
         $routeProvider
             .when('/', {
@@ -305,7 +307,7 @@
         }
 
         $scope.reloadActivities = function(){
-            if($route.current.loadedTemplateUrl != "pages/activity.html"){
+            if($route.current.loadedTemplateUrl != "pages/activity.html?v=" + t){
                 $location.path("/")
             }else{
                 $route.reload()

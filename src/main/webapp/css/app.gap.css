@@ -209,6 +209,20 @@ body{
 #amadeus-model-content p{
     color:#54afff;
 }
+#amadeus-symbol-color{
+    -webkit-animation-name: symbol-animation; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 1.40s; /* Safari 4.0 - 8.0 */
+    animation-name: symbol-animation;
+    animation-iteration-count: infinite;
+    animation-duration: 1.40s;
+}
+@keyframes symbol-animation {
+    0%  {color:#17161b}
+    1%  {color:#fff}
+    3%  {color:#fff}
+    49% {color:#17161b}
+    100%{color:#17161b}
+}
 
 #amadeus-modal-icon{
     height:49px;
@@ -221,6 +235,8 @@ body{
     animation-iteration-count: infinite;
     animation-duration: 1.40s;
 }
+
+
 
 @keyframes amadeus-modal-icon {
     0%  {fill:#17161b}
@@ -3206,7 +3222,7 @@ textarea{
     width:inherit !important;
 }
 
-#profile-picture-actions-container{
+#profile-pictuamadeus-symbol-colorre-actions-container{
     right:37px;
     width:139px;
     margin-top:58px;
