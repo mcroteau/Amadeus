@@ -63,7 +63,6 @@ public class PostPermissionsTest {
 
     @Before
     public void before(){
-
         TestUtils.mockRequestCycle();
 
         Account adminAccount = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
@@ -88,7 +87,7 @@ public class PostPermissionsTest {
     @Test
     public void testUpdateWithWrongUser(){
         savedPost = postService.updatePost(Long.toString(savedPost.getId()), savedPost);
-        assertTrue(savedPost.getFailMessage().equals(Constants.REQUIRES_PERMISSION));
+        assertTrue(savedPost.getStatusMessage().equals(Constants.REQUIRES_PERMISSION));
     }
 
     @Test

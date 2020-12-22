@@ -81,7 +81,7 @@ public class PostService {
     public Post savePost(Post post, CommonsMultipartFile[] imageFiles, CommonsMultipartFile videoFile){
 
         if(!authService.isAuthenticated()){
-            post.setFailMessage("authentication required");
+            post.setStatusMessage(Constants.AUTHENTICATION_REQUIRED);
             return post;
         }
 
@@ -104,7 +104,8 @@ public class PostService {
                 List<String> list = Arrays.asList(contentTypes);
 
                 if(!utils.correctMimeType(list, videoFile)){
-                    post.setFailMessage("Video file must be mp4.");
+                    post.setStatusMessage("Video file must be mp4.");
+                    return post;
                 }else{
                     syncService.send(videoFileName, videoFile.getInputStream());
                     post.setVideoFileUri(Constants.HTTPS + Constants.DO_ENDPOINT + "/" + videoFileName);
@@ -160,7 +161,7 @@ public class PostService {
         if(imageLookup.size() == 0 &&
                 (post.getVideoFileUri() == null || post.getVideoFileUri().equals("")) &&
                 post.getContent().equals("")){
-            post.setFailMessage("everything is blank");
+            post.setStatusMessage("everything is blank");
             return post;
         }
 
@@ -207,13 +208,13 @@ public class PostService {
 
     public Post updatePost(String id, Post post){
         if (!authService.isAuthenticated()) {
-            post.setFailMessage(Constants.AUTHENTICATION_REQUIRED);
+            post.setStatusMessage(Constants.AUTHENTICATION_REQUIRED);
             return post;
         }
 
         String permission = Constants.POST_MAINTENANCE  + id;
         if(!authService.hasPermission(permission)) {
-            post.setFailMessage(Constants.REQUIRES_PERMISSION);
+            post.setStatusMessage(Constants.REQUIRES_PERMISSION);
             return post;
         }
 
