@@ -15,6 +15,7 @@ import social.amadeus.model.Flyer;
 import social.amadeus.service.AuthService;
 import social.amadeus.service.PhoneService;
 import social.amadeus.service.StripeService;
+import social.amadeus.service.SyncService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -39,6 +40,9 @@ public class FlyerController {
 
     @Autowired
     private AuthService authService;
+
+    @Autowired
+    private SyncService syncService;
 
 
     @RequestMapping(value="/flyer/create", method=RequestMethod.GET)
@@ -67,9 +71,9 @@ public class FlyerController {
             return "redirect:/flyer/create";
         }
 
-        if(!flyerImage.isEmpty()){
-            String imageUri = utils.write(flyerImage, Constants.IMAGE_DIRECTORY);
-            flyer.setImageUri(imageUri);
+        if(!flyerImage.isEmpty() &&
+                flyerImage.getSize() > 0){
+            synchronizeFlyerImage(flyer, flyerImage);
         }
 
         Account authenticatedAccount = authService.getAccount();
@@ -172,8 +176,7 @@ public class FlyerController {
 
             if(flyerImage != null &&
                     flyerImage.getSize() > 0){
-                String imageUri = utils.write(flyerImage, Constants.IMAGE_DIRECTORY);
-                flyer.setImageUri(imageUri);
+                synchronizeFlyerImage(flyer, flyerImage);
             }
             flyerRepo.update(flyer);
         }else{
@@ -182,6 +185,21 @@ public class FlyerController {
 
         return "redirect:/flyer/edit/" + flyer.getId();
     }
+
+
+    private Flyer synchronizeFlyerImage(Flyer flyer, CommonsMultipartFile flyerImage){
+        try {
+            String fileName = Utils.getGenericFileName(flyerImage);
+            String imageUri = Constants.HTTPS + Constants.DO_ENDPOINT + "/" + fileName;
+
+            syncService.send(fileName, flyerImage.getInputStream());
+            flyer.setImageUri(imageUri);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return flyer;
+    }
+
 
     @RequestMapping(value="/admin/flyer/list", method=RequestMethod.GET)
     public String flyers(ModelMap modelMap){

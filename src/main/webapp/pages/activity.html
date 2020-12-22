@@ -66,7 +66,7 @@
         <span ng-if="femsfellas.length > 0" class="tiny" style="display:inline-block;margin:20px 0px 5px 20px;" data-i18n="click.filter">Click to Filter</span>
         <div id="posts-fellows-fems-container">
             <span ng-repeat="femfella in femsfellas" class="profile-post-container" data-title="{{femfella.count}} New Posts">
-                <a ng-click="filterActivities(femfella.id)" href="javascript:" data-id="{{femfella.accountId}}" class="profile-ref"><img ng-src="/o/{{femfella.imageUri}}" style="width:46px; height:46px; margin:5px;" class="profile-image-posted main-shadow" alt="{{femfella.name}}" title="{{femfella.name}}"/></a>
+                <a ng-click="filterActivities(femfella.id)" href="javascript:" data-id="{{femfella.accountId}}" class="profile-ref"><img ng-src="{{femfella.imageUri}}" style="width:46px; height:46px; margin:5px;" class="profile-image-posted main-shadow" alt="{{femfella.name}}" title="{{femfella.name}}"/></a>
                 <span class="activity-status {{femfella.status}}"></span>
                 <span class="tooltiptext">{{femfella.name}}<br/> {{femfella.count}} New Posts</span>
             </span>
@@ -109,7 +109,7 @@
             <div ng-if="post.shared" class="shared-post-container" >
 
                 <a ng-href="#!/profile/{{post.sharedAccountId}}" class="shared-post-whois" data-id="{{post.sharedAccountId}}">
-                    <img ng-src="/o/{{post.sharedImageUri}}" style="width:40px; height:40px;"/>
+                    <img ng-src="{{post.sharedImageUri}}" style="width:40px; height:40px;"/>
                 </a>
 
                 <div class="shared-account-container">
@@ -131,7 +131,7 @@
                 <div ng-if="!post.advertisement && !post.hidden" ng-class="{'post-meta' : true, 'shared' : post.shared}">
 
                     <a ng-href="#!/profile/{{post.accountId}}" href="javascript:" class="post-whois" data-id="{{post.accountId}}">
-                        <img ng-src="/o/{{post.imageUri}}"/>
+                        <img ng-src="{{post.imageUri}}"/>
                     </a>
                     <a ng-href="#!/profile/{{post.accountId}}" class="posted-by" data-id="{{post.accountId}}">{{post.name}}</a><br/>
                     <span class="post-date">{{post.timeAgo}}</span>
@@ -243,7 +243,7 @@
 
                         <div class="post-comment-meta" ng-repeat="comment in post.shareComments">
                             <a ng-href="#!/profile/{{comment.accountId}}" class="post-comment-whois left-float">
-                                <img ng-src="/o/{{comment.accountImageUri}}" style="height:30px; width:30px;"/>
+                                <img ng-src="{{comment.accountImageUri}}" style="height:30px; width:30px;"/>
                             </a>
                             <div class="left-float" style="margin-left:10px;width:79%;">
                                 <p>
@@ -260,7 +260,7 @@
 
                         <div class="post-comment-meta" ng-repeat="comment in post.comments">
                             <a ng-href="#!/profile/{{comment.accountId}}" class="post-comment-whois left-float">
-                                <img ng-src="/o/{{comment.accountImageUri}}" style="height:30px; width:30px;"/>
+                                <img ng-src="{{comment.accountImageUri}}" style="height:30px; width:30px;"/>
                             </a>
                             <div class="left-float" style="margin-left:10px;width:79%;">
                                 <p>

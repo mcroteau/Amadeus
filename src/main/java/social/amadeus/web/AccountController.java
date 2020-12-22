@@ -21,10 +21,7 @@ import social.amadeus.common.Constants;
 import social.amadeus.common.Utils;
 import social.amadeus.repository.*;
 import social.amadeus.model.*;
-import social.amadeus.service.AuthService;
-import social.amadeus.service.EmailService;
-import social.amadeus.service.PhoneService;
-import social.amadeus.service.ReCaptchaService;
+import social.amadeus.service.*;
 
 
 @Controller
@@ -74,269 +71,77 @@ public class AccountController {
 	@Autowired
 	private AuthService authService;
 
+	@Autowired
+	private AccountService accountService;
 
-    @RequestMapping(value="/account/info", method=RequestMethod.GET)
-    public @ResponseBody String info(ModelMap model, HttpServletRequest request){
 
-        if(!authService.isAuthenticated()){
-            Map<String, String> data = new HashMap<String, String>();
-            data.put("error", "Not authenticated");
-            return gson.toJson(data);
-        }
-
-        Account account = authService.getAccount();
-        return gson.toJson(account);
+    @GetMapping(value="/account/info", produces="application/json")
+    public @ResponseBody String getAccountInfo(){
+    	return gson.toJson(accountService.getAccountInfo());
     }
 
 
-	@RequiresAuthentication
-	@RequestMapping(value="/admin/accounts", method=RequestMethod.GET)
-	public String accounts(ModelMap model, 
-					final RedirectAttributes redirect, 
-				    @RequestParam(value="admin", required = false ) String admin,
-				    @RequestParam(value="offset", required = false ) String offset,
-				    @RequestParam(value="max", required = false ) String max,
-				    @RequestParam(value="page", required = false ) String page){
-
-		if(!authService.isAdministrator()){
-			redirect.addFlashAttribute("error", "You are not administrator.");
-			return "redirect:/";
-		}
-
-		if(page == null){
-			page = "1";
-		}						
-
-		List<Account> accounts = new ArrayList<Account>();
-		
-		if(offset != null) {
-			int m = Constants.RESULTS_PER_PAGE;
-			if(max != null){
-				m = Integer.parseInt(max);
-			}
-			int o = Integer.parseInt(offset);
-			accounts = accountRepo.findAllOffset(m, o);
-		}else{
-			accounts = accountRepo.findAll();
-		} 
-		
-		long count = accountRepo.count();
-		
-		model.addAttribute("accounts", accounts);
-		model.addAttribute("total", count);
-		
-		model.addAttribute("resultsPerPage", Constants.RESULTS_PER_PAGE);
-		model.addAttribute("activePage", page);
-
-		model.addAttribute("accountsHrefActive", "active");
-		
-    	return "account/index";
-
+	@GetMapping(value="/admin/account/list")
+	public String getAccounts(ModelMap modelMap){
+		return accountService.getAccounts(modelMap);
 	}
 
 
-
-
-	@RequestMapping(value="/account/edit/{id}", method=RequestMethod.GET)
-	public String edit(Locale locale,
-					   ModelMap model,
-	                   HttpServletRequest request,
-					   final RedirectAttributes redirect,
-					   @PathVariable String id){
-
-		String permission = Constants.ACCOUNT_MAINTENANCE + id;
-		if(authService.isAdministrator() ||
-				authService.hasPermission(permission)){
-
-			Account account = accountRepo.get(Long.parseLong(id));
-			model.addAttribute("account", account);
-
-			return "account/edit";
-
-		}else{
-			redirect.addFlashAttribute("error", "You do not have permission to edit this account.");
-			return "redirect:/";
-		}
-		
+	@GetMapping(value="/account/edit/{id}")
+	public String getEditAccount(ModelMap modelMap,
+								 @PathVariable String id){
+		return accountService.getEditAccount(id, modelMap);
 	}
 
 
-	@RequestMapping(value="/account/update/{id}", method=RequestMethod.GET)
-	public String uget(ModelMap model,
-					  	 	 final RedirectAttributes redirect,
-					     	@PathVariable String id){
+	@GetMapping(value="/account/update/{id}")
+	public String updateAccountGet(ModelMap modelMap,
+								   @PathVariable String id){
+		return accountService.updateAccountGet(id, modelMap);
+    }
 
 
-    	String permission = Constants.ACCOUNT_MAINTENANCE + id;
-		if(authService.isAdministrator() ||
-				authService.hasPermission(permission)){
 
-			Account account = accountRepo.get(Long.parseLong(id));
-
-			model.addAttribute("account", account);
-			return "account/edit";
-
-		}else{
-			redirect.addFlashAttribute("error", "You don't hava permissionsa...");
-			return "redirect:/";
-		}
-
+	@PostMapping(value="/account/update/{id}")
+	public String update(ModelMap modelMap,
+						 RedirectAttributes redirect,
+						 @ModelAttribute("account") Account account,
+						 @RequestParam(value="image", required=false) CommonsMultipartFile imageFile){
+		return accountService.updateAccount(imageFile, account, modelMap, redirect);
 	}
 
 
-	@RequestMapping(value="/account/update/{id}", method=RequestMethod.POST)
-	public String update(@ModelAttribute("account")
-							 Account account, 
-							 ModelMap model,
-					   		 HttpServletRequest request,
-					  	 	 final RedirectAttributes redirect, 
-					  	 	 @RequestParam(value="image", required=false) CommonsMultipartFile uploadedProfileImage){
-		
-		long id = account.getId();
-		Account storedAccount = accountRepo.get(id);
-
-		String imageFileUri = "";
-
-		String permission = Constants.ACCOUNT_MAINTENANCE + id;
-		if(authService.isAdministrator() ||
-				authService.hasPermission(permission)){
-
-
-			if(uploadedProfileImage != null &&
-					uploadedProfileImage.getSize() > 0) {
-				imageFileUri = utils.write(uploadedProfileImage, Constants.PROFILE_IMAGE_DIRECTORY);
-				if(imageFileUri.equals("")){
-					utils.deleteUploadedFile(imageFileUri);
-					redirect.addFlashAttribute("account", account);
-					redirect.addFlashAttribute("error", "Something went wrong while processing image. PNG, JPG or GIF only.");
-					return "redirect:/account/edit/" + id;
-				}
-				account.setImageUri(imageFileUri);
-
-				if(!storedAccount.getImageUri().equals(Constants.DEFAULT_IMAGE_URI) &&
-						!storedAccount.getImageUri().equals(Constants.FRESCO)) {
-					utils.deleteUploadedFile(storedAccount.getImageUri());
-				}
-			}
-
-			if(!account.getImageUri().equals("")) {
-				accountRepo.update(account);
-				Account savedAccount = accountRepo.get(id);
-
-				//TODO: update session account
-
-				redirect.addFlashAttribute("message", "account successfully updated");
-				model.addAttribute("account", savedAccount);
-
-				return "redirect:/account/edit/" + id;
-			}
-			else{
-				redirect.addFlashAttribute("account", account);
-				redirect.addFlashAttribute("error", "Please include your profile image");
-				return "redirect:/account/edit/" + id;
-			}
-
-		}else{
-			redirect.addFlashAttribute("error", "You don't hava permissionsa...");
-			return "redirect:/";
-		}
-
+	@GetMapping(value="/account/edit_password/{id}")
+	public String editPassword(ModelMap modelMap,
+	                     	   @PathVariable String id){
+		return accountService.editPassword(id, modelMap);
 	}
 
 
-	@RequestMapping(value="/account/edit_password/{id}", method=RequestMethod.GET)
-	public String editPassword(ModelMap model, 
-	                     HttpServletRequest request,
-						 final RedirectAttributes redirect,
-					     @PathVariable String id){
-
-		String permission = Constants.ACCOUNT_MAINTENANCE + id;
-		if(authService.isAdministrator() ||
-				authService.hasPermission(permission)){
-
-			Account account = accountRepo.get(Long.parseLong(id));
-			model.addAttribute("account", account);
-			return "account/edit_password";
-
-		}else {
-			redirect.addFlashAttribute("error", "You do not have permission to edit this account. What are you up to?");
-			return "redirect:/";
-		}
+	@PostMapping(value="/account/update_password/{id}")
+	public String updatePassword(ModelMap modelMap,
+								 RedirectAttributes redirect,
+								 @ModelAttribute("account") Account account){
+    	return accountService.updatePassword(account, modelMap, redirect);
 	}
 
-
-	@RequestMapping(value="/account/update_password/{id}", method=RequestMethod.POST)
-	public String updatePassword(@ModelAttribute("account")
-							 Account account, 
-							 ModelMap model,
-					   		 HttpServletRequest request,
-					  	 	 final RedirectAttributes redirect // @RequestParam("image") CommonsMultipartFile file
-								 ){
-		
-		if(account.getPassword().length() < 7){
-		 	redirect.addFlashAttribute("account", account);
-			redirect.addFlashAttribute("error", "Passwords must be at least 7 characters long.");
-			return "redirect:/signup";
-		}
-
-
-		String permission = Constants.ACCOUNT_MAINTENANCE + account.getId();
-		if(authService.isAdministrator() ||
-				authService.hasPermission(permission)){
-			
-			if(!account.getPassword().equals("")){
-				String password = utils.hash(account.getPassword());
-				account.setPassword(password);
-				accountRepo.updatePassword(account);
-			}
-
-			redirect.addFlashAttribute("message", "password successfully updated");	
-			return "redirect:/signout";
-			
-		}else{
-			redirect.addFlashAttribute("error", "You don't hava permissionsa...");
-			return "redirect:/";
-		}
-	}
-
-	@RequestMapping(value="/account/delete/{id}", method=RequestMethod.POST)
-	public String deleteAccount(ModelMap model,
-								  HttpServletRequest request,
-								  final RedirectAttributes redirect,
-								  @PathVariable String id) {
-
-		if(!authService.isAdministrator()){
-			redirect.addFlashAttribute("error", "You don't hava permissionsa...");
-			return "redirect:/admin/accounts";
-		}
-
-		Account account = accountRepo.get(Long.parseLong(id));
-		List<Post> posts = postRepo.getUserPosts(Long.parseLong(id));
-		for(Post post : posts){
-			postRepo.hide(post.getId());
-			postRepo.removePostShares(post.getId());
-		}
-
-		account.setDisabled(true);
-		account.setDateDisabled(utils.getCurrentDate());
-		accountRepo.suspend(account);
-
-		redirect.addFlashAttribute("message", "Successfully disabled account");
-
-		return "redirect:/admin/accounts";
+	@PostMapping(value="/account/delete/{id}")
+	public String disableAccount(ModelMap modelMap,
+								 RedirectAttributes redirect,
+								 @PathVariable String id) {
+		return accountService.disableAccount(id, modelMap, redirect);
 	}
 	
-	@RequestMapping(value="/signup", method=RequestMethod.GET)
-	public String signup(HttpServletRequest request, ModelMap model, @RequestParam(value="uri", required = false ) String uri, @ModelAttribute("account") Account account){
-		parakeet.logout();
-    	model.addAttribute("uri", uri);
-		return "account/signup";
+	@GetMapping(value="/signup")
+	public String signup(ModelMap modelMap,
+						 @RequestParam(value="uri", required = false ) String uri){
+		return accountService.signup(uri, modelMap);
 	}
 	
 
 	@RequestMapping(value="/register", method=RequestMethod.POST)
 	protected String register(HttpServletRequest req,
-							@ModelAttribute("account") Account account,
+							  @ModelAttribute("account") Account account,
 							  @RequestParam(value="g-recaptcha-response", required = true ) String reCaptchaResponse,
 							  @RequestParam(value="uri", required = false ) String uri,
 							  RedirectAttributes redirect){
@@ -835,21 +640,6 @@ public class AccountController {
 
 		return notifications;
 	}
-
-//	private List<Post> getLatestPostsSkinny(Account account, HttpServletRequest request) {
-//		List<Post> latestPosts = new ArrayList<Post>();
-//
-//		try {
-//			if (request.getSession().getAttribute(Constants.ACTIVITY_REQUEST_TIME) != null) {
-//				long start = (Long) request.getSession().getAttribute(Constants.ACTIVITY_REQUEST_TIME);
-//				long end = utilities.getCurrentDate();
-//				latestPosts = postRepo.getLatestSkinny(start, end, account.getId());
-//			}
-//		} catch (Exception e) {
-//		}
-//
-//		return latestPosts;
-//	}
 
 
 	@RequestMapping(value="/profile/data/views", method=RequestMethod.GET, produces="application/json")

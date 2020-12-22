@@ -7,14 +7,7 @@
 
 <body>
 
-	<h1>Accounts</h1>
-
-	
-	<c:if test="${not empty error}">
-		<div class="notify notify-warning">
-			${error}
-		</div>
-	</c:if>
+	<h1>Admin Accounts</h1>
 	
 	<c:if test="${not empty message}">
 		<div class="notify notify-info">
@@ -27,32 +20,7 @@
 		<c:when test="${accounts.size() > 0}">
 					
 			<div class="span12">
-    		
-				<div class="btn-toolbar">
-					<div class="btn-group">
-    		
-						<%  int total = Integer.parseInt(request.getAttribute("total").toString());
-							int resultsPerPage = Integer.parseInt(request.getAttribute("resultsPerPage").toString());
-							int activePage = Integer.parseInt(request.getAttribute("activePage").toString());
-							
-							int currentPage = 1;
-						    for(int m = 0; m < total; m++){ 
-								if(m % resultsPerPage == 0){%>
-									<%if(activePage == currentPage){%>
-										<a href="${pageContext.request.contextPath}/admin/account/list?offset=<%=m%>&max=<%=resultsPerPage%>&page=<%=currentPage%>" class="btn active"><%=currentPage%></a>
-									<%}else{%>
-										<a href="${pageContext.request.contextPath}/admin/account/list?offset=<%=m%>&max=<%=resultsPerPage%>&page=<%=currentPage%>" class="btn"><%=currentPage%></a>
-									<%}%>
-									
-								<%	
-									currentPage++;
-								}%>
-						<%}%>
-    		
-					</div>
-				</div>
-				
-					
+
 				<table class="table table-condensed">
 					<thead>
 						<tr>

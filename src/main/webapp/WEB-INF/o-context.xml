@@ -29,6 +29,7 @@
 	<bean id="phoneService" class="social.amadeus.service.PhoneService"/>
 	<bean id="stripeService" class="social.amadeus.service.StripeService"/>
 	<bean id="reCaptchaService" class="social.amadeus.service.ReCaptchaService"/>
+	<bean id="accountService" class="social.amadeus.service.AccountService"/>
 	<bean id="authService" class="social.amadeus.service.AuthService"/>
 	<bean id="postService" class="social.amadeus.service.PostService"/>
 	<bean id="syncService" class="social.amadeus.service.SyncService"/>

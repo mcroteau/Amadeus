@@ -48,7 +48,7 @@ public class Constants {
 
 	public static final String ACCOUNT_MAINTENANCE = "permission:accounts:";
 	public static final String POST_MAINTENANCE    = "permission:posts:";
-	public static final String POST_SHARE_MAINTENANCE    = "permission:posts_shared:";
+	public static final String POST_SHARE_MAINTENANCE = "permission:posts_shared:";
 	public static final String COMMENT_MAINTENANCE = "permission:comments:";
 	public static final String FLYER_MAINTENANCE   = "permission:flyer:";
 

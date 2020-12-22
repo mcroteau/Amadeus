@@ -14,7 +14,7 @@
         <tr>
             <td>
                 <c:if test="${not empty flyer.imageUri}">
-                    <img src="/o/${flyer.imageUri}" style="width:60px;border-radius:9px;"/>
+                    <img src="${flyer.imageUri}" style="width:60px;border-radius:9px;"/>
                 </c:if>
             </td>
             <td>

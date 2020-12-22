@@ -1,6 +1,5 @@
 package social.amadeus.service;
 
-import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.ocpsoft.prettytime.PrettyTime;

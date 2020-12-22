@@ -21,7 +21,7 @@
 
         <div class="form-row">
             <c:if test="${not empty flyer.imageUri}">
-                <img src="/o/${flyer.imageUri}" style="width:300px;border-radius: 40px;"/>
+                <img src="${flyer.imageUri}" style="width:300px;border-radius: 40px;"/>
             </c:if>
             <label>Pick Image</label>
             <input type="file" name="flyerImage"/>

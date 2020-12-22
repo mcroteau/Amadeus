@@ -129,7 +129,7 @@
 
 
             <div id="profile-image">
-                <img src="${pageContext.request.contextPath}/${account.imageUri}"/>
+                <img src="${account.imageUri}"/>
 
                 <span class="information" style="display:block;margin:20px auto;">250 x 250</span>
 

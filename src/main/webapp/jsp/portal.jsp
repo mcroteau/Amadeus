@@ -82,7 +82,7 @@
 
             <div id="navigation-container" class="float-right">
                 <a ng-click="toggleProfile()" href="javascript:" id="profile-actions-href" style="margin-right:37px;">
-                    <img src="/o/${sessionScope.imageUri}" id="profile-ref-image" style="z-index:1"/>
+                    <img src="${sessionScope.imageUri}" id="profile-ref-image" style="z-index:1"/>
                     <span ng-show="data.messagesCount" id="base-notifications-count">{{data.messagesCount}}</span>
                 </a>
 

@@ -9,8 +9,8 @@
         <thead>
         <tr>
             <th>Id</th>
+            <td></td>
             <th>Name</th>
-            <th>Age</th>
             <th>City</th>
             <th></th>
         </tr>
@@ -18,11 +18,11 @@
         <tbody id="friend-invite-rows-container">
             <tr ng-repeat="invitation in invitations" ng-show="!invitation.isOwnersAccount">
                 <td>{{invitation.inviteeId}}</td>
+                <td><a ng-href="#!/profile/{{account.id}}" href="javascript:" class="profile-href"><img ng-src="{{account.imageUri}}" class="profile-href search-profile-image"/></a></td>
                 <!--<td>{{invitedId}}</td>-->
                 <td>
                     <a ng-href="#!/profile/{{invitation.inviteeId}}" href="javascript:" class="friend-invite-profile-href href-dotted">{{invitation.name}}</a>
                 </td>
-                <td>{{invitation.age}}</td>
                 <td>{{invitation.location}}</td>
                 <td class="align-right">
                     <button ng-click="ignoreInvitation(invitation.inviteeId)" class="button sky ignore-button small">Ignore</button>

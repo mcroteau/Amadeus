@@ -15,7 +15,7 @@
             </thead>
             <tbody id="accounts-search-results-container">
                 <tr ng-repeat="account in accounts" ng-if="!account.blocked">
-                    <td><a ng-href="#!/profile/{{account.id}}" href="javascript:" class="profile-href"><img ng-src="/o/{{account.imageUri}}" class="profile-href search-profile-image"/></a></td>
+                    <td><a ng-href="#!/profile/{{account.id}}" href="javascript:" class="profile-href"><img ng-src="{{account.imageUri}}" class="profile-href search-profile-image"/></a></td>
                     <td>
                         <a ng-href="#!/profile/{{account.id}}" href="javascript:" class="profile-href href-dotted" data-id="{{id}}">{{account.name}}
                             <span ng-if="!account.isFriend && account.invited" class="invite-sent-span">(Invite sent)</span>

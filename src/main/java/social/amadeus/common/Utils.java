@@ -36,6 +36,27 @@ public class Utils {
 		return r.nextInt(max);
 	}
 
+	public static String hashit(String password){
+		MessageDigest md = null;
+		StringBuffer passwordHashed = new StringBuffer();
+
+		try {
+			md = MessageDigest.getInstance("SHA-256");
+			md.update(password.getBytes());
+
+			byte byteData[] = md.digest();
+
+			for (int i = 0; i < byteData.length; i++) {
+				passwordHashed.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+			}
+
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return passwordHashed.toString();
+	}
+
+
 	public String hash(String password){
 		MessageDigest md = null;
         StringBuffer passwordHashed = new StringBuffer();
@@ -253,6 +274,16 @@ public class Utils {
 		}
 	}
 
+	public static String getGenericFileName(CommonsMultipartFile file){
+
+		FileItem fileItem = file.getFileItem();
+		String originalName = fileItem.getName();
+
+		String fileName = getRandomString(9);
+		String extension = getExtension(originalName);
+
+		return fileName + "." +  extension;
+	}
 
 	public String generateFileName(CommonsMultipartFile file){
 	    
@@ -266,6 +297,20 @@ public class Utils {
 	}
 
 
+
+	private static String getExtension(final String path) {
+		String result = null;
+		if (path != null) {
+			result = "";
+			if (path.lastIndexOf('.') != -1) {
+				result = path.substring(path.lastIndexOf('.'));
+				if (result.startsWith(".")) {
+					result = result.substring(1);
+				}
+			}
+		}
+		return result;
+	}
 
 
 	private String getFileExtension(final String path) {
@@ -282,6 +327,18 @@ public class Utils {
 	    return result;
 	}
 
+
+
+	public static String getRandomString(int n) {
+		String CHARS = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890";
+		StringBuilder uuid = new StringBuilder();
+		Random rnd = new Random();
+		while (uuid.length() < n) {
+			int index = (int) (rnd.nextFloat() * CHARS.length());
+			uuid.append(CHARS.charAt(index));
+		}
+		return uuid.toString();
+	}
 
 
 	public String generateRandomString(int n) {
