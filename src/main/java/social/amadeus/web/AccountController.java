@@ -189,7 +189,7 @@ public class AccountController {
         try{
 
 			account.setPassword(passwordHashed.toString());
-			account.setImageUri(Constants.DEFAULT_IMAGE_URI);
+			account.setImageUri(Utils.getProfileImageUri());
 			accountRepo.save(account);
 			
 			Account savedAccount = accountRepo.findByUsername(account.getUsername());
@@ -279,7 +279,7 @@ public class AccountController {
         try{
 
 			account.setPassword(passwordHashed.toString());
-			account.setImageUri(Constants.DEFAULT_IMAGE_URI);
+			account.setImageUri(Utils.getProfileImageUri());
 			accountRepo.save(account);
 			
 			Account savedAccount = accountRepo.findByUsername(account.getUsername());

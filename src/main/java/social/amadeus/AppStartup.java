@@ -102,7 +102,7 @@ public class AppStartup {
 				admin.setName("Sebastien");
 				admin.setUsername(Constants.ADMIN_USERNAME);
 				admin.setPassword(password);
-				admin.setImageUri(Constants.FRESCO);
+				admin.setImageUri(Utils.getSebastienImageUri());
 				accountRepo.saveAdministrator(admin);
 			}
 		}catch(Exception e){
@@ -110,7 +110,6 @@ public class AppStartup {
 		}
 		log.info("Accounts : " + accountRepo.count());
 	}
-
 
 
 	private void createApplicationGuest(){
@@ -122,7 +121,7 @@ public class AppStartup {
 			account.setName("Kelly");
 			account.setUsername(Constants.GUEST_USERNAME);
 			account.setPassword(password);
-			account.setImageUri(Constants.DEFAULT_IMAGE_URI);
+			account.setImageUri(Utils.getProfileImageUri());
 			accountRepo.save(account);
 		}
 		log.info("Accounts : " + accountRepo.count());
@@ -190,6 +189,7 @@ public class AppStartup {
 		generateMockConnections();
 		generateMockPosts();
 		generateMockMessages();
+		generateAds();
 	}
 
 
@@ -205,7 +205,7 @@ public class AppStartup {
 				account.setAge("33");
 				String password = utils.hash(Constants.PASSWORD);
 				account.setPassword(password);
-				account.setImageUri(Constants.DEFAULT_IMAGE_URI);
+				account.setImageUri(Utils.getProfileImageUri());
 				Account savedAccount = accountRepo.save(account);
 				accountRepo.savePermission(savedAccount.getId(), Constants.ACCOUNT_MAINTENANCE + savedAccount.getId());
 			}
@@ -373,7 +373,7 @@ public class AppStartup {
 		if (count == 0) {
 			Account account = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
 			Flyer flyer = new Flyer();
-			flyer.setImageUri(Constants.DEFAULT_FLYER_IMAGE_URI);
+			flyer.setImageUri(Utils.getFlyerImageUri());
 			flyer.setActive(true);
 			flyer.setPageUri("www.microsoft.org");
 			flyer.setStartDate(utils.getCurrentDate());

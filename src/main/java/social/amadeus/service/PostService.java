@@ -268,7 +268,7 @@ public class PostService {
         }
 
         String permission = Constants.POST_MAINTENANCE  + id;
-        if(!authService.isAdministrator() ||
+        if(!authService.isAdministrator() &&
                 !authService.hasPermission(permission)) {
             return Constants.REQUIRES_PERMISSION;
         }
@@ -677,7 +677,8 @@ public class PostService {
     }
 
     private Post setActive(Post post){
-        if (sessionManager.sessions.containsKey(post.getUsername())) {
+        if (post.getUsername() != null &&
+                sessionManager.sessions.containsKey(post.getUsername())) {
             post.setStatus("online");
         }
         return post;
@@ -900,10 +901,11 @@ public class PostService {
             account.setId(post.getAccountId());
             account.setName(post.getName());
             account.setImageUri(post.getImageUri());
-            if (sessionManager.sessions.containsKey(post.getUsername())) {
+            if(post.getUsername() != null &&
+                    sessionManager.sessions.containsKey(post.getUsername())) {
                 account.setStatus("online");
             }
-            if (femalesMalesMap.containsKey(post.getAccountId())) {
+            if(femalesMalesMap.containsKey(post.getAccountId())) {
                 int count = femalesMalesMap.get(post.getAccountId()).getCount() + 1;
                 account.setCount(count);
                 femalesMalesMap.put(post.getAccountId(), account);

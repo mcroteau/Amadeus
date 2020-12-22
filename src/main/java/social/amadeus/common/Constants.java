@@ -40,9 +40,9 @@ public class Constants {
 
     public static final String PROFILE_IMAGE_DIRECTORY = "media/profiles/";
 
-    public static final String FRESCO                  = "media/profiles/sebastien.jpg";
-	public static final String DEFAULT_IMAGE_URI       = "media/profiles/amadeus.png";
-	public static final String DEFAULT_FLYER_IMAGE_URI = "images/figma-ad.jpg";
+    public static final String FRESCO                  = "2Wxt8sKms.jpg";
+	public static final String DEFAULT_IMAGE_URI       = "tHMLqV9TU.png";
+	public static final String DEFAULT_FLYER_IMAGE_URI = "k0nIVNObX.png";
 
 	public static final String DELIMITER = ":";
 
@@ -52,7 +52,6 @@ public class Constants {
 	public static final String COMMENT_MAINTENANCE = "permission:comments:";
 	public static final String FLYER_MAINTENANCE   = "permission:flyer:";
 
-	public static final int RESULTS_PER_PAGE       = 10;
 	public static final int RESULTS_PER_PAGE_MUSIC = 7;
 	public static final int MOCK_ACCOUNTS          = 7;
 	

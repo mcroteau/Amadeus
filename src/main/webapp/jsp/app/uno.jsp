@@ -39,7 +39,7 @@
 
     <br class="clear"/>
 
-    <a href="${pageContext.request.contextPath}/signup" class="button beauty-light large">Sign Up !</a>
+    <a href="${pageContext.request.contextPath}/signup" class="button yella large">Sign Up !</a>
 
 <%--    <a href="${pageContext.request.contextPath}/account/guest" class="button light large" style="display:block;margin-top:10px;margin-bottom:70px;">Check it Out !</a>--%>
 </div>

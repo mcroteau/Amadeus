@@ -30,6 +30,17 @@ public class Utils {
 	@Autowired
 	private ApplicationContext applicationContext;
 
+	public static String getSebastienImageUri(){
+		return Constants.HTTPS + Constants.DO_ENDPOINT + "/" + Constants.FRESCO;
+	}
+
+	public static String getProfileImageUri(){
+		return Constants.HTTPS + Constants.DO_ENDPOINT + "/" + Constants.DEFAULT_IMAGE_URI;
+	}
+
+	public static String getFlyerImageUri(){
+		return Constants.HTTPS + Constants.DO_ENDPOINT + "/" + Constants.DEFAULT_FLYER_IMAGE_URI;
+	}
 
 	public int generateRandomNumber(int max){
 		Random r = new Random();

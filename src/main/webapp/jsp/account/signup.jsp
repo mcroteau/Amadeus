@@ -66,7 +66,7 @@
 
             <p style="text-align: left; margin-top:30px;">Are you already one of our delicate flowers?</p>
 
-            <a href="${pageContext.request.contextPath}/" class="button amadeus" id="signin-button" style="width:100%;">Signin!</a>
+            <a href="${pageContext.request.contextPath}/" class="button yella" id="signin-button" style="width:100%;">Signin!</a>
 
         </div>
 
