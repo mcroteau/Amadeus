@@ -57,7 +57,7 @@
         <div class="indeterminate" style="width: 100%"></div>
     </div>
 
-	<div ng-click="closeDialogs" id="layout-container" style="position:relative;">
+	<div id="layout-container" style="position:relative;">
 
 		<div id="top-outer-container" ng-init="init()">
 
@@ -73,8 +73,8 @@
 			<div id="top-inner-container">
 
                 <div ng-if="!$root.profilePage" id="search-container" class="float-left" style="z-index:100">
-<%--                    <div id="search-label" data-i18n="search.text">Search:</div>--%>
-                    <input ng-keyup="navigateSearch($event)" type="text" class="search-input" id="search-box" placeholder="Search:" autocomplete="off"/>
+                    <div id="search-label" data-i18n="search.text">Search:</div>
+                    <input ng-keyup="navigateSearch($event)" type="text" class="search-input" id="search-box" placeholder="" autocomplete="off"/>
                 </div>
 
 				<br class="clear"/>
@@ -90,7 +90,7 @@
                 <div ng-show="showProfile" id="profile-picture-actions-container" class="global-shadow">
                     <a href="#!/profile/${sessionScope.account.id}" id="profile-href"  class="profile-popup-action"><span class="space"></span> <span data-i18n="profile.text">Profile</span></a>
                     <a ng-click="openChat()" href="javascript:" id="messages-href" class="profile-popup-action" ng-click="renderMessages(${sessionScope.account.id})"><span id="latest-messages-total" class="space">{{data.messagesCount}}</span> <span data-i18n="unread.text">Unread</span></a>
-                    <a href="/o/signout" class="profile-popup-action" ><span class="space"></span> <span data-i18n="logout.text">Logout</span></a>
+                    <a href="/o/signout" class="profile-popup-action"><span class="space"></span> <span data-i18n="logout.text">Logout</span></a>
                 </div>
             </div>
 
@@ -374,7 +374,6 @@
         }
 
         $scope.closeDialogs = function(event) {
-            console.log(event.target)
             var $target = $(event.target)
             var id = $target.attr('id')
             if (id != 'profile-ref-image' &&
