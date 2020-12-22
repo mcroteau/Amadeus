@@ -4027,6 +4027,13 @@ h1.gray span{
     border-radius: 20px;
 }
 
+#top-inner-container{
+    margin-left:194px;
+}
+#search-box{
+    width:421px;
+}
+
 #footer{
     z-index:13;
 }

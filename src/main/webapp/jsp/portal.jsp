@@ -19,6 +19,7 @@
     <script type="text/javascript" src="/o/js/packages/jquery.i18n.messagestore.js"></script>
 
     <link rel="stylesheet" href="/o/css/app.gap.css?v=<%=System.currentTimeMillis()%>"/>
+    <link rel="stylesheet" href="/o/css/app.astro.css?v=<%=System.currentTimeMillis()%>"/>
     <link rel="stylesheet" href="/o/css/app.gap.mobile.css?v=<%=System.currentTimeMillis()%>"/>
 
 </head>
