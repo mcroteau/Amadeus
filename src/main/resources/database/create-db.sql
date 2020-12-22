@@ -219,7 +219,7 @@ create table flyers (
 	page_uri text,
     ad_views bigint default 0,
     active boolean,
-    ad_runs bigint default 1,
+    ad_runs bigint default 0,
 	account_id bigint NOT NULL REFERENCES account(id),
     start_date bigint NOT NULL
 );

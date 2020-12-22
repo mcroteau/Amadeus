@@ -23,19 +23,20 @@
 	</bean>  
 
 	
-	<bean id="utils" class="social.amadeus.common.Utils"/>
+	<bean class="social.amadeus.common.Utils"/>
 
-	<bean id="emailService" class="social.amadeus.service.EmailService"/>
-	<bean id="phoneService" class="social.amadeus.service.PhoneService"/>
-	<bean id="stripeService" class="social.amadeus.service.StripeService"/>
-	<bean id="reCaptchaService" class="social.amadeus.service.ReCaptchaService"/>
-	<bean id="accountService" class="social.amadeus.service.AccountService"/>
-	<bean id="authService" class="social.amadeus.service.AuthService"/>
+	<bean class="social.amadeus.service.EmailService"/>
+	<bean class="social.amadeus.service.PhoneService"/>
+	<bean class="social.amadeus.service.StripeService"/>
+	<bean class="social.amadeus.service.ReCaptchaService"/>
+	<bean class="social.amadeus.service.AccountService"/>
+	<bean class="social.amadeus.service.AuthService"/>
+	<bean class="social.amadeus.service.FlyerService"/>
 	<bean class="social.amadeus.service.PortalService"/>
-	<bean id="postService" class="social.amadeus.service.PostService"/>
-	<bean id="staticService" class="social.amadeus.service.StaticService"/>
-	<bean id="syncService" class="social.amadeus.service.SyncService"/>
-	<bean id="notificationService" class="social.amadeus.service.NotificationService"/>
+	<bean class="social.amadeus.service.PostService"/>
+	<bean class="social.amadeus.service.StaticService"/>
+	<bean class="social.amadeus.service.SyncService"/>
+	<bean class="social.amadeus.service.NotificationService"/>
 
 	<bean id="appRunner" class="social.amadeus.AppStartup" scope="singleton"/>
 
