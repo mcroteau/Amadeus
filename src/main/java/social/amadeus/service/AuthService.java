@@ -1,18 +1,30 @@
 package social.amadeus.service;
 
+import com.google.gson.Gson;
 import io.github.mcroteau.Parakeet;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import social.amadeus.common.Constants;
 import social.amadeus.repository.AccountRepo;
 import social.amadeus.model.Account;
 
+import javax.servlet.http.HttpServletRequest;
+import java.nio.charset.StandardCharsets;
+
 public class AuthService {
+
+    Gson gson = new Gson();
 
     @Autowired
     private Parakeet parakeet;
 
     @Autowired
     private AccountRepo accountRepo;
+
+    @Autowired
+    private AuthService authService;
 
     public boolean signin(String username, String password){
         return parakeet.login(username, password);
@@ -44,4 +56,43 @@ public class AuthService {
         return account;
     }
 
+    public String authenticateUser(String uri, Account account, RedirectAttributes redirect, HttpServletRequest request) {
+
+        try{
+            if(account == null) {
+                String payload = IOUtils.toString(request.getInputStream(), StandardCharsets.UTF_8);
+                account = gson.fromJson(payload, Account.class);
+            }
+
+            if(!signin(account.getUsername(), account.getPassword())){
+                redirect.addFlashAttribute("message", "Wrong username and password");
+                return "redirect:/";
+            }
+
+            Account sessionAccount = accountRepo.findByUsername(account.getUsername());
+
+            request.getSession().setAttribute("account", sessionAccount);
+            request.getSession().setAttribute("imageUri", sessionAccount.getImageUri());
+
+            if(uri != null &&
+                    !uri.equals("")) {
+                return "redirect:/action?uri=" + uri;
+            }
+
+        } catch ( Exception e ) {
+            e.printStackTrace();
+            redirect.addFlashAttribute("message", "Please yell at one of us, something is a little off.");
+            return "redirect:/";
+        }
+
+        return "redirect:/";
+    }
+
+    public String unAuthenticateUser(RedirectAttributes redirect, HttpServletRequest request) {
+        signout();
+        redirect.addFlashAttribute("message", "Successfully signed out");
+        request.getSession().setAttribute("account", "");
+        request.getSession().setAttribute("imageUri", "");
+        return "redirect:/";
+    }
 }

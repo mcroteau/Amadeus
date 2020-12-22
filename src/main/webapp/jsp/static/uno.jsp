@@ -2,12 +2,11 @@
 
 <div id="uno-content">
 
-    <c:if test="${not empty sessionScope.message}">
+    <c:if test="${not empty message}">
         <div class="span12">
-            <p>${sessionScope.message}</p>
+            <p>${message}</p>
         </div>
     </c:if>
-
 
     <h2 style="margin-bottom:20px;">Signin</h2>
 

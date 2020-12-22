@@ -278,7 +278,7 @@ public class AccountService {
 
         if(!reCaptchaService.validates(reCaptchaResponse)){
             redirect.addFlashAttribute("account", account);
-            redirect.addFlashAttribute("message", "Please be a valid human... check the box?");
+            redirect.addFlashAttribute("message", "Did you forget to check the box thing?");
             return "redirect:/signup?uri=" + uri;
         }
 

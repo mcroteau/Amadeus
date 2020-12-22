@@ -26,6 +26,7 @@
 	<bean class="social.amadeus.common.Utils"/>
 
 	<bean class="social.amadeus.service.AccountService"/>
+	<bean class="social.amadeus.service.ActionService"/>
 	<bean class="social.amadeus.service.AuthService"/>
 	<bean class="social.amadeus.service.EmailService"/>
 	<bean class="social.amadeus.service.FlyerService"/>

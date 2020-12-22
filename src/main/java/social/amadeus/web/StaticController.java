@@ -69,4 +69,9 @@ public class StaticController {
 		return staticService.sendInvites(emails, modelMap, redirect);
 	}
 
+	@RequestMapping(value="/unauthorized", method=RequestMethod.GET)
+	public String unauthorized(ModelMap model, @RequestParam(value="uri", required=false ) String uri){
+		return "static/unauthorized";
+	}
+
 }
