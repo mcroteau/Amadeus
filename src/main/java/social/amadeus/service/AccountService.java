@@ -103,7 +103,7 @@ public class AccountService {
             }
         };
 
-        List<FriendInvite> invites = friendRepo.invites(account.getId());
+        List<FriendInvite> invites = friendRepo.getInvites(account.getId());
         for(FriendInvite invite : invites){
             Notification notification = new Notification();
             notification.setInvite(true);
@@ -566,9 +566,9 @@ public class AccountService {
         List<Notification> notifications = getNotifications(account);
         long messagesCount = messageRepo.countByAccount(account);
         long notificationsCount = notificationRepo.countByAccount(account);
-        long invitationsCount = friendRepo.countInvitesByAccount(account);
+        long invitationsCount = friendRepo.getCountInvitesByAccount(account);
 
-        List<FriendInvite> invites = friendRepo.invites(account.getId());
+        List<FriendInvite> invites = friendRepo.getInvites(account.getId());
         notificationsCount = notificationsCount + invites.size();
 
         respData.put("newestCount", newestCount);

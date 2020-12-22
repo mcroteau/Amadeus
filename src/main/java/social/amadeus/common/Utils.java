@@ -402,8 +402,6 @@ public class Utils {
 		}
 	}
 
-
-
 	public static long getDate() {
 		Calendar cal = Calendar.getInstance();
 		long date = getSimpleDateFormatted(cal);

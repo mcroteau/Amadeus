@@ -18,8 +18,7 @@ public class SearchController {
     private SearchService searchService;
 
     @RequestMapping(value="/search", method= RequestMethod.GET, produces="application/json")
-    public @ResponseBody
-    String search(@RequestParam(value="q", required = false ) String q){
+    public @ResponseBody String search(@RequestParam(value="q", required = false ) String q){
         return gson.toJson(searchService.queryBasic(q));
     }
 

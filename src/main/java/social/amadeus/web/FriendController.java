@@ -19,6 +19,7 @@ import social.amadeus.service.AuthService;
 import social.amadeus.service.EmailService;
 import social.amadeus.repository.FriendRepo;
 import social.amadeus.repository.MessageRepo;
+import social.amadeus.service.FriendService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -30,177 +31,40 @@ public class FriendController {
 
     private static final Logger log = Logger.getLogger(FriendController.class);
 
+    Gson gson = new Gson();
 
     @Autowired
-    private Utils utils;
-
-    @Autowired
-    private EmailService emailService;
-
-    @Autowired
-    private FriendRepo friendRepo;
-
-    @Autowired
-    private MessageRepo messageRepo;
-
-    @Autowired
-    private AuthService authService;
+    FriendService friendService;
 
 
     @RequestMapping(value="/friend/invitations", method=RequestMethod.GET, produces="application/json")
-    public @ResponseBody String invitations(ModelMap model,
-                                        HttpServletRequest request,
-                                        final RedirectAttributes redirect){
-
-        Map<String, Object> data = new HashMap<String, Object>();
-        Gson gson = new Gson();
-
-        if(!authService.isAuthenticated()){
-            data.put("error", "Authentication required");
-            return gson.toJson(data);
-        }
-
-        Account account = authService.getAccount();
-
-        List<FriendInvite> invites = friendRepo.invites(account.getId());
-        for(FriendInvite invite : invites){
-            if(account.getId() == invite.getInviteeId()){
-                invite.setOwnersAccount(true);
-            }
-        }
-
-        return gson.toJson(invites);
+    public @ResponseBody String getinvitiations(){
+        return gson.toJson(friendService.getInvites());
     }
-
-
 
     @RequestMapping(value="/friend/invite/{id}", method=RequestMethod.POST, produces="application/json")
-    public @ResponseBody String invite(ModelMap model,
-                                       HttpServletRequest request,
-                                       final RedirectAttributes redirect,
-                                       @PathVariable String id){
-
-        Map<String, Object> response = new HashMap<String, Object>();
-        Gson gson = new Gson();
-
-        if(!authService.isAuthenticated()){
-            response.put("error", "authentication required");
-            String error = gson.toJson(response);
-            return error;
-        }
-
-        Account authenticatedAccount = authService.getAccount();
-
-        if(friendRepo.invite(authenticatedAccount.getId(), Long.parseLong(id), utils.getCurrentDate())){
-            response.put("success", true);
-        }else{
-            response.put("error", true);
-        }
-
-        return gson.toJson(response);
+    public @ResponseBody String sendInvite(@PathVariable String id){
+        return gson.toJson(friendService.sendInvite(id));
     }
-
-
 
     @RequestMapping(value="/friend/accept/{id}", method=RequestMethod.POST, produces="application/json")
-    public @ResponseBody
-    String accept(ModelMap model,
-               HttpServletRequest request,
-               final RedirectAttributes redirect,
-               @PathVariable String id){
-
-        Map<String, Object> data = new HashMap<String, Object>();
-        Gson gson = new Gson();
-
-        if(!authService.isAuthenticated()){
-            data.put("error", true);
-            return gson.toJson(data);
-        }
-
-        Account authenticatedAccount = authService.getAccount();
-
-        if(friendRepo.accept(Long.parseLong(id), authenticatedAccount.getId(), utils.getCurrentDate())) {
-            data.put("success", true);
-            return gson.toJson(data);
-        }
-        else{
-            data.put("error", true);
-            return gson.toJson(data);
-        }
+    public @ResponseBody String acceptInvite(@PathVariable String id){
+        return gson.toJson(friendService.acceptInvite(id));
     }
-
 
     @RequestMapping(value="/friend/ignore/{id}", method=RequestMethod.POST, produces="application/json")
-    public @ResponseBody
-    String ignore(ModelMap model,
-               HttpServletRequest request,
-               final RedirectAttributes redirect,
-               @PathVariable String id){
-
-        Map<String, Object> data = new HashMap<String, Object>();
-        Gson gson = new Gson();
-
-        if(!authService.isAuthenticated()){
-            data.put("error", true);
-            String error = gson.toJson(data);
-            return error;
-        }
-
-        Account account = authService.getAccount();
-
-        boolean ignored = friendRepo.ignore(Long.parseLong(id), account.getId(), utils.getCurrentDate());
-
-        data.put("success", ignored);
-        return gson.toJson(data);
+    public @ResponseBody String ignoreInvite(@PathVariable String id){
+        return gson.toJson(friendService.ignoreInvite(id));
     }
-
 
     @RequestMapping(value="/friend/remove/{id}", method=RequestMethod.POST, produces="application/json")
-    public @ResponseBody String remove(ModelMap model,
-                                       HttpServletRequest request,
-                                       final RedirectAttributes redirect,
-                                       @PathVariable String id){
-
-        Map<String, Object> data = new HashMap<String, Object>();
-        Gson gson = new Gson();
-
-        if(!authService.isAuthenticated()){
-            data.put("error", true);
-            String error = gson.toJson(data);
-            return error;
-        }
-
-        Account account = authService.getAccount();
-        boolean success = friendRepo.removeConnection(account.getId(), Long.parseLong(id));
-
-        data.put("success", success);
-        String json = gson.toJson(data);
-
-        return json;
+    public @ResponseBody String disconnectedFriend(@PathVariable String id){
+        return gson.toJson(friendService.disconnectedFriend(id));
     }
 
-
-
-    @RequiresAuthentication
     @RequestMapping(value="/friends/{id}", method=RequestMethod.GET, produces="application/json")
-    public @ResponseBody String friends(ModelMap model,
-                                        final RedirectAttributes redirect,
-                                        @PathVariable String id){
-        Map<String, Object> data = new HashMap<String, Object>();
-        Gson gson = new Gson();
-
-        if(!authService.isAuthenticated()){
-            data.put("error", "authentication required");
-            return gson.toJson(data);
-        }
-
-        List<Friend> friends = friendRepo.getFriends(Long.parseLong(id));
-        for(Friend friend : friends){
-            if(messageRepo.hasMessages(friend.getFriendId(), authService.getAccount().getId()))
-                friend.setHasMessages(true);
-        }
-
-        return gson.toJson(friends);
+    public @ResponseBody String getFriends(@PathVariable String id){
+        return gson.toJson(friendService.getFriends(id));
     }
 
 }

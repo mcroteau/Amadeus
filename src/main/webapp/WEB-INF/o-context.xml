@@ -25,18 +25,20 @@
 	
 	<bean class="social.amadeus.common.Utils"/>
 
-	<bean class="social.amadeus.service.EmailService"/>
-	<bean class="social.amadeus.service.PhoneService"/>
-	<bean class="social.amadeus.service.StripeService"/>
-	<bean class="social.amadeus.service.ReCaptchaService"/>
 	<bean class="social.amadeus.service.AccountService"/>
 	<bean class="social.amadeus.service.AuthService"/>
+	<bean class="social.amadeus.service.EmailService"/>
 	<bean class="social.amadeus.service.FlyerService"/>
+	<bean class="social.amadeus.service.FriendService"/>
+	<bean class="social.amadeus.service.MessageService"/>
+	<bean class="social.amadeus.service.NotificationService"/>
+	<bean class="social.amadeus.service.PhoneService"/>
 	<bean class="social.amadeus.service.PortalService"/>
 	<bean class="social.amadeus.service.PostService"/>
+	<bean class="social.amadeus.service.ReCaptchaService"/>
 	<bean class="social.amadeus.service.StaticService"/>
+	<bean class="social.amadeus.service.StripeService"/>
 	<bean class="social.amadeus.service.SyncService"/>
-	<bean class="social.amadeus.service.NotificationService"/>
 
 	<bean id="appRunner" class="social.amadeus.AppStartup" scope="singleton"/>
 

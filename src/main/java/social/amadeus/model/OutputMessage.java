@@ -4,6 +4,8 @@ import java.util.List;
 
 public class OutputMessage {
 
+    String statusMessage;
+
     long recipientId;
 
     String recipient;
@@ -11,6 +13,14 @@ public class OutputMessage {
     String recipientImageUri;
 
     List<Message> messages;
+
+    public String getStatusMessage() {
+        return statusMessage;
+    }
+
+    public void setStatusMessage(String statusMessage) {
+        this.statusMessage = statusMessage;
+    }
 
     public long getRecipientId() {
         return recipientId;
