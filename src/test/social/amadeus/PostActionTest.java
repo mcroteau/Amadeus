@@ -55,10 +55,9 @@ public class PostActionTest {
     }
 
 
-
     @Test
     public void testPublish(){
-        String result = postService.publishPost(Long.toString(savedPost.getId()));
+        postService.publishPost(Long.toString(savedPost.getId()));
         assertEquals(1, postRepo.getCount());
     }
 
@@ -74,7 +73,7 @@ public class PostActionTest {
 
     @Test
     public void testDelete(){
-        String result = postService.deletePost(Long.toString(savedPost.getId()));
+        postService.deletePost(Long.toString(savedPost.getId()));
         Post updatedPost = postRepo.get(savedPost.getId());
         assertTrue(updatedPost.isHidden());
     }
@@ -98,6 +97,15 @@ public class PostActionTest {
         assertNull(postRepo.getPostCommentId());
     }
 
+    @Test
+    public void testSharePost(){
+        Account adminAcc = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
+        postService.publishPost(Long.toString(savedPost.getId()));
+        postService.sharePost(Long.toString(savedPost.getId()), new MockPostShare(adminAcc, savedPost, Utils.getYesterday(7)));
+        ActivityOutput activityOutput = postService.getActivity();
+        assertEquals(2, activityOutput.getPosts().size());
+        postRepo.deletePostShare(postRepo.getPostShareId());
+    }
 
 //    @Test
 //    public void testUnshare(){
