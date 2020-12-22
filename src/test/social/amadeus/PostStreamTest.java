@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import social.amadeus.common.Constants;
 import social.amadeus.common.Utils;
+import social.amadeus.mocks.MockPost;
 import social.amadeus.mocks.MockPostLike;
 import social.amadeus.model.Account;
 import social.amadeus.model.ActivityOutput;
@@ -17,18 +18,19 @@ import social.amadeus.model.Post;
 import social.amadeus.repository.AccountRepo;
 import social.amadeus.repository.NotificationRepo;
 import social.amadeus.repository.PostRepo;
+import social.amadeus.service.AuthService;
 import social.amadeus.service.PostService;
 
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:o-combined-test.xml")
-public class PostActivityTest {
+public class PostStreamTest {
 
     private static final Logger log = Logger.getLogger(PostPermissionsTest.class);
 
     @Autowired
-    private Parakeet parakeet;
+    private AuthService authService;
 
     @Autowired
     private AccountRepo accountRepo;
@@ -47,12 +49,12 @@ public class PostActivityTest {
 
     @Before
     public void before(){
-        MockUtils.mockRequestCycle();
+        TestUtils.mockRequestCycle();
 
         Account adminAcc = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
-        Post postPre = MockUtils.mock(adminAcc, Utils.getDate());
+        Post postPre = new MockPost(adminAcc, Utils.getDate());
 
-        parakeet.login(Constants.ADMIN_USERNAME, Constants.PASSWORD);
+        authService.signin(Constants.ADMIN_USERNAME, Constants.PASSWORD);
         savedPost = postService.savePost(postPre, null, null);
     }
 
@@ -93,29 +95,13 @@ public class PostActivityTest {
         assertEquals(0, activityOutput.getPosts().size());
     }
 
-    @Test
-    public void testSharePost(){
-        postService.publishPost(Long.toString(savedPost.getId()));
-        ActivityOutput activityOutput = postService.getActivity();
-        assertEquals(3,3);
-    }
-
-    @Test
-    public void testSaveMultipleLikes(){
-        postService.publishPost(Long.toString(savedPost.getId()));
-        LikesOutput likesOutput = postService.likePost(Long.toString(savedPost.getId()));
-        log.info(likesOutput.getLikes());
-        MockUtils.mockRequestCycle();
-        parakeet.login(Constants.GUEST_USERNAME, Constants.GUEST_PASSWORD);
-        postService.likePost(Long.toString(savedPost.getId()));
-        assertEquals(2, postRepo.likes(savedPost.getId()));
-    }
 
     @After
     public void after(){
         Account adminAcc = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
         Account guestAcc = accountRepo.findByUsername(Constants.GUEST_USERNAME);
         notificationRepo.clearNotifications(adminAcc.getId());
+        postRepo.deletePostShare(postRepo.getPostShareId());
         postRepo.unlike(new MockPostLike(adminAcc, savedPost));
         postRepo.unlike(new MockPostLike(guestAcc, savedPost));
         postRepo.deletePostFlag(savedPost.getId(), adminAcc.getId());

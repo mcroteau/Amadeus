@@ -38,9 +38,13 @@ public class PostJdbcRepo implements PostRepo {
 	}
 
 	public long getPostShareId() {
-		String sql = "select max(id) from post_shares";
-		long id = jdbcTemplate.queryForObject(sql, new Object[]{}, Long.class);
-		return id;
+		try{
+			String sql = "select max(id) from post_shares";
+			return jdbcTemplate.queryForObject(sql, new Object[]{}, Long.class);
+		}catch (Exception ex){
+			//ex.printStackTrace();
+		}
+		return 0;
 	}
 
 	public long postCommentId() {
