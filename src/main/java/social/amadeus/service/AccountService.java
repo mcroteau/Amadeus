@@ -1,5 +1,7 @@
 package social.amadeus.service;
 
+import com.google.gson.Gson;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -8,15 +10,23 @@ import social.amadeus.common.Constants;
 import social.amadeus.common.Utils;
 import social.amadeus.model.Account;
 import social.amadeus.model.Post;
+import social.amadeus.model.Role;
 import social.amadeus.repository.AccountRepo;
+import social.amadeus.repository.FriendRepo;
 import social.amadeus.repository.PostRepo;
+import social.amadeus.repository.RoleRepo;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class AccountService {
+
+    Gson gson = new Gson();
 
     @Autowired
     private SyncService syncService;
@@ -25,14 +35,57 @@ public class AccountService {
     private AccountRepo accountRepo;
 
     @Autowired
+    private RoleRepo roleRepo;
+
+    @Autowired
+    private FriendRepo friendRepo;
+
+    @Autowired
     private PostRepo postRepo;
 
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    private PhoneService phoneService;
+
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired
+    private ReCaptchaService reCaptchaService;
+
 
     private String getAccountPermission(String id){
         return Constants.ACCOUNT_MAINTENANCE + id;
+    }
+
+    private Account hydrateAccount(HttpServletRequest req) {
+        try {
+            String payload = IOUtils.toString(req.getInputStream(), StandardCharsets.UTF_8);
+            return gson.fromJson(payload, Account.class);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    private void preloadConnections(Account authenticatedAccount){
+        Account adminAccount = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
+        friendRepo.saveConnection(adminAccount.getId(), authenticatedAccount.getId(), Utils.getDate());
+    }
+
+    private Account synchronizeImage(CommonsMultipartFile imageFile, Account account){
+        try {
+            String fileName = Utils.getGenericFileName(imageFile);
+            String imageUri = Constants.HTTPS + Constants.DO_ENDPOINT + "/" + fileName;
+
+            syncService.send(fileName, imageFile.getInputStream());
+            account.setImageUri(imageUri);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return account;
     }
 
     public Account getAccountInfo(){
@@ -97,15 +150,7 @@ public class AccountService {
 
         if(imageFile != null &&
                 imageFile.getSize() > 0) {
-            try {
-                String fileName = Utils.getGenericFileName(imageFile);
-                String imageUri = Constants.HTTPS + Constants.DO_ENDPOINT + "/" + fileName;
-
-                syncService.send(fileName, imageFile.getInputStream());
-                account.setImageUri(imageUri);
-            }catch(Exception ex){
-                ex.printStackTrace();
-            }
+            synchronizeImage(imageFile, account);
         }
 
         if(account.getImageUri().equals("")) {
@@ -152,7 +197,7 @@ public class AccountService {
         }
 
         if(!account.getPassword().equals("")){
-            account.setPassword(Utils.hashit(account.getPassword()));
+            account.setPassword(Utils.dirty(account.getPassword()));
             accountRepo.updatePassword(account);
         }
 
@@ -183,9 +228,103 @@ public class AccountService {
         return "redirect:/admin/accounts";
     }
 
+
     public String signup(String uri, ModelMap modelMap) {
         authService.signout();
         modelMap.addAttribute("uri", uri);
         return "account/signup";
     }
+
+
+    public String register(String uri, String reCaptchaResponse, Account account, HttpServletRequest req, RedirectAttributes redirect) {
+
+        if(account == null)hydrateAccount(req);
+
+        if(account == null){
+            redirect.addFlashAttribute("message", "a error on our end, please give it another go.");
+            return "redirect:/signup?uri=" + uri;
+        }
+
+        if(!reCaptchaService.validates(reCaptchaResponse)){
+            redirect.addFlashAttribute("account", account);
+            redirect.addFlashAttribute("message", "Please be a valid human... check the box?");
+            return "redirect:/signup?uri=" + uri;
+        }
+
+        if(!Utils.validMailbox(account.getUsername())){
+            redirect.addFlashAttribute("account", account);
+            redirect.addFlashAttribute("message", "Username must be a valid email.");
+            return "redirect:/signup?uri=" + uri;
+        }
+
+        Account existingAccount = accountRepo.findByUsername(account.getUsername());
+        if(existingAccount != null){
+            redirect.addFlashAttribute("account", account);
+            redirect.addFlashAttribute("message", "Account exists with same username.");
+            return "redirect:/signup?uri=" + uri;
+        }
+
+        if(account.getName().equals("")){
+            redirect.addFlashAttribute("account", account);
+            redirect.addFlashAttribute("message", "Name must not be blank.");
+            return "redirect:/signup?uri=" + uri;
+        }
+
+        if(account.getPassword().equals("")) {
+            redirect.addFlashAttribute("account", account);
+            redirect.addFlashAttribute("message", "Password cannot be blank");
+            return "redirect:/signup?uri=" + uri;
+        }
+
+        if(account.getPassword().length() < 7){
+            redirect.addFlashAttribute("account", account);
+            redirect.addFlashAttribute("message", "Password must be at least 7 characters long.");
+            return "redirect:/signup?uri=" + uri;
+        }
+
+        String password = account.getPassword();
+        String passwordHashed = Utils.dirty(account.getPassword());
+
+        try{
+
+            account.setPassword(passwordHashed.toString());
+            account.setImageUri(Utils.getProfileImageUri());
+            accountRepo.save(account);
+
+            Account savedAccount = accountRepo.findByUsername(account.getUsername());
+            preloadConnections(savedAccount);
+
+            Role defaultRole = roleRepo.find(Constants.ROLE_ACCOUNT);
+
+            accountRepo.saveAccountRole(savedAccount.getId(), defaultRole.getId());
+            accountRepo.savePermission(savedAccount.getId(), "account:maintenance:" + savedAccount.getId());
+
+
+            String body = "<h1>Amadeus</h1>"+
+                    "<p>Thank you for registering! Enjoy!</p>";
+
+            emailService.send(savedAccount.getUsername(), "Successfully Registered", body);
+
+            phoneService.support("Amadeus : Registration " + account.getName() + " " + account.getUsername());
+
+        }catch(Exception e){
+            e.printStackTrace();
+            redirect.addFlashAttribute("account", account);
+            redirect.addFlashAttribute("error", "Will you contact us? Email us with the subject, support@amadeus.social. Our programmers missed something. Gracias!");
+            return("redirect:/signup?uri=" + uri);
+        }
+
+
+        if(!authService.signin(account.getUsername(), password)) {
+            redirect.addFlashAttribute("message", "Thank you for registering. We hope you enjoy!");
+            return "redirect:/?uri=" + uri;
+        }
+
+        req.getSession().setAttribute("account", account);
+        req.getSession().setAttribute("imageUri", account.getImageUri());
+
+        return "redirect:/?uri=" + uri;
+    }
+
+
 }

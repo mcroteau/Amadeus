@@ -47,7 +47,7 @@ public class Utils {
 		return r.nextInt(max);
 	}
 
-	public static String hashit(String password){
+	public static String dirty(String password){
 		MessageDigest md = null;
 		StringBuffer passwordHashed = new StringBuffer();
 
@@ -362,6 +362,11 @@ public class Utils {
         }
         return uuid.toString();
     }
+
+	public static boolean validMailbox(String str){
+		EmailValidator validator = EmailValidator.getInstance();
+		return validator.isValid(str);
+	}
 
 
 	public boolean validEmail(String str){

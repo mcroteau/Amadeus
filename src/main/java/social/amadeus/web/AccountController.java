@@ -139,172 +139,15 @@ public class AccountController {
 	}
 	
 
-	@RequestMapping(value="/register", method=RequestMethod.POST)
-	protected String register(HttpServletRequest req,
-							  @ModelAttribute("account") Account account,
+	@PostMapping(value="/register")
+	protected String register(@ModelAttribute("account") Account account,
 							  @RequestParam(value="g-recaptcha-response", required = true ) String reCaptchaResponse,
 							  @RequestParam(value="uri", required = false ) String uri,
+							  HttpServletRequest request,
 							  RedirectAttributes redirect){
-
-		if(!reCaptchaService.validates(reCaptchaResponse)){
-			redirect.addFlashAttribute("account", account);
-			redirect.addFlashAttribute("error", "Please be a valid human... check the box?");
-			return "redirect:/signup?uri=" + uri;
-		}
-
-		if(!utils.validEmail(account.getUsername())){
-			redirect.addFlashAttribute("account", account);
-			redirect.addFlashAttribute("error", "Username must be a valid email.");
-			return "redirect:/signup?uri=" + uri;
-		}
-
-		Account existingAccount = accountRepo.findByUsername(account.getUsername());
-		if(existingAccount != null){
-			redirect.addFlashAttribute("account", account);
-			redirect.addFlashAttribute("error", "Account exists with same username.");
-			return "redirect:/signup?uri=" + uri;
-		}
-
-		if(account.getName().equals("")){
-			redirect.addFlashAttribute("account", account);
-			redirect.addFlashAttribute("error", "Name must not be blank.");
-			return "redirect:/signup?uri=" + uri;
-		}
-		
-		if(account.getPassword().equals("")) {
-			redirect.addFlashAttribute("account", account);
-			redirect.addFlashAttribute("error", "Password cannot be blank");
-			return "redirect:/signup?uri=" + uri;
-		}
-
-		if(account.getPassword().length() < 7){
-			redirect.addFlashAttribute("account", account);
-			redirect.addFlashAttribute("error", "Password must be at least 7 characters long.");
-			return "redirect:/signup?uri=" + uri;
-		}
-
-		String password = account.getPassword();
-		String passwordHashed = utils.hash(account.getPassword());
-
-        try{
-
-			account.setPassword(passwordHashed.toString());
-			account.setImageUri(Utils.getProfileImageUri());
-			accountRepo.save(account);
-			
-			Account savedAccount = accountRepo.findByUsername(account.getUsername());
-			preloadConnections(savedAccount);
-
-			Role defaultRole = roleRepo.find(Constants.ROLE_ACCOUNT);
-
-			accountRepo.saveAccountRole(savedAccount.getId(), defaultRole.getId());
-			accountRepo.savePermission(savedAccount.getId(), "account:maintenance:" + savedAccount.getId());
-
-
-			String body = "<h1>Amadeus</h1>"+
-					"<p>Thank you for registering! Enjoy!</p>";
-
-			emailService.send(savedAccount.getUsername(), "Successfully Registered", body);
-
-			phoneService.support("Amadeus : Registration " + account.getName() + " " + account.getUsername());
-
-        }catch(Exception e){
-			e.printStackTrace();
-			redirect.addFlashAttribute("account", account);
-        	redirect.addFlashAttribute("error", "Will you contact us? Email us with the subject, Please Fix. support@amadeus.social. Our programmers missed something. Gracias");
-        	return("redirect:/signup?uri=" + uri);
-        }
-
-
-        if(parakeet.login(account.getUsername(), password)) {
-
-			req.getSession().setAttribute("account", account);
-			req.getSession().setAttribute("imageUri", account.getImageUri());
-
-			return "redirect:/?uri=" + uri;
-
-		}else{
-			redirect.addFlashAttribute("message", "Thank you for registering. Enjoy");
-			return "redirect:/?uri=" + uri;
-		}
+    	return accountService.register(uri, reCaptchaResponse, account, request, redirect);
 	}
-
 	
-
-	@RequestMapping(value="/register_mobile", method=RequestMethod.POST, consumes="application/json")
-	protected @ResponseBody String registerMobile(
-							 @RequestBody Account account,
-							  @RequestParam(value="name", required = false ) String name,
-							  @RequestParam(value="email", required = false ) String email,
-							  @RequestParam(value="password", required = false ) String password,
-							   HttpServletRequest request){
-
-
-		Map<String, String> data = new HashMap<String, String>();
-		
-		try{
-
-			if(account == null){
-				String payload = IOUtils.toString(request.getInputStream(), StandardCharsets.UTF_8);
-		    	account = gson.fromJson(payload, Account.class);
-			}
-
-		}catch(Exception e){
-			data.put("error", "IO error");
-			return gson.toJson(data);
-		}
-
-		if(!utils.validEmail(account.getUsername())){
-			data.put("error", "Username must be a valid email");
-		}
-
-		if(account.getUsername().contains(" ")){
-			data.put("error", "Username contains spaces, no spaces are allowed");
-		}
-
-		if(account.getName().equals("")){
-			data.put("error", "Name cannot be blank.");
-		}
-		
-		if(account.getPassword().equals("")) {
-			data.put("error", "Password cannot be blank.");
-		}
-
-		if(account.getPassword().length() < 7){
-			data.put("error", "Passwords must be at least 7 characters long.");
-		}
-
-		String passwordHashed = utils.hash(account.getPassword());
-
-        try{
-
-			account.setPassword(passwordHashed.toString());
-			account.setImageUri(Utils.getProfileImageUri());
-			accountRepo.save(account);
-			
-			Account savedAccount = accountRepo.findByUsername(account.getUsername());
-			preloadConnections(savedAccount);
-
-			Role defaultRole = roleRepo.find(Constants.ROLE_ACCOUNT);
-
-			accountRepo.saveAccountRole(savedAccount.getId(), defaultRole.getId());
-			accountRepo.savePermission(savedAccount.getId(), "account:maintenance:" + savedAccount.getId());
-
-			String body = "<h1>Amadeus</h1>"+
-					"<p>Thank you for registering! Enjoy!</p>";
-
-			emailService.send(savedAccount.getUsername(), "Successfully Registered", body);
-			phoneService.support("Amadeus : Registration " + account.getName() + " " + account.getUsername());
-
-        }catch(Exception e){
-			e.printStackTrace();
-			data.put("error",  "Will you contact us? Email us with the subject, Please Fix. support@amadeus.social. Our programmers missed something. Gracias");
-        }
-
-		data.put("success", "true");
-		return gson.toJson(data);
-	}
-
 
 
 	@RequestMapping(value="/profile/{id}", method=RequestMethod.GET, produces="application/json")
@@ -457,25 +300,6 @@ public class AccountController {
 	}
 
 
-	@RequestMapping(value="/account/guest", method=RequestMethod.GET)
-	public String guest(HttpServletRequest request){
-
-		try {
-
-			if(parakeet.login(Constants.GUEST_USERNAME, Constants.GUEST_PASSWORD)) {
-				Account sessionAccount = authService.getAccount();
-//				parakeet.store("account", sessionAccount);
-//				parakeet.store("imageUri", sessionAccount.getImageUri());
-
-				request.getSession(false).setAttribute("account", sessionAccount);
-				request.getSession(false).setAttribute("imageUri", sessionAccount.getImageUri());
-			}
-			//phoneService.support("Zq:" + request.getRemoteHost());
-
-		}catch(Exception e){ }
-
-		return "redirect:/";
-	}
 
 
 	private void preloadConnections(Account authenticatedAccount){

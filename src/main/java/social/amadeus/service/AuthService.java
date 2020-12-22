@@ -14,6 +14,10 @@ public class AuthService {
     @Autowired
     private AccountRepo accountRepo;
 
+    public boolean signin(String username, String password){
+        return parakeet.login(username, password);
+    }
+
     public boolean signout(){
         return parakeet.logout();
     }
