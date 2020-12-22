@@ -2705,8 +2705,8 @@ p{
 }
 .user-status,
 .user-status-shared{
-    height:4px;
-    width:4px;
+    height:5px;
+    width:5px;
     top:7px;
     right:7px;
     position:absolute;
