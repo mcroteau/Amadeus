@@ -26,12 +26,12 @@
 <body ng-app="app" ng-controller="baseController">
 
 <%
-    String[] vizs = {"/o/jsp/app/vis/candy.jsp",
-                    "/o/jsp/app/vis/graph.jsp",
-                    "/o/jsp/app/vis/pond.jsp",
-                    "/o/jsp/app/vis/mucho.jsp",
-                    "/o/jsp/app/vis/correct.jsp",
-                    "/o/jsp/app/vis/space.jsp"};
+    String[] vizs = {"/o/jsp/static/vis/candy.jsp",
+                     "/o/jsp/static/vis/graph.jsp",
+                     "/o/jsp/static/vis/pond.jsp",
+                     "/o/jsp/static/vis/mucho.jsp",
+                     "/o/jsp/static/vis/correct.jsp",
+                     "/o/jsp/static/vis/space.jsp"};
 
     Random ran = new Random();
     int inx = ran.nextInt(vizs.length);
@@ -40,7 +40,7 @@
 
 
 <%--    <iframe id="viz" src="<%=viz%>" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>--%>
-<iframe src="/o/jsp/app/vis/space.jsp" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>
+<iframe src="/o/jsp/static/vis/space.jsp" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>
 <%--    <canvas id="sugarcookie" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></canvas>--%>
 
 
@@ -80,7 +80,7 @@
 			</div>
 
             <div id="navigation-container" class="float-right">
-                <a ng-click="toggleProfile()" href="javascript:" id="profile-actions-href" style="margin-right:37px;">
+                <a ng-click="toggleProfile()" href="javascript:" id="profile-actions-href" class="profile-popup" style="margin-right:37px;">
                     <img src="${sessionScope.imageUri}" id="profile-ref-image" style="z-index:1"/>
                     <span ng-show="data.messagesCount" id="base-notifications-count">{{data.messagesCount}}</span>
                 </a>
@@ -107,7 +107,7 @@
         </div>
 
         <div id="navigation-outer-container">
-            <a ng-click="toggleProfile()" href="javascript:" id="profile-actions-href" style="margin-right:37px;">
+            <a ng-click="toggleProfile()" href="javascript:" id="profile-actions-href" class="profile-popup" style="margin-right:37px;">
                 <img src="${sessionScope.imageUri}" id="profile-ref-image" style="z-index:1"/>
                 <span ng-show="data.messagesCount" id="base-notifications-count">{{data.messagesCount}}</span>
             </a>
@@ -145,7 +145,7 @@
         </div>
     </div>
 
-    <div ng-class="{'opened': chatOpened}" ng-click="openChat()" id="chat-launcher-popup" class="global-shadow chat-launcher" >
+    <div ng-class="{'opened': chatOpened}" ng-click="openChat()" id="chat-launcher-popup" class="global-shadow chat-launcher chat-session-popup" >
         <div id="chat-header">
             <h2 id="friends-launcher" data-launched="false" class="chat-launcher">Messages</h2>
         </div>
@@ -372,10 +372,15 @@
             if(!$scope.chatStarted)$interval.cancel($scope.chatInterval)
         }
 
-        $scope.closeDialogs = function(){
-            $scope.chatOpened = false
-            $scope.showProfile = false
-            $scope.showNotifications = false
+        $scope.closeDialogs = function(event) {
+            var $target = $(event.target);
+            if (!$target.hasClass('profile-popup') &&
+                    !$target.hasClass('notifications-popup') &&
+                        !$target.hasClass('chat-session-popup')){
+                $scope.chatOpened = false
+                $scope.showProfile = false
+                $scope.showNotifications = false
+            }
         }
 
         $('body').click($scope.closeDialogs)
