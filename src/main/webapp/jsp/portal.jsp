@@ -378,6 +378,7 @@
             if (!$target.hasClass('profile-popup') &&
                     !$target.hasClass('notifications-popup') &&
                         !$target.hasClass('chat-session-popup')){
+                console.log('close dialogs');
                 $scope.chatOpened = false
                 $scope.showProfile = false
                 $scope.showNotifications = false

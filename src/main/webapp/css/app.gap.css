@@ -2434,6 +2434,26 @@ p{
 }
 
 
+#profile-picture-actions-container{
+    right:37px;
+    width:139px;
+    margin-top:58px;
+    position:absolute;
+    color:#fff;
+    background:#17161b;
+    background:#e24e8e;
+    background:#fdfe03;
+    background:#17161b;
+    background:#0ad5fc;
+    z-index:14 !important;
+    -webkit-box-shadow: 1px 3px 12px 0px rgba(214,214,214,0.7);
+    -moz-box-shadow: 1px 3px 12px 0px rgba(214,214,214,0.7);
+    box-shadow: 1px 3px 12px 0px rgba(214,214,214,0.7);
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+
 #post-right{
     margin-top:15px;
     background:#f9f9f9;
