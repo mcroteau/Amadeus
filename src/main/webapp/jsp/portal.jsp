@@ -315,12 +315,12 @@
 
         $scope.openChat = function(){
             $http.get('/o/friends/' + ${sessionScope.account.id}).then(function(response){
-                $scope.friends = response.data
+                $scope.friends = response.data.friends
                 $scope.chatOpened = !$scope.chatOpened
                 if(!$scope.chatOpened)$interval.cancel($scope.chatInterval)
             })
         }
-
+        
         $scope.startChat = function(friendId){
             $scope.friendId = friendId
             $http.get('/o/messages/' + friendId).then(function(response){
@@ -521,7 +521,7 @@
         }
 
         var setData = function(response){
-            $scope.invitations = response.data
+            $scope.invitations = response.data.invites
         }
 
         $scope.ignoreInvitation = function(id){
@@ -830,7 +830,7 @@
             }
 
             this.getInvitations = function(callback){
-                $http.get("/o/friend/invitations").then(callback)
+                $http.get("/o/friend/invites").then(callback)
             };
 
             this.saveTodo = function(todo, callback) {

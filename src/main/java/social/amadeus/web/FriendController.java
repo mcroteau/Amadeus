@@ -37,7 +37,7 @@ public class FriendController {
     FriendService friendService;
 
 
-    @RequestMapping(value="/friend/invitations", method=RequestMethod.GET, produces="application/json")
+    @RequestMapping(value="/friend/invites", method=RequestMethod.GET, produces="application/json")
     public @ResponseBody String getinvitiations(){
         return gson.toJson(friendService.getInvites());
     }
