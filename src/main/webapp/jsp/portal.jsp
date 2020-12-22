@@ -40,7 +40,7 @@
 
 
 <%--    <iframe id="viz" src="<%=viz%>" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>--%>
-<iframe src="/o/jsp/app/vis/pond.jsp" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>
+<%--<iframe src="/o/jsp/app/vis/pond.jsp" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>--%>
 <%--    <canvas id="sugarcookie" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></canvas>--%>
 
 
@@ -57,7 +57,7 @@
         <div class="indeterminate" style="width: 100%"></div>
     </div>
 
-	<div ng-click="hideAll" id="layout-container" style="position:relative;">
+	<div ng-click="closeDialogs" id="layout-container" style="position:relative;">
 
 		<div id="top-outer-container" ng-init="init()">
 
@@ -299,11 +299,11 @@
         }
 
         $scope.toggleNotifications = function(){
-            $scope.showNotifications = $scope.showNotifications ? false : true
+            $scope.showNotifications = !$scope.showNotifications
         }
 
         $scope.toggleProfile = function(){
-            $scope.showProfile = $scope.showProfile ? false : true
+            $scope.showProfile = !$scope.showProfile
         }
 
         $scope.reloadActivities = function(){
@@ -317,7 +317,7 @@
         $scope.openChat = function(){
             $http.get('/o/friends/' + ${sessionScope.account.id}).then(function(response){
                 $scope.friends = response.data
-                $scope.chatOpened = $scope.chatOpened ? false : true
+                $scope.chatOpened = !$scope.chatOpened
                 if(!$scope.chatOpened)$interval.cancel($scope.chatInterval)
             })
         }
@@ -373,8 +373,14 @@
             if(!$scope.chatStarted)$interval.cancel($scope.chatInterval)
         }
 
-        $scope.hideAll = function(){
+        $scope.closeDialogs = function(){
+            $scope.chatOpened = false
+            $scope.showProfile = false
+            $scope.showNotifications = false
         }
+
+        $('body').click($scope.closeDialogs)
+
     });
 
 

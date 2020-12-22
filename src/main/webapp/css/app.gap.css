@@ -2665,8 +2665,8 @@ p{
     text-decoration:none;
 }
 .profile-image-posted{
-    height:67px !important;
-    width:67px !important;
+    height:42px !important;
+    width:42px !important;
 	border-radius: 34px;
 	-moz-border-radius: 34px;
 	-webkit-border-radius: 34px;
@@ -3480,9 +3480,8 @@ a.information{
     padding:0px;
 }
 #logo-logo{
-    height:45px;
     display:block;
-    padding:11px 17px 0px 24px;
+    padding:11px 17px 17px 24px;
     line-height:1.0;
     vertical-align:middle;
     text-decoration:none;
@@ -3658,10 +3657,16 @@ h1.gray span{
 }
 
 #chat-launcher-popup.opened{
-    height: 200px;
+    height: 300px;
+}
+
+#chat-launcher-popup.opened #friends-wrapper-container{
+    height:300px;
+    overflow: scroll;
 }
 
 #chat-header{
+    background: #fff;
     position:relative;
 }
 #chat-header h2{
@@ -3671,6 +3676,8 @@ h1.gray span{
     position:absolute;
     border-top-right-radius:7px;
     border-top-left-radius:7px;
+    background: #fff;
+    border-bottom:solid 1px #ddd;
 }
 #friends-launcher{
     padding:10px 20px;
@@ -3678,6 +3685,7 @@ h1.gray span{
     cursor:pointer;
     cursor:hand;
     width:171px;
+    background: #fff;
 }
 #friends-wrapper-container{
     padding-bottom:31px;
@@ -3755,6 +3763,10 @@ h1.gray span{
 
 #chat-session-header-wrapper{
     padding-top:20px;
+}
+
+#chat-inner-wrapper{
+    overflow: scroll;
 }
 
 #chat-session-header{

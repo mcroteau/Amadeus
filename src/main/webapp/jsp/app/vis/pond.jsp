@@ -243,7 +243,7 @@
     var groupTogether = false;
 
     // Add the boids:
-    for (var i = 0; i < 21; i++) {
+    for (var i = 0; i < 31; i++) {
         var position = Point.random() * view.size;
         boids.push(new Boid(position, 1, 0.05));
     }
