@@ -406,7 +406,7 @@ public class Utils {
 
 	public static long getDate() {
 		Calendar cal = Calendar.getInstance();
-		long date = getSearchDateFormatted(cal);
+		long date = getSimpleDateFormatted(cal);
 		return date;
 	}
 
@@ -415,7 +415,15 @@ public class Utils {
         long date = getDateFormatted(cal);
 		return date;
 	}
-	
+
+
+	public static long getYesterday(int day) {
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DAY_OF_MONTH, -day);
+		long date = getSimpleDateFormatted(cal);
+		return date;
+	}
+
 	public long getPreviousDay(int day) {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DAY_OF_MONTH, -day);
@@ -423,7 +431,7 @@ public class Utils {
         return date;
 	}
 
-	private static long getSearchDateFormatted(Calendar cal) {
+	private static long getSimpleDateFormatted(Calendar cal) {
 		DateFormat df = new SimpleDateFormat(Constants.DATE_SEARCH_FORMAT);
 		String dateStr = df.format(cal.getTime());
 		long date = Long.parseLong(dateStr);
@@ -445,7 +453,7 @@ public class Utils {
 	}
 
 
-	public String getGraphDate(int day) {
+	public static String getGraphDate(int day) {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DAY_OF_MONTH, -day);
 		DateFormat df = new SimpleDateFormat(Constants.DATE_GRAPH_FORMAT);

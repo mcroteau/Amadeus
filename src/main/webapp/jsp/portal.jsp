@@ -131,7 +131,7 @@
     <div ng-show="chatStarted" id="chat-session-outer-wrapper" class="global-shadow">
         <div id="chat-inner-wrapper">
             <div id="chat-session-header-wrapper">
-                <a ng-href="#!/profile/{{recipientId}}"><img ng-src="/o/{{imageUri}}" id="chat-header-img"/></a>
+                <a ng-href="#!/profile/{{recipientId}}"><img ng-src="{{imageUri}}" id="chat-header-img"/></a>
                 <span ng-click="toggleChat()" id="close-chat-session" class="yella">x</span>
             </div>
             <div id="chat-session">
@@ -155,7 +155,7 @@
                 <tr ng-click="startChat(friend.friendId)"  ng-repeat="friend in friends" class="friend-wrapper">
                     <td><a href="javascript:" ng-class="" class="lightf chat-session-launcher">{{friend.name}}</a></td>
                     <td>
-                        <img ng-src="/o/{{friend.imageUri}}" class="chat-session-launcher" data-id="{{friend.friendId}}"/>
+                        <img ng-src="{{friend.imageUri}}" class="chat-session-launcher" data-id="{{friend.friendId}}"/>
                         <span class="online-indicator" ng-class="{'online' : friend.isOnline}"></span>
                     </td>
                 </tr>

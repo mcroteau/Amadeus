@@ -191,7 +191,7 @@ public class PostService {
         }
         postRepo.publish(Long.parseLong(id));
 
-        return Constants.SUCCESS_MESSAGE;
+        return Constants.SUCCESS;
     }
 
 
@@ -275,7 +275,7 @@ public class PostService {
 
         Post post = postRepo.get(Long.parseLong(id));
         postRepo.hide(Long.parseLong(id));
-        return Constants.SUCCESS_MESSAGE;
+        return Constants.SUCCESS;
     }
 
 
@@ -309,7 +309,7 @@ public class PostService {
         Notification notification = notificationService.createNotification(existingPost.getAccountId(), authdAccount.getId(), Long.parseLong(id), false, true, false);
         notificationRepo.save(notification);
 
-        return Constants.SUCCESS_MESSAGE;
+        return Constants.SUCCESS;
     }
 
 
@@ -328,7 +328,7 @@ public class PostService {
             if(!postRepo.deletePostShare(Long.parseLong(id)))
                 return Constants.X_MESSAGE;
         }
-        return Constants.SUCCESS_MESSAGE;
+        return Constants.SUCCESS;
     }
 
 
@@ -347,7 +347,7 @@ public class PostService {
         postRepo.makeInvisible(hiddenPost);
         postRepo.hide(Long.parseLong(id));
 
-        return Constants.SUCCESS_MESSAGE;
+        return Constants.SUCCESS;
     }
 
     public String flagPost(String id, boolean shared){
@@ -375,7 +375,7 @@ public class PostService {
             emailService.send(Constants.ADMIN_USERNAME, "It ain't good...", body);
         }
 
-        return Constants.SUCCESS_MESSAGE;
+        return Constants.SUCCESS;
     }
 
 
@@ -412,7 +412,7 @@ public class PostService {
         Notification notification = notificationService.createNotification(post.getAccountId(), authdAccount.getId(), Long.parseLong(id), false, false, true);
         notificationRepo.save(notification);
 
-        return Constants.SUCCESS_MESSAGE;
+        return Constants.SUCCESS;
     }
 
     public String deletePostComment(String id){
@@ -426,7 +426,7 @@ public class PostService {
         }
 
         postRepo.deletePostComment(Long.parseLong(id));
-        return Constants.SUCCESS_MESSAGE;
+        return Constants.SUCCESS;
     }
 
 
@@ -462,7 +462,7 @@ public class PostService {
         Notification notification = notificationService.createNotification(postShare.getAccountId(), authdAccount.getId(), Long.parseLong(id), false, false, true);
         notificationRepo.save(notification);
 
-        return Constants.SUCCESS_MESSAGE;
+        return Constants.SUCCESS;
     }
 
 
@@ -478,7 +478,7 @@ public class PostService {
         }
 
         postRepo.deletePostShareComment(Long.parseLong(id));
-        return Constants.SUCCESS_MESSAGE;
+        return Constants.SUCCESS;
     }
 
 
@@ -493,7 +493,7 @@ public class PostService {
         PostImage postImage = postRepo.getImage(Long.parseLong(id), imageUri);
         syncService.delete(postImage.getFileName());
         postRepo.deletePostImage(Long.parseLong(id), imageUri);
-        return Constants.SUCCESS_MESSAGE;
+        return Constants.SUCCESS;
     }
 
 
@@ -532,7 +532,7 @@ public class PostService {
             }
         }
 
-        likesOutput.setMessage(Constants.SUCCESS_MESSAGE);
+        likesOutput.setMessage(Constants.SUCCESS);
         likesOutput.setId(Long.parseLong(id));
         likesOutput.setLikes(postRepo.likes(Long.parseLong(id)));
 
@@ -565,7 +565,7 @@ public class PostService {
         List<Post> activityFeedSorted = getSortedActivities(activityFeedPre);
 
         activityFeedSorted.stream().forEach(post -> setActive(post));
-        activityOutput.setMessage(Constants.SUCCESS_MESSAGE);
+        activityOutput.setMessage(Constants.SUCCESS);
         activityOutput.setPosts(activityFeedSorted);
 
         return activityOutput;
@@ -604,7 +604,7 @@ public class PostService {
 
         List<Account> accounts = getFemalesMales(activityFeed);
 
-        activityOutput.setMessage(Constants.SUCCESS_MESSAGE);
+        activityOutput.setMessage(Constants.SUCCESS);
         activityOutput.setPosts(activityFeedSorted);
         activityOutput.setAccounts(accounts);
 
@@ -631,7 +631,7 @@ public class PostService {
         Post post = postRepo.get(Long.parseLong(id));
         savePostImages(post, imageLookup);
 
-        return Constants.SUCCESS_MESSAGE;
+        return Constants.SUCCESS;
     }
 
     public List<String> savePostImages(Post post, Map<String, String> imageLookup){
