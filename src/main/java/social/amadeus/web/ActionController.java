@@ -29,12 +29,6 @@ public class ActionController {
     private AccountRepo accountRepo;
 
     @Autowired
-    private MusicRepo musicRepo;
-
-    @Autowired
-    private FriendRepo friendRepo;
-
-    @Autowired
     private PostRepo postRepo;
 
     @Autowired

@@ -2,7 +2,8 @@
 
 # Amadeus
 
-mkoio
+Mkio
+BQi
 
 <bean depends-on="dataSource" class="org.springframework.beans.factory.config.MethodInvokingBean">
     <property name="targetClass" value="org.hsqldb.util.DatabaseManagerSwing" />

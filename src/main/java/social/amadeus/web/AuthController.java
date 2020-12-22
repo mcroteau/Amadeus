@@ -115,13 +115,8 @@ public class AuthController {
 	public String signout(ModelMap model,	
 							   HttpServletRequest request, 
 							   final RedirectAttributes redirect){
-//		Subject currentUser = Resource.getSubject();
-//		currentUser.logout();
 
-//		Session session = currentUser.getSession();
-//		session.setAttribute("account", null);
-
-		parakeet.logout();
+		authService.signout();
 
 		model.addAttribute("message", "Successfully signed out");
 		request.getSession().setAttribute("account", "");
@@ -132,6 +127,6 @@ public class AuthController {
 
 	@RequestMapping(value="/unauthorized", method=RequestMethod.GET)
 	public String unauthorized(ModelMap model, @RequestParam(value="uri", required = false ) String uri){
-		return "app/unauthorized";
+		return "static/unauthorized";
 	}
 }
