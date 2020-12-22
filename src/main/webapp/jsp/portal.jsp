@@ -374,10 +374,12 @@
         }
 
         $scope.closeDialogs = function(event) {
-            var $target = $(event.target);
-            if (!$target.hasClass('profile-popup') &&
-                    !$target.hasClass('notifications-popup') &&
-                        !$target.hasClass('chat-session-popup')){
+            console.log(event.target)
+            var $target = $(event.target)
+            var id = $target.attr('id')
+            if (id != 'profile-ref-image' &&
+                    id != 'notifications-href' &&
+                        id != 'friends-launcher'){
                 console.log('close dialogs');
                 $scope.chatOpened = false
                 $scope.showProfile = false
