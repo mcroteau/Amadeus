@@ -17,6 +17,7 @@
     var path = new Path.RegularPolygon(new Point(0, 0), 3, 5);
     path.fillColor = '#627979';
     path.fillColor = '#FF4F01';
+    path.fillColor = 'black';
     path.strokeColor = 'white';
     path.strokeWidth = 1;
     path.selected = true;

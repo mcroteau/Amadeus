@@ -3,7 +3,7 @@
 <!doctype html><%--${pageContext.response.locale}--%>
 <html lang="en" dir="i18n">
 <head>
-    <title>Amadeus: interstellar*</title>
+    <title>Amadeus: astrophysical*</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 
@@ -73,8 +73,8 @@
 			<div id="top-inner-container">
 
                 <div ng-if="!$root.profilePage" id="search-container" class="float-left" style="z-index:100">
-                    <div id="search-label" data-i18n="search.text">Search:</div>
-                    <input ng-keyup="navigateSearch($event)" type="text" class="search-input" id="search-box" placeholder="" autocomplete="off"/>
+<%--                    <div id="search-label" data-i18n="search.text">Search:</div>--%>
+                    <input ng-keyup="navigateSearch($event)" type="text" class="search-input" id="search-box" placeholder="Search:" autocomplete="off"/>
                 </div>
 
 				<br class="clear"/>
