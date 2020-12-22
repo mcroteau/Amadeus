@@ -49,7 +49,7 @@ public class SearchService {
 
             for(Account a : accounts){
                 a.setIsFriend(friendRepo.isFriend(account.getId(), a.getId()));
-                a.setInvited(friendRepo.invited(account.getId(), a.getId()));
+                a.setInvited(friendRepo.isInvited(account.getId(), a.getId()));
 
                 AccountBlock accountBlock = new AccountBlock();
                 accountBlock.setPersonId(account.getId());

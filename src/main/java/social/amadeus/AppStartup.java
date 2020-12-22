@@ -229,7 +229,7 @@ public class AppStartup {
 				for (Account account : accounts) {
 					List<Account> possibleInvites = accountRepo.findAll();
 					Account invited = possibleInvites.get(n);
-					friendRepo.invite(account.getId(), invited.getId(), currentDate);
+					friendRepo.sendInvite(account.getId(), invited.getId(), currentDate);
 				}
 			}
 
@@ -237,12 +237,12 @@ public class AppStartup {
 			log.info("duplicate invite");
 		}
 
-		log.info("Friend Invites : " + friendRepo.countInvites());
+		log.info("Friend Invites : " + friendRepo.getCountInvites());
 	}
 
 	private void generateMockConnections() {
 		try {
-			long count = friendRepo.count();
+			long count = friendRepo.getCount();
 
 			if (count == 0) {
 				List<Account> accounts = accountRepo.findAll();
@@ -278,7 +278,7 @@ public class AppStartup {
 			log.error("duplicate friend connection");
 		}
 
-		log.info("Connections : " + friendRepo.count()/2);
+		log.info("Connections : " + friendRepo.getCount()/2);
 	}
 
 	
