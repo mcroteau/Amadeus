@@ -6,7 +6,13 @@ import social.amadeus.model.*;
 
 public interface PostRepo {
 
-	public long id();
+	public Long getPostId();
+
+	public Long getPostShareId();
+
+	public Long getPostCommentId();
+
+	public Long getPostShareCommentId();
 
 	public long getCount();
 	
@@ -29,6 +35,8 @@ public interface PostRepo {
 	public List<Post> getUnpublished();
 
 	public boolean hide(long id);
+
+	public boolean deleteHiddenPost(long postId, long accountId);
 
 	public boolean delete(long id);
 
@@ -105,6 +113,8 @@ public interface PostRepo {
 	public boolean updateFlagged(Post post);
 
 	public boolean removePostFlags(long postId);
+
+	public boolean deletePostFlag(long postId, long accountId);
 
 	public boolean makeInvisible(HiddenPost hiddenPost);
 

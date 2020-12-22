@@ -31,29 +31,42 @@ public class PostJdbcRepo implements PostRepo {
 	private FriendRepo friendRepo;
 
 
-	public long id() {
-		String sql = "select max(id) from posts";
-		long id = jdbcTemplate.queryForObject(sql, new Object[]{}, Long.class);
-		return id;
+	public Long getPostId() {
+		try {
+			String sql = "select max(id) from posts";
+			long id = jdbcTemplate.queryForObject(sql, new Object[]{}, Long.class);
+			return id;
+		}catch(Exception ex){}
+		return null;
 	}
 
-	public long getPostShareId() {
-		String sql = "select max(id) from post_shares";
-		long id = jdbcTemplate.queryForObject(sql, new Object[]{}, Long.class);
-		return id;
+	public Long getPostShareId() {
+		try{
+			String sql = "select max(id) from post_shares";
+			return jdbcTemplate.queryForObject(sql, new Object[]{}, Long.class);
+		}catch (Exception ex){
+			//ex.printStackTrace();
+		}
+		return null;
 	}
 
-	public long postCommentId() {
-		String sql = "select max(id) from post_comments";
-		long id = jdbcTemplate.queryForObject(sql, new Object[]{}, Long.class);
-		return id;
+	public Long getPostCommentId() {
+		try {
+			String sql = "select max(id) from post_comments";
+			long id = jdbcTemplate.queryForObject(sql, new Object[]{}, Long.class);
+			return id;
+		}catch (Exception ex){}
+		return null;
 	}
 
 
-	public long postShareCommentId() {
-		String sql = "select max(id) from post_share_comments";
-		long id = jdbcTemplate.queryForObject(sql, new Object[]{}, Long.class);
-		return id;
+	public Long getPostShareCommentId() {
+		try {
+			String sql = "select max(id) from post_share_comments";
+			long id = jdbcTemplate.queryForObject(sql, new Object[]{}, Long.class);
+			return id;
+		}catch(Exception ex){}
+		return null;
 	}
 
 
@@ -68,9 +81,7 @@ public class PostJdbcRepo implements PostRepo {
 		String sql = "select * from posts where id = ?";
 		
 		Post post = jdbcTemplate.queryForObject(sql, new Object[] { id }, 
-				new BeanPropertyRowMapper<Post>(Post.class));
-		
-		if(post == null) post = new Post();
+				new BeanPropertyRowMapper<>(Post.class));
 
 		return post;
 	}
@@ -80,9 +91,7 @@ public class PostJdbcRepo implements PostRepo {
 		String sql = "select * from post_comments where id = ?";
 
 		PostComment comment = jdbcTemplate.queryForObject(sql, new Object[] { id },
-				new BeanPropertyRowMapper<PostComment>(PostComment.class));
-
-		if(comment == null) comment = new PostComment();
+				new BeanPropertyRowMapper<>(PostComment.class));
 
 		return comment;
 	}
@@ -154,29 +163,6 @@ public class PostJdbcRepo implements PostRepo {
 		return jdbcTemplate.queryForObject(sql, new Object[] { }, Long.class);
 	}
 
-//Remove
-//	public List<Post> getLatestSkinny(long start, long end, long accountId){
-//
-//		List<Friend> friends = friendRepo.getFriends(accountId);
-//		Set<Long> ids = new HashSet<Long>();
-//
-//		for(Friend connection : friends) {
-//			ids.add(connection.getFriendId());
-//		}
-//
-//		ids.add(accountId);
-//		String idsString = StringUtils.join(ids, ",");
-//
-//		String sql = "select a.name from " +
-//				"posts p inner join account a on p.account_id = a.id " +
-//				"where account_id in (" + idsString + ") " +
-//				"and p.published = true and p.date_posted between " + start + " and " + end + "";
-//
-//		List<Post> latest = jdbcTemplate.query(sql, new BeanPropertyRowMapper<Post>(Post.class));
-//
-//		return latest;
-//	}
-
 
 	@Override
 	public List<Post> getUserPosts(long accountId) {
@@ -194,9 +180,9 @@ public class PostJdbcRepo implements PostRepo {
 	public Post save(Post post){
 		String sql = "insert into posts (account_id, content, video_file_uri, video_file_name, date_posted, update_date, hidden, flagged, published ) values ( ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 		jdbcTemplate.update(sql, new Object[] { 
-			post.getAccountId(), post.getContent(), post.getVideoFileUri(), post.getVideoFileName(), post.getDatePosted(), post.getUpdateDate(), post.isHidden(), false, false
+			post.getAccountId(), post.getContent(), post.getVideoFileUri(), post.getVideoFileName(), post.getDatePosted(), post.getUpdateDate(), false, false, false
 		});
-		long id = id();
+		Long id = getPostId();
 		Post savedPost = get(id);
 		
 		return savedPost;
@@ -228,6 +214,11 @@ public class PostJdbcRepo implements PostRepo {
 		return true;
 	}
 
+	public boolean deleteHiddenPost(long postId, long accountId){
+		String sql = "delete from hidden_posts where post_id = ? and account_id = ?";
+		jdbcTemplate.update(sql, new Object[] { postId, accountId });
+		return true;
+	}
 
 	public boolean delete(long id){
 		String sql = "delete from posts where id = ?";
@@ -340,7 +331,7 @@ public class PostJdbcRepo implements PostRepo {
 				postShare.getPostId(), postShare.getAccountId(), postShare.getComment(), postShare.getDateShared()
 		});
 
-		long id = getPostShareId();
+		Long id = getPostShareId();
 		PostShare savePostShare = getPostShare(id);
 
 		return savePostShare;
@@ -349,12 +340,7 @@ public class PostJdbcRepo implements PostRepo {
 
 	public PostShare getPostShare(long postShareId){
 		String sql = "select * from post_shares where id = ?";
-		PostShare postShare = null;
-
-		try {
-			postShare = jdbcTemplate.queryForObject(sql, new Object[]{ postShareId }, new BeanPropertyRowMapper<PostShare>(PostShare.class));
-		}catch(Exception e){}
-
+		PostShare postShare = jdbcTemplate.queryForObject(sql, new Object[]{ postShareId }, new BeanPropertyRowMapper<PostShare>(PostShare.class));
 		return postShare;
 	}
 
@@ -399,59 +385,56 @@ public class PostJdbcRepo implements PostRepo {
 
 	public List<PostComment> getPostComments(long postId){
 		List<PostComment> postComments = null;
-
 		try {
-
-			String sql = "select * from post_comments where post_id = ? order by date_created asc";
-			postComments = jdbcTemplate.query(sql, new Object[]{ postId }, new BeanPropertyRowMapper<PostComment>(PostComment.class));
-
+			String sql = "select distinct pc.id, pc.account_id, pc.date_created, pc.comment, " +
+					"a.name as account_name, a.image_uri as account_image_uri from post_comments " +
+					"inner join post_comments pc inner join account a on pc.account_id = a.id " +
+					"where pc.post_id = ? order by pc.date_created asc";
+			postComments = jdbcTemplate.query(sql, new Object[]{ postId }, new BeanPropertyRowMapper<>(PostComment.class));
 			if (postComments == null) postComments = new ArrayList<PostComment>();
-
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-
 		return postComments;
 	}
 
 
 	public List<PostShareComment> getPostShareComments(long postShareId){
 		List<PostShareComment> postShareComments = null;
-
 		try {
-
-			String sql = "select * from post_share_comments where post_share_id = ? order by date_created asc";
-			postShareComments = jdbcTemplate.query(sql, new Object[]{ postShareId }, new BeanPropertyRowMapper<PostShareComment>(PostShareComment.class));
-
-			if (postShareComments == null) postShareComments = new ArrayList<PostShareComment>();
-
+			String sql = "select distinct psc.id, psc.account_id, psc.date_created, psc.comment, " +
+					"a.name as account_name, a.image_uri as account_image_uri from post_share_comments " +
+					"inner join post_share_comments psc inner join account a on psc.account_id = a.id " +
+					"where psc.post_share_id = ? order by psc.date_created asc";
+			postShareComments = jdbcTemplate.query(sql, new Object[]{ postShareId }, new BeanPropertyRowMapper<>(PostShareComment.class));
+			if (postShareComments == null) postShareComments = new ArrayList<>();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-
 		return postShareComments;
 	}
 
 
 	public PostComment savePostComment(PostComment postComment){
-		String sql = "insert into post_comments (post_id, account_id, account_name, account_image_uri, comment, date_created) values ( ?, ?, ?, ?, ?, ? )";
+		log.info(postComment.getPostId());
+		String sql = "insert into post_comments (post_id, account_id, comment, date_created) values ( ?, ?, ?, ? )";
 		jdbcTemplate.update(sql, new Object[] {
-			postComment.getPostId(), postComment.getAccountId(), postComment.getAccountName(), postComment.getAccountImageUri(), postComment.getComment(), postComment.getDateCreated()
+			postComment.getPostId(), postComment.getAccountId(), postComment.getComment(), postComment.getDateCreated()
 		});
 
-		long id = postCommentId();
+		Long id = getPostCommentId();
 		PostComment savedComment = getPostComment(id);
 		return savedComment;
 	}
 
 
 	public PostShareComment savePostShareComment(PostShareComment postShareComment){
-		String sql = "insert into post_share_comments (post_share_id, account_id, account_name, account_image_uri, comment, date_created) values ( ?, ?, ?, ?, ?, ? )";
+		String sql = "insert into post_share_comments (post_share_id, account_id, comment, date_created) values ( ?, ?, ?, ? )";
 		jdbcTemplate.update(sql, new Object[] {
-				postShareComment.getPostShareId(), postShareComment.getAccountId(), postShareComment.getAccountName(), postShareComment.getAccountImageUri(), postShareComment.getComment(), postShareComment.getDateCreated()
+				postShareComment.getPostShareId(), postShareComment.getAccountId(), postShareComment.getComment(), postShareComment.getDateCreated()
 		});
 
-		long id = postShareCommentId();
+		Long id = getPostShareCommentId();
 		PostShareComment savedComment = getPostShareComment(id);
 		return savedComment;
 	}
@@ -589,6 +572,12 @@ public class PostJdbcRepo implements PostRepo {
 	public boolean removePostFlags(long postId){
 		String sql = "delete from post_flags where post_id = ?";
 		jdbcTemplate.update(sql, new Object[] { postId });
+		return true;
+	}
+
+	public boolean deletePostFlag(long postId, long accountId){
+		String sql = "delete from post_flags where post_id = ? and account_id = ?";
+		jdbcTemplate.update(sql, new Object[] { postId, accountId });
 		return true;
 	}
 

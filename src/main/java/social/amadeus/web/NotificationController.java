@@ -14,6 +14,7 @@ import social.amadeus.model.Account;
 import social.amadeus.repository.AccountRepo;
 import social.amadeus.repository.FriendRepo;
 import social.amadeus.service.AuthService;
+import social.amadeus.service.NotificationService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -23,40 +24,13 @@ public class NotificationController {
 
     private static final Logger log = Logger.getLogger(NotificationController.class);
 
-    @Autowired
-    private FriendRepo friendRepo;
+    Gson gson = new Gson();
 
     @Autowired
-    private AccountRepo accountRepo;
-
-    @Autowired
-    private NotificationRepo notificationRepo;
-
-    @Autowired
-    private AuthService authService;
-    
+    NotificationService notificationService;
 
     @RequestMapping(value="/notifications/clear", method=RequestMethod.DELETE,  produces="application/json")
-    public @ResponseBody String delete(ModelMap model,
-                                       HttpServletRequest request,
-                                       final RedirectAttributes redirect){
-
-        Map<String, Object> data = new HashMap<String, Object>();
-        Gson gson = new Gson();
-
-        if(!authService.isAuthenticated()){
-            data.put("error", "authentication required");
-            return gson.toJson(data);
-        }
-
-        Account authenticatedAccount = authService.getAccount();
-
-        if(notificationRepo.clearNotifications(authenticatedAccount.getId())){
-            data.put("success", true);
-        }else{
-            data.put("error", true);
-        }
-
-        return gson.toJson(data);
+    public @ResponseBody String deleteUserNotifications(){
+        return gson.toJson(notificationService.deleteUserNotifications());
     }
 }

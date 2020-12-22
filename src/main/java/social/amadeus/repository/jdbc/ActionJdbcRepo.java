@@ -15,19 +15,19 @@ public class ActionJdbcRepo implements ActionRepo {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public Resource get(String uri) {
+    public Resource getWebsite(String uri) {
         Resource resource = null;
         try{
             String sql = "select * from resources where uri = ?";
             resource = jdbcTemplate.queryForObject(sql, new Object[] { uri },
-                    new BeanPropertyRowMapper<Resource>(Resource.class));
+                    new BeanPropertyRowMapper<>(Resource.class));
 
         }catch(EmptyResultDataAccessException e){}
         return resource;
     }
 
     @Override
-    public boolean save(Resource resource) {
+    public boolean saveWebsite(Resource resource) {
         String sql = "insert into resources ( uri, account_id, date_added ) values ( ?, ?, ? )";
         jdbcTemplate.update(sql, new Object[] {
             resource.getUri(), resource.getAccountId(), resource.getDateAdded()
@@ -36,7 +36,7 @@ public class ActionJdbcRepo implements ActionRepo {
     }
 
     @Override
-    public boolean like(ActionLike actionLike){
+    public boolean likeWebsite(ActionLike actionLike){
         String sql = "insert into action_likes (resource_id, account_id, date_liked) values ( ?, ?, ? )";
         jdbcTemplate.update(sql, new Object[] {
                 actionLike.getResourceId(), actionLike.getAccountId(), actionLike.getDateLiked()
@@ -46,7 +46,7 @@ public class ActionJdbcRepo implements ActionRepo {
 
 
     @Override
-    public boolean liked(ActionLike actionLike){
+    public boolean isLiked(ActionLike actionLike){
         String sql = "select * from action_likes where resource_id = ? and account_id = ?";
         ActionLike existingLike = null;
         try {
@@ -58,7 +58,7 @@ public class ActionJdbcRepo implements ActionRepo {
     }
 
     @Override
-    public boolean share(ActionShare actionShare){
+    public boolean shareWebsite(ActionShare actionShare){
         String sql = "insert into action_shares (resource_id, account_id, post_id, date_shared, comment) values ( ?, ?, ?, ?, ? )";
         jdbcTemplate.update(sql, new Object[] {
                 actionShare.getResourceId(), actionShare.getAccountId(), actionShare.getPostId(), actionShare.getDateShared(), actionShare.getComment()
@@ -67,14 +67,14 @@ public class ActionJdbcRepo implements ActionRepo {
     }
 
     @Override
-    public long likesCount(long resourceId) {
+    public long getLikesCount(long resourceId) {
         String sql = "select count(*) from action_likes where resource_id = ?";
         long count = jdbcTemplate.queryForObject(sql, new Object[]{ resourceId }, Long.class);
         return count;
     }
 
     @Override
-    public long sharesCount(long resourceId) {
+    public long getSharesCount(long resourceId) {
         String sql = "select count(*) from action_shares where resource_id = ?";
         long count = jdbcTemplate.queryForObject(sql, new Object[]{ resourceId }, Long.class);
         return count;

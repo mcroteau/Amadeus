@@ -2,6 +2,12 @@ package social.amadeus.common;
 
 public class Constants {
 
+	public static final String X_MESSAGE = "fail";
+	public static final String SUCCESS = "complete";
+	public static final String AUTHENTICATION_REQUIRED = "authentication required";
+	public static final String REQUIRES_PERMISSION = "permission required";
+	public static final String UNAUTHORIZED_REDIRECT = "redirect:/unauthorized";
+
 	public static final String AMADEUS_GROUP = "Amadeus";
 	public static final String PUBLISHING_JOB = "AmadeusPublishingJob";
 	public static final String PUBLISHING_JOB_TRIGGER = "AmadeusPublishingTrigger";
@@ -34,16 +40,19 @@ public class Constants {
 
     public static final String PROFILE_IMAGE_DIRECTORY = "media/profiles/";
 
-    public static final String FRESCO                  = "media/profiles/sebastien.jpg";
-	public static final String DEFAULT_IMAGE_URI       = "media/profiles/amadeus.png";
-	public static final String DEFAULT_FLYER_IMAGE_URI = "images/figma-ad.jpg";
+    public static final String FRESCO                  = "2Wxt8sKms.jpg";
+	public static final String DEFAULT_IMAGE_URI       = "tHMLqV9TU.png";
+	public static final String DEFAULT_FLYER_IMAGE_URI = "k0nIVNObX.png";
 
-	public static final String ACCOUNT_MAINTENANCE = "permission:accounts:";
-	public static final String POST_MAINTENANCE    = "permission:posts:";
-	public static final String COMMENT_MAINTENANCE = "permission:comments:";
-	public static final String FLYER_MAINTENANCE   = "permission:flyer:";
+	public static final String DELIMITER = ":";
 
-	public static final int RESULTS_PER_PAGE       = 10;
+	public static final String ACCOUNT_MAINTENANCE            = "permission:accounts:";
+	public static final String POST_MAINTENANCE               = "permission:posts:";
+	public static final String POST_SHARE_MAINTENANCE         = "permission:posts_shared:";
+	public static final String POST_COMMENT_MAINTENANCE            = "permission:comments:";
+	public static final String POST_SHARE_COMMENT_MAINTENANCE = "permission:post_share:comments:";
+	public static final String FLYER_MAINTENANCE              = "permission:flyer:";
+
 	public static final int RESULTS_PER_PAGE_MUSIC = 7;
 	public static final int MOCK_ACCOUNTS          = 7;
 	

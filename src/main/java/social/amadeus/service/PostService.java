@@ -1,10 +1,10 @@
 package social.amadeus.service;
 
-import com.amazonaws.services.s3.model.PutObjectResult;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import social.amadeus.common.Constants;
 import social.amadeus.common.SessionManager;
@@ -38,6 +38,8 @@ public class PostService {
             Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 
 
+    boolean notify = false;
+
     @Autowired
     private Utils utils;
 
@@ -63,6 +65,9 @@ public class PostService {
     private SyncService syncService;
 
     @Autowired
+    private EmailService emailService;
+
+    @Autowired
     private SessionManager sessionManager;
 
 
@@ -73,8 +78,14 @@ public class PostService {
         return post;
     }
 
-    public Post savePost(Post post, Account authdAccount, CommonsMultipartFile[] imageFiles, CommonsMultipartFile videoFile){
+    public Post savePost(Post post, CommonsMultipartFile[] imageFiles, CommonsMultipartFile videoFile){
 
+        if(!authService.isAuthenticated()){
+            post.setStatusMessage(Constants.AUTHENTICATION_REQUIRED);
+            return post;
+        }
+
+        Account authdAccount = authService.getAccount();
 
         Map<String, String> imageLookup = new HashMap<>();
 
@@ -93,7 +104,8 @@ public class PostService {
                 List<String> list = Arrays.asList(contentTypes);
 
                 if(!utils.correctMimeType(list, videoFile)){
-                    post.setFailMessage("Video file must be mp4.");
+                    post.setStatusMessage("Video file must be mp4.");
+                    return post;
                 }else{
                     syncService.send(videoFileName, videoFile.getInputStream());
                     post.setVideoFileUri(Constants.HTTPS + Constants.DO_ENDPOINT + "/" + videoFileName);
@@ -149,7 +161,7 @@ public class PostService {
         if(imageLookup.size() == 0 &&
                 (post.getVideoFileUri() == null || post.getVideoFileUri().equals("")) &&
                 post.getContent().equals("")){
-            post.setFailMessage("everything is blank");
+            post.setStatusMessage("everything is blank");
             return post;
         }
 
@@ -162,11 +174,27 @@ public class PostService {
         accountRepo.savePermission(authdAccount.getId(), Constants.POST_MAINTENANCE  + savedPost.getId());
         Post populatedPost = setPostData(savedPost, authdAccount);
 
-        List<String> imageUris = savePostImages(imageLookup, populatedPost);
+        List<String> imageUris = savePostImages(populatedPost, imageLookup);
         populatedPost.setImageFileUris(imageUris);
 
         return savedPost;
     }
+
+
+    public String publishPost(String id){
+        if (!authService.isAuthenticated()) {
+            return Constants.AUTHENTICATION_REQUIRED;
+        }
+
+        String permission = Constants.POST_MAINTENANCE + id;
+        if (!authService.hasPermission(permission)) {
+            return Constants.REQUIRES_PERMISSION;
+        }
+        postRepo.publish(Long.parseLong(id));
+
+        return Constants.SUCCESS;
+    }
+
 
     public PostImage getPostImage(String fileName, String imageUri, Post populatedPost){
         PostImage postImage = new PostImage();
@@ -179,9 +207,14 @@ public class PostService {
 
 
     public Post updatePost(String id, Post post){
+        if (!authService.isAuthenticated()) {
+            post.setStatusMessage(Constants.AUTHENTICATION_REQUIRED);
+            return post;
+        }
+
         String permission = Constants.POST_MAINTENANCE  + id;
         if(!authService.hasPermission(permission)) {
-            post.setFailMessage("requires permission");
+            post.setStatusMessage(Constants.REQUIRES_PERMISSION);
             return post;
         }
 
@@ -229,32 +262,249 @@ public class PostService {
     }
 
 
-    public boolean deletePost(String id){
+    public String deletePost(String id){
+
+        if(!authService.isAuthenticated()){
+            return Constants.AUTHENTICATION_REQUIRED;
+        }
+
         String permission = Constants.POST_MAINTENANCE  + id;
-        if(!authService.hasPermission(permission)) {
-            return false;
+        if(!authService.isAdministrator() &&
+                !authService.hasPermission(permission)) {
+            return Constants.REQUIRES_PERMISSION;
         }
 
         Post post = postRepo.get(Long.parseLong(id));
         postRepo.hide(Long.parseLong(id));
-        return true;
+        return Constants.SUCCESS;
     }
 
 
+    public String sharePost(String id, PostShare postShare){
 
-    public boolean deletePostImage(String id, String imageUri){
+        if(!authService.isAuthenticated()){
+            return Constants.AUTHENTICATION_REQUIRED;
+        }
+
+        Account authdAccount = authService.getAccount();
+        postShare.setAccountId(authdAccount.getId());
+        postShare.setPostId(Long.parseLong(id));
+        postShare.setDateShared(utils.getCurrentDate());
+
+        postShare.setComment(postShare.getComment());
+        if(postShare.getComment().contains("<style")){
+            postShare.setComment(postShare.getComment().replace("style", "") + "We caught a hacker!");
+        }
+
+        if(postShare.getComment().contains("<script")){
+            postShare.setComment(postShare.getComment().replace("script", "") + "We caught a hacker!");
+        }
+
+        PostShare savedPostShare = postRepo.sharePost(postShare);
+
+        String permission = Constants.POST_SHARE_MAINTENANCE  + Constants.DELIMITER + savedPostShare.getId();
+        accountRepo.savePermission(authdAccount.getId(), permission);
+
+        Post existingPost = postRepo.get(Long.parseLong(id));
+
+        Notification notification = notificationService.createNotification(existingPost.getAccountId(), authdAccount.getId(), Long.parseLong(id), false, true, false);
+        notificationRepo.save(notification);
+
+        return Constants.SUCCESS;
+    }
+
+
+    public String unsharePost(String id){
+
+        if(!authService.isAuthenticated()){
+            return Constants.AUTHENTICATION_REQUIRED;
+        }
+
+        String permission = Constants.POST_SHARE_MAINTENANCE  + Constants.DELIMITER + id;
+        if(!authService.hasPermission(permission)) {
+            return Constants.REQUIRES_PERMISSION;
+        }
+
+        if(postRepo.deletePostShareComments(Long.parseLong(id))){
+            if(!postRepo.deletePostShare(Long.parseLong(id)))
+                return Constants.X_MESSAGE;
+        }
+        return Constants.SUCCESS;
+    }
+
+
+    public String hidePost(String id) {
+
+        if(!authService.isAuthenticated()){
+            return Constants.AUTHENTICATION_REQUIRED;
+        }
+
+        Account authdAccount = authService.getAccount();
+        HiddenPost hiddenPost = new HiddenPost();
+        hiddenPost.setAccountId(authdAccount.getId());
+        hiddenPost.setPostId(Long.parseLong(id));
+        hiddenPost.setDateHidden(utils.getCurrentDate());
+
+        postRepo.makeInvisible(hiddenPost);
+        postRepo.hide(Long.parseLong(id));
+
+        return Constants.SUCCESS;
+    }
+
+    public String flagPost(String id, boolean shared){
+
+        if(!authService.isAuthenticated()){
+            return Constants.AUTHENTICATION_REQUIRED;
+        }
+
+        Post post = postRepo.get(Long.parseLong(id));
+        post.setFlagged(true);
+
+        PostFlag postFlag = new PostFlag();
+        postFlag.setPostId(post.getId());
+        postFlag.setAccountId(authService.getAccount().getId());
+        postFlag.setDateFlagged(utils.getCurrentDate());
+        postFlag.setShared(shared);
+
+        postRepo.flagPost(postFlag);
+        postRepo.updateFlagged(post);
+
+        if(notify) {
+            String body = "<h1>Amadeus</h1>"+
+                    "<p>" + post.getContent() + "</p>" +
+                    "<p><a href=\"amadeus.social\">Signin</a></p>";
+            emailService.send(Constants.ADMIN_USERNAME, "It ain't good...", body);
+        }
+
+        return Constants.SUCCESS;
+    }
+
+
+    public String savePostComment(String id, PostComment postComment){
+
+        if(!authService.isAuthenticated()){
+            return Constants.AUTHENTICATION_REQUIRED;
+        }
+
+        Account authdAccount = authService.getAccount();
+        if(postComment.getComment() == null ||
+                postComment.getComment().equals("")){
+            return Constants.X_MESSAGE;
+        }
+
+        postComment.setPostId(Long.parseLong(id));
+        postComment.setAccountId(authdAccount.getId());
+        postComment.setDateCreated(utils.getCurrentDate());
+
+        if(postComment.getComment().contains("<style")){
+            postComment.setComment(postComment.getComment().replace("style", "") + "We caught a hacker!");
+        }
+        if(postComment.getComment().contains("<script")){
+            postComment.setComment(postComment.getComment().replace("script", "") + "We caught a hacker!");
+        }
+
+        PostComment savedComment = postRepo.savePostComment(postComment);
+
+        String permission = Constants.POST_COMMENT_MAINTENANCE  + savedComment.getId();
+        accountRepo.savePermission(authdAccount.getId(), permission);
+
+        Post post = postRepo.get(Long.parseLong(id));
+
+        Notification notification = notificationService.createNotification(post.getAccountId(), authdAccount.getId(), Long.parseLong(id), false, false, true);
+        notificationRepo.save(notification);
+
+        return Constants.SUCCESS;
+    }
+
+    public String deletePostComment(String id){
+        if(!authService.isAuthenticated()){
+            return Constants.AUTHENTICATION_REQUIRED;
+        }
+
+        String permission = Constants.POST_COMMENT_MAINTENANCE + id;
+        if(!authService.hasPermission(permission)){
+            return Constants.REQUIRES_PERMISSION;
+        }
+
+        postRepo.deletePostComment(Long.parseLong(id));
+        return Constants.SUCCESS;
+    }
+
+
+    public String savePostShareComment(String id, PostShareComment postShareComment){
+
+        if(!authService.isAuthenticated()){
+            return Constants.AUTHENTICATION_REQUIRED;
+        }
+
+        if(postShareComment.getComment() == null ||
+                postShareComment.getComment().equals("")){
+            return Constants.X_MESSAGE;
+        }
+
+        Account authdAccount = authService.getAccount();
+        PostShare postShare = postRepo.getPostShare(Long.parseLong(id));
+
+        postShareComment.setPostShareId(Long.parseLong(id));
+        postShareComment.setAccountId(authdAccount.getId());
+
+        if(postShareComment.getComment().contains("<style")){
+            postShareComment.setComment(postShareComment.getComment().replace("style", "") + "We caught a hacker!");
+        }
+        if(postShareComment.getComment().contains("<script")){
+            postShareComment.setComment(postShareComment.getComment().replace("script", "") + "We caught a hacker!");
+        }
+
+        postShareComment.setDateCreated(utils.getCurrentDate());
+        PostShareComment savedComment = postRepo.savePostShareComment(postShareComment);
+
+        accountRepo.savePermission(authdAccount.getId(), Constants.POST_SHARE_COMMENT_MAINTENANCE  + savedComment.getId());
+
+        Notification notification = notificationService.createNotification(postShare.getAccountId(), authdAccount.getId(), postShare.getPostId(), false, false, true);
+        notificationRepo.save(notification);
+
+        return Constants.SUCCESS;
+    }
+
+
+    public String deletePostShareComment(String id){
+
+        if(!authService.isAuthenticated()){
+            return Constants.AUTHENTICATION_REQUIRED;
+        }
+
+        String permission = Constants.POST_SHARE_COMMENT_MAINTENANCE + id;
+        if(!authService.hasPermission(permission)){
+            return Constants.REQUIRES_PERMISSION;
+        }
+
+        postRepo.deletePostShareComment(Long.parseLong(id));
+        return Constants.SUCCESS;
+    }
+
+
+    public String deletePostImage(String id, String imageUri){
+        if(!authService.isAuthenticated()){
+            return Constants.AUTHENTICATION_REQUIRED;
+        }
         String permission = Constants.POST_MAINTENANCE  + id;
         if(!authService.hasPermission(permission)) {
-            return false;
+            return Constants.REQUIRES_PERMISSION;
         }
         PostImage postImage = postRepo.getImage(Long.parseLong(id), imageUri);
         syncService.delete(postImage.getFileName());
         postRepo.deletePostImage(Long.parseLong(id), imageUri);
-        return true;
+        return Constants.SUCCESS;
     }
 
 
-    public Map<String, Object> likePost(String id){
+    public LikesOutput likePost(String id){
+        LikesOutput likesOutput = new LikesOutput();
+        if(!authService.isAuthenticated()){
+            likesOutput.setMessage(Constants.AUTHENTICATION_REQUIRED);
+            return likesOutput;
+        }
+
         Account authdAccount = authService.getAccount();
 
         PostLike postLike = new PostLike();
@@ -283,15 +533,27 @@ public class PostService {
             }
         }
 
-        long likes = postRepo.likes(Long.parseLong(id));
-        Map<String, Object> respData = new HashMap<>();
-        respData.put("likes", likes);
-        respData.put("id", id);
-        return respData;
+        likesOutput.setMessage(Constants.SUCCESS);
+        likesOutput.setId(Long.parseLong(id));
+        likesOutput.setLikes(postRepo.likes(Long.parseLong(id)));
+
+        return likesOutput;
     }
 
 
-    public List<Post> getUserActivity(Account profileAccount, Account authdAccount){
+    public ActivityOutput getUserActivity(String userId){
+
+        ActivityOutput activityOutput = new ActivityOutput();
+
+        if(!authService.isAuthenticated()){
+            activityOutput.setMessage(Constants.AUTHENTICATION_REQUIRED);
+            activityOutput.setPosts(new ArrayList<>());
+            return activityOutput;
+        }
+
+        Account authdAccount = authService.getAccount();
+        Account profileAccount = accountRepo.get(Long.parseLong(userId));
+
         List<Post> postsPre = postRepo.getUserPosts(profileAccount.getId());
         List<Post> posts = populatePostData(postsPre, authdAccount);
 
@@ -304,11 +566,24 @@ public class PostService {
         List<Post> activityFeedSorted = getSortedActivities(activityFeedPre);
 
         activityFeedSorted.stream().forEach(post -> setActive(post));
+        activityOutput.setMessage(Constants.SUCCESS);
+        activityOutput.setPosts(activityFeedSorted);
 
-        return activityFeedSorted;
+        return activityOutput;
     }
 
-    public Map<String, Object> getActivity(Account authdAccount){
+    public ActivityOutput getActivity(){
+
+        ActivityOutput activityOutput = new ActivityOutput();
+
+        if(!authService.isAuthenticated()){
+            activityOutput.setMessage(Constants.AUTHENTICATION_REQUIRED);
+            activityOutput.setPosts(new ArrayList<>());
+            activityOutput.setAccounts(new ArrayList<>());
+            return activityOutput;
+        }
+
+        Account authdAccount = authService.getAccount();
 
         long start = utils.getPreviousDay(14);
         long end = utils.getCurrentDate();
@@ -328,19 +603,42 @@ public class PostService {
 
         activityFeedSorted.stream().forEach(post -> setActive(post));
 
-        List<Account> femalesMales = getFemalesMales(activityFeed);
+        List<Account> accounts = getFemalesMales(activityFeed);
 
-        Map<String, Object> data = new HashMap<>();
-        data.put("activities", activityFeedSorted);
-        data.put("femsfellas", femalesMales);
+        activityOutput.setMessage(Constants.SUCCESS);
+        activityOutput.setPosts(activityFeedSorted);
+        activityOutput.setAccounts(accounts);
 
-        return data;
+        return activityOutput;
     }
 
-    public List<String> savePostImages(Map<String, String> imageLookup, Post populatedPost){
+    public String addPostImages(String id, CommonsMultipartFile[] imageFiles){
+
+        if(!authService.isAuthenticated()){
+            return Constants.AUTHENTICATION_REQUIRED;
+        }
+
+        String permission = Constants.POST_MAINTENANCE  + id;
+        if(!authService.hasPermission(permission)) {
+            return Constants.REQUIRES_PERMISSION;
+        }
+
+        Map<String, String> imageLookup = new HashMap<>();
+        if(imageFiles != null &&
+                imageFiles.length > 0) {
+            synchronizeImages(imageFiles, imageLookup);
+        }
+
+        Post post = postRepo.get(Long.parseLong(id));
+        savePostImages(post, imageLookup);
+
+        return Constants.SUCCESS;
+    }
+
+    public List<String> savePostImages(Post post, Map<String, String> imageLookup){
         List<String> imageUris = new ArrayList<>();
         for (Map.Entry<String,String> image : imageLookup.entrySet()){
-            PostImage postImage = getPostImage(image.getKey(), image.getValue(), populatedPost);
+            PostImage postImage = getPostImage(image.getKey(), image.getValue(), post);
             postRepo.saveImage(postImage);
             imageUris.add(image.getValue());
         }
@@ -380,7 +678,8 @@ public class PostService {
     }
 
     private Post setActive(Post post){
-        if (sessionManager.sessions.containsKey(post.getUsername())) {
+        if (post.getUsername() != null &&
+                sessionManager.sessions.containsKey(post.getUsername())) {
             post.setStatus("online");
         }
         return post;
@@ -603,10 +902,11 @@ public class PostService {
             account.setId(post.getAccountId());
             account.setName(post.getName());
             account.setImageUri(post.getImageUri());
-            if (sessionManager.sessions.containsKey(post.getUsername())) {
+            if(post.getUsername() != null &&
+                    sessionManager.sessions.containsKey(post.getUsername())) {
                 account.setStatus("online");
             }
-            if (femalesMalesMap.containsKey(post.getAccountId())) {
+            if(femalesMalesMap.containsKey(post.getAccountId())) {
                 int count = femalesMalesMap.get(post.getAccountId()).getCount() + 1;
                 account.setCount(count);
                 femalesMalesMap.put(post.getAccountId(), account);
@@ -624,289 +924,70 @@ public class PostService {
     }
 
 
+    public String reviewFlaggedPosts(ModelMap modelMap){
+        if(!authService.isAdministrator()){
+            return Constants.UNAUTHORIZED_REDIRECT;
+        }
 
+        List<Post> posts = postRepo.getFlaggedPosts();
+        modelMap.addAttribute("posts", posts);
 
+        return "admin/flagged";
+    }
 
-//    public Map<String, Object> getActivityD(Account authenticatedAccount, HttpServletRequest request){
-//
-//        Map<String, Object> activityData = new HashMap<>();
-//
-//        try {
-//
-//            long start = utilities.getPreviousDay(14);
-//            long end = utilities.getCurrentDate();
-//
-//            List<Post> posts = postDao.getActivity(start, end, authenticatedAccount.getId());
-//
-//            for (Post post : posts) {
-//                Account postedAccount = accountDao.get(post.getAccountId());
-//                populatePost(post, postedAccount, authenticatedAccount);
-//            }
-//
-//            List<PostShare> postShares = postDao.getPostShares(start, end, authenticatedAccount.getId());
-//
-//            for (PostShare postShare : postShares) {
-//                Post post = postDao.get(postShare.getPostId());
-//                post.setPostShareId(postShare.getId());
-//
-//                Account postedAccount = accountDao.get(post.getAccountId());
-//
-//                populatePostShare(post, postShare, postedAccount, authenticatedAccount);
-//
-//                post.setShared(true);
-//                post.setSharedComment(postShare.getComment());
-//
-//                Account acc = accountDao.get(postShare.getAccountId());
-//                post.setSharedAccountId(postShare.getAccountId());
-//                post.setSharedAccount(acc.getName());
-//                post.setSharedImageUri(acc.getImageUri());
-//
-//                SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_SEARCH_FORMAT);
-//                Date date = format.parse(Long.toString(postShare.getDateShared()));
-//
-//                PrettyTime p = new PrettyTime();
-//                post.setTimeSharedAgo(p.format(date));
-//                post.setDatePosted(postShare.getDateShared());
-//
-//                if (postShare.getAccountId() == authenticatedAccount.getId()) {
-//                    post.setDeletable(true);
-//                }
-//
-//                if (postShare.getAccountId() == authenticatedAccount.getId()) {
-//                    post.setPostShareEditable(true);
-//                }
-//
-//                posts.add(post);
-//            }
-//
-//
-//            Comparator<Post> comparator = new Comparator<Post>() {
-//                @Override
-//                public int compare(Post a1, Post a2) {
-//                    Long p1 = new Long(a1.getDatePosted());
-//                    Long p2 = new Long(a2.getDatePosted());
-//                    return p2.compareTo(p1);
-//                }
-//            };
-//
-//
-//            Collections.sort(posts, comparator);
-//            List<Post> finalFeed = new ArrayList<Post>();
-//
-//            request.getSession().setAttribute(Constants.ACTIVITY_REQUEST_TIME, utilities.getCurrentDate());
-//
-//            for (Post post : posts) {
-//                if (sessionManager.sessions.containsKey(post.getUsername())) {
-//                    post.setStatus("active");
-//                } else {
-//                    post.setStatus("inactive");
-//                }
-//                finalFeed.add(post);
-//            }
-//
-//            Random rand = new Random();
-//
-//            int adIdx = rand.nextInt(2);
-//            if (adIdx == 1) {
-//
-//                List<Flyer> activeFlyers = flyerDao.getActiveFlyers();
-//
-//                int flyerIdx = 0;
-//                if (activeFlyers.size() > 0) {
-//
-//                    flyerIdx = rand.nextInt(activeFlyers.size());
-//
-//                    Flyer flyer = activeFlyers.get(flyerIdx);
-//
-//                    Post adPost = new Post();
-//
-//                    List<String> imageUris = new ArrayList<>();
-//                    imageUris.add(flyer.getImageUri());
-//
-//                    adPost.setImageFileUris(imageUris);
-//                    adPost.setAdvertisementUri(flyer.getPageUri());
-//                    adPost.setAdvertisement(true);
-//                    adPost.setShared(false);
-//                    adPost.setHidden(false);
-//                    adPost.setFlagged(false);
-//                    adPost.setPublished(true);
-//
-//                    if (finalFeed.size() > 0) {
-//                        int feedIdx = rand.nextInt(finalFeed.size());
-//                        finalFeed.add(feedIdx, adPost);
-//                    } else {
-//                        finalFeed.add(adPost);
-//                    }
-//                    long views = flyer.getAdViews() + 1;
-//                    flyerDao.updateViews(views, flyer.getId());
-//                }
-//            }
-//
-//            Map<Long, Account> femsfellasMap = new HashMap<Long, Account>();
-//            List<Account> femsfellas = new ArrayList<Account>();
-//            for (Post post : posts) {
-//                Account femfella = new Account();
-//                femfella.setId(post.getAccountId());
-//                femfella.setName(post.getName());
-//                femfella.setImageUri(post.getImageUri());
-//                if (femsfellasMap.containsKey(post.getAccountId())) {
-//                    int count = femsfellasMap.get(post.getAccountId()).getCount() + 1;
-//                    femfella.setCount(count);
-//                    femsfellasMap.put(post.getAccountId(), femfella);
-//                } else {
-//                    femfella.setCount(1);
-//                    femsfellasMap.put(post.getAccountId(), femfella);
-//                }
-//            }
-//
-//            for (Account femfella : femsfellasMap.values()) {
-//                femsfellas.add(femfella);
-//            }
-//
-//
-//            activityData.put("activities", finalFeed);
-//            activityData.put("femsfellas", femsfellas);
-//
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//
-//        return activityData;
-//    }
-//
-//
-//
-//    public Post populatePost(Post post, Account postAccount, Account authenticatedAccount){
-//        try {
-//
-//            SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_SEARCH_FORMAT);
-//            Date date = format.parse(Long.toString(post.getDatePosted()));
-//
-//            PrettyTime p = new PrettyTime();
-//            post.setTimeAgo(p.format(date));
-//
-//            long likes = postDao.likes(post.getId());
-//            post.setLikes(likes);
-//
-//            PostLike postLike = new PostLike();
-//            postLike.setPostId(post.getId());
-//            postLike.setAccountId(authenticatedAccount.getId());
-//            boolean existingPostLike = postDao.liked(postLike);
-//            if (existingPostLike) {
-//                post.setLiked(true);
-//            }
-//
-//            long shares = postDao.shares(post.getId());
-//            post.setShares(shares);
-//
-//            post.setAccountId(postAccount.getId());
-////            post.setImageUri(postAccount.getImageUri());
-////            post.setName(postAccount.getName());
-////            post.setUsername(postAccount.getUsername());
-//
-//            if(post.getAccountId() == authenticatedAccount.getId()){
-//                post.setDeletable(true);
-//                post.setPostEditable(true);
-//            }else{
-//                post.setDeletable(false);
-//            }
-//
-//            List<PostComment> postComments = postDao.getPostComments(post.getId());
-//
-//            for (PostComment postComment : postComments) {
-//                if(postComment.getAccountId() == authenticatedAccount.getId()){
-//                    postComment.setCommentDeletable(true);
-//                }
-//                postComment.setCommentId(postComment.getId());//used for front end
-//            }
-//
-//            post.setComments(postComments);
-//
-////            List<HiddenPost> hiddenPosts = postDao.getHiddenPosts(post.getId(), authenticatedAccount.getId());
-////            if(hiddenPosts.size() > 0){
-////                post.setHidden(true);
-////            }
-//
-//            if(postComments.size() > 0)post.setCommentsOrShareComments(true);
-//
-//            retrieveMultimedia(post);
-//
-//        }catch(Exception e){ }
-//
-//        return post;
-//    }
-//
-//
-//    public Post populatePostShare(Post post, PostShare postShare, Account postAccount, Account authenticatedAccount){
-//        try {
-//
-//            //this and previous written in a hurry, needs help.
-//            SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_SEARCH_FORMAT);
-//            Date date = format.parse(Long.toString(post.getDatePosted()));
-//
-//            PrettyTime p = new PrettyTime();
-//            post.setTimeAgo(p.format(date));
-//
-//            long likes = postDao.likes(post.getId());
-//            post.setLikes(likes);
-//
-//            PostLike postLike = new PostLike();
-//            postLike.setPostId(post.getId());
-//            postLike.setAccountId(postAccount.getId());
-//            boolean existingPostLike = postDao.liked(postLike);
-//            if (existingPostLike) {
-//                post.setLiked(true);
-//            }
-//
-//            long shares = postDao.shares(post.getId());
-//            post.setShares(shares);
-//
-//            post.setAccountId(postAccount.getId());
-//            post.setImageUri(postAccount.getImageUri());
-//            post.setName(postAccount.getName());
-//            post.setUsername(postAccount.getUsername());
-//
-//            if(post.getAccountId() == authenticatedAccount.getId()){
-//                post.setDeletable(true);
-//            }else{
-//                post.setDeletable(false);
-//            }
-//
-//            List<PostShareComment> postShareComments = postDao.getPostShareComments(postShare.getId());
-//
-//            for (PostShareComment postShareComment : postShareComments) {
-//                if(postShareComment.getAccountId() == authenticatedAccount.getId()){
-//                    postShareComment.setCommentDeletable(true);
-//                }
-//                postShareComment.setCommentId(postShareComment.getId());
-//            }
-//
-//            post.setShareComments(postShareComments);
-//
-//            List<HiddenPost> hiddenPosts = postDao.getHiddenPosts(post.getId(), authenticatedAccount.getId());
-//            if(hiddenPosts.size() > 0){
-//                post.setHidden(true);
-//            }
-//
-//            if(postShareComments.size() > 0)post.setCommentsOrShareComments(true);
-//
-//            retrieveMultimedia(post);
-//
-//        }catch(Exception e){ }
-//
-//        return post;
-//    }
-//
-//
-//    private Post retrieveMultimedia(Post post){
-//        List<PostImage> postImages = postDao.getImages(post.getId());
-//        List<String> imageUris = new ArrayList<String>();
-//
-//        for(PostImage postImage : postImages){
-//            imageUris.add(postImage.getUri());
-//        }
-//        post.setImageFileUris(imageUris);
-//
-//        return post;
-//    }
+    public String reviewFlaggedPost(String id, ModelMap modelMap){
+        if(!authService.isAdministrator()){
+            return Constants.UNAUTHORIZED_REDIRECT;
+        }
+
+        Post post = postRepo.getFlaggedPost(Long.parseLong(id));
+        Account account = accountRepo.get(post.getAccountId());
+        Post populatedPost = setPostData(post, account);
+        modelMap.addAttribute("post", populatedPost);
+
+        return "admin/review_post";
+    }
+
+    public String approveFlaggedPost(String id) {
+        if(!authService.isAdministrator()){
+            return Constants.UNAUTHORIZED_REDIRECT;
+        }
+
+        Post post = postRepo.get(Long.parseLong(id));
+        Account account = accountRepo.get(post.getAccountId());
+
+        account.setDisabled(true);
+        accountRepo.updateDisabled(account);
+
+        postRepo.delete(post.getId());
+        postRepo.removePostShares(post.getId());
+        postRepo.removePostFlags(post.getId());
+
+        List<PostImage> postImages = postRepo.getImages(post.getId());
+        for(PostImage postImage : postImages){
+            postRepo.deletePostImage(postImage.getId());
+            utils.deleteUploadedFile(postImage.getUri());
+        }
+
+        return "redirect:/posts/flagged";
+    }
+
+    public String revokeFlag(String id) {
+
+        if(!authService.isAdministrator()){
+            return Constants.UNAUTHORIZED_REDIRECT;
+        }
+
+        Post post = postRepo.get(Long.parseLong(id));
+        Account account = accountRepo.get(post.getAccountId());
+
+        account.setDisabled(false);
+        accountRepo.updateDisabled(account);
+
+        post.setFlagged(false);
+        postRepo.updateFlagged(post);
+        postRepo.removePostFlags(post.getId());
+
+        return "redirect:/posts/flagged";
+    }
 }

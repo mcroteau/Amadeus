@@ -11,7 +11,7 @@
         }
     </style>
 
-    <a href="/b" class="href-dotted">Home</a>
+    <a href="/o" class="href-dotted">Home</a>
 
     <h1>EULA</h1>
     <p class"tiny">End-User License Agreement</p>

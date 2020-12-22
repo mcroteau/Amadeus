@@ -30,11 +30,43 @@ public class Utils {
 	@Autowired
 	private ApplicationContext applicationContext;
 
+	public static String getSebastienImageUri(){
+		return Constants.HTTPS + Constants.DO_ENDPOINT + "/" + Constants.FRESCO;
+	}
+
+	public static String getProfileImageUri(){
+		return Constants.HTTPS + Constants.DO_ENDPOINT + "/" + Constants.DEFAULT_IMAGE_URI;
+	}
+
+	public static String getFlyerImageUri(){
+		return Constants.HTTPS + Constants.DO_ENDPOINT + "/" + Constants.DEFAULT_FLYER_IMAGE_URI;
+	}
 
 	public int generateRandomNumber(int max){
 		Random r = new Random();
 		return r.nextInt(max);
 	}
+
+	public static String dirty(String password){
+		MessageDigest md = null;
+		StringBuffer passwordHashed = new StringBuffer();
+
+		try {
+			md = MessageDigest.getInstance("SHA-256");
+			md.update(password.getBytes());
+
+			byte byteData[] = md.digest();
+
+			for (int i = 0; i < byteData.length; i++) {
+				passwordHashed.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+			}
+
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return passwordHashed.toString();
+	}
+
 
 	public String hash(String password){
 		MessageDigest md = null;
@@ -253,6 +285,16 @@ public class Utils {
 		}
 	}
 
+	public static String getGenericFileName(CommonsMultipartFile file){
+
+		FileItem fileItem = file.getFileItem();
+		String originalName = fileItem.getName();
+
+		String fileName = getRandomString(9);
+		String extension = getExtension(originalName);
+
+		return fileName + "." +  extension;
+	}
 
 	public String generateFileName(CommonsMultipartFile file){
 	    
@@ -266,6 +308,20 @@ public class Utils {
 	}
 
 
+
+	private static String getExtension(final String path) {
+		String result = null;
+		if (path != null) {
+			result = "";
+			if (path.lastIndexOf('.') != -1) {
+				result = path.substring(path.lastIndexOf('.'));
+				if (result.startsWith(".")) {
+					result = result.substring(1);
+				}
+			}
+		}
+		return result;
+	}
 
 
 	private String getFileExtension(final String path) {
@@ -284,6 +340,18 @@ public class Utils {
 
 
 
+	public static String getRandomString(int n) {
+		String CHARS = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890";
+		StringBuilder uuid = new StringBuilder();
+		Random rnd = new Random();
+		while (uuid.length() < n) {
+			int index = (int) (rnd.nextFloat() * CHARS.length());
+			uuid.append(CHARS.charAt(index));
+		}
+		return uuid.toString();
+	}
+
+
 	public String generateRandomString(int n) {
         String CHARS = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890";
         StringBuilder uuid = new StringBuilder();
@@ -294,6 +362,11 @@ public class Utils {
         }
         return uuid.toString();
     }
+
+	public static boolean validMailbox(String str){
+		EmailValidator validator = EmailValidator.getInstance();
+		return validator.isValid(str);
+	}
 
 
 	public boolean validEmail(String str){
@@ -329,14 +402,26 @@ public class Utils {
 		}
 	}
 
-
+	public static long getDate() {
+		Calendar cal = Calendar.getInstance();
+		long date = getSimpleDateFormatted(cal);
+		return date;
+	}
 
 	public long getCurrentDate() {
         Calendar cal = Calendar.getInstance();
         long date = getDateFormatted(cal);
 		return date;
 	}
-	
+
+
+	public static long getYesterday(int day) {
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DAY_OF_MONTH, -day);
+		long date = getSimpleDateFormatted(cal);
+		return date;
+	}
+
 	public long getPreviousDay(int day) {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DAY_OF_MONTH, -day);
@@ -344,24 +429,10 @@ public class Utils {
         return date;
 	}
 
-	public long getPrevious7Days() {
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DAY_OF_MONTH, -7);
-		long date = getDateFormatted(cal);
-		return date;
-	}
-
-	public long getPrevious14Days(){
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DAY_OF_MONTH, -14);
-		long date = getDateFormatted(cal);
-		return date;
-	}
-
-	public long getPreviousMonth() {
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DAY_OF_MONTH, -31);
-		long date = getDateFormatted(cal);
+	private static long getSimpleDateFormatted(Calendar cal) {
+		DateFormat df = new SimpleDateFormat(Constants.DATE_SEARCH_FORMAT);
+		String dateStr = df.format(cal.getTime());
+		long date = Long.parseLong(dateStr);
 		return date;
 	}
 
@@ -380,7 +451,7 @@ public class Utils {
 	}
 
 
-	public String getGraphDate(int day) {
+	public static String getGraphDate(int day) {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DAY_OF_MONTH, -day);
 		DateFormat df = new SimpleDateFormat(Constants.DATE_GRAPH_FORMAT);

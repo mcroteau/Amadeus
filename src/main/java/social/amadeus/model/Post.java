@@ -41,7 +41,7 @@ public class Post {
 	long updateDate;
 	boolean advertisement;
 	String advertisementUri;
-	String failMessage;
+	String statusMessage;
 
 	public long getId(){
 		return id;
@@ -321,12 +321,11 @@ public class Post {
 		this.advertisementUri = advertisementUri;
 	}
 
-	public String getFailMessage() {
-		return failMessage;
+	public String getStatusMessage() {
+		return statusMessage;
 	}
 
-	public void setFailMessage(String failMessage) {
-		this.failMessage = failMessage;
+	public void setStatusMessage(String statusMessage) {
+		this.statusMessage = statusMessage;
 	}
-
 }

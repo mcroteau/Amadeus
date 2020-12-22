@@ -24,6 +24,7 @@ public class Account {
 	boolean hidden;
 	boolean blocked;
 	String status;
+	String failMessage;
 
 	public long getId(){
 		return id;
@@ -185,6 +186,14 @@ public class Account {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getFailMessage() {
+		return failMessage;
+	}
+
+	public void setFailMessage(String failMessage) {
+		this.failMessage = failMessage;
 	}
 
 	public String getNameUsername(){

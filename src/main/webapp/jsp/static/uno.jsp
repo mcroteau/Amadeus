@@ -2,12 +2,11 @@
 
 <div id="uno-content">
 
-    <c:if test="${not empty sessionScope.message}">
+    <c:if test="${not empty message}">
         <div class="span12">
-            <p>${sessionScope.message}</p>
+            <p>${message}</p>
         </div>
     </c:if>
-
 
     <h2 style="margin-bottom:20px;">Signin</h2>
 
@@ -39,7 +38,7 @@
 
     <br class="clear"/>
 
-    <a href="${pageContext.request.contextPath}/signup" class="button beauty-light large">Sign Up !</a>
+    <a href="${pageContext.request.contextPath}/signup" class="button yella large">Sign Up !</a>
 
 <%--    <a href="${pageContext.request.contextPath}/account/guest" class="button light large" style="display:block;margin-top:10px;margin-bottom:70px;">Check it Out !</a>--%>
 </div>

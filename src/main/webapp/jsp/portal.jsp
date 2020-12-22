@@ -18,34 +18,30 @@
     <script type="text/javascript" src="/o/js/packages/jquery.i18n.js"></script>
     <script type="text/javascript" src="/o/js/packages/jquery.i18n.messagestore.js"></script>
 
-
     <link rel="stylesheet" href="/o/css/app.gap.css?v=<%=System.currentTimeMillis()%>"/>
     <link rel="stylesheet" href="/o/css/app.gap.mobile.css?v=<%=System.currentTimeMillis()%>"/>
-
-
 
 </head>
 
 <body ng-app="app" ng-controller="baseController">
 
 <%
-    String[] vizs = {"/o/jsp/app/vis/candy.jsp",
-                    "/o/jsp/app/vis/graph.jsp",
-                    "/o/jsp/app/vis/pond.jsp",
-                    "/o/jsp/app/vis/mucho.jsp",
-                    "/o/jsp/app/vis/correct.jsp",
-                    "/o/jsp/app/vis/space.jsp"};
+    String[] vizs = {"/o/jsp/static/vis/candy.jsp",
+                     "/o/jsp/static/vis/graph.jsp",
+                     "/o/jsp/static/vis/pond.jsp",
+                     "/o/jsp/static/vis/mucho.jsp",
+                     "/o/jsp/static/vis/correct.jsp",
+                     "/o/jsp/static/vis/space.jsp"};
 
     Random ran = new Random();
     int inx = ran.nextInt(vizs.length);
     String viz = vizs[inx];
 %>
 
-    <iframe id="viz" src="<%=viz%>" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>
-<!-- <iframe src="/o/jsp/app/vis/pond.jsp" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe> -->
 
-    <canvas id="sugarcookie" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></canvas>
-
+<%--    <iframe id="viz" src="<%=viz%>" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>--%>
+<iframe src="/o/jsp/static/vis/space.jsp" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>
+<%--    <canvas id="sugarcookie" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></canvas>--%>
 
 
     <div ng-if="$root.renderModal" id="amadeus-modal">
@@ -60,7 +56,7 @@
         <div class="indeterminate" style="width: 100%"></div>
     </div>
 
-	<div ng-click="hideAll" id="layout-container" style="position:relative;">
+	<div ng-click="closeDialogs" id="layout-container" style="position:relative;">
 
 		<div id="top-outer-container" ng-init="init()">
 
@@ -84,8 +80,8 @@
 			</div>
 
             <div id="navigation-container" class="float-right">
-                <a ng-click="toggleProfile()" href="javascript:" id="profile-actions-href" style="margin-right:37px;">
-                    <img src="/o/${sessionScope.imageUri}" id="profile-ref-image" style="z-index:1"/>
+                <a ng-click="toggleProfile()" href="javascript:" id="profile-actions-href" class="profile-popup" style="margin-right:37px;">
+                    <img src="${sessionScope.imageUri}" id="profile-ref-image" style="z-index:1"/>
                     <span ng-show="data.messagesCount" id="base-notifications-count">{{data.messagesCount}}</span>
                 </a>
 
@@ -111,8 +107,8 @@
         </div>
 
         <div id="navigation-outer-container">
-            <a ng-click="toggleProfile()" href="javascript:" id="profile-actions-href" style="margin-right:37px;">
-                <img src="/o/${sessionScope.imageUri}" id="profile-ref-image" style="z-index:1"/>
+            <a ng-click="toggleProfile()" href="javascript:" id="profile-actions-href" class="profile-popup" style="margin-right:37px;">
+                <img src="${sessionScope.imageUri}" id="profile-ref-image" style="z-index:1"/>
                 <span ng-show="data.messagesCount" id="base-notifications-count">{{data.messagesCount}}</span>
             </a>
 
@@ -134,7 +130,7 @@
     <div ng-show="chatStarted" id="chat-session-outer-wrapper" class="global-shadow">
         <div id="chat-inner-wrapper">
             <div id="chat-session-header-wrapper">
-                <a ng-href="#!/profile/{{recipientId}}"><img ng-src="/o/{{imageUri}}" id="chat-header-img"/></a>
+                <a ng-href="#!/profile/{{recipientId}}"><img ng-src="{{imageUri}}" id="chat-header-img"/></a>
                 <span ng-click="toggleChat()" id="close-chat-session" class="yella">x</span>
             </div>
             <div id="chat-session">
@@ -149,7 +145,7 @@
         </div>
     </div>
 
-    <div ng-class="{'opened': chatOpened}" ng-click="openChat()" id="chat-launcher-popup" class="global-shadow chat-launcher" >
+    <div ng-class="{'opened': chatOpened}" ng-click="openChat()" id="chat-launcher-popup" class="global-shadow chat-launcher chat-session-popup" >
         <div id="chat-header">
             <h2 id="friends-launcher" data-launched="false" class="chat-launcher">Messages</h2>
         </div>
@@ -158,7 +154,7 @@
                 <tr ng-click="startChat(friend.friendId)"  ng-repeat="friend in friends" class="friend-wrapper">
                     <td><a href="javascript:" ng-class="" class="lightf chat-session-launcher">{{friend.name}}</a></td>
                     <td>
-                        <img ng-src="/o/{{friend.imageUri}}" class="chat-session-launcher" data-id="{{friend.friendId}}"/>
+                        <img ng-src="{{friend.imageUri}}" class="chat-session-launcher" data-id="{{friend.friendId}}"/>
                         <span class="online-indicator" ng-class="{'online' : friend.isOnline}"></span>
                     </td>
                 </tr>
@@ -302,11 +298,11 @@
         }
 
         $scope.toggleNotifications = function(){
-            $scope.showNotifications = $scope.showNotifications ? false : true
+            $scope.showNotifications = !$scope.showNotifications
         }
 
         $scope.toggleProfile = function(){
-            $scope.showProfile = $scope.showProfile ? false : true
+            $scope.showProfile = !$scope.showProfile
         }
 
         $scope.reloadActivities = function(){
@@ -319,8 +315,8 @@
 
         $scope.openChat = function(){
             $http.get('/o/friends/' + ${sessionScope.account.id}).then(function(response){
-                $scope.friends = response.data
-                $scope.chatOpened = $scope.chatOpened ? false : true
+                $scope.friends = response.data.friends
+                $scope.chatOpened = !$scope.chatOpened
                 if(!$scope.chatOpened)$interval.cancel($scope.chatInterval)
             })
         }
@@ -376,8 +372,19 @@
             if(!$scope.chatStarted)$interval.cancel($scope.chatInterval)
         }
 
-        $scope.hideAll = function(){
+        $scope.closeDialogs = function(event) {
+            var $target = $(event.target);
+            if (!$target.hasClass('profile-popup') &&
+                    !$target.hasClass('notifications-popup') &&
+                        !$target.hasClass('chat-session-popup')){
+                $scope.chatOpened = false
+                $scope.showProfile = false
+                $scope.showNotifications = false
+            }
         }
+
+        $('body').click($scope.closeDialogs)
+
     });
 
 
@@ -396,8 +403,8 @@
         }
 
         var setData = function(response){
-            $scope.activities = response.data.activities
-            $scope.femsfellas = response.data.femsfellas
+            $scope.activities = response.data.posts
+            $scope.femsfellas = response.data.accounts
             $scope.memory = $scope.activities
 
             activityModel.set('memory', $scope.memory)
@@ -514,7 +521,7 @@
         }
 
         var setData = function(response){
-            $scope.invitations = response.data
+            $scope.invitations = response.data.invites
         }
 
         $scope.ignoreInvitation = function(id){
@@ -575,7 +582,7 @@
             var postId = $event.target.attributes['data-id'].value
             dataService.sharePost(postId, comment, function(){
                 $rootScope.renderModal = false
-                $route.reload()
+                $window.location.reload()
             })
         }
 
@@ -642,7 +649,7 @@
         $scope.saveShareComment = function(id){
             var comment = document.querySelector("#post-share-comment-" + id).value
             if(comment != '') {
-                dataService.saveShareComment(id, comment, function(){
+                dataService.saveShareComment(id, comment, function(resp){
                     $window.location.reload()
                 })
             }
@@ -759,7 +766,7 @@
             $scope.friends = response.data.friends
 
             $http.get("/o/post/account/" + self.id).then(function(response){
-                $scope.activities = response.data
+                $scope.activities = response.data.posts
                 $timeout(setAnchors, 1300)
             })
             $http.get("/o/profile/data/views").then(function(response){
@@ -802,12 +809,15 @@
             };
 
             this.deleteComment = function(id, callback){
-                $http.delete("/o/post/delete_comment/" + id).then(callback);
+                $http.delete("/o/post/comment/delete/" + id).then(callback);
             }
-
             this.saveShareComment = function(id, comment, callback){
                 var postComment = { comment : comment };
                 $http.post("/o/post_share/comment/" + id, postComment).then(callback);
+            }
+
+            this.deleteShareComment = function(id, callback){
+                $http.delete("/o/post_share/comment/delete/" + id).then(callback);
             }
 
             this.sharePost = function(id, comment, callback){
@@ -820,7 +830,7 @@
             }
 
             this.getInvitations = function(callback){
-                $http.get("/o/friend/invitations").then(callback)
+                $http.get("/o/friend/invites").then(callback)
             };
 
             this.saveTodo = function(todo, callback) {

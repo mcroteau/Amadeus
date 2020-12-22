@@ -17,7 +17,7 @@
     var path = new Path.RegularPolygon(new Point(0, 0), 3, 5);
     path.fillColor = 'white';
     path.strokeColor = 'grey';
-    path.strokeWidth = 2;
+    path.strokeWidth = 1;
     path.selected = true;
 
     var symbol = new SymbolDefinition(path);
