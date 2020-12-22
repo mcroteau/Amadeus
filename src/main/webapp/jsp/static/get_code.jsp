@@ -21,29 +21,32 @@
 
     <c:set var="dev" value="true" scope="page" />
     <c:if test="${dev}">
-        <c:set var="launcherUrl" value="/o/images/launcher-tres.png" scope="page" />
+        <c:set var="launcherUrl" value="/o/images/icon.png" scope="page" />
         <c:set var="jsUrl" value="/o/js/Actions.js" scope="page" />
     </c:if>
     <c:if test="${!dev}">
-        <c:set var="launcherUrl" value="https://www.amadeus.social/o/images/launcher-tres.png" scope="page" />
+        <c:set var="launcherUrl" value="https://www.amadeus.social/o/images/icon.png" scope="page" />
         <c:set var="jsUrl" value="https://www.amadeus.social/o/js/Actions.js" scope="page" />
     </c:if>
 
     <a href="/o" class="href-dotted">Home</a>
+    <br class="clear"/>
 
-    <h1>Get Code</h1>
+    <h1 style="float:left">Get Code</h1>
 
-    <span class="information" style="position:absolute; top:100; right:159px;">Generates</span>
+    <div style="float:right">
+        <span class="information">Generates</span>
 
-    <div id="amadeus-actions-wrapper" data-uri="NOT READY, GO BACK ENTER URL!" style="position:absolute; top:100px;right:0px;">
-        <div id="amadeus-inner-wrapper">
-            <a href="javascript:" id="launch-amadeus"><img src="${launcherUrl}" style="width:45px"/></a>
-            <span id="amadeus-likes"><span id="likes-span"></span> likes</span>
-            <span id="amadeus-shares"><span id="shares-span"></span> shares</span>
+        <div id="amadeus-actions-wrapper" data-uri="NOT READY, GO BACK ENTER URL!">
+            <div id="amadeus-inner-wrapper">
+                <a href="javascript:" id="launch-amadeus"><img src="${launcherUrl}" style="width:45px"/></a>
+                <span id="amadeus-likes"><span id="likes-span"></span> likes</span>
+                <span id="amadeus-shares"><span id="shares-span"></span> shares</span>
+            </div>
         </div>
     </div>
     <script type="text/javascript" src="${jsUrl}"></script>
-
+    <br class="clear"/>
 
     <div style="float:left;margin-bottom:20px;">
         <span>Enter Web Address</span><br/>
@@ -58,7 +61,7 @@
 <div id="amadeus-actions-wrapper" data-uri="{{uri}}">
     <div id="amadeus-inner-wrapper">
         <a href="javascript:" id="launch-amadeus">
-            <img src="https://amadeus.social/o/images/launcher-tres.png"/></a>
+            <img src="https://amadeus.social/o/images/icon.png" style="width:45px"/></a>
         <span id="amadeus-likes"><span id="likes-span"></span> likes</span>
         <span id="amadeus-shares"><span id="shares-span"></span> shares</span>
     </div>

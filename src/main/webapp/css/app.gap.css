@@ -887,6 +887,10 @@ input[type="submit"]#search-button,
     border:solid 3px #f2f306;
     border:solid 3px #f1f1f1;
     border:none;
+
+    -webkit-box-shadow: 0px 3px 19px 0px rgba(0,0,0,.09);
+    -moz-box-shadow: 0px 3px 19px 0px rgba(0,0,0,.09);
+    box-shadow: 0px 3px 19px 0px rgba(0,0,0,.09);
 }
 
 #base-notifications-count{
@@ -2102,7 +2106,7 @@ p{
 }
 
 #latest-feed-total{
-    color:#17161b;
+    color:#fff;
     bottom:7px !important;
     bottom:11px !important;
     left: 56px !important;
@@ -3106,7 +3110,7 @@ table tr:hover{
     display:block;
     text-decoration:none;
     text-align: center;
-    background: #54afff !important;
+    background: #17161b !important;
 	/*-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.27) !important;*/
 	/*-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.26) !important;*/
 	/*box-shadow: 0px 2px 3px 0px rgba(0,0,0,.27) !important;*/
@@ -3114,14 +3118,14 @@ table tr:hover{
     -webkit-border-radius: 4px !important;
     -moz-border-radius: 4px !important;
     border-radius: 4px !important;
-    border:solid 1px #4198e4;
+    border:solid 1px #000;
     -webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.07) !important;
     -moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.07) !important;
     box-shadow: 0px 2px 3px 0px rgba(0,0,0,.07) !important;
 }
 
 .post-button:hover{
-    background: #54afff !important;
+    background: #0f0f13 !important;
 	-webkit-box-shadow: 0px 2px 4px 0px rgba(0,0,0,.07) !important;
 	-moz-box-shadow: 0px 2px 4px 0px rgba(0,0,0,.07) !important;
 	box-shadow: 0px 2px 4px 0px rgba(0,0,0,.07) !important;
@@ -3468,24 +3472,20 @@ a.information{
 
 #logo-container{
     left:-4px;
-    background:#999;
-    background:#13B1FF;
-    background:#fff;
-    background:#fff553;
-    background:#fff;
-    background:#fff553;
-    background:#FDFE01;
-    background:#3f94de;
-    background:#17161b;
     padding:0px;
+    -webkit-box-shadow: 0px 3px 19px 0px rgba(0,0,0,.29);
+    -moz-box-shadow: 0px 3px 19px 0px rgba(0,0,0,.29);
+    box-shadow: 0px 3px 19px 0px rgba(0,0,0,.29);
 }
 #logo-logo{
     display:block;
-    padding:11px 17px 17px 24px;
+    padding:16px 24px 18px 25px;
     line-height:1.0;
     vertical-align:middle;
     text-decoration:none;
+    background:#312f38 !important;
     background:#FF4F01 !important;
+
     /*background:#ff2401 !important;*/
 }
 
@@ -3501,6 +3501,12 @@ a.information{
     fill:#fff;
     z-index: 3;
     background-size: cover;
+}
+
+#amadeus-symbol{
+    color:#fff;
+    font-size:25px;
+    display:block;
 }
 
 #search-label{

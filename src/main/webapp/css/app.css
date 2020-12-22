@@ -264,6 +264,7 @@ h3{
     animation-duration: 19s;
 
     background:#FDFE03 !important;
+    background:#0ad5fc !important;
 }
 
 #logo-logo:hover{
@@ -271,11 +272,13 @@ h3{
     color:#E34B86;
     color:#FDFE03;
     background: #FDFE03 !important;
+    background:#0ad5fc !important;
 }
 #logo-logo:hover #amadeus-logo {
     animation-play-state: paused;
     fill:#54AFFF;
 }
+
 
 #logo-logo:active{
     color:#07a4ed;
@@ -3947,6 +3950,13 @@ h1.gray span{
     height:20px;
     width:20px;
 }
+
+#amadeus-symbol{
+    color:#fff;
+    font-size:32px;
+    display:block;
+}
+
 
 .thunder{
     height:11px;

@@ -2,6 +2,14 @@
 
 # Amadeus
 
+interstellar
+astral, star, starry, stellar
+celestial, empyrean, heavenly
+astronomical (also astronomic), astrophysical
+astronautic (or astronautical)
+starlike, star-spangled
+
+
 Mkio
 BQi
 

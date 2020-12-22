@@ -2,7 +2,7 @@
 
 <html>
 <head>
-    <title>Amadeus : Rock Me Amadeus!</title>
+    <title>Amadeus : Social Networking.</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -73,6 +73,12 @@
         #content-container{
             width:570px;
         }
+        #logo-logo{
+            background: #efefef !important;
+        }
+        #logo-logo:hover{
+            background: #efefef !important;
+        }
     </style>
 
 </head>
@@ -80,9 +86,10 @@
 
     <div id="top-outer-container">
         <a href="/o/" id="logo-logo">
-            <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
-                <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>
-            </svg>
+            <span class="medium" id="amadeus-symbol" style="color:#17161b">&Delta;</span>
+<%--            <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">--%>
+<%--                <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>--%>
+<%--            </svg>--%>
         </a>
     </div>
 
