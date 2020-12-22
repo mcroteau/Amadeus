@@ -404,7 +404,7 @@ public class PostService {
 
         PostComment savedComment = postRepo.savePostComment(postComment);
 
-        String permission = Constants.COMMENT_MAINTENANCE  + savedComment.getId();
+        String permission = Constants.POST_COMMENT_MAINTENANCE  + savedComment.getId();
         accountRepo.savePermission(authdAccount.getId(), permission);
 
         Post post = postRepo.get(Long.parseLong(id));
@@ -420,7 +420,7 @@ public class PostService {
             return Constants.AUTHENTICATION_REQUIRED;
         }
 
-        String permission = Constants.COMMENT_MAINTENANCE + id;
+        String permission = Constants.POST_COMMENT_MAINTENANCE + id;
         if(!authService.hasPermission(permission)){
             return Constants.REQUIRES_PERMISSION;
         }
@@ -442,6 +442,7 @@ public class PostService {
         }
 
         Account authdAccount = authService.getAccount();
+        PostShare postShare = postRepo.getPostShare(Long.parseLong(id));
 
         postShareComment.setPostShareId(Long.parseLong(id));
         postShareComment.setAccountId(authdAccount.getId());
@@ -456,10 +457,9 @@ public class PostService {
         postShareComment.setDateCreated(utils.getCurrentDate());
         PostShareComment savedComment = postRepo.savePostShareComment(postShareComment);
 
-        accountRepo.savePermission(authdAccount.getId(), Constants.COMMENT_MAINTENANCE  + savedComment.getId());
-        PostShare postShare = postRepo.getPostShare(Long.parseLong(id));
+        accountRepo.savePermission(authdAccount.getId(), Constants.POST_SHARE_COMMENT_MAINTENANCE  + savedComment.getId());
 
-        Notification notification = notificationService.createNotification(postShare.getAccountId(), authdAccount.getId(), Long.parseLong(id), false, false, true);
+        Notification notification = notificationService.createNotification(postShare.getAccountId(), authdAccount.getId(), postShare.getPostId(), false, false, true);
         notificationRepo.save(notification);
 
         return Constants.SUCCESS;
@@ -472,7 +472,7 @@ public class PostService {
             return Constants.AUTHENTICATION_REQUIRED;
         }
 
-        String permission = Constants.COMMENT_MAINTENANCE + id;
+        String permission = Constants.POST_SHARE_COMMENT_MAINTENANCE + id;
         if(!authService.hasPermission(permission)){
             return Constants.REQUIRES_PERMISSION;
         }

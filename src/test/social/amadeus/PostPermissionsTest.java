@@ -1,6 +1,5 @@
 package social.amadeus;
 
-import io.github.mcroteau.Parakeet;
 import io.github.mcroteau.resources.filters.CacheFilter;
 import org.apache.log4j.Logger;
 import org.junit.After;
@@ -18,17 +17,18 @@ import social.amadeus.common.Utils;
 import social.amadeus.mocks.MockPost;
 import social.amadeus.mocks.MockPostComment;
 import social.amadeus.mocks.MockPostShare;
+import social.amadeus.mocks.MockPostShareComment;
 import social.amadeus.model.*;
 import social.amadeus.repository.AccountRepo;
 import social.amadeus.repository.NotificationRepo;
 import social.amadeus.repository.PostRepo;
+import social.amadeus.service.AuthService;
 import social.amadeus.service.PostService;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 
 import static org.junit.Assert.assertTrue;
 
@@ -40,19 +40,20 @@ public class PostPermissionsTest {
     private static final Logger log = Logger.getLogger(PostPermissionsTest.class);
 
     @Autowired
-    private Parakeet parakeet;
+    private PostRepo postRepo;
 
     @Autowired
     private AccountRepo accountRepo;
 
     @Autowired
+    private NotificationRepo notificationRepo;
+
+    @Autowired
+    private AuthService authService;
+
+    @Autowired
     private PostService postService;
 
-    @Autowired
-    private PostRepo postRepo;
-
-    @Autowired
-    private NotificationRepo notificationRepo;
 
 
     CacheFilter filter = new CacheFilter();
@@ -63,16 +64,16 @@ public class PostPermissionsTest {
     @Before
     public void before(){
 
-        mockRequestCycle();
+        TestUtils.mockRequestCycle();
 
         Account adminAccount = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
         Post post = new MockPost(adminAccount, Utils.getDate());
 
-        parakeet.login(Constants.ADMIN_USERNAME, Constants.PASSWORD);
+        authService.signin(Constants.ADMIN_USERNAME, Constants.PASSWORD);
         savedPost = postService.savePost(post, null, null);
 
-        mockRequestCycle();
-        parakeet.login(Constants.GUEST_USERNAME, Constants.GUEST_PASSWORD);
+        TestUtils.mockRequestCycle();
+        authService.signin(Constants.GUEST_USERNAME, Constants.GUEST_PASSWORD);
     }
 
 
@@ -100,35 +101,6 @@ public class PostPermissionsTest {
     public void testAddImageWithWrongUser(){
         String result = postService.addPostImages(Long.toString(savedPost.getId()), null);
         assertTrue(result.equals(Constants.REQUIRES_PERMISSION));
-    }
-
-    @Test
-    public void testDeleteImageWithWrongUser(){
-//
-//        mockRequestCycle();
-//        parakeet.login(Constants.ADMIN_USERNAME, Constants.PASSWORD);
-//
-//        File file = new File("test-img.png");
-//        log.info(file.getPath());
-//        FileItem fileItem = new DiskFileItem("file", "image/png", true, file.getName(), 100000000, file.getParentFile());
-//
-//        try {
-//            fileItem.getOutputStream();
-//        }catch (Exception ex){
-//            ex.printStackTrace();
-//        }
-//
-//        CommonsMultipartFile cmf = new CommonsMultipartFile(fileItem);
-//        CommonsMultipartFile[] imageFiles = { cmf };
-//
-//        postService.addPostImages(Long.toString(savedPost.getId()), imageFiles);
-//
-//        mockRequestCycle();
-//        parakeet.login(Constants.GUEST_USERNAME, Constants.GUEST_PASSWORD);
-//        String result = postService.deletePostImage(Long.toString(savedPost.getId()), "");
-//        assertTrue(result.equals(Constants.REQUIRES_PERMISSION));
-//        postService.deletePost(Long.toString(savedPost.getId()));
-        assertTrue(true);
     }
 
 
@@ -159,55 +131,56 @@ public class PostPermissionsTest {
         PostShare postShare = new MockPostShare(guestAcc, savedPost, Utils.getDate());
         postService.sharePost(Long.toString(savedPost.getId()), postShare);
 
-        mockRequestCycle();
-        parakeet.login(Constants.ADMIN_USERNAME, Constants.PASSWORD);
+        TestUtils.mockRequestCycle();
+        authService.signin(Constants.ADMIN_USERNAME, Constants.PASSWORD);
         String result = postService.unsharePost(Long.toString(postRepo.getPostShareId()));
         assertTrue(result.equals(Constants.REQUIRES_PERMISSION));
     }
 
-//    @Test
-//    public void testDeleteShareCommentWithWrongUser(){
-//        Account guestAcc = accountRepo.findByUsername(Constants.GUEST_USERNAME);
-//        PostShare postShare = new MockPostShare(guestAcc, savedPost, Utils.getDate());
-//        postService.sharePost(Long.toString(savedPost.getId()), postShare);
-//
-//        long postShareId = postRepo.getPostShareId();
-//        Account adminAcc = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
-//        PostShare savedPostShare = postRepo.getPostShare(postShareId);
-//
-//        PostShareComment postShareComment = new MockPostShareComment(adminAcc, savedPostShare);
-//        postService.savePostShareComment(Long.toString(postShareId), postShareComment);
-//
-//        String result = postService.deletePostShareComment("1");
-//        assertTrue(result.equals(Constants.REQUIRES_PERMISSION));
-//        postRepo.deletePostShareComments(1);
-//        postRepo.deletePostShare(postShareId);
-//    }
+    @Test
+    public void testDeleteShareCommentWithWrongUser(){
+        Account guestAcc = accountRepo.findByUsername(Constants.GUEST_USERNAME);
+        PostShare postShare = new MockPostShare(guestAcc, savedPost, Utils.getDate());
+        postService.sharePost(Long.toString(savedPost.getId()), postShare);
+
+        PostShare savedPostShare = postRepo.getPostShare(postRepo.getPostShareId());
+
+        Account adminAcc = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
+        TestUtils.mockRequestCycle();
+        authService.signin(Constants.ADMIN_USERNAME, Constants.PASSWORD);
+
+        PostShareComment postShareComment = new MockPostShareComment(adminAcc, savedPostShare);
+        postService.savePostShareComment(Long.toString(postRepo.getPostShareId()), postShareComment);
+
+        log.info(postRepo.getPostShareCommentId());
+
+        TestUtils.mockRequestCycle();
+        authService.signin(Constants.GUEST_USERNAME, Constants.GUEST_PASSWORD);
+
+        String result = postService.deletePostShareComment(Long.toString(postRepo.getPostShareCommentId()));
+        log.info(result);
+        assertTrue(result.equals(Constants.REQUIRES_PERMISSION));
+
+        postRepo.deletePostShareComments(postRepo.getPostShareId());
+        postRepo.deletePostShare(postRepo.getPostShareId());
+    }
 
     @After
     public void after(){
         Account adminAcc = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
+        Account guestAcc = accountRepo.findByUsername(Constants.GUEST_USERNAME);
+
+        notificationRepo.clearNotifications(guestAcc.getId());
         notificationRepo.clearNotifications(adminAcc.getId());
-        postRepo.deletePostShare(postRepo.getPostShareId());
+
+        if(postRepo.getPostShareCommentId() != null)
+            postService.deletePostShareComment(Long.toString(postRepo.getPostShareCommentId()));
+
+        if(postRepo.getPostShareId() != null)
+            postRepo.deletePostShare(postRepo.getPostShareId());
+
         postRepo.deletePostComments(savedPost.getId());
         postRepo.delete(savedPost.getId());
     }
-
-
-    private void mockRequestCycle(){
-        try {
-            HttpServletRequest req = new MockHttpServletRequest();
-            HttpServletResponse resp = new MockHttpServletResponse();
-
-            FilterChain filterChain = Mockito.mock(FilterChain.class);
-            FilterConfig config = Mockito.mock(FilterConfig.class);
-
-            filter.init(config);
-            filter.doFilter(req, resp, filterChain);
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-    }
-
 
 }

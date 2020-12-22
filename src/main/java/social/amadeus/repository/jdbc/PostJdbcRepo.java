@@ -31,33 +31,42 @@ public class PostJdbcRepo implements PostRepo {
 	private FriendRepo friendRepo;
 
 
-	public long id() {
-		String sql = "select max(id) from posts";
-		long id = jdbcTemplate.queryForObject(sql, new Object[]{}, Long.class);
-		return id;
+	public Long getPostId() {
+		try {
+			String sql = "select max(id) from posts";
+			long id = jdbcTemplate.queryForObject(sql, new Object[]{}, Long.class);
+			return id;
+		}catch(Exception ex){}
+		return null;
 	}
 
-	public long getPostShareId() {
+	public Long getPostShareId() {
 		try{
 			String sql = "select max(id) from post_shares";
 			return jdbcTemplate.queryForObject(sql, new Object[]{}, Long.class);
 		}catch (Exception ex){
 			//ex.printStackTrace();
 		}
-		return 0;
+		return null;
 	}
 
-	public long postCommentId() {
-		String sql = "select max(id) from post_comments";
-		long id = jdbcTemplate.queryForObject(sql, new Object[]{}, Long.class);
-		return id;
+	public Long getPostCommentId() {
+		try {
+			String sql = "select max(id) from post_comments";
+			long id = jdbcTemplate.queryForObject(sql, new Object[]{}, Long.class);
+			return id;
+		}catch (Exception ex){}
+		return null;
 	}
 
 
-	public long postShareCommentId() {
-		String sql = "select max(id) from post_share_comments";
-		long id = jdbcTemplate.queryForObject(sql, new Object[]{}, Long.class);
-		return id;
+	public Long getPostShareCommentId() {
+		try {
+			String sql = "select max(id) from post_share_comments";
+			long id = jdbcTemplate.queryForObject(sql, new Object[]{}, Long.class);
+			return id;
+		}catch(Exception ex){}
+		return null;
 	}
 
 
@@ -173,7 +182,7 @@ public class PostJdbcRepo implements PostRepo {
 		jdbcTemplate.update(sql, new Object[] { 
 			post.getAccountId(), post.getContent(), post.getVideoFileUri(), post.getVideoFileName(), post.getDatePosted(), post.getUpdateDate(), false, false, false
 		});
-		long id = id();
+		Long id = getPostId();
 		Post savedPost = get(id);
 		
 		return savedPost;
@@ -322,7 +331,7 @@ public class PostJdbcRepo implements PostRepo {
 				postShare.getPostId(), postShare.getAccountId(), postShare.getComment(), postShare.getDateShared()
 		});
 
-		long id = getPostShareId();
+		Long id = getPostShareId();
 		PostShare savePostShare = getPostShare(id);
 
 		return savePostShare;
@@ -413,7 +422,7 @@ public class PostJdbcRepo implements PostRepo {
 			postComment.getPostId(), postComment.getAccountId(), postComment.getComment(), postComment.getDateCreated()
 		});
 
-		long id = postCommentId();
+		Long id = getPostCommentId();
 		PostComment savedComment = getPostComment(id);
 		return savedComment;
 	}
@@ -425,7 +434,7 @@ public class PostJdbcRepo implements PostRepo {
 				postShareComment.getPostShareId(), postShareComment.getAccountId(), postShareComment.getComment(), postShareComment.getDateCreated()
 		});
 
-		long id = postShareCommentId();
+		Long id = getPostShareCommentId();
 		PostShareComment savedComment = getPostShareComment(id);
 		return savedComment;
 	}

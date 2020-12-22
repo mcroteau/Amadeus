@@ -83,7 +83,8 @@ public class PostActionTest {
         Account adminAcc = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
         Account guestAcc = accountRepo.findByUsername(Constants.GUEST_USERNAME);
         notificationRepo.clearNotifications(adminAcc.getId());
-        postRepo.deletePostShare(postRepo.getPostShareId());
+        if(postRepo.getPostShareId() != null)
+            postRepo.deletePostShare(postRepo.getPostShareId());
         postRepo.unlike(new MockPostLike(adminAcc, savedPost));
         postRepo.unlike(new MockPostLike(guestAcc, savedPost));
         postRepo.delete(savedPost.getId());

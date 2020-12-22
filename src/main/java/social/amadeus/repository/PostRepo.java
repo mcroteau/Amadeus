@@ -6,9 +6,13 @@ import social.amadeus.model.*;
 
 public interface PostRepo {
 
-	public long id();
+	public Long getPostId();
 
-	public long getPostShareId();
+	public Long getPostShareId();
+
+	public Long getPostCommentId();
+
+	public Long getPostShareCommentId();
 
 	public long getCount();
 	
