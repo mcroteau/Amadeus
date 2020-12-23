@@ -47,10 +47,8 @@
 
     <div ng-if="$root.renderModal" id="amadeus-modal">
         <div id="amadeus-model-content">
-<%--            <svg id="amadeus-modal-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">--%>
-<%--                <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>--%>
-<%--            </svg>--%>
-            <span id="amadeus-symbol-color" style="margin-top:142px;color:#17161b;font-size:41px;display:block;font-family:Roboto-Medium !important;">&Delta;</span>
+            <span id="amadeus-symbol-color" style="margin-top:142px;color:#FFFF44;font-size:41px;display:block;font-family:Roboto-Medium !important;">&Delta;</span>
+            <span class="tiny" style="color:#fff">Processing</span>
         </div>
     </div>
 

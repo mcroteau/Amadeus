@@ -168,15 +168,7 @@ h3{
     right:0px;
     position:fixed;
     z-index:2001;
-    background: rgb(253,254,3);
-    background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 50%, rgba(84,175,255,1) 100%);
-    background: rgb(253,254,3);
-    background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 33%, rgba(253,254,3,1) 70%, rgba(84,175,255,1) 70%, rgba(192,225,255,1) 100%);/*-moz-box-shadow: 0px 4px 17px 0px rgba(0,0,0,.9);*/
-    background: rgb(192,225,255);
-    background: linear-gradient(36deg, rgba(192,225,255,1) 0%, rgba(84,175,255,1) 15%, rgba(253,254,3,1) 15%, rgba(253,254,3,1) 90%, rgba(84,175,255,1) 90%, rgba(192,225,255,1) 100%);
-    background: rgb(253,254,3);
-    background: linear-gradient(60deg, rgba(253,254,3,1) 24%, rgba(84,175,255,1) 56%, rgba(84,175,255,1) 89%, rgba(208,48,138,1) 100%);
-    background:rgba(255,255,255,.7);
+    background:rgba(10, 213,252, 0.9);
 }
 
 #amadeus-model-content{
@@ -193,42 +185,14 @@ h3{
 #amadeus-model-content p{
     color:#54afff;
 }
-#amadeus-symbol-color{
-    -webkit-animation-name: symbol-animation; /* Safari 4.0 - 8.0 */
-    -webkit-animation-duration: 1.40s; /* Safari 4.0 - 8.0 */
-    animation-name: symbol-animation;
-    animation-iteration-count: infinite;
-    animation-duration: 1.40s;
-}
-@keyframes symbol-animation {
-    0%  {color:#17161b}
-    1%  {color:#fff}
-    3%  {color:#fff}
-    49% {color:#17161b}
-    100%{color:#17161b}
-}
 
 #amadeus-modal-icon{
     height:49px;
     width:49px;
-    fill:#17161b;
+    fill: #FFFF44;
     margin-top:100px;
-    -webkit-animation-name: logo-logo; /* Safari 4.0 - 8.0 */
-    -webkit-animation-duration: 1.40s; /* Safari 4.0 - 8.0 */
-    animation-name: amadeus-modal-icon;
-    animation-iteration-count: infinite;
-    animation-duration: 1.40s;
 }
 
-
-
-@keyframes amadeus-modal-icon {
-    0%  {fill:#17161b}
-    1%  {fill:#FDFE03}
-    3%  {fill:#FDFE03}
-    49% {fill:#17161b}
-    100%{fill:#17161b}
-}
 
 
 #linear-indicator {
@@ -630,10 +594,6 @@ input[type="password"]::placeholder {
   /*-webkit-box-shadow: 0 0 0px 1000px #fff inset;*/
 }
 
-#content-container{
-    z-index: 3;
-}
-
 #search-box::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     color: #a5b7b7 !important;
     font-size:24px;
@@ -868,9 +828,10 @@ input[type="submit"]#search-button,
 }
 
 #content-container{
+    z-index: 3;
 	text-align: left;
 	position:relative;
-	margin:1px auto 119px 194px;
+	margin:3px auto 119px 194px;
 }
 
 
@@ -1180,8 +1141,8 @@ input[type="submit"].beauty-light{
 .button.yella{
 	color:#2b2b34;
 	background:#FDFE00;
-	background:#FDFE01;
-	border:solid 1px #FDFE01;
+	background:#FFFF44;
+	border:solid 1px #FFFF44;
 	-webkit-box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.23);
     -moz-box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.23);
     box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.23);
@@ -1189,8 +1150,8 @@ input[type="submit"].beauty-light{
 
 .yella{
 	color:#2b2b34;
-	background:#FDFE00;
-	border:solid 1px #FDFE00;
+	background:#FFFF44;
+	border:solid 1px #FFFF44;
 	-webkit-box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.23);
     -moz-box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.23);
     box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.23);
@@ -1398,13 +1359,7 @@ input[type="submit"].button.black{
 }
 
 #content-container{
-    width:967px;
-    width:943px;
-    width:848px;
-    width:860px;
-    width:825px;
     width:800px;
-    margin-top:5px;
 }
 
 #no-activity-discovered{
