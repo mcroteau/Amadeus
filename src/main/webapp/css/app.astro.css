@@ -81,3 +81,7 @@
 #search-box:placeholder:active{
     color: #797979 !important;
 }
+
+.href-dotted{
+    font-family:Roboto-Bold !important;
+}
