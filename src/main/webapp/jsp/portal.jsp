@@ -19,6 +19,7 @@
     <script type="text/javascript" src="/o/js/packages/jquery.i18n.messagestore.js"></script>
 
     <link rel="stylesheet" href="/o/css/app.msn.css?v=<%=System.currentTimeMillis()%>"/>
+    <link rel="stylesheet" href="/o/css/app.astro.css?v=<%=System.currentTimeMillis()%>"/>
     <link rel="stylesheet" href="/o/css/app.gap.mobile.css?v=<%=System.currentTimeMillis()%>"/>
 
 </head>
@@ -40,7 +41,7 @@
 
 
 <%--    <iframe id="viz" src="<%=viz%>" style="z-index:1;position:fixed;bottom:0px;width:71%;height:79%;"></iframe>--%>
-        <iframe src="/o/jsp/static/vis/space.jsp" style="z-index:1;position:fixed;bottom:0px;width:72%;height:79%;"></iframe>
+        <iframe id="viz" src="/o/jsp/static/vis/space.jsp" style="z-index:1;position:fixed;bottom:0px;width:72%;height:79%;"></iframe>
 <%--    <canvas id="sugarcookie" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></canvas>--%>
 
 

@@ -37,10 +37,18 @@
     #logo-logo{
         z-index:1;
         text-align:center;
-        height: 51px;
+        height: 41px;
         padding-left:0px;
         padding-right:0px;
+        padding-bottom:0px;
+        padding-top:12px;
         background:#FF4F01 !important;
+        position: relative;
+    }
+
+    #logo-logo #amadeus-symbol{
+        font-size:32px;
+        font-family: Roboto !important;
     }
 
     #logo-logo:hover{
