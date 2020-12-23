@@ -107,4 +107,8 @@
     #content-container{
         margin-left:194px;
     }
+    #navigation-container{
+        left:1023px;
+        right:initial;
+    }
 }
