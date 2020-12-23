@@ -18,7 +18,7 @@
 
     path.fillColor = '#FF4F01';
     path.fillColor = 'white';
-    path.fillColor = '#FF4F01';
+    path.fillColor = '#5b7575';
     path.strokeColor = 'white';
     path.strokeWidth = 0.5;
     path.selected = true;

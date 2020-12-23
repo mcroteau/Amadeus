@@ -2102,9 +2102,9 @@ p{
     -moz-box-shadow: 1px 3px 7px 0px rgba(0,0,0,.07);
     box-shadow: 1px 3px 7px 0px rgba(0,0,0,.07);
 
-    -webkit-box-shadow: 0px 3px 29px 0px rgba(0,0,0,.09);
-    -moz-box-shadow: 0px 3px 29px 0px rgba(0,0,0,.09);
-    box-shadow: 0px 3px 29px 0px rgba(0,0,0,.09);
+    -webkit-box-shadow: 0px 3px 59px 0px rgba(0,0,0,.09);
+    -moz-box-shadow: 0px 3px 59px 0px rgba(0,0,0,.09);
+    box-shadow: 0px 3px 59px 0px rgba(0,0,0,.09);
 
     border-radius: 4px !important;
 }
@@ -2866,6 +2866,7 @@ p span{
 }
 
 .href-dotted{
+    font-family:Roboto-Bold !important;
     text-decoration: none !important;
     border-bottom:dotted 2px #428bca !important;
 }
@@ -3137,8 +3138,9 @@ h2.yella{
     width:100%;
 }
 
+table tr,
 table tr:hover{
-    background:#efefef;
+    background:rgba(255,255,255,0.9);
 }
 
 .post-button{
@@ -3499,9 +3501,9 @@ a.information{
     color:#17161b !important;
     background:#fff !important;
     /*border:solid 1px #0AD5FC !important;*/
-    -webkit-box-shadow: 0px 3px 19px 0px rgba(0,0,0,.29);
-    -moz-box-shadow: 0px 3px 19px 0px rgba(0,0,0,.29);
-    box-shadow: 0px 3px 19px 0px rgba(0,0,0,.29);
+    -webkit-box-shadow: 0px 3px 29px 0px rgba(0,0,0,.39);
+    -moz-box-shadow: 0px 3px 29px 0px rgba(0,0,0,.39);
+    box-shadow: 0px 3px 29px 0px rgba(0,0,0,.39);
 }
 
 #search-box,
@@ -3512,6 +3514,7 @@ a.information{
     background:#fff !important;
     border:solid 1px #a4a4a4 !important;
     background:#748e8e !important;
+    background:#5b7575 !important;
     color:#fff !important;
     border:none !important;
 }
@@ -3672,7 +3675,7 @@ a.information{
 #accounts-results-table td,
 #accounts-results-table td a{
     font-size:23px !important;
-    font-family:Roboto-Light !important;
+    font-family:Roboto !important;
 }
 
 #accounts-results-table td{
