@@ -2,7 +2,7 @@
 
 <html>
 <head>
-    <title>Amadeus : Social Networking.</title>
+    <title>Amadeus : Social Networking</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
