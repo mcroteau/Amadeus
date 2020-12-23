@@ -18,8 +18,8 @@
 
     path.fillColor = '#FF4F01';
     path.fillColor = 'white';
-    path.fillColor = 'white';
-    path.strokeColor = 'black';
+    path.fillColor = '#FF4F01';
+    path.strokeColor = 'white';
     path.strokeWidth = 0.5;
     path.selected = true;
 
@@ -30,7 +30,7 @@
         // The center position is a random point in the view:
         var center = Point.random() * view.size;
         var placed = symbol.place(center);
-        var scale = (i + 90) / count;
+        var scale = (i + 1) / count;
         placed.scale(scale);
         placed.data.vector = new Point({
             angle: Math.random() * 360,
