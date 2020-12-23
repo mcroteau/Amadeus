@@ -3504,6 +3504,9 @@ a.information{
     -webkit-box-shadow: 0px 3px 29px 0px rgba(0,0,0,.39);
     -moz-box-shadow: 0px 3px 29px 0px rgba(0,0,0,.39);
     box-shadow: 0px 3px 29px 0px rgba(0,0,0,.39);
+    border-radius:0px !important;
+    -moz-border-radius:0px !important;
+    -webkit-border-radius:0px !important;
 }
 
 #search-box,
