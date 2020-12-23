@@ -30,7 +30,7 @@
         // The center position is a random point in the view:
         var center = Point.random() * view.size;
         var placed = symbol.place(center);
-        var scale = (i + 100) / count;
+        var scale = (i + 90) / count;
         placed.scale(scale);
         placed.data.vector = new Point({
             angle: Math.random() * 360,
