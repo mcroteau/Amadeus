@@ -17,10 +17,10 @@
     var path = new Path.RegularPolygon(new Point(0, 0), 3, 5);
 
     path.fillColor = '#FF4F01';
-    path.fillColor = 'black';
-    path.fillColor = '#627979';
-    path.strokeColor = 'white';
-    path.strokeWidth = 1;
+    path.fillColor = 'white';
+    path.fillColor = 'white';
+    path.strokeColor = 'black';
+    path.strokeWidth = 0.5;
     path.selected = true;
 
     var symbol = new SymbolDefinition(path);
@@ -30,7 +30,7 @@
         // The center position is a random point in the view:
         var center = Point.random() * view.size;
         var placed = symbol.place(center);
-        var scale = (i + 1) / count;
+        var scale = (i + 100) / count;
         placed.scale(scale);
         placed.data.vector = new Point({
             angle: Math.random() * 360,

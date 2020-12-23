@@ -73,12 +73,12 @@
         #content-container{
             width:570px;
         }
-        #logo-logo{
-            background: #efefef !important;
-        }
-        #logo-logo:hover{
-            background: #efefef !important;
-        }
+        /*#logo-logo{*/
+        /*    background: #efefef !important;*/
+        /*}*/
+        /*#logo-logo:hover{*/
+        /*    background: #efefef !important;*/
+        /*}*/
     </style>
 
 </head>
@@ -86,7 +86,7 @@
 
     <div id="top-outer-container">
         <a href="/o/" id="logo-logo">
-            <span class="medium" id="amadeus-symbol" style="color:#17161b">&Delta;</span>
+            <span class="medium" id="amadeus-symbol">&Delta;</span>
 <%--            <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">--%>
 <%--                <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>--%>
 <%--            </svg>--%>

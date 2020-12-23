@@ -2,12 +2,20 @@
 /*    background:#FF4F01 !important;*/
 /*}*/
 
-/*.post-button,*/
-/*.post-button:hover{*/
-/*    background:#17161b !important;*/
-/*    border:solid 1px #000;*/
-/*}*/
 
+
+
+#logo-logo{
+    top:0px;
+    left:0px;
+    position:fixed;
+}
+
+.post-button,
+.post-button:hover{
+    background:#17161b !important;
+    border:solid 1px #000;
+}
 
 #search-box{
     color:#17161b !important;

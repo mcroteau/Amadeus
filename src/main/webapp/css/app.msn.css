@@ -1119,8 +1119,8 @@ input[type="submit"].button{
 	border:solid 1px #195da5;
 	display:inline-block;
 	background:#2776CB;
-    background:#0AD5FC;
-    border:solid 1px #01badd;
+    background:#54AFFF;
+    border:solid 1px #4196e0;
 	text-decoration:none;
 	border-radius: 3px;
 	-moz-border-radius: 3px;
@@ -1135,6 +1135,7 @@ input[type="submit"].button{
 }
 
 .button:hover{
+    color:#fff;
 	-webkit-box-shadow: 0px 3px 5px 0px rgba(179,179,179,0.43) !important;
     -moz-box-shadow: 0px 3px 5px 0px rgba(179,179,179,0.43) !important;
     box-shadow: 0px 3px 5px 0px rgba(179,179,179,0.43) !important;
@@ -2630,7 +2631,6 @@ p{
     position:absolute;
     background:#5AB2FF;
     background:#0ad5fc;
-    background:#FDFE03;
     width:297px;
     padding-top:10px;
     padding-bottom:20px;
@@ -2652,7 +2652,7 @@ p{
 .notification a,
 .notification span,
 #notifications-container p{
-    color: #018ca7;
+    color: #fff;
     display:block;
     font-size:17px;
     text-decoration:none;
@@ -2670,14 +2670,12 @@ p{
     background:#D954A0;
     background:#e861ad;
     background: #FDFE03;
-    color:#00444f !important;
-    background:#0AD5FC;
-    color:#fff !important;
+    color:#17161b !important;
 }
 
 #notifications-container p{
     font-size:14px;
-    color:#018CA7;
+    color:#fff;
 }
 
 .posted-by,
@@ -3159,7 +3157,7 @@ table tr:hover{
     display:block;
     text-decoration:none;
     text-align: center;
-    background: #0AD5FC !important;
+    background: #54AFFF !important;
 	/*-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.27) !important;*/
 	/*-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.26) !important;*/
 	/*box-shadow: 0px 2px 3px 0px rgba(0,0,0,.27) !important;*/
@@ -3167,17 +3165,10 @@ table tr:hover{
     -webkit-border-radius: 4px !important;
     -moz-border-radius: 4px !important;
     border-radius: 4px !important;
-    border:solid 1px #06c7ec;
+    border:solid 1px #4094de;
     -webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.07) !important;
     -moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,.07) !important;
     box-shadow: 0px 2px 3px 0px rgba(0,0,0,.07) !important;
-}
-
-.post-button:hover{
-    background: #0AD5FC !important;
-	-webkit-box-shadow: 0px 2px 4px 0px rgba(0,0,0,.07) !important;
-	-moz-box-shadow: 0px 2px 4px 0px rgba(0,0,0,.07) !important;
-	box-shadow: 0px 2px 4px 0px rgba(0,0,0,.07) !important;
 }
 
 .post-button.beautiful{
@@ -3254,7 +3245,6 @@ textarea{
 #posts-right{
     width:inherit !important;
 }
-
 
 #profile-picture-actions-container a{
     display:block;
@@ -3498,10 +3488,56 @@ a.information{
     display:inline-block;
 }
 
+
 #logo-container{
     left:-4px;
     padding:0px;
 }
+
+#search-box{
+    color:#17161b !important;
+    background:#fff !important;
+    /*border:solid 1px #0AD5FC !important;*/
+    -webkit-box-shadow: 0px 3px 19px 0px rgba(0,0,0,.09);
+    -moz-box-shadow: 0px 3px 19px 0px rgba(0,0,0,.09);
+    box-shadow: 0px 3px 19px 0px rgba(0,0,0,.09);
+}
+
+#search-box:hover,
+#search-box:focus,
+#search-box:active {
+    color:#17161b !important;
+    background:#fff !important;
+    border:solid 1px #0AD5FC !important;
+}
+
+#search-box::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: #0AD5FC !important;
+    font-size:24px;
+    font-family:Roboto-Light !important;
+    line-height:0.9em !important;
+}
+#search-box::-moz-placeholder { /* Firefox 19+ */
+    color:#0AD5FC !important;
+    font-size:13px;
+    font-family:Roboto-Light !important;
+}
+#search-box:-ms-input-placeholder { /* IE 10+ */
+    color:#0AD5FC !important;
+    font-size:13px;
+    font-family:Roboto-Light !important;
+}
+#search-box:-moz-placeholder { /* Firefox 18- */
+    color:#0AD5FC !important;
+    font-size:13px;
+    font-family:Roboto-Light !important;
+}
+
+#search-box:placeholder:focus,
+#search-box:placeholder:active{
+    color: #0AD5FC !important;
+}
+
 #logo-logo{
     display:block;
     padding:15px 24px 18px 27px;
@@ -3510,7 +3546,6 @@ a.information{
     text-decoration:none;
     background:#312f38 !important;
     background:#FF4F01 !important;
-    background:#0ad5fc !important;
 
     /*background:#ff2401 !important;*/
     -webkit-box-shadow: 0px 3px 19px 0px rgba(0,0,0,.29);
