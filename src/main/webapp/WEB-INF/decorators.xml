@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <decorators defaultdir="/jsp/layouts">
-    <decorator name="home" page="home.jsp">
-        <pattern>*/uno</pattern>
-        <pattern>*/signup</pattern>
-    </decorator>
-    <decorator name="guest" page="guest.jsp">
-        <pattern>*/signin</pattern>
+    <decorator name="auth" page="auth.jsp">
         <pattern>*/account/edit*</pattern>
         <pattern>*/account/reset*</pattern>
         <pattern>*/account/send_reset*</pattern>

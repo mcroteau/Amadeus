@@ -1,7 +1,7 @@
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
 <html>
 <head>
-    <title>Amadeus : Rock Me Amadeus!</title>
+    <title>Amadeus : astrophysical*</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/app.css?v=<%=System.currentTimeMillis()%>">
     <style>
         iframe,

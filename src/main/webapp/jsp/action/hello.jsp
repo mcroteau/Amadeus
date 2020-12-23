@@ -85,7 +85,6 @@
     }
 </style>
 
-<div id="top-outer-container"></div>
 
 <h1>Like or Share</h1>
 <p>${uri}</p>
