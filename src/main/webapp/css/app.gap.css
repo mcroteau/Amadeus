@@ -3931,3 +3931,7 @@ h1.gray span{
 #footer{
     z-index:13;
 }
+
+.post-meta{
+     background: #f9f9f9 !important;
+}
