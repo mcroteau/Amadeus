@@ -9,7 +9,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/images/icon.png?v=<%=System.currentTimeMillis()%>">
+    <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/images/icon-post-modern.png?v=<%=System.currentTimeMillis()%>">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/app.gap.css?v=<%=System.currentTimeMillis()%>">
 
     <style type="text/css">
@@ -57,7 +57,7 @@
         <div class="notify alert-info">${message}</div>
     </c:if>
 
-    <a href="/o/uno" id="amadeus-home-logo" style="background:#FF4F01;display:inline-block;padding:28px 33px;text-decoration: none;">
+    <a href="/o/uno" id="amadeus-home-logo" style="background:#0ad5fc;display:inline-block;padding:28px 33px;text-decoration: none;">
         <span class="medium" id="amadeus-symbol" style="display:block">&Delta;</span>
     </a>
 
@@ -96,8 +96,8 @@
     </form>
 
 
-    <div style="margin-top:41px;text-align:center; width:inherit;margin-bottom:30px; ">
-        <input type="submit" class="button retro" id="signup-button" value="Signup!" style="width:100%;"/>
+    <div style="width:100%;margin-top:41px;text-align:center;margin-bottom:30px; ">
+        <input type="submit" class="button yella" id="signup-button" value="Signup!" style="width:100%;"/>
 
         <p style="text-align: left; margin-top:30px;">Are you already one of our delicate flowers?</p>
 

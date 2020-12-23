@@ -935,7 +935,7 @@ input[type="submit"]#search-button,
 #content-container{
 	text-align: left;
 	position:relative;
-	margin:1px auto 119px 194px;
+	margin:10px auto 119px 194px;
 }
 
 
@@ -1245,6 +1245,7 @@ input[type="submit"].beauty-light{
 	color:#2b2b34;
 	background:#FDFE00;
 	background:#FDFE01;
+    background: #FFFF44;
 	border:solid 1px #FDFE01;
 	-webkit-box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.23);
     -moz-box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.23);
@@ -2134,9 +2135,9 @@ p{
 
 #latest-feed-total{
     color:#fff;
-    bottom:7px !important;
-    bottom:11px !important;
-    left: 59px !important;
+    bottom:16px !important;
+    left: 56px !important;
+    font-family: Roboto-Thin !important;
 }
 
 /*.feed-content.maroon{*/
@@ -2268,6 +2269,8 @@ p{
 .post-meta{
     margin:0px auto 0px auto;
     padding:10px 12px;
+    background: #eefff4;
+    background:#f9f9f9;
 }
 
 /*.post-meta.shared{*/
@@ -2354,7 +2357,7 @@ p{
     font-family:Roboto-Thin !important;
     height:67px !important;
     width:300px !important;
-    width: 87% !important;
+    width: 85% !important;
     margin:0px 0px 10px 0px;
     padding:10px 30px 10px 10px !important;
     background:rgba(255,255,255,0.1);
@@ -3553,7 +3556,7 @@ a.information{
 
 #logo-logo{
     display:block;
-    padding:15px 24px 18px 27px;
+    padding:20px 24px 20px 27px;
     line-height:1.0;
     vertical-align:middle;
     text-decoration:none;
@@ -3584,8 +3587,9 @@ a.information{
 
 #amadeus-symbol{
     color:#fff;
-    font-size:25px;
+    font-size:23px;
     display:block;
+    font-family:Roboto-Medium !important;
 }
 
 #search-label{

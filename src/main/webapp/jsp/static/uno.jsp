@@ -7,7 +7,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/images/icon.png?v=<%=System.currentTimeMillis()%>">
+    <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/images/icon-post-modern.png?v=<%=System.currentTimeMillis()%>">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/app.gap.css?v=<%=System.currentTimeMillis()%>">
 
     <style type="text/css">
@@ -110,7 +110,7 @@
         </div>
     </parakeet:isAuthenticated>
 
-    <a href="/o/uno" id="amadeus-home-logo" style="background:#FF4F01;display:inline-block;padding:28px 33px;text-decoration: none;">
+    <a href="/o/uno" id="amadeus-home-logo" style="background:#0ad5fc;display:inline-block;padding:28px 33px;text-decoration: none;">
         <span class="medium" id="amadeus-symbol" style="display:block">&Delta;</span>
     </a>
 
@@ -138,7 +138,7 @@
 
         <div style="text-align:right; margin-top:30px;">
             <input type="hidden" name="targetUri" value="${targetUri}" />
-            <input type="submit" class="button retro" value="Signin" style="width:100%;">
+            <input type="submit" class="button yella" value="Signin" style="width:100%;">
         </div>
 
         <br/>
@@ -150,7 +150,7 @@
 
 
     <div id="signup-container" style="text-align: center;margin-top:51px">
-        <a href="${pageContext.request.contextPath}/signup" class="button yella large">Sign Up !</a>
+        <a href="${pageContext.request.contextPath}/signup" class="button modern large">Sign Up !</a>
     </div>
 
 </div>
