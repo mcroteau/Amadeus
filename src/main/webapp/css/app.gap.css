@@ -189,7 +189,7 @@ h3{
 #amadeus-modal-icon{
     height:49px;
     width:49px;
-    fill: #FFFF44;
+    fill: #FDFE03;
     margin-top:100px;
 }
 
@@ -1136,8 +1136,8 @@ input[type="submit"].beauty-light{
 .button.yella{
 	color:#2b2b34;
 	background:#FDFE00;
-	background:#FFFF44;
-	border:solid 1px #FFFF44;
+	background:#FDFE03;
+	border:solid 1px #FDFE03;
 	-webkit-box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.23);
     -moz-box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.23);
     box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.23);
@@ -1145,8 +1145,8 @@ input[type="submit"].beauty-light{
 
 .yella{
 	color:#2b2b34;
-	background:#FFFF44;
-	border:solid 1px #FFFF44;
+	background:#FDFE03;
+	border:solid 1px #FDFE03;
 	-webkit-box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.23);
     -moz-box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.23);
     box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.23);
@@ -2516,7 +2516,7 @@ p{
     color:#fff !important;
     background:#D954A0;
     background:#e861ad;
-    background: #FFFF44;
+    background: #FDFE03;
     color:#17161b !important;
 }
 
@@ -3135,7 +3135,7 @@ textarea{
     background:#f4f400;
     background:#0199B6;
     background:#d953a0;;
-    background:#FFFF44;
+    background:#FDFE03;
     color:#17161b;
 }
 
