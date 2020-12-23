@@ -3,11 +3,11 @@
 <!doctype html><%--${pageContext.response.locale}--%>
 <html lang="en" dir="i18n">
 <head>
-    <title>Amadeus : Like. Share. Rock Me Amadeus!</title>
+    <title>Amadeus: astrophysical*</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 
-    <link rel="icon" type="image/png" href="/o/images/favicon.png?v=<%=System.currentTimeMillis()%>">
+    <link rel="icon" type="image/png" href="/o/images/icon.png?v=<%=System.currentTimeMillis()%>">
 
     <script type="text/javascript" src="/o/js/packages/angular.min.js"></script>
     <script type="text/javascript" src="/o/js/packages/angular-sanitize.js"></script>
@@ -18,7 +18,7 @@
     <script type="text/javascript" src="/o/js/packages/jquery.i18n.js"></script>
     <script type="text/javascript" src="/o/js/packages/jquery.i18n.messagestore.js"></script>
 
-    <link rel="stylesheet" href="/o/css/app.gap.css?v=<%=System.currentTimeMillis()%>"/>
+    <link rel="stylesheet" href="/o/css/app.msn.css?v=<%=System.currentTimeMillis()%>"/>
     <link rel="stylesheet" href="/o/css/app.gap.mobile.css?v=<%=System.currentTimeMillis()%>"/>
 
 </head>
@@ -27,9 +27,9 @@
 
 <%
     String[] vizs = {"/o/jsp/static/vis/candy.jsp",
-                     "/o/jsp/static/vis/graph.jsp",
-                     "/o/jsp/static/vis/pond.jsp",
-                     "/o/jsp/static/vis/mucho.jsp",
+//                     "/o/jsp/static/vis/graph.jsp",
+//                     "/o/jsp/static/vis/pond.jsp",
+//                     "/o/jsp/static/vis/rah.jsp",
                      "/o/jsp/static/vis/correct.jsp",
                      "/o/jsp/static/vis/space.jsp"};
 
@@ -39,16 +39,17 @@
 %>
 
 
-<%--    <iframe id="viz" src="<%=viz%>" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>--%>
-<iframe src="/o/jsp/static/vis/space.jsp" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>
+<%--    <iframe id="viz" src="<%=viz%>" style="z-index:1;position:fixed;bottom:0px;width:71%;height:79%;"></iframe>--%>
+        <iframe src="/o/jsp/static/vis/space.jsp" style="z-index:1;position:fixed;bottom:0px;width:72%;height:79%;"></iframe>
 <%--    <canvas id="sugarcookie" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></canvas>--%>
 
 
     <div ng-if="$root.renderModal" id="amadeus-modal">
         <div id="amadeus-model-content">
-            <svg id="amadeus-modal-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
-                <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>
-            </svg>
+<%--            <svg id="amadeus-modal-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">--%>
+<%--                <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>--%>
+<%--            </svg>--%>
+            <span id="amadeus-symbol-color" style="margin-top:142px;color:#17161b;font-size:41px;display:block;font-family:Roboto-Medium !important;">&Delta;</span>
         </div>
     </div>
 
@@ -56,15 +57,16 @@
         <div class="indeterminate" style="width: 100%"></div>
     </div>
 
-	<div ng-click="closeDialogs" id="layout-container" style="position:relative;">
+	<div id="layout-container" style="position:relative;">
 
 		<div id="top-outer-container" ng-init="init()">
 
             <div id="logo-container" style="position:absolute;">
                 <a ng-click="reloadActivities()" href="javascript:" id="logo-logo">
-                    <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
-                        <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>
-                    </svg>
+<%--                    <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">--%>
+<%--                        <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>--%>
+<%--                    </svg>--%>
+                    <span class="medium" id="amadeus-symbol">&Delta;</span>
                     <span id="latest-feed-total" class="notifications-count" style="display:inline-block; position:absolute;bottom:3px;left:54px;">{{data.newestCount}}</span></a>
             </div>
 
@@ -88,7 +90,7 @@
                 <div ng-show="showProfile" id="profile-picture-actions-container" class="global-shadow">
                     <a href="#!/profile/${sessionScope.account.id}" id="profile-href"  class="profile-popup-action"><span class="space"></span> <span data-i18n="profile.text">Profile</span></a>
                     <a ng-click="openChat()" href="javascript:" id="messages-href" class="profile-popup-action" ng-click="renderMessages(${sessionScope.account.id})"><span id="latest-messages-total" class="space">{{data.messagesCount}}</span> <span data-i18n="unread.text">Unread</span></a>
-                    <a href="/o/signout" class="profile-popup-action" ><span class="space"></span> <span data-i18n="logout.text">Logout</span></a>
+                    <a href="/o/signout" class="profile-popup-action"><span class="space"></span> <span data-i18n="logout.text">Logout</span></a>
                 </div>
             </div>
 
@@ -167,8 +169,6 @@
 <%--        <div id="footer" style="z-index:2001">--%>
 <%--            <div style="text-align:center;margin-top:10px;">--%>
 <%--                <a href="${pageContext.request.contextPath}/get_code" class="page-ref href-dotted" >Get Code</a>--%>
-<%--                <a href="javascript:" class="page-ref href-dotted" data-ref="about">About</a>--%>
-<%--                <a href="${pageContext.request.contextPath}/invite" class="href-dotted" id="invite-people">Invite</a>--%>
 <%--            </div>--%>
 
 <%--            <p style="text-align:center;"><a href="mailto:support@amadeus.social" style="color:#17161b" class="href-dotted">support@amadeus.social</a>--%>
@@ -185,6 +185,8 @@
 <%--    </div>--%>
 
 <script>
+
+    var t = new Date().getTime()
 
     var app = angular.module("app", ['ngRoute', 'ngAnimate', 'ngSanitize'])
 
@@ -243,7 +245,6 @@
 
     app.config(function($routeProvider) {
 
-        var t = new Date().getTime()
 
         $routeProvider
             .when('/', {
@@ -306,7 +307,7 @@
         }
 
         $scope.reloadActivities = function(){
-            if($route.current.loadedTemplateUrl != "pages/activity.html"){
+            if($route.current.loadedTemplateUrl != "pages/activity.html?v=" + t){
                 $location.path("/")
             }else{
                 $route.reload()
@@ -373,10 +374,12 @@
         }
 
         $scope.closeDialogs = function(event) {
-            var $target = $(event.target);
-            if (!$target.hasClass('profile-popup') &&
-                    !$target.hasClass('notifications-popup') &&
-                        !$target.hasClass('chat-session-popup')){
+            var $target = $(event.target)
+            var id = $target.attr('id')
+            if (id != 'profile-ref-image' &&
+                    id != 'notifications-href' &&
+                        id != 'friends-launcher'){
+                console.log('close dialogs');
                 $scope.chatOpened = false
                 $scope.showProfile = false
                 $scope.showNotifications = false

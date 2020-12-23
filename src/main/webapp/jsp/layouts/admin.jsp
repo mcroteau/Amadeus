@@ -3,7 +3,7 @@
 
 <html>
 <head>
-    <title>Amadeus : Rock Me Amadeus!</title>
+    <title>Amadeus : interstellar*</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 

@@ -7,11 +7,11 @@
 
 <html>
 <head>
-    <title>Amadeus : Rock Me Amadeus!</title>
+    <title>Amadeus : Social Networking.</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/images/favicon.png?v=<%=System.currentTimeMillis()%>">
+    <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/images/icon-msn.png?v=<%=System.currentTimeMillis()%>">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/app.gap.css?v=<%=System.currentTimeMillis()%>">
 
 </head>
@@ -161,25 +161,30 @@
             height:54px;
             fill:#fff;
         }
+
+        #amadeus-symbol{
+            font-size:32px;
+        }
     </style>
 
 
     <div id="guest-content-container">
 
         <div id="guest-content-left" style="padding:3% 5%; width:46%;">
-            <a href="/o/uno" style="background:#FF4F01;display:inline-block;padding:20px;">
-                <span style="display:inline-block;">
-                    <svg id="amadeus-logo-hp" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
-                        <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>
-                    </svg>
-                </span>
+            <a href="/o/uno" style="background:#FF4F01;display:inline-block;padding:28px 33px;text-decoration: none;">
+                <span class="medium" id="amadeus-symbol" style="display:block">&Delta;</span>
+<%--                <span style="display:inline-block;">--%>
+<%--                    <svg id="amadeus-logo-hp" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">--%>
+<%--                        <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>--%>
+<%--                    </svg>--%>
+<%--                </span>--%>
             </a>
 
             <p style="font-weight: normal; font-size:32px;font-family:Georgia !important;">Amadeus</p>
 
             <div id="amadeus-words">
 
-                <p>Amadeus is a very new social networking app built with Care. <a href="${pageContext.request.contextPath}/signup" class="href-dotted">Signup!</a></p>
+                <p>Amadeus is a very new social networking app. <a href="${pageContext.request.contextPath}/signup" class="href-dotted">Signup!</a></p>
 
             </div>
 
