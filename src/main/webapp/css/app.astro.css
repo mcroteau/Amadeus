@@ -85,3 +85,26 @@
 .href-dotted{
     font-family:Roboto-Bold !important;
 }
+
+#top-inner-container{
+    width:800px !important;
+    margin:auto;
+}
+
+#content-container{
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#navigation-container{
+    left:initial;
+    right:10px;
+}
+
+
+@media screen and (max-width: 1090px) {
+    #top-inner-container,
+    #content-container{
+        margin-left:194px;
+    }
+}
