@@ -1999,7 +1999,8 @@ p{
 }
 
 #latest-feed-total{
-    color:#fff;
+    font-size:13px;
+    color:#17161b;
     bottom:7px !important;
     bottom:11px !important;
     left: 59px !important;
