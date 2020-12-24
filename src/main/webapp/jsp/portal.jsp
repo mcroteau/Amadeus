@@ -309,7 +309,7 @@
             if($route.current.loadedTemplateUrl != "pages/activity.html?v=" + t){
                 $location.path("/")
             }else{
-                $route.reload()
+                $window.location.reload()
             }
         }
 
