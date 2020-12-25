@@ -41,7 +41,7 @@
 
 
 <%--    <iframe id="viz" src="<%=viz%>" style="z-index:1;position:fixed;bottom:0px;width:71%;height:79%;"></iframe>--%>
-        <iframe id="viz" src="/o/jsp/static/vis/space.jsp" style="z-index:1;position:fixed;bottom:0px;width:72%;height:79%;"></iframe>
+<%--        <iframe id="viz" src="/o/jsp/static/vis/space.bare.jsp" style="z-index:1;position:fixed;bottom:0px;width:72%;height:79%;"></iframe>--%>
 <%--    <canvas id="sugarcookie" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></canvas>--%>
 
 
@@ -73,25 +73,25 @@
 
                 <div ng-if="!$root.profilePage" id="search-container" class="float-left" style="z-index:100">
 <%--                    <div id="search-label" data-i18n="search.text">Search:</div>--%>
-                    <input ng-keyup="navigateSearch($event)" type="text" class="search-input" id="search-box" placeholder="Search:" autocomplete="off"/>
+                    <input ng-keyup="navigateSearch($event)" ng-blur="unfocusSearch($event)" type="text" class="search-input" id="search-box" placeholder="Search:" autocomplete="off"/>
                 </div>
 
-				<br class="clear"/>
+                <div style="position:relative">
+                    <div id="navigation-container" class="float-right">
+                        <a ng-click="toggleProfile()" href="javascript:" id="profile-actions-href" class="profile-popup" style="margin-right:37px;">
+                            <img src="${sessionScope.imageUri}" id="profile-ref-image" style="z-index:1"/>
+                            <span ng-show="data.messagesCount" id="base-notifications-count">{{data.messagesCount}}</span>
+                        </a>
+
+                        <div ng-show="showProfile" id="profile-picture-actions-container" class="global-shadow">
+                            <a href="#!/profile/${sessionScope.account.id}" id="profile-href"  class="profile-popup-action"><span class="space"></span> <span data-i18n="profile.text">Profile</span></a>
+                            <a ng-click="openChat()" href="javascript:" id="messages-href" class="profile-popup-action" ng-click="renderMessages(${sessionScope.account.id})"><span id="latest-messages-total" class="space">{{data.messagesCount}}</span> <span data-i18n="unread.text">Unread</span></a>
+                            <a href="/o/signout" class="profile-popup-action"><span class="space"></span> <span data-i18n="logout.text">Logout</span></a>
+                        </div>
+                    </div>
+                </div>
 
 			</div>
-
-            <div id="navigation-container" class="float-right">
-                <a ng-click="toggleProfile()" href="javascript:" id="profile-actions-href" class="profile-popup" style="margin-right:37px;">
-                    <img src="${sessionScope.imageUri}" id="profile-ref-image" style="z-index:1"/>
-                    <span ng-show="data.messagesCount" id="base-notifications-count">{{data.messagesCount}}</span>
-                </a>
-
-                <div ng-show="showProfile" id="profile-picture-actions-container" class="global-shadow">
-                    <a href="#!/profile/${sessionScope.account.id}" id="profile-href"  class="profile-popup-action"><span class="space"></span> <span data-i18n="profile.text">Profile</span></a>
-                    <a ng-click="openChat()" href="javascript:" id="messages-href" class="profile-popup-action" ng-click="renderMessages(${sessionScope.account.id})"><span id="latest-messages-total" class="space">{{data.messagesCount}}</span> <span data-i18n="unread.text">Unread</span></a>
-                    <a href="/o/signout" class="profile-popup-action"><span class="space"></span> <span data-i18n="logout.text">Logout</span></a>
-                </div>
-            </div>
 
 		</div>
 
@@ -386,6 +386,10 @@
         }
 
         $('body').click($scope.closeDialogs)
+
+        $scope.unfocusSearch = function($event){
+            // $event.target.value = ''
+        }
 
     });
 

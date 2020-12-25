@@ -84,7 +84,7 @@ input::placeholder,
 textarea::placeholder, th, td{
     vertical-align: middle;
 	font-family: 'Roboto' !important;
-	color:#17161b;
+	color:#000;
 }
 td{
     padding:10px 0px 10px 0px;
@@ -237,7 +237,7 @@ h3{
 
 h1{
     color:#2e3c40;
-    color:#17161b;
+    color:#000;
 	font-size:71px;
 	margin-top:11px;
 	line-height:1.3em;
@@ -428,7 +428,7 @@ input[type="password"]::placeholder {
     background:#657d84 !important;
     background:#f8f8f8 !important;
     background:#fff !important;
-    color:#17161b !important;
+    color:#000 !important;
     border:solid 1px #84c5ff !important;
     border:solid 1px rgba(0, 0, 0, 0.01) !important;
     background: #a5b8b8 !important;
@@ -482,7 +482,7 @@ input[type="password"]::placeholder {
     border:solid 1px #FD7300 !important;
     border:solid 1px #fff !important;
     border:solid 1px #5AB2FF !important;
-    border:solid 1px #17161b !important;
+    border:solid 1px #000 !important;
     background:#fff !important;
     border:solid 1px #54AFFF !important;
     border:solid 1px #748e8e !important;
@@ -497,12 +497,12 @@ input[type="password"]::placeholder {
 #search-box:-webkit-autofill:hover,
 #search-box:-webkit-autofill:focus{
     font-size:19px !important;
-    color:#17161b !important;
+    color:#000 !important;
     fill:#fff !important;
-    cursor-caret:#17161b !important;
+    cursor-caret:#000 !important;
     background: rgba(255,255,255,0.1) !important;
     border:solid 1px #fff !important;
-  -webkit-text-fill-color: #17161b;
+  -webkit-text-fill-color: #000;
   /*-webkit-box-shadow: 0 0 0px 1000px #fff inset;*/
 }
 
@@ -611,7 +611,7 @@ input[type="submit"]#search-button,
 .navigation-href{
 	font-size:37px;
     font-family:Roboto-Bold !important;
-	color:#17161b;
+	color:#000;
 	text-decoration: none;
 }
 
@@ -726,7 +726,7 @@ input[type="submit"]#search-button,
     background:#d4528f;
     background:#FDFE03;
     background:#FF4F01;
-    background:#17161b;
+    background:#000;
     border-radius: 18px;
     -moz-border-radius: 18px;
     -webkit-border-radius: 18px;
@@ -850,7 +850,7 @@ input[type="submit"]#search-button,
 .like-button{
     cursor: pointer;
     cursor: hand;
-    fill:#17161b;
+    fill:#000;
     border:solid 2px #54afff;
     background:#54afff;
     border:solid 3px #FDFE03;
@@ -863,8 +863,8 @@ input[type="submit"]#search-button,
     background:#FDFE03;
     border:solid 3px #54AFFF;
     background:#54AFFF;
-    border:solid 2px #17161b;
-    background:#17161b;
+    border:solid 2px #000;
+    background:#000;
 }
 
 .share-button:active,
@@ -1143,14 +1143,14 @@ input[type="button"].button.retro{
 input[type="button"].button.modern,
 input[type="reset"].button.modern,
 input[type="submit"].button.modern{
-    background:#17161b;
+    background:#000;
     border:solid 1px #000;
 }
 
 .modern{
     color:#fff;
-    background:#17161b;
-    border:solid 1px #17161b;
+    background:#000;
+    border:solid 1px #000;
     -webkit-box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.43);
     -moz-box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.43);
     box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.43);
@@ -1178,7 +1178,7 @@ input[type="button"].button.amadeus{
 }
 
 .modern{
-    background:#17161b;
+    background:#000;
 }
 
 
@@ -1343,7 +1343,7 @@ h3#share-something span{
     box-shadow: 0px 2px 3px 0px rgba(0,0,0,.07);
     /*border: solid 1px #ff8cce !important;*/
     background:#fff;
-    color:#17161b !important;
+    color:#000 !important;
     border:solid 0px #fff !important;
     border:solid 1px rgba(255,255,255, 0.1) !important;
     background: #fff !important;
@@ -1375,7 +1375,7 @@ h3#share-something span{
     background:#f4f7f7;
 	background:#fff;
 
-    border:solid 1px #17161b !important;
+    border:solid 1px #000 !important;
     border:solid 1px rgba(255,255,255, 0.3) !important;
     background: #fff !important;
 
@@ -1384,7 +1384,7 @@ h3#share-something span{
 #whatsup:focus{
 
 	border-bottom:solid 1px #a6b3b9;
-	border:solid 1px #17161b !important;
+	border:solid 1px #000 !important;
     border:solid 0px #54AFFF !important;
     border:solid 1px #9b79ce !important;
     border:solid 1px rgba(0,0,0,0.1) !important;
@@ -1401,24 +1401,24 @@ h3#share-something span{
     -moz-box-shadow: 0px 3px 19px 0px rgba(0,0,0,.09);
     box-shadow: 0px 3px 19px 0px rgba(0,0,0,.09);
 
-    color: #17161b !important;
+    color: #000 !important;
 
 }
 
 #whatsup::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    color:#17161b !important;
+    color:#000 !important;
     font-family:Roboto-Thin !important;
 }
 #whatsup::-moz-placeholder { /* Firefox 19+ */
-    color:#17161b !important;
+    color:#000 !important;
     font-family:Roboto-Thin !important;
 }
 #whatsup:-ms-input-placeholder { /* IE 10+ */
-    color:#17161b !important;
+    color:#000 !important;
     font-family:Roboto-Thin !important;
 }
 #whatsup:placeholder { /* Firefox 18- */
-    color:#17161b !important;
+    color:#000 !important;
     font-family:Roboto-Thin !important;
 }
 
@@ -1904,7 +1904,7 @@ p{
 }
 
 .feed-content{
-    color:#17161b;
+    color:#000;
     padding:0px 0px 0px 0px;
     margin:0px 0px 30px 0px;
     background:inherit;
@@ -1915,22 +1915,22 @@ p{
     color:#FFFF44;
     bottom:7px !important;
     bottom:11px !important;
-    left: 59px !important;
+    left: 43px !important;
 }
 
 /*.feed-content.maroon{*/
 /*    border-top:solid 4px #e24682;*/
 /*    border-top:solid 2px #13B1FF;*/
-/*    border-top:solid 2px #17161b;*/
+/*    border-top:solid 2px #000;*/
 /*}*/
 /*.feed-content.blue{*/
 /*    border-top:solid 4px #04adfd;*/
 /*    border-top:solid 2px #13B1FF;*/
-/*    border-top:solid 2px #17161b;*/
+/*    border-top:solid 2px #000;*/
 /*}*/
 /*.feed-content.yellow{*/
 /*    border-top:solid 2px #fff553;*/
-/*    border-top:solid 2px #17161b;*/
+/*    border-top:solid 2px #000;*/
 /*}*/
 /*.feed-content.shared.maroon{*/
 /*    border-top:solid 4px #fff553;*/
@@ -1942,12 +1942,12 @@ p{
 /*    border-top:solid 4px #486970;*/
 /*    border-top:solid 4px #e24682;*/
 /*    border-top:solid 4px #3ac0ff;*/
-/*    border-top:solid 2px #17161b;*/
+/*    border-top:solid 2px #000;*/
 /*}*/
 
 /*.feed-content.sky{*/
 /*    border-top:solid 2px #13B1FF;*/
-/*    border-top:solid 2px #17161b;*/
+/*    border-top:solid 2px #000;*/
 /*}*/
 /*.feed-content.shared.maroon{*/
 /*    border-radius:0px !important;*/
@@ -1978,7 +1978,7 @@ p{
     margin-top:4px;
     margin-bottom:4px;
     display:inline-block;
-    color:#17161b !important;
+    color:#000 !important;
 }
 .post-date{
     font-family:Roboto-Thin !important;
@@ -1993,7 +1993,7 @@ p{
 .post-comment span{
     margin:0px;
     padding:0px;
-    color:#17161b;
+    color:#000;
     font-family:Roboto-Light !important;
     line-height:1.6em;
 }
@@ -2087,7 +2087,7 @@ p{
     background:#5b7582;
     background:#617078;
     background:#13B1FF;
-    background:#17161b;
+    background:#000;
 }
 .shared-post-container span{
     color:#fff;
@@ -2351,7 +2351,7 @@ p{
 .comment-input:focus,
 .comment-shared-input:hover,
 .comment-shared-input:focus{
-    color:#17161b !important;
+    color:#000 !important;
     border:solid 1px rgba(0,0,0, 0.1) !important;
     background:rgba(255,255,255, 0.1) !important;
 }
@@ -2430,7 +2430,7 @@ p{
     background:#D954A0;
     background:#e861ad;
     background: #FDFE03;
-    color:#17161b !important;
+    color:#000 !important;
 }
 
 #notifications-container p{
@@ -2440,7 +2440,7 @@ p{
 
 .posted-by,
 .post-comment-whois{
-    color:#17161b !important;
+    color:#000 !important;
     font-family:Roboto-Bold !important;
     cursor:pointer;
     cursor:hand;
@@ -2649,9 +2649,9 @@ p span{
 
 
 .href-dotted-black{
-    color: #17161b !important;
+    color: #000 !important;
     text-decoration: none !important;
-    border-bottom:dotted 2px #17161b !important;
+    border-bottom:dotted 2px #000 !important;
 }
 
 .black,
@@ -2769,8 +2769,8 @@ a:hover{
 }
 #profile-profile-image{
     padding: 5px;
-    background: #17161b;
-    border: solid 1px #17161b;
+    background: #000;
+    border: solid 1px #000;
 }
 h2.yella{
     width:fit-content !important;
@@ -3020,10 +3020,10 @@ textarea{
     margin-top:58px;
     position:absolute;
     color:#fff;
-    background:#17161b;
+    background:#000;
     background:#e24e8e;
     background:#fdfe03;
-    background:#17161b;
+    background:#000;
     background:#0ad5fc;
     z-index:14 !important;
     -webkit-box-shadow: 1px 3px 12px 0px rgba(214,214,214,0.7);
@@ -3049,7 +3049,7 @@ textarea{
     background:#0199B6;
     background:#d953a0;;
     background:#FDFE03;
-    color:#17161b;
+    color:#000;
 }
 
 #profile-picture-actions-container span{
@@ -3282,7 +3282,7 @@ a.information{
 }
 #logo-logo{
     display:block;
-    padding:15px 24px 18px 27px;
+    padding:18px 24px 19px 27px;
     line-height:1.0;
     vertical-align:middle;
     text-decoration:none;
@@ -3331,12 +3331,12 @@ a.information{
     background: #D955A0;
     background: #1e1d23;/** retro **/
     background: #54AFFF;
-    /*background: #17161b;*/
+    /*background: #000;*/
     background: #d953a0;
     background: #7D0047;
     background: #9E0059;
     background: #54afff;
-    /*background:#17161b;*/
+    /*background:#000;*/
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
     font-family: Roboto-Light !important;
@@ -3357,7 +3357,7 @@ a.information{
     background:#5AB2FF;
     background:#2b2b34;
     background:#54AFFF;
-    background:#17161b;
+    background:#000;
 }
 .post-sep-dos{
     width:15%;
@@ -3376,7 +3376,7 @@ a.information{
     width:10%;
     background:#5AB2FF;
     background:#2b2b34;
-    background:#17161b;
+    background:#000;
 }
 .post-sep-dos{
     width:70%;
@@ -3384,7 +3384,7 @@ a.information{
     background:#5AB2FF;
     background:#19ff93;
     background:#D955A0;
-    background:#17161b;
+    background:#000;
 }
 .post-sep-tres{
     width:20%;
@@ -3392,7 +3392,7 @@ a.information{
     background:#54AFFF;
     background:#0AD6FC;
     background:#19ff93;
-    background:#17161b;
+    background:#000;
 }
 
 #accounts-results-table{
@@ -3541,7 +3541,7 @@ h1.gray span{
 }
 
 .friend-wrapper a{
-    color:#17161b;
+    color:#000;
 }
 
 .friend-wrapper img{
@@ -3618,7 +3618,7 @@ h1.gray span{
 
 #chat-session p,
 #chat-session span{
-    color:#17161b;
+    color:#000;
 }
 #chat-session-frm{
     background:#54afff;
@@ -3743,7 +3743,7 @@ h1.gray span{
     display: none;
     padding:0px 12px;
     margin:0px 53px 0px 0px;
-    background: #17161b;
+    background: #000;
 }
 
 .edit-click{
@@ -3781,7 +3781,7 @@ h1.gray span{
     height:11px;
     width:11px;
     padding:9px;
-    fill:#17161b;
+    fill:#000;
     border-radius: 20px;
 }
 
