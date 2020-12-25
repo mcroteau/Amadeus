@@ -57,7 +57,12 @@
     </div>
 
     <div id="notifications-wrapper">
-        <a ng-click="toggleNotifications()" href="javascript:" class="navigation-href notifications-popup float-right" id="notifications-href" style="margin-top:0px;margin-bottom:10px;">N<span id="notifications-count">{{data.notificationsCount}}</span></a>
+
+        <div id="notifications-href-wrapper">
+            <div id="notifications-href-inner">
+                <a ng-click="toggleNotifications()" href="javascript:" class="navigation-href notifications-popup float-right" id="notifications-href" style="margin-top:0px;margin-bottom:10px;">N<span id="notifications-count">{{data.notificationsCount}}</span></a>
+            </div>
+        </div>
 
         <div ng-show="showNotifications" id="notifications-outer-container" class="main-shadow">
 
