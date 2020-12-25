@@ -21,7 +21,7 @@
     <ul>
         <li>I agree not to be rude to others</li>
         <li>I agree not to post anything rude or abusive</li>
-        <li>Basically I agree not to do poopoo stuff while on the site</li>
+        <li>Basically I agree not to do doodoo stuff while on the site</li>
     </ul>
 
     <p>If you agree to these requirements, you may proceed.</p>

@@ -83,6 +83,7 @@
 
         #amadeus-symbol{
             font-size:42px;
+            text-shadow: 1px 1px #07d1f4;
         }
         .href-dotted,
         .href-dotted-amadeus{
