@@ -54,8 +54,4 @@
 
 	<bean id="amadeusAccessor" class="social.amadeus.accessor.AmadeusAccessor"/>
 
-	<bean id="parakeet" class="io.github.mcroteau.Parakeet" scope="singleton">
-		<constructor-arg name="accessor" ref="amadeusAccessor"/>
-	</bean>
-
 </beans>

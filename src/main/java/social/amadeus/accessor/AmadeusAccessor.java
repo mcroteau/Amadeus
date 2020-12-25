@@ -1,9 +1,9 @@
 package social.amadeus.accessor;
 
-import io.github.mcroteau.resources.access.Accessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import social.amadeus.repository.AccountRepo;
 import social.amadeus.model.Account;
+import xyz.strongperched.resources.access.Accessor;
 
 import java.util.Set;
 

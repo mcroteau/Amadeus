@@ -1,15 +1,11 @@
 package social.amadeus;
 
-import io.github.mcroteau.resources.filters.CacheFilter;
 import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import social.amadeus.common.Constants;
@@ -24,11 +20,6 @@ import social.amadeus.repository.NotificationRepo;
 import social.amadeus.repository.PostRepo;
 import social.amadeus.service.AuthService;
 import social.amadeus.service.PostService;
-
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import static org.junit.Assert.assertTrue;
 
@@ -54,9 +45,6 @@ public class PostPermissionsTest {
     @Autowired
     private PostService postService;
 
-
-
-    CacheFilter filter = new CacheFilter();
 
     Post savedPost;
 

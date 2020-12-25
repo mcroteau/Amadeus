@@ -28,6 +28,7 @@ BQi
         </list>
     </property>
 </bean>
-
+mvn install:install-file -Dfile=<path-to-file> -DgroupId=<group-id> -DartifactId=<artifact-id> -Dversion=<version> -Dpackaging=<packaging>
 
 GASTC775
+Q84RSG8Q

@@ -13,6 +13,7 @@ import social.amadeus.common.Constants;
 import social.amadeus.common.Utils;
 import social.amadeus.model.*;
 import social.amadeus.repository.*;
+import xyz.strongperched.Parakeet;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URLEncoder;
@@ -321,7 +322,7 @@ public class AccountService {
         }
 
         String password = account.getPassword();
-        String passwordHashed = Utils.dirty(account.getPassword());
+        String passwordHashed = Parakeet.dirty(account.getPassword());
 
         try{
 

@@ -1,7 +1,6 @@
 package social.amadeus.service;
 
 import com.google.gson.Gson;
-import io.github.mcroteau.Parakeet;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import social.amadeus.common.Constants;
 import social.amadeus.repository.AccountRepo;
 import social.amadeus.model.Account;
+import xyz.strongperched.Parakeet;
 
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
@@ -20,38 +20,38 @@ public class AuthService {
 
     Gson gson = new Gson();
 
-    @Autowired
-    private Parakeet parakeet;
+//    @Autowired
+//    private Parakeet parakeet;
 
     @Autowired
     private AccountRepo accountRepo;
 
     public boolean signin(String username, String password){
-        return parakeet.login(username, password);
+        return Parakeet.login(username, password);
     }
 
     public boolean signout(){
-        return parakeet.logout();
+        return Parakeet.logout();
     }
 
     public boolean isAuthenticated(){
-        return parakeet.isAuthenticated();
+        return Parakeet.isAuthenticated();
     }
 
     public boolean isAdministrator(){
-        return parakeet.hasRole(Constants.ROLE_ADMIN);
+        return Parakeet.hasRole(Constants.ROLE_ADMIN);
     }
 
     public boolean hasPermission(String permission){
-        return parakeet.hasPermission(permission);
+        return Parakeet.hasPermission(permission);
     }
 
     public boolean hasRole(String role){
-        return parakeet.hasRole(role);
+        return Parakeet.hasRole(role);
     }
 
     public Account getAccount(){
-        String username = parakeet.getUser();
+        String username = Parakeet.getUser();
         Account account = accountRepo.getByUsername(username);
         return account;
     }

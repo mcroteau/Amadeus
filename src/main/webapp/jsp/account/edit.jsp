@@ -3,7 +3,7 @@
 <%@ page import="java.util.Calendar"%>
 <%@ page import="java.util.Date"%>
 <%@ page import="social.amadeus.model.Account"%>
-<%@ page import="io.github.mcroteau.Parakeet" %>
+<%@ page import="xyz.strongperched.Parakeet" %>
 <%@ page import="social.amadeus.common.BeanLookup" %>
 <%@ page import="social.amadeus.common.Constants" %>
 
@@ -160,11 +160,7 @@
 
 
 
-        <%
-            BeanLookup beanLookup = new BeanLookup();
-            Parakeet parakeet = (Parakeet) beanLookup.get("parakeet");
-        %>
-        <%if(parakeet.hasRole(Constants.ROLE_ADMIN)){%>
+        <%if(Parakeet.hasRole(Constants.ROLE_ADMIN)){%>
 
             <form action="${pageContext.request.contextPath}/account/delete/${account.id}" method="post">
                 <div id="delete-account-container" style="width:100%;">

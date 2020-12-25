@@ -314,7 +314,7 @@
 		<dependency>
 			<groupId>io.github.mcroteau</groupId>
 			<artifactId>parakeet</artifactId>
-			<version>0.3</version>
+			<version>0.4-SNAPSHOT</version>
 		</dependency>
 
 	</dependencies>

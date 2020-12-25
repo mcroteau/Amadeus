@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
-import io.github.mcroteau.Parakeet;
 import social.amadeus.model.Account;
+import social.amadeus.service.AuthService;
 
 
 public class AppInterceptor implements HandlerInterceptor {
@@ -20,14 +20,16 @@ public class AppInterceptor implements HandlerInterceptor {
     private static final Logger log = Logger.getLogger(AppInterceptor.class);
 
     @Autowired
-    private AccountRepo accountRepo;
+    AccountRepo accountRepo;
 
     @Autowired
-    private SessionManager sessionManager;
+    SessionManager sessionManager;
+
+//    @Autowired
+//    private Parakeet parakeet;
 
     @Autowired
-    private Parakeet parakeet;
-
+    AuthService authService;
 
     @Override
     public boolean preHandle(HttpServletRequest req,
@@ -40,8 +42,8 @@ public class AppInterceptor implements HandlerInterceptor {
                            HttpServletResponse resp, Object handler,
                            ModelAndView modelAndView) throws Exception {
 
-        if(parakeet.isAuthenticated()){
-            String username = parakeet.getUser();
+        if(authService.isAuthenticated()){
+            String username = authService.getAccount().getUsername();
             sessionManager.sessions.put(username, System.currentTimeMillis());
         }
 
@@ -61,9 +63,8 @@ public class AppInterceptor implements HandlerInterceptor {
                                 HttpServletResponse resp, Object handler, Exception ex)
             throws Exception {
 
-        if(parakeet.isAuthenticated()){
-            String user = parakeet.getUser();
-            Account sessionAaccount = accountRepo.getByUsername(user);
+        if(authService.isAuthenticated()){
+            Account sessionAaccount = authService.getAccount();
             req.getSession().setAttribute("account", sessionAaccount);
             req.getSession().setAttribute("imageUri", sessionAaccount.getImageUri());
         }

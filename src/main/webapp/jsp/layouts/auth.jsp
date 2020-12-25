@@ -1,5 +1,5 @@
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
-<%@ page import="io.github.mcroteau.Parakeet" %>
+<%@ page import="xyz.strongperched.Parakeet" %>
 <%@ page import="social.amadeus.common.BeanLookup" %>
 
 <html>
@@ -120,12 +120,7 @@
 
                 <br class="clear"/>
 
-                <%
-                    BeanLookup beanLookup = new BeanLookup();
-                    Parakeet parakeet = (Parakeet) beanLookup.get("parakeet");
-                %>
-
-                <%if(parakeet.isAuthenticated()){%>
+                <%if(Parakeet.isAuthenticated()){%>
 
                     Hello <strong>${sessionScope.account.nameUsername}</strong>!
                     &nbsp;|&nbsp;

@@ -21,7 +21,7 @@
 
 	<filter>
 		<filter-name>Parakeet</filter-name>
-		<filter-class>io.github.mcroteau.resources.filters.CacheFilter</filter-class>
+		<filter-class>xyz.strongperched.resources.filters.ParakeetFilter</filter-class>
 	</filter>
 
 	<filter-mapping>

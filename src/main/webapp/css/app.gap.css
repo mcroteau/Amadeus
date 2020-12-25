@@ -235,94 +235,6 @@ h3{
 
 
 
-/* Safari 4.0 - 8.0 */
-@-webkit-keyframes logo-logo {
-    0%  {fill:#54afff}
-    1%  {fill:#fff}
-    9%  {fill:#54afff}
-   100% {ill:#54afff}
-}
-
-@keyframes logo-logo {
-    0%  {fill:#8131AF}
-    1%  {fill:#fff}
-    9%  {fill:#54afff}
-    29% {fill:#8131AF}
-    100%{fill:#8131AF}
-}
-
-@keyframes logo-logo {
-    0%  {fill:#d953a0}
-    1%  {fill:#fff}
-    9%  {fill:#54afff}
-    29% {fill:#d953a0}
-    79% {fill:#d953a0}
-    80% {fill:#17161b}
-    100%{fill:#d953a0}
-}
-
-@keyframes logo-logo {
-    0%  {fill:#17161b}
-    1%  {fill:#fff}
-    9%  {fill:#54afff}
-    19% {fill:#17161b}
-    100%{fill:#17161b}
-}
-
-@keyframes logo-logo {
-    0%  {fill:#17161b}
-    1%  {fill:#fff}
-    9%  {fill:#54afff}
-    19% {fill:#17161b}
-    100%{fill:#17161b}
-}
-
-/*@-webkit-keyframes logo-logo {*/
-/*    0%  {margin-top: 0px;fill:#fff}*/
-/*    1%  {margin-top: 2px;fill:#ffffb2}*/
-/*    2%  {margin-top: 0px;fill:#fff}*/
-/*    100% {margin-top:0px;fill:#fff}*/
-/*}*/
-
-/*@keyframes logo-logo {*/
-/*    0%  {margin-top: 0px;fill:#fff}*/
-/*    1%  {margin-top: 2px;fill:#ffffb2}*/
-/*    2%  {margin-top: 0px;fill:#fff}*/
-/*    100%{margin-top:0px;fill:#fff}*/
-/*}*/
-
-/* Safari 4.0 - 8.0 */
-@-webkit-keyframes logo-logo-down {
-    30% {background:#d953a0;}
-    67% {background:#54afff;}
-    100% {background:#FDFE03;}
-}
-
-@keyframes logo-logo-down {
-    30% {background:#d953a0;}
-    67% {background:#54afff;}
-    100%{background:#FDFE03;}
-}
-
-
-/* Safari 4.0 - 8.0 */
-@-webkit-keyframes amadeus-logo {
-  0%  {background: #12ADFD;border:solid 1px #1f9bc4;}
-  32%  {background: #E34B86; border:solid 1px #e24682;}
-  72% {background: #77d1ff;border:solid 1px #77d1ff;}
-  100% {background: #12ADFD;border:solid 1px #1f9bc4;}
-}
-
-@keyframes amadeus-logo {
-  0%  {background: #12ADFD;border:solid 1px #1f9bc4;}
-  32%  {background: #E34B86; border:solid 1px #e24682;}
-  72% {background: #77d1ff;border:solid 1px #77d1ff;}
-  100% {background: #12ADFD;border:solid 1px #1f9bc4;}
-
-}
-
-
-
 h1{
     color:#2e3c40;
     color:#17161b;
@@ -792,7 +704,7 @@ input[type="submit"]#search-button,
     z-index:1;
     height:57px;
     width:57px;
-    margin-top:-4px;
+    margin-top:-1px;
     border-radius: 30px;
     -moz-border-radius: 30px;
     -webkit-border-radius: 30px;

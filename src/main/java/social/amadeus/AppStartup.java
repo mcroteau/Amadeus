@@ -10,12 +10,14 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.core.env.Environment;
+import social.amadeus.accessor.AmadeusAccessor;
 import social.amadeus.repository.*;
 import social.amadeus.jobs.AdJob;
 import social.amadeus.jobs.PublishJob;
 import social.amadeus.model.*;
 import social.amadeus.common.Constants;
 import social.amadeus.common.Utils;
+import xyz.strongperched.Parakeet;
 
 import javax.annotation.PostConstruct;
 
@@ -47,9 +49,13 @@ public class AppStartup {
 	@Autowired
 	private Environment env;
 
+	@Autowired
+	AmadeusAccessor accessor;
+
 
 	@PostConstruct
 	public void init() {
+		Parakeet.perch(accessor);
 		createApplicationRoles();
 		createApplicationAdministrator();
 		createApplicationGuest();
@@ -85,7 +91,7 @@ public class AppStartup {
 		
 		try{
 			Account existing = accountRepo.getByUsername(Constants.ADMIN_USERNAME);
-			String password = io.github.mcroteau.resources.Constants.hash(Constants.PASSWORD);
+			String password = Parakeet.dirty(Constants.PASSWORD);
 
 			if(existing == null){
 				Account admin = new Account();

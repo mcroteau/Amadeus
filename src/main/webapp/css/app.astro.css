@@ -6,7 +6,7 @@
 
 
 #logo-logo{
-    top:0px;
+    top:5px;
     left:0px;
     position:fixed;
 }
@@ -81,10 +81,6 @@
     color: #797979 !important;
 }
 
-.href-dotted{
-    font-family:Roboto-Bold !important;
-}
-
 #top-inner-container{
     width:800px !important;
     margin:auto;
@@ -98,6 +94,10 @@
 #navigation-container{
     left:initial;
     right:10px;
+}
+
+.href-dotted{
+    font-family:Roboto-Bold !important;
 }
 
 
