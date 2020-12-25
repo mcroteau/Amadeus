@@ -4,12 +4,15 @@ import com.drew.imaging.ImageMetadataReader;
 import com.drew.metadata.exif.ExifIFD0Directory;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.apache.log4j.Logger;
 import org.imgscalr.Scalr;
 import org.imgscalr.Scalr.Rotation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import social.amadeus.AppStartup;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -26,6 +29,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Utils {
+
+	private static final Logger log = Logger.getLogger(Utils.class);
 	
 	@Autowired
 	private ApplicationContext applicationContext;
@@ -40,6 +45,17 @@ public class Utils {
 
 	public static String getFlyerImageUri(){
 		return Constants.HTTPS + Constants.DO_ENDPOINT + "/" + Constants.DEFAULT_FLYER_IMAGE_URI;
+	}
+
+	public static int getRandomNumber(int max){
+		Random r = new Random();
+		return r.nextInt(max);
+	}
+
+	public static boolean isTestEnvironment(Environment env){
+		String[] profilesPre = env.getActiveProfiles();
+		List<String> profiles = Arrays.asList(profilesPre);
+		return !profiles.contains(Constants.TEST);
 	}
 
 	public int generateRandomNumber(int max){

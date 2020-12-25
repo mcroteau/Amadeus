@@ -63,7 +63,7 @@ public class AppInterceptor implements HandlerInterceptor {
 
         if(parakeet.isAuthenticated()){
             String user = parakeet.getUser();
-            Account sessionAaccount = accountRepo.findByUsername(user);
+            Account sessionAaccount = accountRepo.getByUsername(user);
             req.getSession().setAttribute("account", sessionAaccount);
             req.getSession().setAttribute("imageUri", sessionAaccount.getImageUri());
         }

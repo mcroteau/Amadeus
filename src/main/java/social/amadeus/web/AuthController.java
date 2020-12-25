@@ -20,7 +20,7 @@ public class AuthController {
 
 	private static final Logger log = Logger.getLogger(AuthController.class);
 
-    private Gson gson = new Gson();
+    Gson gson = new Gson();
 
 	@Autowired
 	AuthService authService;

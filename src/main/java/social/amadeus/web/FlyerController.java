@@ -21,7 +21,7 @@ import java.util.List;
 public class FlyerController {
 
     @Autowired
-    private FlyerService flyerService;
+    FlyerService flyerService;
 
     @RequestMapping(value="/flyer/create", method=RequestMethod.GET)
     public String create(){

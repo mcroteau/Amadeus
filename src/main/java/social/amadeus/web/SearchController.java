@@ -15,7 +15,7 @@ public class SearchController {
     Gson gson = new Gson();
 
     @Autowired
-    private SearchService searchService;
+    SearchService searchService;
 
     @RequestMapping(value="/search", method= RequestMethod.GET, produces="application/json")
     public @ResponseBody String search(@RequestParam(value="q", required = false ) String q){

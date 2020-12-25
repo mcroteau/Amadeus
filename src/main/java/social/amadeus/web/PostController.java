@@ -25,7 +25,7 @@ public class PostController {
 	Gson gson = new Gson();
 
 	@Autowired
-	private PostService postService;
+	PostService postService;
 
 
 	@GetMapping(value="/post/{id}", produces="application/json")

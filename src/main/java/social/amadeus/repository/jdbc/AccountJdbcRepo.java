@@ -31,13 +31,13 @@ public class AccountJdbcRepo implements AccountRepo {
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
 
-	public long id() {
+	public long getId() {
 		String sql = "select max(id) from account";
 		long id = jdbcTemplate.queryForObject(sql, new Object[]{}, Long.class);
 		return id;
 	}
 
-	public long count() {
+	public long getCount() {
 		String sql = "select count(*) from account";
 		long count = jdbcTemplate.queryForObject(sql, new Object[] { }, Long.class);
 	 	return count; 
@@ -54,7 +54,7 @@ public class AccountJdbcRepo implements AccountRepo {
 		return account;
 	}
 
-	public Account findByUsername(String username) {
+	public Account getByUsername(String username) {
 		Account account = null;
 		try{
 			String sql = "select * from account where username = ?";
@@ -86,7 +86,7 @@ public class AccountJdbcRepo implements AccountRepo {
 				account.getName(), account.getUsername(), account.getAge(), account.getLocation(), account.getImageUri(), account.getPassword(), false, 0
 		});
 
-		long id = id();
+		long id = getId();
 		Account savedAccount = get(id);
 
 		checkSaveDefaultAccountRole(id);
@@ -101,7 +101,7 @@ public class AccountJdbcRepo implements AccountRepo {
 				account.getName(), account.getUsername(), account.getAge(), account.getLocation(), account.getImageUri(), account.getPassword(), false, 0
 		});
 
-		long id = id();
+		long id = getId();
 		Account savedAccount = get(id);
 
 		checkSaveAdministratorRole(id);
@@ -134,7 +134,7 @@ public class AccountJdbcRepo implements AccountRepo {
 		return true;
 	}
 
-	public Account findByUsernameAndUuid(String username, String uuid){
+	public Account getByUsernameAndUuid(String username, String uuid){
 		Account account = null;
 		try{
 			String sql = "select * from account where username = '" + username + "' and uuid = '" + uuid + "'";
@@ -153,7 +153,7 @@ public class AccountJdbcRepo implements AccountRepo {
 	}
 
 	public String getAccountPassword(String username) {
-		Account account = findByUsername(username);
+		Account account = getByUsername(username);
 		return account.getPassword();
 	}
 
@@ -242,7 +242,7 @@ public class AccountJdbcRepo implements AccountRepo {
 	}
 	
 	public Set<String> getAccountRoles(String username) {	
-		Account account = findByUsername(username);
+		Account account = getByUsername(username);
 		String sql = "select r.name from account_roles ur, role r where ur.role_id = r.id and ur.account_id = " + account.getId();
 		List<String> rolesList = jdbcTemplate.queryForList(sql, String.class);
 		Set<String> roles = new HashSet<String>(rolesList);
@@ -257,7 +257,7 @@ public class AccountJdbcRepo implements AccountRepo {
 	}
 
 	public Set<String> getAccountPermissions(String username) {	
-		Account account = findByUsername(username);
+		Account account = getByUsername(username);
 		String sql = "select permission from account_permissions where account_id = " + account.getId();
 		List<String> permissionsList = jdbcTemplate.queryForList(sql, String.class);
 		Set<String> permissions = new HashSet<String>(permissionsList);

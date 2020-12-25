@@ -18,13 +18,13 @@ public class AmadeusAccessor implements Accessor {
     }
 
     public Set<String> getRoles(String user){
-        Account account = accountRepo.findByUsername(user);
+        Account account = accountRepo.getByUsername(user);
         Set<String> roles = accountRepo.getAccountRoles(account.getId());
         return roles;
     }
 
     public Set<String> getPermissions(String user){
-        Account account = accountRepo.findByUsername(user);
+        Account account = accountRepo.getByUsername(user);
         Set<String> permissions = accountRepo.getAccountPermissions(account.getId());
         return permissions;
     }

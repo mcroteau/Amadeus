@@ -3,6 +3,7 @@ package social.amadeus.service;
 import com.google.gson.Gson;
 import io.github.mcroteau.Parakeet;
 import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -15,6 +16,8 @@ import java.nio.charset.StandardCharsets;
 
 public class AuthService {
 
+    private static final Logger log = Logger.getLogger(AuthService.class);
+
     Gson gson = new Gson();
 
     @Autowired
@@ -22,9 +25,6 @@ public class AuthService {
 
     @Autowired
     private AccountRepo accountRepo;
-
-    @Autowired
-    private AuthService authService;
 
     public boolean signin(String username, String password){
         return parakeet.login(username, password);
@@ -52,7 +52,7 @@ public class AuthService {
 
     public Account getAccount(){
         String username = parakeet.getUser();
-        Account account = accountRepo.findByUsername(username);
+        Account account = accountRepo.getByUsername(username);
         return account;
     }
 
@@ -69,7 +69,7 @@ public class AuthService {
                 return "redirect:/";
             }
 
-            Account sessionAccount = accountRepo.findByUsername(account.getUsername());
+            Account sessionAccount = accountRepo.getByUsername(account.getUsername());
 
             request.getSession().setAttribute("account", sessionAccount);
             request.getSession().setAttribute("imageUri", sessionAccount.getImageUri());

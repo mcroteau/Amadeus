@@ -47,7 +47,7 @@ public class PostActionTest {
     public void before(){
         TestUtils.mockRequestCycle();
 
-        Account adminAcc = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
+        Account adminAcc = accountRepo.getByUsername(Constants.ADMIN_USERNAME);
         Post postPre = new MockPost(adminAcc, Utils.getDate());
 
         authService.signin(Constants.ADMIN_USERNAME, Constants.PASSWORD);
@@ -81,7 +81,7 @@ public class PostActionTest {
 
     @Test
     public void testAddComment(){
-        Account adminAcc = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
+        Account adminAcc = accountRepo.getByUsername(Constants.ADMIN_USERNAME);
         PostComment postComment = new MockPostComment(adminAcc, savedPost);
         postService.savePostComment(Long.toString(savedPost.getId()), postComment);
         assertNotNull(postRepo.getPostCommentId());
@@ -90,7 +90,7 @@ public class PostActionTest {
 
     @Test
     public void testDeleteComment(){
-        Account adminAcc = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
+        Account adminAcc = accountRepo.getByUsername(Constants.ADMIN_USERNAME);
         PostComment postComment = new MockPostComment(adminAcc, savedPost);
         postService.savePostComment(Long.toString(savedPost.getId()), postComment);
         postService.deletePostComment(Long.toString(postRepo.getPostCommentId()));
@@ -99,7 +99,7 @@ public class PostActionTest {
 
     @Test
     public void testSharePost(){
-        Account adminAcc = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
+        Account adminAcc = accountRepo.getByUsername(Constants.ADMIN_USERNAME);
         postService.publishPost(Long.toString(savedPost.getId()));
         postService.sharePost(Long.toString(savedPost.getId()), new MockPostShare(adminAcc, savedPost, Utils.getYesterday(7)));
         ActivityOutput activityOutput = postService.getActivity();
@@ -109,7 +109,7 @@ public class PostActionTest {
 
 //    @Test
 //    public void testUnshare(){
-//        Account guestAcc = accountRepo.findByUsername(Constants.GUEST_USERNAME);
+//        Account guestAcc = accountRepo.getByUsername(Constants.GUEST_USERNAME);
 //        PostShare postShare = new MockPostShare(guestAcc, savedPost, Utils.getDate());
 //        postService.sharePost(Long.toString(savedPost.getId()), postShare);
 //
@@ -121,13 +121,13 @@ public class PostActionTest {
 //
 //    @Test
 //    public void testDeleteShareComment(){
-//        Account guestAcc = accountRepo.findByUsername(Constants.GUEST_USERNAME);
+//        Account guestAcc = accountRepo.getByUsername(Constants.GUEST_USERNAME);
 //        PostShare postShare = new MockPostShare(guestAcc, savedPost, Utils.getDate());
 //        postService.sharePost(Long.toString(savedPost.getId()), postShare);
 //
 //        PostShare savedPostShare = postRepo.getPostShare(postRepo.getPostShareId());
 //
-//        Account adminAcc = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
+//        Account adminAcc = accountRepo.getByUsername(Constants.ADMIN_USERNAME);
 //        TestUtils.mockRequestCycle();
 //        authService.signin(Constants.ADMIN_USERNAME, Constants.PASSWORD);
 //
@@ -150,7 +150,7 @@ public class PostActionTest {
 //
 //    @Test
 //    public void testSharePost(){
-//        Account adminAcc = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
+//        Account adminAcc = accountRepo.getByUsername(Constants.ADMIN_USERNAME);
 //        postService.publishPost(Long.toString(savedPost.getId()));
 //        postService.sharePost(Long.toString(savedPost.getId()), new MockPostShare(adminAcc, savedPost, Utils.getYesterday(7)));
 //        ActivityOutput activityOutput = postService.getActivity();
@@ -171,8 +171,8 @@ public class PostActionTest {
 
     @After
     public void after(){
-        Account adminAcc = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
-        Account guestAcc = accountRepo.findByUsername(Constants.GUEST_USERNAME);
+        Account adminAcc = accountRepo.getByUsername(Constants.ADMIN_USERNAME);
+        Account guestAcc = accountRepo.getByUsername(Constants.GUEST_USERNAME);
         notificationRepo.clearNotifications(adminAcc.getId());
         if(postRepo.getPostShareId() != null)
             postRepo.deletePostShare(postRepo.getPostShareId());

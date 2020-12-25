@@ -19,7 +19,7 @@ public class StaticController {
 	private static final Logger log = Logger.getLogger(StaticController.class);
 
 	@Autowired
-	private StaticService staticService;
+	StaticService staticService;
 
 	@RequestMapping(value="/uno", method=RequestMethod.GET)
 	public String uno(HttpServletRequest request,

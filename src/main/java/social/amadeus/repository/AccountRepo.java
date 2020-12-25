@@ -10,13 +10,13 @@ import social.amadeus.model.ProfileView;
 
 public interface AccountRepo {
 
-	public long id();
+	public long getId();
 
-	public long count();
+	public long getCount();
 
 	public Account get(long id);
 
-	public Account findByUsername(String username);
+	public Account getByUsername(String username);
 
 	public List<Account> findAll();
 
@@ -32,7 +32,7 @@ public interface AccountRepo {
 
 	public boolean updatePassword(Account account);
 
-	public Account findByUsernameAndUuid(String username, String uuid);
+	public Account getByUsernameAndUuid(String username, String uuid);
 	
 	public boolean delete(long id);
 	

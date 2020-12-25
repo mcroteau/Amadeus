@@ -10,7 +10,7 @@ import social.amadeus.service.PortalService;
 public class PortalController {
 
     @Autowired
-    private PortalService portalService;
+    PortalService portalService;
 
     @RequestMapping(value="/", method= RequestMethod.GET)
     public String z(){

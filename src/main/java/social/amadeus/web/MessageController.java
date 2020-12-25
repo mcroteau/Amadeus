@@ -16,7 +16,7 @@ public class MessageController {
 
     private static final Logger log = Logger.getLogger(MessageController.class);
 
-    private Gson gson = new Gson();
+    Gson gson = new Gson();
 
     @Autowired
     MessageService messageService;

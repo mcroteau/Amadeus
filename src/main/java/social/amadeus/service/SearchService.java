@@ -32,12 +32,12 @@ public class SearchService {
     private AuthService authService;
 
 
-    public Object queryBasic(String q) {
+    public Map<String, Object> queryBasic(String q) {
 
         Map<String, Object> respData = new HashMap<String, Object>();
 
         if(!authService.isAuthenticated()){
-            respData.put("error", Constants.AUTHENTICATION_REQUIRED);
+            respData.put("status", Constants.AUTHENTICATION_REQUIRED);
             return respData;
         }
 
@@ -72,6 +72,7 @@ public class SearchService {
                 }
             }
 
+            respData.put("status", Constants.SUCCESS);
             respData.put("accounts", accounts);
             respData.put("music", music);
 

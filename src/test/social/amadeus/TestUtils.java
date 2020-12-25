@@ -14,9 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 
 public class TestUtils {
 
-    public static CacheFilter mockRequestCycle(){
-        CacheFilter filter = new CacheFilter();
+    public static boolean mockRequestCycle(){
         try {
+            CacheFilter filter = new CacheFilter();
             HttpServletRequest req = new MockHttpServletRequest();
             HttpServletResponse resp = new MockHttpServletResponse();
 
@@ -28,7 +28,7 @@ public class TestUtils {
         }catch(Exception ex){
             ex.printStackTrace();
         }
-        return filter;
+        return true;
     }
 
 

@@ -2,22 +2,26 @@ package social.amadeus.service;
 
 import com.google.gson.Gson;
 import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import social.amadeus.AppStartup;
 import social.amadeus.common.Constants;
 import social.amadeus.common.Utils;
 import social.amadeus.model.*;
 import social.amadeus.repository.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class AccountService {
+
+    private static final Logger log = Logger.getLogger(AccountService.class);
 
     Gson gson = new Gson();
 
@@ -54,6 +58,8 @@ public class AccountService {
     @Autowired
     private ReCaptchaService reCaptchaService;
 
+    @Autowired
+    private Environment env;
 
     private String getAccountPermission(String id){
         return Constants.ACCOUNT_MAINTENANCE + id;
@@ -70,7 +76,7 @@ public class AccountService {
     }
 
     private void preloadConnections(Account authenticatedAccount){
-        Account adminAccount = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
+        Account adminAccount = accountRepo.getByUsername(Constants.ADMIN_USERNAME);
         friendRepo.saveConnection(adminAccount.getId(), authenticatedAccount.getId(), Utils.getDate());
     }
 
@@ -276,7 +282,8 @@ public class AccountService {
             return "redirect:/signup?uri=" + uri;
         }
 
-        if(!reCaptchaService.validates(reCaptchaResponse)){
+        if(!reCaptchaService.validates(reCaptchaResponse) &&
+                !Utils.isTestEnvironment(env)){
             redirect.addFlashAttribute("account", account);
             redirect.addFlashAttribute("message", "Did you forget to check the box thing?");
             return "redirect:/signup?uri=" + uri;
@@ -288,7 +295,7 @@ public class AccountService {
             return "redirect:/signup?uri=" + uri;
         }
 
-        Account existingAccount = accountRepo.findByUsername(account.getUsername());
+        Account existingAccount = accountRepo.getByUsername(account.getUsername());
         if(existingAccount != null){
             redirect.addFlashAttribute("account", account);
             redirect.addFlashAttribute("message", "Account exists with same username.");
@@ -322,21 +329,23 @@ public class AccountService {
             account.setImageUri(Utils.getProfileImageUri());
             accountRepo.save(account);
 
-            Account savedAccount = accountRepo.findByUsername(account.getUsername());
+            Account savedAccount = accountRepo.getByUsername(account.getUsername());
             preloadConnections(savedAccount);
 
             Role defaultRole = roleRepo.find(Constants.ROLE_ACCOUNT);
 
             accountRepo.saveAccountRole(savedAccount.getId(), defaultRole.getId());
-            accountRepo.savePermission(savedAccount.getId(), "account:maintenance:" + savedAccount.getId());
+            String permission = Constants.ACCOUNT_MAINTENANCE + savedAccount.getId();
+            accountRepo.savePermission(savedAccount.getId(), permission);
 
 
             String body = "<h1>Amadeus</h1>"+
                     "<p>Thank you for registering! Enjoy!</p>";
 
-            emailService.send(savedAccount.getUsername(), "Successfully Registered", body);
-
-            phoneService.support("Amadeus : Registration " + account.getName() + " " + account.getUsername());
+            if(!Utils.isTestEnvironment(env)) {
+                emailService.send(savedAccount.getUsername(), "Successfully Registered", body);
+                phoneService.support("Amadeus : Registration " + account.getName() + " " + account.getUsername());
+            }
 
         }catch(Exception e){
             e.printStackTrace();
@@ -345,7 +354,7 @@ public class AccountService {
             return("redirect:/signup?uri=" + uri);
         }
 
-
+        log.info(accountRepo.getCount() + " " + authService + " " + account.getUsername());
         if(!authService.signin(account.getUsername(), password)) {
             redirect.addFlashAttribute("message", "Thank you for registering. We hope you enjoy!");
             return "redirect:/?uri=" + uri;
@@ -420,7 +429,7 @@ public class AccountService {
 
         try {
 
-            Account account = accountRepo.findByUsername(username);
+            Account account = accountRepo.getByUsername(username);
             if (account == null) {
                 redirect.addFlashAttribute("message", "Unable to find account.");
                 return ("redirect:/account/reset");
@@ -454,7 +463,7 @@ public class AccountService {
 
     public String resetView(String uuid, String username, ModelMap modelMap,RedirectAttributes redirect) {
 
-        Account account = accountRepo.findByUsernameAndUuid(username, uuid);
+        Account account = accountRepo.getByUsernameAndUuid(username, uuid);
         if (account == null) {
             redirect.addFlashAttribute("error", "Unable to locate account.");
             return "redirect:/account/reset";

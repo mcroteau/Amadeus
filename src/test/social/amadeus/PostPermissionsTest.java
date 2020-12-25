@@ -65,7 +65,7 @@ public class PostPermissionsTest {
     public void before(){
         TestUtils.mockRequestCycle();
 
-        Account adminAccount = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
+        Account adminAccount = accountRepo.getByUsername(Constants.ADMIN_USERNAME);
         Post post = new MockPost(adminAccount, Utils.getDate());
 
         authService.signin(Constants.ADMIN_USERNAME, Constants.PASSWORD);
@@ -105,7 +105,7 @@ public class PostPermissionsTest {
 
     @Test
     public void testAddCommentWithEmptyComment(){
-        Account adminAccount = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
+        Account adminAccount = accountRepo.getByUsername(Constants.ADMIN_USERNAME);
         PostComment postComment = new PostComment();
         postComment.setAccountId(adminAccount.getId());
         postComment.setPostId(savedPost.getId());
@@ -116,7 +116,7 @@ public class PostPermissionsTest {
 
     @Test
     public void testDeleteCommentWithWrongUser(){
-        Account adminAcc = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
+        Account adminAcc = accountRepo.getByUsername(Constants.ADMIN_USERNAME);
         PostComment postComment = new MockPostComment(adminAcc, savedPost);
         postService.savePostComment(Long.toString(savedPost.getId()), postComment);
         String result = postService.deletePostComment(Long.toString(0));
@@ -126,7 +126,7 @@ public class PostPermissionsTest {
 
     @Test
     public void testUnshareWithWrongUser(){
-        Account guestAcc = accountRepo.findByUsername(Constants.GUEST_USERNAME);
+        Account guestAcc = accountRepo.getByUsername(Constants.GUEST_USERNAME);
         PostShare postShare = new MockPostShare(guestAcc, savedPost, Utils.getDate());
         postService.sharePost(Long.toString(savedPost.getId()), postShare);
 
@@ -138,13 +138,13 @@ public class PostPermissionsTest {
 
     @Test
     public void testDeleteShareCommentWithWrongUser(){
-        Account guestAcc = accountRepo.findByUsername(Constants.GUEST_USERNAME);
+        Account guestAcc = accountRepo.getByUsername(Constants.GUEST_USERNAME);
         PostShare postShare = new MockPostShare(guestAcc, savedPost, Utils.getDate());
         postService.sharePost(Long.toString(savedPost.getId()), postShare);
 
         PostShare savedPostShare = postRepo.getPostShare(postRepo.getPostShareId());
 
-        Account adminAcc = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
+        Account adminAcc = accountRepo.getByUsername(Constants.ADMIN_USERNAME);
         TestUtils.mockRequestCycle();
         authService.signin(Constants.ADMIN_USERNAME, Constants.PASSWORD);
 
@@ -166,8 +166,8 @@ public class PostPermissionsTest {
 
     @After
     public void after(){
-        Account adminAcc = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
-        Account guestAcc = accountRepo.findByUsername(Constants.GUEST_USERNAME);
+        Account adminAcc = accountRepo.getByUsername(Constants.ADMIN_USERNAME);
+        Account guestAcc = accountRepo.getByUsername(Constants.GUEST_USERNAME);
 
         notificationRepo.clearNotifications(guestAcc.getId());
         notificationRepo.clearNotifications(adminAcc.getId());

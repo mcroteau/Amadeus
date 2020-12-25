@@ -1,8 +1,9 @@
 package social.amadeus;
 
-import io.github.mcroteau.Parakeet;
 import org.apache.log4j.Logger;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -13,7 +14,6 @@ import social.amadeus.mocks.MockPost;
 import social.amadeus.mocks.MockPostLike;
 import social.amadeus.model.Account;
 import social.amadeus.model.ActivityOutput;
-import social.amadeus.model.LikesOutput;
 import social.amadeus.model.Post;
 import social.amadeus.repository.AccountRepo;
 import social.amadeus.repository.NotificationRepo;
@@ -51,7 +51,7 @@ public class PostStreamTest {
     public void before(){
         TestUtils.mockRequestCycle();
 
-        Account adminAcc = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
+        Account adminAcc = accountRepo.getByUsername(Constants.ADMIN_USERNAME);
         Post postPre = new MockPost(adminAcc, Utils.getDate());
 
         authService.signin(Constants.ADMIN_USERNAME, Constants.PASSWORD);
@@ -98,8 +98,8 @@ public class PostStreamTest {
 
     @After
     public void after(){
-        Account adminAcc = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
-        Account guestAcc = accountRepo.findByUsername(Constants.GUEST_USERNAME);
+        Account adminAcc = accountRepo.getByUsername(Constants.ADMIN_USERNAME);
+        Account guestAcc = accountRepo.getByUsername(Constants.GUEST_USERNAME);
 
         notificationRepo.clearNotifications(adminAcc.getId());
 

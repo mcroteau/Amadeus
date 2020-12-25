@@ -22,7 +22,7 @@ public class AccountController {
 	Gson gson = new Gson();
 
 	@Autowired
-	private AccountService accountService;
+	AccountService accountService;
 
 
     @GetMapping(value="/account/info", produces="application/json")

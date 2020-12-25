@@ -55,19 +55,9 @@ public class AppStartup {
 		createApplicationGuest();
 		connectEm();
 
-		if(!isTestEnvironment()) {
+		if(!Utils.isTestEnvironment(env)) {
 			startupBackgroundJobs();
 		}
-	}
-
-	private boolean isTestEnvironment(){
-		String[] profiles = env.getActiveProfiles();
-		for(String profile: profiles){
-			if(profile.equals("test")){
-				return true;
-			}
-		}
-		return false;
 	}
 
 
@@ -94,7 +84,7 @@ public class AppStartup {
 	private void createApplicationAdministrator(){
 		
 		try{
-			Account existing = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
+			Account existing = accountRepo.getByUsername(Constants.ADMIN_USERNAME);
 			String password = io.github.mcroteau.resources.Constants.hash(Constants.PASSWORD);
 
 			if(existing == null){
@@ -108,12 +98,12 @@ public class AppStartup {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		log.info("Accounts : " + accountRepo.count());
+		log.info("Accounts : " + accountRepo.getCount());
 	}
 
 
 	private void createApplicationGuest(){
-		Account existing = accountRepo.findByUsername(Constants.GUEST_USERNAME);
+		Account existing = accountRepo.getByUsername(Constants.GUEST_USERNAME);
 		String password = utils.hash(Constants.GUEST_PASSWORD);
 
 		if(existing == null){
@@ -124,7 +114,7 @@ public class AppStartup {
 			account.setImageUri(Utils.getProfileImageUri());
 			accountRepo.save(account);
 		}
-		log.info("Accounts : " + accountRepo.count());
+		log.info("Accounts : " + accountRepo.getCount());
 	}
 
 
@@ -194,7 +184,7 @@ public class AppStartup {
 
 
 	private void generateMockAccounts(){
-		long count = accountRepo.count();
+		long count = accountRepo.getCount();
 		if(count == 2){
 			for(int m = 0; m < Constants.MOCK_ACCOUNTS; m++){
 				Account account = new Account();
@@ -211,7 +201,7 @@ public class AppStartup {
 			}
 		}
 
-		log.info("Accounts : " + accountRepo.count());
+		log.info("Accounts : " + accountRepo.getCount());
 	}
 
 
@@ -371,7 +361,7 @@ public class AppStartup {
 	private void generateAds(){
 		long count = flyerRepo.getCount();
 		if (count == 0) {
-			Account account = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
+			Account account = accountRepo.getByUsername(Constants.ADMIN_USERNAME);
 			Flyer flyer = new Flyer();
 			flyer.setImageUri(Utils.getFlyerImageUri());
 			flyer.setActive(true);
@@ -386,8 +376,8 @@ public class AppStartup {
 	}
 
 	private void connectEm(){
-		Account admin = accountRepo.findByUsername(Constants.ADMIN_USERNAME);
-		Account guest = accountRepo.findByUsername(Constants.GUEST_USERNAME);
+		Account admin = accountRepo.getByUsername(Constants.ADMIN_USERNAME);
+		Account guest = accountRepo.getByUsername(Constants.GUEST_USERNAME);
 		if(!friendRepo.isFriend(admin.getId(), guest.getId())) {
 			friendRepo.saveConnection(admin.getId(), guest.getId(), utils.getCurrentDate());
 		}
