@@ -21,12 +21,10 @@
 }
 
 #logo-logo{
-    background: #2d383c !important;
     /*background: #FF4F01 !important;*/
     box-shadow: none !important;
     border: solid 1px #1dd9fd;
-    padding:16px 16px 10px 16px;
-    text-shadow: none !important;
+    padding:16px 17px 10px 17px;
     -webkit-border-radius: 34px !important;
     -moz-border-radius: 34px !important;
     border-radius: 34px !important;
@@ -40,16 +38,17 @@
 }
 
 #logo-logo.active{
-    background: #0ad5fc !important;
+    background: #FF4F01 !important;
 }
 
 #logo-logo.active #latest-feed-total{
-    color:#000;
+    color:#fff;
 }
 
 #amadeus-symbol{
     font-size:27px;
     color:#fff;
+    text-shadow: none !important;
     font-family: Roboto !important;
     text-shadow: none !important;
 }
