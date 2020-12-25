@@ -73,7 +73,7 @@
 
                 <div ng-if="!$root.profilePage" id="search-container" class="float-left" style="z-index:100">
 <%--                    <div id="search-label" data-i18n="search.text">Search:</div>--%>
-                    <input ng-keyup="navigateSearch($event)" ng-blur="unfocusSearch($event)" type="text" class="search-input" id="search-box" placeholder="Search:" autocomplete="off"/>
+                    <input ng-keyup="navigateSearch($event)" ng-focus="focusSearch($event)" ng-blur="unfocusSearch($event)" type="text" class="search-input" id="search-box" placeholder="..." autocomplete="off"/>
                 </div>
 
                 <div style="position:relative">
@@ -389,8 +389,12 @@
 
         $scope.unfocusSearch = function($event){
             // $event.target.value = ''
+            $($event.target).attr('placeholder', '...')
         }
 
+        $scope.focusSearch = function($event){
+            $($event.target).attr('placeholder', 'Search:')
+        }
     });
 
 
