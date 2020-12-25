@@ -1136,8 +1136,18 @@ input[type="button"].button.retro{
 	border:solid 1px #1792b7;
 	border:solid 1px #54afff;
     border:solid 1px #4198e4;
+    background:#0AD5FC;
+    border:solid 1px #01badd;
 }
 
+.retro:hover,
+.button.retro:hover,
+input[type="button"].button.retro:hover,
+input[type="reset"].button.retro:hover,
+input[type="submit"].button.retro:hover,
+input[type="button"].button.retro:hover{
+    color:#fff;
+}
 
 .button.modern,
 input[type="button"].button.modern,
@@ -2087,7 +2097,7 @@ p{
     background:#5b7582;
     background:#617078;
     background:#13B1FF;
-    background:#000;
+    background:#0ad5fc;
 }
 .shared-post-container span{
     color:#fff;

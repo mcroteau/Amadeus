@@ -41,7 +41,7 @@
 
 
 <%--    <iframe id="viz" src="<%=viz%>" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>--%>
-        <iframe id="viz" src="/o/jsp/static/vis/space.jsp" style="overflow:hidden;z-index:1;position:absolute;bottom:0px;width:100%;height:300px"></iframe>
+<%--        <iframe id="viz" src="/o/jsp/static/vis/space.jsp" style="overflow:hidden;z-index:1;position:absolute;bottom:0px;width:100%;height:300px"></iframe>--%>
 <%--    <canvas id="sugarcookie" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></canvas>--%>
 
 
@@ -481,7 +481,6 @@
                     headers: {'Content-Type': undefined},
                 }).then(function (response) {
                     document.querySelector('#whatsup').value = ''
-                    $scope.beautiful = $scope.beautiful ? false : true
                     response.data.published = false
                     $scope.activities.unshift(response.data)
                     $rootScope.renderModal = false
