@@ -152,7 +152,7 @@
                 <div ng-if="!post.advertisement && !post.hidden" class="content-actions">
 
                     <div ng-if="!post.shared && post.postEditable">
-                        <a ng-click="updatePost(post.id)" href="javascript:" class="button small edit-update-button edit-fade-in" data-i18n="update.button">Update</a>
+                        <a ng-click="updatePost(post.id)" href="javascript:" class="button small retro edit-update-button edit-fade-in" data-i18n="update.button">Update</a>
                         <div class="image-edit edit-fade-in">
                             <a href="javascript:" class="button small yella" id="edit-image-button-{{post.id}}" data-i18n="images.button">+ Images</a>
                             <input ng-upload-change="uploadImages(post.id, $event)" type="file" name="imageFiles" id="edit-image-select-{{post.id}}" class="edit-image-input" multiple="multiple" data-id="{{post.id}}"/>

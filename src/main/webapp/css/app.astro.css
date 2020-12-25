@@ -5,11 +5,14 @@
     position:fixed !important;
     padding:3px;
     z-index: 100;
-    border: solid 1px #eff2f3;
+    /*border: solid 1px #eff2f3;*/
     background:rgba(0,0,0,0);
-    -webkit-border-radius: 3px !important;
-    -moz-border-radius: 3px !important;
-    border-radius: 3px !important;
+    -webkit-border-radius: 34px !important;
+    -moz-border-radius: 34px !important;
+    border-radius: 34px !important;
+    -webkit-border-radius: 2px !important;
+    -moz-border-radius: 2px !important;
+    border-radius: 2px !important;
 }
 
 #logo-container:hover{
@@ -17,19 +20,37 @@
 }
 
 #logo-logo{
+    /*background: #710BAA !important;*/
     box-shadow: none !important;
     border: solid 1px #1dd9fd;
-    padding:17px 36px 10px 15px;
+    padding:10px 16px 10px 16px;
     text-shadow: none !important;
-    -webkit-border-radius: 3px !important;
-    -moz-border-radius: 3px !important;
-    border-radius: 3px !important;
+    -webkit-border-radius: 34px !important;
+    -moz-border-radius: 34px !important;
+    border-radius: 34px !important;
+
+    -webkit-border-radius: 0px !important;
+    -moz-border-radius: 0px !important;
+    border-radius: 0px !important;
+    -webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,.19) !important;
+    -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,.19) !important;
+    box-shadow: 0px 3px 12px 0px rgba(0,0,0,.19) !important;
 }
 
 #amadeus-symbol{
-    font-size:23px;
-    font-family: Roboto-Medium !important;
+    font-size:27px;
+    color:#fff;
+    font-family: Roboto !important;
     text-shadow: none !important;
+}
+
+#latest-feed-total{
+    font-size:11px;
+    bottom:12px;
+    right:10px;
+    color:#FFFF44;
+    color: transparent;
+    font-family: Roboto !important;
 }
 
 #search-container{
@@ -73,8 +94,18 @@
 }
 
 
+
+#search-box,
+#search-box:hover,
+#search-box:focus,
+#search-box:active {
+    color:#000 !important;
+    background: #e4ecee !important;
+    border:solid 1px #dbe5e7 !important;
+}
+
 #search-box::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    color: #fff !important;
+    color: #000 !important;
     font-size:17px !important;
     font-family:Roboto-Light !important;
 }
@@ -173,9 +204,9 @@
     top:123px;
     z-index:100;
     background: #fff;
-    border-radius: 4px;
+    border-radius: 34px;
     padding:3px;
-    border:solid 1px #eff2f3;
+    /*border:solid 1px #eff2f3;*/
 }
 
 #notifications-href-wrapper:hover{
@@ -187,10 +218,15 @@
 }
 #notifications-href{
     font-size:23px;
-    border-radius: 4px;
+    border-radius: 34px;
     background: #eaf1f3;
-    padding:17px 36px 10px 15px;
+    background: #fff;
+    padding:17px 17px 13px 15px;
     margin:0px !important;
+
+    /*-webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,.09) !important;*/
+    /*-moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,.09) !important;*/
+    /*box-shadow: 0px 3px 12px 0px rgba(0,0,0,.09) !important;*/
 }
 
 #notifications-href:hover{
@@ -198,20 +234,15 @@
 }
 
 #notifications-count{
-    top: 3px !important;
+    top: 9px !important;
     left: 33px !important;
     position: absolute;
-    font-size:16px;
+    font-size:12px;
     font-family: Roboto !important;
     background: inherit;
     color: #000;
 }
 
-#latest-feed-total{
-    top:11px;
-    color:#FFFF44;
-    font-family: Roboto !important;
-}
 
 #profile-actions-href{
     margin-right:10px !important;
@@ -250,7 +281,7 @@
     width:70%;
 }
 .post-sep-dos{
-    background:#000;
+    background:#710BAA;
     width:30%;
 }
 

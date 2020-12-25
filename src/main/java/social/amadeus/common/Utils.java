@@ -55,7 +55,7 @@ public class Utils {
 	public static boolean isTestEnvironment(Environment env){
 		String[] profilesPre = env.getActiveProfiles();
 		List<String> profiles = Arrays.asList(profilesPre);
-		return !profiles.contains(Constants.TEST);
+		return profiles.contains(Constants.TEST);
 	}
 
 	public int generateRandomNumber(int max){
