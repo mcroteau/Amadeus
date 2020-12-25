@@ -557,7 +557,7 @@ public class AccountService {
     }
 
 
-    public Map<String, Object> profileData(HttpServletRequest request) {
+    public Map<String, Object> getProfileData(HttpServletRequest request) {
         Map<String, Object> respData = new HashMap<>();
 
         if(!authService.isAuthenticated()){

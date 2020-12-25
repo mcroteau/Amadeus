@@ -28,7 +28,7 @@
 
 <%
     String[] vizs = {"/o/jsp/static/vis/candy.jsp",
-//                     "/o/jsp/static/vis/graph.jsp",
+                     "/o/jsp/static/vis/graph.jsp",
 //                     "/o/jsp/static/vis/pond.jsp",
 //                     "/o/jsp/static/vis/rah.jsp",
                      "/o/jsp/static/vis/correct.jsp",
@@ -40,8 +40,8 @@
 %>
 
 
-<%--    <iframe id="viz" src="<%=viz%>" style="z-index:1;position:fixed;bottom:0px;width:71%;height:79%;"></iframe>--%>
-<%--        <iframe id="viz" src="/o/jsp/static/vis/space.bare.jsp" style="z-index:1;position:fixed;bottom:0px;width:72%;height:79%;"></iframe>--%>
+<%--    <iframe id="viz" src="<%=viz%>" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>--%>
+        <iframe id="viz" src="/o/jsp/static/vis/space.jsp" style="overflow:hidden;z-index:1;position:absolute;bottom:0px;width:100%;height:300px"></iframe>
 <%--    <canvas id="sugarcookie" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></canvas>--%>
 
 
@@ -54,6 +54,29 @@
 
     <div id="linear-indicator">
         <div class="indeterminate" style="width: 100%"></div>
+    </div>
+
+    <div id="notifications-wrapper">
+        <a ng-click="toggleNotifications()" href="javascript:" class="navigation-href notifications-popup float-right" id="notifications-href" style="margin-top:0px;margin-bottom:10px;">N<span id="notifications-count">{{data.notificationsCount}}</span></a>
+
+        <div ng-show="showNotifications" id="notifications-outer-container" class="main-shadow">
+
+            <a ng-click="clearNotifications()" ng-if="data.notifications.length > 0"  href="javascript:" id="clear-notifications" class="right-float href-dotted-light" style="margin-bottom:10px; margin-right:10px;" data-id="${sessionScope.account.id}" data-i18n="clear.text">Clear</a>
+
+            <div class="notification" ng-controller="mixController" ng-repeat="notification in data.notifications">
+
+                <a ng-if="!notification.invite" ng-click="navigatePost(notification.postId)" href="javascript:">
+                    <span ng-if="notification.liked">{{notification.name}} <span data-i18n="liked.post.text">liked your post.</span></span>
+                    <span ng-if="notification.shared">{{notification.name}} <span data-i18n="shared.post.text">shared your post.</span></span>
+                    <span ng-if="notification.commented">{{notification.name}} <span data-i18n="commented.post.text">commented your post.</span></span>
+                </a>
+
+                <a ng-href="#!/invitations" ng-if="notification.invite" href="javascript:" class="invite-ref">{{notification.name}} <span data-i18n="invited.connect.text">invited you to connect.</span></a>
+
+            </div>
+
+            <div class="notification"><a href="javascript:"><span ng-if="data.notifications.length == 0" data-i18n="no.notifications">No new notifications</span></a></div>
+        </div>
     </div>
 
 	<div id="layout-container" style="position:relative;">

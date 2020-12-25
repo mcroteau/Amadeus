@@ -3,6 +3,7 @@
     <script type="text/javascript" src="/o/js/packages/paper.full.js"></script>
     <style>
         #space{
+            height:290px;
             width:100%;
         }
     </style>

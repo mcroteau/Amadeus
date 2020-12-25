@@ -3,35 +3,12 @@
 
     <div id="post-right">
 
-        <a ng-click="toggleNotifications()" href="javascript:" class="navigation-href notifications-popup float-right" id="notifications-href" style="margin-top:0px;margin-bottom:10px;">N<span id="notifications-count">{{data.notificationsCount}}</span></a>
-
-        <div ng-show="showNotifications" id="notifications-outer-container" class="main-shadow">
-
-            <a ng-click="clearNotifications()" ng-if="data.notifications.length > 0"  href="javascript:" id="clear-notifications" class="right-float href-dotted-light" style="margin-bottom:10px; margin-right:10px;" data-id="${sessionScope.account.id}" data-i18n="clear.text">Clear</a>
-
-            <div class="notification" ng-controller="mixController" ng-repeat="notification in data.notifications">
-
-                <a ng-if="!notification.invite" ng-click="navigatePost(notification.postId)" href="javascript:">
-                    <span ng-if="notification.liked">{{notification.name}} <span data-i18n="liked.post.text">liked your post.</span></span>
-                    <span ng-if="notification.shared">{{notification.name}} <span data-i18n="shared.post.text">shared your post.</span></span>
-                    <span ng-if="notification.commented">{{notification.name}} <span data-i18n="commented.post.text">commented your post.</span></span>
-                </a>
-
-                <a ng-href="#!/invitations" ng-if="notification.invite" href="javascript:" class="invite-ref">{{notification.name}} <span data-i18n="invited.connect.text">invited you to connect.</span></a>
-
-            </div>
-
-            <div class="notification"><a href="javascript:"><span ng-if="data.notifications.length == 0" data-i18n="no.notifications">No new notifications</span></a></div>
-        </div>
-
-
         <span id="expressed" class="information left-float" data-i18n="express.text">Express!</span>
 
         <br class="clear"/>
 
         <div id="whatsup-wrapper">
-            <textarea placeholder="The Lax Cow jumped over the Moon." id="whatsup" name="content"></textarea>
-
+            <textarea placeholder="The Lazy Cow jumped over the Moon." id="whatsup" name="content"></textarea>
         </div>
 
         <div style="text-align:center;width:100%; position:relative;">

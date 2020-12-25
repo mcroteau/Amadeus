@@ -153,8 +153,8 @@ public class AccountController {
 
 
 	@RequestMapping(value="/profile/data", method=RequestMethod.GET, produces="application/json")
-	public @ResponseBody String profileData(HttpServletRequest request){
-    	return gson.toJson(accountService.profileData(request));
+	public @ResponseBody String getProfileData(HttpServletRequest request){
+    	return gson.toJson(accountService.getProfileData(request));
 	}
 
 
