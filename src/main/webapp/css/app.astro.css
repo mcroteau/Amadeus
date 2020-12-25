@@ -21,10 +21,11 @@
 }
 
 #logo-logo{
-    /*background: #710BAA !important;*/
+    background: #2d383c !important;
+    /*background: #FF4F01 !important;*/
     box-shadow: none !important;
     border: solid 1px #1dd9fd;
-    padding:13px 16px 13px 16px;
+    padding:16px 16px 10px 16px;
     text-shadow: none !important;
     -webkit-border-radius: 34px !important;
     -moz-border-radius: 34px !important;
@@ -33,9 +34,17 @@
     -webkit-border-radius: 0px !important;
     -moz-border-radius: 0px !important;
     border-radius: 0px !important;
-    -webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,.19) !important;
-    -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,.19) !important;
-    box-shadow: 0px 3px 12px 0px rgba(0,0,0,.19) !important;
+    /*-webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,.19) !important;*/
+    /*-moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,.19) !important;*/
+    /*box-shadow: 0px 3px 12px 0px rgba(0,0,0,.19) !important;*/
+}
+
+#logo-logo.active{
+    background: #0ad5fc !important;
+}
+
+#logo-logo.active #latest-feed-total{
+    color:#000;
 }
 
 #amadeus-symbol{
@@ -46,11 +55,11 @@
 }
 
 #latest-feed-total{
-    font-size:11px;
-    bottom:12px;
+    font-size:12px;
+    top:12px;
     right:10px;
     color:#FFFF44;
-    color: transparent;
+    color: #fff;
     font-family: Roboto !important;
 }
 
@@ -149,6 +158,8 @@
 }
 
 #profile-picture-actions-container{
+    right:14px;
+    margin-top:70px;
     box-shadow: none !important;
 }
 
@@ -239,9 +250,6 @@
     /*box-shadow: 0px 3px 12px 0px rgba(0,0,0,.09) !important;*/
 }
 
-#notifications-href:hover{
-    background: #e4ecee;
-}
 
 #notifications-count{
     top: 9px !important;
@@ -289,12 +297,12 @@
 }
 
 .post-sep-uno{
-    background:#710BAA;
-    width:70%;
+    background: #3f5d62;
+    width:100%;
 }
 .post-sep-dos{
     background:#710BAA;
-    width:30%;
+    width:0%;
 }
 
 .post-sep-tres{
