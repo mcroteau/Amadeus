@@ -7,7 +7,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 
-    <link rel="icon" type="image/png" href="/o/images/icon.png?v=<%=System.currentTimeMillis()%>">
+    <link rel="icon" type="image/png" href="/o/images/favicon.png?v=<%=System.currentTimeMillis()%>">
 
     <script type="text/javascript" src="/o/js/packages/angular.min.js"></script>
     <script type="text/javascript" src="/o/js/packages/angular-sanitize.js"></script>
@@ -41,7 +41,7 @@
 
 
 <%--    <iframe id="viz" src="<%=viz%>" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>--%>
-        <iframe id="viz" src="/o/jsp/static/vis/space.jsp" style="overflow:hidden;z-index:1;position:absolute;bottom:0px;width:100%;height:300px"></iframe>
+<%--        <iframe id="viz" src="/o/jsp/static/vis/space.jsp" style="overflow:hidden;z-index:1;position:absolute;bottom:0px;width:100%;height:300px"></iframe>--%>
 <%--    <canvas id="sugarcookie" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></canvas>--%>
 
 
@@ -105,7 +105,7 @@
                 </div>
 
                 <div style="position:relative">
-                    <div id="navigation-container" class="float-right">
+                    <div id="navigation-container">
                         <a ng-click="toggleProfile()" href="javascript:" id="profile-actions-href" class="profile-popup" style="margin-right:37px;">
                             <img src="${sessionScope.imageUri}" id="profile-ref-image" style="z-index:1"/>
                             <span ng-show="data.messagesCount" id="base-notifications-count">{{data.messagesCount}}</span>

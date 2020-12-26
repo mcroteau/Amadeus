@@ -6,53 +6,28 @@
     }
 
     #top-inner-container{
-        margin-left:81px;
-        margin-bottom:0px;
-    }
-
-    #top-outer-container  #navigation-container{
-        top:0px;
-        left:0px;
-        right:0px !important;
-        display:none;
-        z-index:3;
-    }
-
-    #navigation-outer-container{
-        position: absolute;
-        right: 0px !important;
-        top: 62px;
+        margin:0px;
+        top: 3px;
     }
 
     #logo-container{
-        width:100%;
+        top:90px;
+        left:0px;
+        height:70px;
         margin:auto;
+        padding:0px;
+        box-shadow: none;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
     }
-
-    #logo-container{
-        right:0px;
-        left:0px;
+    #logo-container:hover{
+        border:solid 1px #ffffff !important;
     }
 
     #logo-logo{
         z-index:1;
         text-align:center;
-        height: 41px;
-        padding-left:0px;
-        padding-right:0px;
-        padding-bottom:0px;
-        padding-top:12px;
-        background:#0ad5fc !important;
         position: relative;
-    }
-
-    #logo-logo #amadeus-symbol{
-        font-size:32px;
-        font-family: Roboto !important;
-    }
-
-    #logo-logo:hover{
-        background:#FF4F01 !important;
     }
 
     #amadeus-logo{
@@ -60,9 +35,8 @@
     }
 
     #latest-feed-total{
-        display:none !important;
-        left:0px !important;
-        position:relative !important;
+        bottom:20px;
+        right:0px !important;
     }
 
     #profile-actions-href{
@@ -74,56 +48,79 @@
     }
 
     #mobile-outer-container {
-        background:#efefef !important;
-        height:63px;
+        top:3px;
+        left:67px;
+        right:3px;
+        z-index:300;
+        position:fixed;
         display: block !important;
     }
 
     #mobile-search-container {
-        right:64px;
+        right:3px;
         left:3px;
         z-index:100;
-        height:72px;
         display:block;
-        margin:auto;
         z-index:1;
         position:absolute;
+        -webkit-border-radius: 10px !important;
+        -moz-border-radius: 10px !important;
+        border-radius: 10px !important;
+        border: solid 1px #eff2f3;
+        margin:auto;
+        margin-top: 2px;
+        padding:3px;
+        background: #fff;
     }
-    #profile-ref-image{
-        margin-top:-2px;
-    }
-    #mobile-search-container #search-box{
-        top:6px;
+
+    #search-box{
         height:51px;
         display:block;
         box-sizing: border-box;
-        min-width: 100%;
-        max-width: 100%;
-        width: calc(100% - 80px);
+        margin:0px;
+        width: calc(100% - 10px);
+        position: relative;
         -webkit-box-shadow: 0px 3px 4px 0px rgba(0,0,0,.09);
         -moz-box-shadow: 0px 3px 4px 0px rgba(0,0,0,.09);
         box-shadow: 0px 3px 4px 0px rgba(0,0,0,.09);
-        border:solid 1px rgba(0, 0, 0, 0.1) !important;
-    }
+        background: #E4ECEE !important;
+        border:solid 1px #dbe5e7 !important;
 
-    #mobile-search-container #search-label{
-        top:6px;
-    }
-
-    #mobile-outer-container #navigation-outer-container{
-        right:0px;
-        top:59px;
-        position:absolute;
+        background: #37585f !important;
+        border:solid 1px #2f4c53 !important;
     }
 
     #search-container{
         display:none;
     }
 
-    #content-container{
-        width:96%;
-        margin: 5px auto 119px auto;
+    #navigation-outer-container{
+        top:10px;
+        right:initial !important;
+        left:67px !important;
+        position:fixed !important;
     }
+
+    #profile-ref-image{
+        padding:6px;
+    }
+
+    #notifications-href-wrapper{
+        top:179px;
+        left:0px;
+        padding:0px;
+        border: none;
+        background: transparent;
+    }
+    #notifications-href-wrapper:hover{
+        border:none;
+        background: transparent;
+    }
+    #content-container{
+        width:calc(100% - 79px);
+        margin: 5px auto 119px 70px;
+    }
+
     #activities-wrapper{
         width:100%;
         float:none;
@@ -143,10 +140,10 @@
         height:81px !important;
         /*padding:0px;*/
         width: calc(100% - 59px) !important;
-        border:solid 1px #84c5ff !important;
+        /*border:solid 1px #84c5ff !important;*/
     }
     #whatsup:focus{
-        border:solid 1px #84c5ff !important;
+        border:solid 1px #F0F4F5 !important;
     }
     #actions-container{
         margin-top:2px;
@@ -156,10 +153,12 @@
         margin:0px auto 10px auto;
     }
     #notifications-outer-container{
-        top:34px;
+        top:120px;
+        z-index: 400;
     }
     #profile-picture-actions-container{
-        right:3px;
+        left:-63px;
+        z-index: 400;
     }
     #posts-fellows-fems-outer-container{
         display:none;

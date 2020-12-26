@@ -6,7 +6,7 @@
     padding:3px;
     z-index: 100;
     border: solid 1px #eff2f3;
-    background:rgba(0,0,0,0);
+    border: solid 1px #fff;
     -webkit-border-radius: 34px !important;
     -moz-border-radius: 34px !important;
     border-radius: 34px !important;
@@ -24,7 +24,7 @@
     /*background: #FF4F01 !important;*/
     box-shadow: none !important;
     border: solid 1px #1dd9fd;
-    padding:16px 17px 10px 17px;
+    padding:16px 18px 10px 18px;
     -webkit-border-radius: 34px !important;
     -moz-border-radius: 34px !important;
     border-radius: 34px !important;
@@ -32,32 +32,31 @@
     -webkit-border-radius: 0px !important;
     -moz-border-radius: 0px !important;
     border-radius: 0px !important;
-    /*-webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,.19) !important;*/
-    /*-moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,.19) !important;*/
-    /*box-shadow: 0px 3px 12px 0px rgba(0,0,0,.19) !important;*/
+    /*-webkit-box-shadow: 0px 3px 29px 0px rgba(0,0,0,.19) !important;*/
+    /*-moz-box-shadow: 0px 3px 29px 0px rgba(0,0,0,.19) !important;*/
+    /*box-shadow: 0px 3px 29px 0px rgba(0,0,0,.19) !important;*/
+    background:#fff !important;
+    border:solid 1px #fff !important;
 }
 
 #logo-logo.active{
-    background: #FF4F01 !important;
-}
-
-#logo-logo.active #latest-feed-total{
-    color:#fff;
+    background: #F0F4F5 !important;
 }
 
 #amadeus-symbol{
-    font-size:27px;
-    color:#fff;
+    font-size:37px;
+    color:#000;
     text-shadow: none !important;
-    font-family: Roboto !important;
+    font-family: Roboto-Medium !important;
     text-shadow: none !important;
+    border-bottom:solid 3px #FF4F01;
 }
 
 #latest-feed-total{
     font-size:12px;
     top:12px;
-    right:10px;
-    color: #fff;
+    right:3px;
+    color: #000;
     font-family: Roboto !important;
 }
 
@@ -80,8 +79,6 @@
     line-height: 1.0em;
     font-size: 24px;
     color:#fff !important;
-    background: #aacad0 !important;
-    border:solid 1px #fff !important;
     background: #658c94 !important;
     border:solid 1px #5d828a !important;
     -webkit-box-shadow: none;
@@ -107,13 +104,16 @@
 #search-box:hover,
 #search-box:focus,
 #search-box:active {
-    color:#000 !important;
+    color:#fff !important;
     background: #e4ecee !important;
     border:solid 1px #dbe5e7 !important;
+
+    background: #37585f !important;
+    border:solid 1px #2f4c53 !important;
 }
 
 #search-box::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    color: #000 !important;
+    color: #fff !important;
     font-size:17px !important;
     font-family:Roboto-Light !important;
 }
@@ -215,33 +215,35 @@
 
 #notifications-outer-container {
     position: relative;
+    z-index:400;
 }
 
 #notifications-href-wrapper{
     position:fixed;
-    left:42px;
-    top:118px;
+    left:40px;
+    top:138px;
     z-index:100;
     background: #fff;
-    border-radius: 34px;
     padding:3px;
-    /*border:solid 1px #eff2f3;*/
+    border:solid 1px #fff;
 }
 
 #notifications-href-wrapper:hover{
     background: #fff;
+    border:solid 1px #eff2f3;
 }
 
 #notifications-href-inner {
     position: relative;
 }
 #notifications-href{
-    font-size:23px;
+    font-size:37px;
     border-radius: 34px;
     background: #eaf1f3;
     background: #fff;
-    padding:17px 17px 13px 15px;
+    padding:16px 19px 10px 18px;
     margin:0px !important;
+    font-family: Roboto-Medium !important;
 
     /*-webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,.09) !important;*/
     /*-moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,.09) !important;*/
@@ -251,7 +253,7 @@
 
 #notifications-count{
     top: 9px !important;
-    left: 33px !important;
+    left: 43px !important;
     position: absolute;
     font-size:12px;
     font-family: Roboto !important;
@@ -295,7 +297,9 @@
 }
 
 .post-sep-uno{
-    background: #3f5d62;
+    background: #CC0274;
+    background: #FF4F01;
+    /*background: #FF4F01;*/
     width:100%;
 }
 .post-sep-dos{
@@ -335,6 +339,7 @@
 
 #top-inner-container,
 #content-container{
+    width:793px;
     margin-left:156px;
 }
 
