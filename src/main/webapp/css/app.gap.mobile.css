@@ -12,7 +12,7 @@
 
     #logo-container{
         top:10px;
-        left:4px;
+        left:14px;
         margin:auto;
         padding:0px;
         box-shadow: none;
@@ -26,8 +26,9 @@
         position: relative;
     }
 
-    #amadeus-logo{
+    #amadeus-symbol{
         margin: auto;
+        font-size:29px;
     }
 
     #latest-feed-total{
@@ -35,8 +36,11 @@
         right:0px !important;
     }
 
-    #profile-actions-href{
-        margin-right:0px !important;
+    #profile-actions-href {
+        right: 10px;
+        top: 5px;
+        position: absolute;
+        margin:auto !important;
     }
 
     .render-desktop{
@@ -44,18 +48,19 @@
     }
 
     #mobile-outer-container {
-        top:3px;
-        left:67px;
-        right:3px;
-        z-index:300;
-        position:fixed;
+        top:6px;
+        left:10px;
+        right:10px;
+        z-index:1;
+        height:72px;
+        position:absolute;
         display: block !important;
     }
 
     #mobile-search-container {
-        right:3px;
-        left:3px;
-        z-index:100;
+        right:98px;
+        left:75px;
+        z-index:0;
         display:block;
         z-index:1;
         position:absolute;
@@ -82,31 +87,32 @@
         display:none;
     }
 
-    #navigation-outer-container{
-        top:90px;
-        right:initial !important;
-        left:67px !important;
-        position:fixed !important;
-    }
-
     #profile-ref-image{
         padding:6px;
     }
 
+    #notifications-wrapper{
+        display:none;
+        background: transparent !important;
+    }
+
     #notifications-href-wrapper{
-        top:179px;
-        left:0px;
+        top:3px;
+        right:100px;
+        left:initial;
         padding:0px;
         border: none;
-        background: transparent;
+        position:fixed;
+        background: transparent !important;
     }
+
     #notifications-href-wrapper:hover{
         border:none;
         background: transparent;
     }
     #content-container{
-        width:calc(100% - 79px);
-        margin: 5px auto 119px 70px;
+        width:95%;
+        margin: 5px auto 119px auto;
     }
 
     #activities-wrapper{
@@ -141,7 +147,11 @@
         margin:0px auto 10px auto;
     }
     #notifications-outer-container{
-        top:120px;
+        top:70px;
+        right:40px;
+        width:200px;
+        left: initial;
+        position: fixed;
         z-index: 400;
     }
     #profile-picture-actions-container{
