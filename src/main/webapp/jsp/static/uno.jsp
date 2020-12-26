@@ -76,17 +76,19 @@
         }
 
         #amadeus-home-logo{
-            border:solid 1px #eff2f3;
+            border-radius: 6px;
+            -moz-border-radius: 6px;
+            -webkit-border-radius: 6px;
+            background: rgb(255,69,174);
+            background: linear-gradient(180deg, rgba(255,69,174,1) 0%, rgba(249,255,34,1) 14%, rgba(45,245,0,1) 37%, rgba(84,175,255,1) 59%, rgba(113,11,170,1) 100%);
 
-            background: rgb(208,48,138);
-            background: linear-gradient(117deg, rgba(208,48,138,1) 40%, rgba(113,11,170,1) 100%);
-            /*-webkit-box-shadow: 0px 3px 49px 0px rgba(0,0,0,.29);*/
-            /*-moz-box-shadow: 0px 3px 49px 0px rgba(0,0,0,.29);*/
-            /*box-shadow: 0px 3px 49px 0px rgba(0,0,0,.29);*/
+            -webkit-box-shadow: 0px 3px 49px 0px rgba(0,0,0,.19);
+            -moz-box-shadow: 0px 3px 49px 0px rgba(0,0,0,.19);
+            box-shadow: 0px 3px 49px 0px rgba(0,0,0,.19);
         }
 
         #amadeus-symbol{
-            color:#fff;
+            color: #fff;
             font-size:42px;
             /*border-bottom:solid 4px #FF4F01;*/
         }
@@ -116,7 +118,7 @@
         </div>
     </parakeet:isAuthenticated>
 
-    <a href="/o/uno" id="amadeus-home-logo" style="display:inline-block;padding:28px 37px;text-decoration: none;">
+    <a href="/o/uno" id="amadeus-home-logo" style="display:inline-block;padding:37px 37px 28px 37px;text-decoration: none;">
         <span class="medium" id="amadeus-symbol" style="display:block">&Delta;</span>
     </a>
 

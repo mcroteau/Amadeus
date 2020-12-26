@@ -55,7 +55,7 @@ public class AppStartup {
 
 	@PostConstruct
 	public void init() {
-		Parakeet.perch(accessor);
+		Parakeet.configure(accessor);
 		createApplicationRoles();
 		createApplicationAdministrator();
 		createApplicationGuest();
@@ -114,7 +114,7 @@ public class AppStartup {
 
 		if(existing == null){
 			Account account = new Account();
-			account.setName("Kelly");
+			account.setName("Marisa");
 			account.setUsername(Constants.GUEST_USERNAME);
 			account.setPassword(password);
 			account.setImageUri(Utils.getProfileImageUri());
