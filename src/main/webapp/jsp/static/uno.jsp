@@ -141,7 +141,7 @@
 
         <div style="text-align:right; margin-top:30px;">
             <input type="hidden" name="targetUri" value="${targetUri}" />
-            <input type="submit" class="button yella" value="Signin" style="width:100%;">
+            <input type="submit" class="button retro" value="Signin" style="width:100%;">
         </div>
 
         <br/>

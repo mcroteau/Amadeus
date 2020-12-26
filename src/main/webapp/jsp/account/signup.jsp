@@ -97,7 +97,7 @@
 
 
     <div style="width:100%;margin-top:41px;text-align:center;margin-bottom:30px; ">
-        <input type="submit" class="button yella" id="signup-button" value="Signup!" style="width:100%;"/>
+        <input type="submit" class="button retro" id="signup-button" value="Signup!" style="width:100%;"/>
 
         <p style="text-align: left; margin-top:30px;">Are you already one of our delicate flowers?</p>
 
