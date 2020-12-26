@@ -28,7 +28,8 @@ BQi
         </list>
     </property>
 </bean>
-mvn install:install-file -Dfile=<path-to-file> -DgroupId=<group-id> -DartifactId=<artifact-id> -Dversion=<version> -Dpackaging=<packaging>
+
+mvn install:install-file -Dfile=output/parakeet-0.5-SNAPSHOT.jar -DgroupId=io.github.mcroteau -DartifactId=parakeet -Dversion=0.5-SNAPSHOT -Dpackaging=jar
 
 GASTC775
 Q84RSG8Q
