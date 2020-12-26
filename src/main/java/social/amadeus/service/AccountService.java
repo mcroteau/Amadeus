@@ -350,8 +350,9 @@ public class AccountService {
 
         }catch(Exception e){
             e.printStackTrace();
+            log.info(e.getMessage());
             redirect.addFlashAttribute("account", account);
-            redirect.addFlashAttribute("error", "Will you contact us? Email us with the subject, support@amadeus.social. Our programmers missed something. Gracias!");
+            redirect.addFlashAttribute("message", "Will you contact us? Email us with the subject, support@amadeus.social. Our programmers missed something. Gracias!");
             return("redirect:/signup?uri=" + uri);
         }
 

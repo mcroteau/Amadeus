@@ -73,12 +73,12 @@
         #content-container{
             width:570px;
         }
-        /*#logo-logo{*/
-        /*    background: #efefef !important;*/
-        /*}*/
-        /*#logo-logo:hover{*/
-        /*    background: #efefef !important;*/
-        /*}*/
+        #logo-logo{
+            background: #efefef !important;
+        }
+        #logo-logo:hover{
+            background: #efefef !important;
+        }
     </style>
 
 </head>

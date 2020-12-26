@@ -57,13 +57,6 @@
     font-family: Roboto !important;
 }
 
-#profile-profile-image{
-    border:none !important;
-    background: rgb(255,69,174);
-    background: linear-gradient(180deg, rgba(255,69,174,1) 0%, rgba(249,255,34,1) 14%, rgba(45,245,0,1) 37%, rgba(84,175,255,1) 60%, rgba(113,11,170,1) 85%);
-}
-
-
 #search-container{
     height: 61px;
     border: solid 1px #eff2f3;
@@ -157,6 +150,12 @@
 #navigation-container{
     left:initial;
     right:10px;
+}
+
+#profile-profile-image{
+    border:none !important;
+    background: rgb(255,69,174);
+    background: linear-gradient(180deg, rgba(255,69,174,1) 0%, rgba(249,255,34,1) 14%, rgba(45,245,0,1) 37%, rgba(84,175,255,1) 60%, rgba(113,11,170,1) 85%);
 }
 
 #profile-picture-actions-container{
@@ -334,6 +333,11 @@
     -webkit-box-shadow: 0px 1px 4px 0px rgba(0,0,0,.09) !important;
     -moz-box-shadow: 0px 1px 4px 0px rgba(0,0,0,.09) !important;
     box-shadow: 0px 1px 4px 0px rgba(0,0,0,.09) !important;
+}
+
+
+.shared-post-container{
+    background: #ff45ae;
 }
 
 
