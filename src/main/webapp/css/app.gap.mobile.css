@@ -11,17 +11,13 @@
     }
 
     #logo-container{
-        top:90px;
-        left:0px;
-        height:70px;
+        top:10px;
+        left:4px;
         margin:auto;
         padding:0px;
         box-shadow: none;
         -moz-box-shadow: none;
         -webkit-box-shadow: none;
-    }
-    #logo-container:hover{
-        border:solid 1px #ffffff !important;
     }
 
     #logo-logo{
@@ -80,14 +76,6 @@
         margin:0px;
         width: calc(100% - 10px);
         position: relative;
-        -webkit-box-shadow: 0px 3px 4px 0px rgba(0,0,0,.09);
-        -moz-box-shadow: 0px 3px 4px 0px rgba(0,0,0,.09);
-        box-shadow: 0px 3px 4px 0px rgba(0,0,0,.09);
-        background: #E4ECEE !important;
-        border:solid 1px #dbe5e7 !important;
-
-        background: #37585f !important;
-        border:solid 1px #2f4c53 !important;
     }
 
     #search-container{
@@ -95,7 +83,7 @@
     }
 
     #navigation-outer-container{
-        top:10px;
+        top:90px;
         right:initial !important;
         left:67px !important;
         position:fixed !important;

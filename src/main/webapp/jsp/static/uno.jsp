@@ -7,7 +7,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/images/favicon.png?v=<%=System.currentTimeMillis()%>">
+    <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/images/icon.png?v=<%=System.currentTimeMillis()%>">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/app.gap.css?v=<%=System.currentTimeMillis()%>">
 
     <style type="text/css">
@@ -77,15 +77,18 @@
 
         #amadeus-home-logo{
             border:solid 1px #eff2f3;
+
+            background: rgb(208,48,138);
+            background: linear-gradient(117deg, rgba(208,48,138,1) 40%, rgba(113,11,170,1) 100%);
             /*-webkit-box-shadow: 0px 3px 49px 0px rgba(0,0,0,.29);*/
             /*-moz-box-shadow: 0px 3px 49px 0px rgba(0,0,0,.29);*/
             /*box-shadow: 0px 3px 49px 0px rgba(0,0,0,.29);*/
         }
 
         #amadeus-symbol{
-            color:#000;
+            color:#fff;
             font-size:42px;
-            border-bottom:solid 4px #FF4F01;
+            /*border-bottom:solid 4px #FF4F01;*/
         }
         .href-dotted,
         .href-dotted-amadeus{

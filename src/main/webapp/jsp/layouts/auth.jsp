@@ -8,7 +8,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/images/favicon.png?v=<%=System.currentTimeMillis()%>">
+    <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/images/icon.png?v=<%=System.currentTimeMillis()%>">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/app.css?v=<%=System.currentTimeMillis()%>">
 </head>
 <body>
@@ -95,6 +95,10 @@
             font-family:Roboto-Medium !important;
         }
 
+        #logo-logo{
+            background: rgb(214,200,137);
+            background: linear-gradient(117deg, rgba(214,200,137,1) 14%, rgba(59,29,18,1) 100%) !important;
+        }
         #amadeus{
             height:121px;
             fill:#43a7fb;

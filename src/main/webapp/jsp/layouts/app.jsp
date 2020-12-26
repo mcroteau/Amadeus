@@ -6,12 +6,14 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="icon" type="image/png" href="/o/images/favicon.png?v=<%=System.currentTimeMillis()%>">
+    <link rel="icon" type="image/png" href="/o/images/icon.png?v=<%=System.currentTimeMillis()%>">
 	<link rel="stylesheet" href="/o/css/app.css?v=<%=System.currentTimeMillis()%>">
 
     <style>
         #logo-logo,
         #logo-logo:hover{
+            background: rgb(214,200,137);
+            background: linear-gradient(117deg, rgba(214,200,137,1) 14%, rgba(59,29,18,1) 100%);
         }
         #content-header{
             text-align: center;
@@ -66,10 +68,6 @@
             border: solid 1px #ccc !important;
         }
 
-        #form-action-container{
-            margin-top:30px;
-            text-align: right;
-        }
         #content-container{
             width:570px;
         }
