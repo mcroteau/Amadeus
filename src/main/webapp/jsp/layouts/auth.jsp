@@ -99,19 +99,21 @@
             background: rgb(214,200,137);
             background: linear-gradient(117deg, rgba(214,200,137,1) 14%, rgba(59,29,18,1) 100%) !important;
         }
-        #amadeus{
-            height:121px;
-            fill:#43a7fb;
-            fill:#000;
+        #logo-logo:hover{
+            background: rgb(214,200,137);
+            background: linear-gradient(117deg, rgba(214,200,137,1) 14%, rgba(59,29,18,1) 100%) !important;
+        }
+        #amadeus-logo{
+            fill:#fff;
         }
     </style>
 
     <div id="top-outer-container">
         <a href="/o/" id="logo-logo">
-            <span class="medium" id="amadeus-symbol">&Delta;</span>
-<%--            <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">--%>
-<%--                <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>--%>
-<%--            </svg>--%>
+<%--            <span class="medium" id="amadeus-symbol">&Delta;</span>--%>
+            <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
+                <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>
+            </svg>
         </a>
         <br class="clear"/>
     </div>

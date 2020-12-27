@@ -1138,8 +1138,10 @@ input[type="button"].button.retro{
     border:solid 1px #4198e4;
     background:#0AD5FC;
     border:solid 1px #01badd;
-    background:#710baa;
+    background: #710baa;
     border:solid 1px #69089f;
+    background: #54afff;
+    border:solid 1px #54afff;
 }
 
 .retro:hover,

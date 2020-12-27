@@ -10,25 +10,60 @@
         top: 3px;
     }
 
-    #logo-container{
+    #logo-mobile{
         top:10px;
         left:14px;
-        margin:auto;
-        padding:0px;
-        box-shadow: none;
-        -moz-box-shadow: none;
-        -webkit-box-shadow: none;
+        position: fixed;
+        z-index: 301;
     }
 
-    #logo-logo{
-        z-index:1;
-        text-align:center;
-        position: relative;
+    #base-navigation-container{
+        background: #710BAA;
+        z-index:302;
+        position:fixed;
+        top:50px;
+        left:30px;
+        border-radius: 4px;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
     }
 
-    #amadeus-symbol{
-        margin: auto;
-        font-size:29px;
+    #base-navigation-container a{
+        display:block;
+        padding:20px;
+        text-align: left;
+        text-decoration: none;
+        color:#fff;
+        font-size: 17px;
+    }
+
+    #base-navigation-container a:hover{
+        background:#d953a0;
+    }
+
+    #mobile-notifications{
+        color: #fff;
+        right:0px;
+        top:0px;
+        z-index:100;
+        position:absolute;
+        display:block;
+        padding:3px 7px;
+        background: #d953a0;
+        text-decoration: none;
+        border-radius: 20px;
+        -moz-border-radius: 20px;
+        -webkit-border-radius: 20px;
+    }
+
+    #logo-container{
+        display:none;
+    }
+
+    #logo-mobile #logo-container{
+        display:block;
+        top:initial;
+        left:initial;
     }
 
     #latest-feed-total{
@@ -36,11 +71,9 @@
         right:0px !important;
     }
 
-    #profile-actions-href {
-        right: 10px;
-        top: 5px;
-        position: absolute;
-        margin:auto !important;
+    #navigation-container,
+    #profile-actions-href{
+        display:none;
     }
 
     .render-desktop{
@@ -58,11 +91,10 @@
     }
 
     #mobile-search-container {
-        right:98px;
+        right:0px;
         left:75px;
-        z-index:0;
-        display:block;
         z-index:1;
+        display:block;
         position:absolute;
         -webkit-border-radius: 10px !important;
         -moz-border-radius: 10px !important;
@@ -72,6 +104,10 @@
         margin-top: 2px;
         padding:3px;
         background: #fff;
+    }
+
+    #notifications-wrapper{
+        display: none;
     }
 
     #search-box{
@@ -91,25 +127,6 @@
         padding:6px;
     }
 
-    #notifications-wrapper{
-        display:none;
-        background: transparent !important;
-    }
-
-    #notifications-href-wrapper{
-        top:3px;
-        right:100px;
-        left:initial;
-        padding:0px;
-        border: none;
-        position:fixed;
-        background: transparent !important;
-    }
-
-    #notifications-href-wrapper:hover{
-        border:none;
-        background: transparent;
-    }
     #content-container{
         width:95%;
         margin: 5px auto 119px auto;
@@ -147,11 +164,11 @@
         margin:0px auto 10px auto;
     }
     #notifications-outer-container{
-        top:70px;
-        right:40px;
+        top:14px;
+        right:5px;
         width:200px;
         left: initial;
-        position: fixed;
+        position: absolute;
         z-index: 400;
     }
     #profile-picture-actions-container{

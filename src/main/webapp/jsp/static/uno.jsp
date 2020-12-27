@@ -87,10 +87,15 @@
             box-shadow: 0px 3px 49px 0px rgba(0,0,0,.19);
         }
 
+        #amadeus-logo{
+            height:49px;
+            width:49px;
+        }
+
         #amadeus-symbol{
             color: #fff;
             font-size:42px;
-            /*border-bottom:solid 4px #FF4F01;*/
+            text-shadow: -2px 0px #710baa;
         }
         .href-dotted,
         .href-dotted-amadeus{
@@ -118,8 +123,11 @@
         </div>
     </parakeet:isAuthenticated>
 
-    <a href="/o/uno" id="amadeus-home-logo" style="display:inline-block;padding:37px 37px 28px 37px;text-decoration: none;">
-        <span class="medium" id="amadeus-symbol" style="display:block">&Delta;</span>
+    <a href="/o/uno" id="amadeus-home-logo" style="display:inline-block;padding:27px 25px 21px 20px;text-decoration: none;">
+        <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
+            <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>
+        </svg>
+        <%--        <span class="medium" id="amadeus-symbol" style="display:block">&Delta;</span>--%>
     </a>
 
     <h1 style="font-size:32px;font-family: Roboto-Bold !important;margin-top:20px;">Amadeus</h1>

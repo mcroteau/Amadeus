@@ -3,7 +3,7 @@
 <!doctype html><%--${pageContext.response.locale}--%>
 <html lang="en" dir="i18n">
 <head>
-    <title>Amadeus: astrophysical*</title>
+    <title>Amadeus: physical*</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 
@@ -30,7 +30,7 @@
     String[] vizs = {"/o/jsp/static/vis/candy.jsp",
                      "/o/jsp/static/vis/graph.jsp",
 //                     "/o/jsp/static/vis/pond.jsp",
-//                     "/o/jsp/static/vis/rah.jsp",
+                     "/o/jsp/static/vis/rah.jsp",
                      "/o/jsp/static/vis/correct.jsp",
                      "/o/jsp/static/vis/space.jsp"};
 
@@ -41,13 +41,32 @@
 
 
 <%--    <iframe id="viz" src="<%=viz%>" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>--%>
-        <iframe id="viz" src="/o/jsp/static/vis/space.jsp" style="overflow:hidden;z-index:1;position:absolute;bottom:0px;width:39%;height:330px"></iframe>
+<%--        <iframe id="viz" src="/o/jsp/static/vis/space.jsp" style="overflow:hidden;z-index:1;position:absolute;bottom:0px;width:39%;height:330px"></iframe>--%>
 <%--    <canvas id="sugarcookie" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></canvas>--%>
 
+    <div id="logo-mobile">
+        <div id="logo-container" style="position:absolute;">
+            <a ng-click="toggleBaseNavigation()" ng-class="{'active' : data.newestCount > 0}" href="javascript:" id="logo-logo">
+                <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
+                    <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>
+                </svg>
+                <%--            <span class="medium" id="amadeus-symbol">&Delta;</span>--%>
+            <span id="latest-feed-total" class="notifications-count" style="display:inline-block; position:absolute;bottom:3px;left:54px;">{{data.newestCount}}</span></a>
+        </div>
+    </div>
+
+    <div ng-show="showBaseNavigation" id="base-navigation-container" class="global-shadow">
+        <a ng-click="reloadActivities()" href="javascript:" data-i18n="post.feed">Post Feed</a>
+        <a href="#!/profile/${sessionScope.account.id}" id="profile-href"  class="profile-popup-action" data-i18n="profile.text">Profile</a>
+        <a href="/o/signout" class="profile-popup-action" data-i18n="logout.text">Logout</a>
+    </div>
 
     <div ng-if="$root.renderModal" id="amadeus-modal">
         <div id="amadeus-model-content">
-            <span id="amadeus-symbol-color" style="margin-top:142px;color:#FFFF44;font-size:41px;display:block;font-family:Roboto-Medium !important;">&Delta;</span>
+            <svg id="amadeus-logo-modal" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
+                <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>
+            </svg>
+<%--            <span id="amadeus-symbol-color" style="margin-top:142px;color:#FFFF44;font-size:41px;display:block;font-family:Roboto-Medium !important;">&Delta;</span>--%>
             <span class="tiny" style="color:#fff">Processing</span>
         </div>
     </div>
@@ -90,10 +109,11 @@
 
             <div id="logo-container" style="position:absolute;">
                 <a ng-class="{'active' : data.newestCount > 0}" ng-click="reloadActivities()" href="javascript:" id="logo-logo">
-<%--                    <svg id="amadeus-logo" style="fill:#000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">--%>
-<%--                        <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>--%>
-<%--                    </svg>--%>
-                    <span class="medium" id="amadeus-symbol">&Delta;</span>
+                    <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
+                        <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>
+                    </svg>
+<%--                    <span class="medium" id="amadeus-symbol">&Delta;</span>--%>
+<%--                    <span class="medium" id="amadeus-symbol">&#9661;</span>--%>
                     <span id="latest-feed-total" class="notifications-count" style="display:inline-block; position:absolute;bottom:3px;left:54px;">{{data.newestCount}}</span></a>
             </div>
 
@@ -129,7 +149,7 @@
         <div id="mobile-search-outer-container" style="position:relative;">
 
             <div id="mobile-search-container" class="float-left">
-                <input ng-keyup="navigateSearch($event)" type="text" class="search-input" id="search-box" placeholder="Search:"/>
+                <input ng-keyup="navigateSearch($event)" type="text" class="search-input" id="search-box" placeholder="Search:" autocomplete="off"/>
                 <br class="clear"/>
             </div>
         </div>
@@ -145,6 +165,29 @@
                 <a ng-click="openChat()" href="javascript:" id="messages-href" class="profile-popup-action render-desktop" ng-click="renderMessages(${sessionScope.account.id})"><span id="latest-messages-total" class="space">{{data.messagesCount}}</span> <span data-i18n="unread.text">Profile</span></a>
                 <a href="/o/signout" class="profile-popup-action" ><span class="space"></span> <span data-i18n="logout.text">Logout</span></a>
             </div>
+        </div>
+
+
+
+        <a href="javascript:" ng-click="toggleMobileNotifications()" id="mobile-notifications">{{data.notificationsCount}}</a>
+
+        <div ng-show="showMobileNotifications" id="notifications-outer-container" class="global-shadow">
+
+            <a ng-click="clearNotifications()" ng-if="data.notifications.length > 0"  href="javascript:" id="clear-notifications" class="right-float href-dotted-light" style="margin-bottom:10px; margin-right:10px;" data-id="${sessionScope.account.id}" data-i18n="clear.text">Clear</a>
+
+            <div class="notification" ng-controller="mixController" ng-repeat="notification in data.notifications">
+
+                <a ng-if="!notification.invite" ng-click="navigatePost(notification.postId)" href="javascript:">
+                    <span ng-if="notification.liked">{{notification.name}} <span data-i18n="liked.post.text">liked your post.</span></span>
+                    <span ng-if="notification.shared">{{notification.name}} <span data-i18n="shared.post.text">shared your post.</span></span>
+                    <span ng-if="notification.commented">{{notification.name}} <span data-i18n="commented.post.text">commented your post.</span></span>
+                </a>
+
+                <a ng-href="#!/invitations" ng-if="notification.invite" href="javascript:" class="invite-ref">{{notification.name}} <span data-i18n="invited.connect.text">invited you to connect.</span></a>
+
+            </div>
+
+            <div class="notification"><a href="javascript:"><span ng-if="data.notifications.length == 0" data-i18n="no.notifications">No new notifications</span></a></div>
         </div>
         <br class="clear"/>
     </div>
@@ -300,6 +343,8 @@
 
         $scope.showProfile = false
         $scope.showNotifications = false
+        $scope.showMobileNotifications = false
+        $scope.showBaseNavigation = false
 
         $scope.chatInput = document.querySelector("#chat-input")
         $scope.chatSession = document.querySelector("#chat-session")
@@ -324,12 +369,21 @@
             })
         }
 
+        $scope.toggleProfile = function(){
+            $scope.showProfile = !$scope.showProfile
+        }
+
         $scope.toggleNotifications = function(){
             $scope.showNotifications = !$scope.showNotifications
         }
 
-        $scope.toggleProfile = function(){
-            $scope.showProfile = !$scope.showProfile
+        $scope.toggleMobileNotifications = function(){
+            $scope.showMobileNotifications = !$scope.showMobileNotifications
+        }
+
+
+        $scope.toggleBaseNavigation = function(){
+            $scope.showBaseNavigation = !$scope.showBaseNavigation
         }
 
         $scope.reloadActivities = function(){
@@ -402,13 +456,17 @@
         $scope.closeDialogs = function(event) {
             var $target = $(event.target)
             var id = $target.attr('id')
-            if (id != 'profile-ref-image' &&
+            if (id != 'logo-logo' &&
+                id != 'mobile-notifications' &&
+                id != 'profile-ref-image' &&
                     id != 'notifications-href' &&
                         id != 'friends-launcher'){
                 console.log('close dialogs');
                 $scope.chatOpened = false
                 $scope.showProfile = false
                 $scope.showNotifications = false
+                $scope.showBaseNavigation = false
+                $scope.showMobileNotifications = false;
             }
         }
 

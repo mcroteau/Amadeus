@@ -18,9 +18,9 @@
     background: linear-gradient(180deg, rgba(255,69,174,1) 0%, rgba(253,254,3,1) 12%, rgba(123,185,0,1) 39%, rgba(84,175,255,1) 67%, rgba(113,11,170,1) 100%);
     background: rgb(255,69,174);
     background: linear-gradient(180deg, rgba(255,69,174,1) 0%, rgba(249,255,34,1) 14%, rgba(45,245,0,1) 37%, rgba(84,175,255,1) 59%, rgba(113,11,170,1) 100%);
-    -webkit-box-shadow: 4px 3px 19px 0px rgba(0,0,0,.29) !important;
-    -moz-box-shadow: 4px 3px 19px 0px rgba(0,0,0,.29) !important;
-    box-shadow: 4px 3px 19px 0px rgba(0,0,0,.29) !important;
+    -webkit-box-shadow: 4px 3px 19px 0px rgba(0,0,0,.23) !important;
+    -moz-box-shadow: 4px 3px 19px 0px rgba(0,0,0,.23) !important;
+    box-shadow: 4px 3px 19px 0px rgba(0,0,0,.23) !important;
 }
 
 #logo-container:hover{
@@ -33,7 +33,7 @@
 #logo-logo{
     box-shadow: none !important;
     border: none;
-    padding:17px 17px 10px 16px;
+    padding:16px 16px 10px 11px;
     background: transparent !important;
 }
 
@@ -41,19 +41,42 @@
     background: #000 !important;
 }
 
+#amadeus-modal{
+    background: rbga(84, 175, 255, 0.8);
+}
+
 #amadeus-symbol{
     font-size:23px;
     color:#fff;
-    text-shadow: none !important;
     font-family: Roboto-Medium !important;
-    text-shadow: none !important;
+    /*text-shadow: -1px 0px #710baa;*/
 }
 
+#amadeus-logo-modal{
+    height:20px;
+    width:20px;
+    fill:#fff;
+    display:block;
+    margin:100px auto 0px auto;
+}
+
+#amadeus-logo{
+    height:24px;
+    width:24px;
+}
+
+
 #latest-feed-total{
-    font-size:12px;
-    top:12px;
-    right:3px;
+    font-size:15px;
+    top:8px;
+    right:0px;
+    left:initial !important;
+    bottom:initial !important;
     color: #fff;
+    padding:2px 4px;
+    background: #000;
+    border-radius: 20px;
+    display: block;
     font-family: Roboto !important;
 }
 
@@ -271,10 +294,16 @@
     bottom: 0px !important;
     left: 43px !important;
     position: absolute;
-    font-size:12px;
     font-family: Roboto !important;
     background: inherit;
-    color: #000;
+    color: #fff;
+    font-size: 15px;
+    background: #d953a0;
+}
+
+#base-notifications-count{
+    font-size:15px;
+    background: #d953a0;
 }
 
 
@@ -338,6 +367,7 @@
 
 .shared-post-container{
     background: #ff45ae;
+    background: #000;
 }
 
 
