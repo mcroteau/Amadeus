@@ -76,12 +76,17 @@
         }
 
         #amadeus-home-logo{
+            text-decoration: none;
+            padding:25px 27px 19px 17px;
+            display:inline-block;
             border-radius: 4px;
             -moz-border-radius: 4px;
             -webkit-border-radius: 4px;
             background: rgb(255,69,174);
             background: linear-gradient(180deg, rgba(255,69,174,1) 0%, rgba(249,255,34,1) 14%, rgba(45,245,0,1) 37%, rgba(84,175,255,1) 59%, rgba(113,11,170,1) 100%);
 
+            background: rgb(253,254,3);
+            background: linear-gradient(180deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 7%, rgba(44,244,0,1) 7%, rgba(44,244,0,1) 25%, rgba(84,175,255,1) 25%, rgba(84,175,255,1) 62%, rgba(113,11,170,1) 62%, rgba(113,11,170,1) 91%, rgba(255,75,176,1) 92%);
             -webkit-box-shadow: 0px 3px 49px 0px rgba(0,0,0,.29);
             -moz-box-shadow: 0px 3px 49px 0px rgba(0,0,0,.29);
             box-shadow: 0px 3px 49px 0px rgba(0,0,0,.29);
@@ -118,7 +123,7 @@
         </div>
     </parakeet:isAuthenticated>
 
-    <a href="/o/uno" id="amadeus-home-logo" style="display:inline-block;padding:27px 25px 21px 20px;text-decoration: none;">
+    <a href="/o/uno" id="amadeus-home-logo">
         <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
             <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>
         </svg>
