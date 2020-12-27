@@ -285,38 +285,32 @@ public class AccountService {
 
         if(!reCaptchaService.validates(reCaptchaResponse) &&
                 !Utils.isTestEnvironment(env)){
-            redirect.addFlashAttribute("account", account);
             redirect.addFlashAttribute("message", "Did you forget to check the box thing?");
             return "redirect:/signup?uri=" + uri;
         }
 
         if(!Utils.validMailbox(account.getUsername())){
-            redirect.addFlashAttribute("account", account);
             redirect.addFlashAttribute("message", "Username must be a valid email.");
             return "redirect:/signup?uri=" + uri;
         }
 
         Account existingAccount = accountRepo.getByUsername(account.getUsername());
         if(existingAccount != null){
-            redirect.addFlashAttribute("account", account);
             redirect.addFlashAttribute("message", "Account exists with same username.");
             return "redirect:/signup?uri=" + uri;
         }
 
         if(account.getName().equals("")){
-            redirect.addFlashAttribute("account", account);
             redirect.addFlashAttribute("message", "Name must not be blank.");
             return "redirect:/signup?uri=" + uri;
         }
 
         if(account.getPassword().equals("")) {
-            redirect.addFlashAttribute("account", account);
             redirect.addFlashAttribute("message", "Password cannot be blank");
             return "redirect:/signup?uri=" + uri;
         }
 
         if(account.getPassword().length() < 7){
-            redirect.addFlashAttribute("account", account);
             redirect.addFlashAttribute("message", "Password must be at least 7 characters long.");
             return "redirect:/signup?uri=" + uri;
         }
@@ -351,7 +345,6 @@ public class AccountService {
         }catch(Exception e){
             e.printStackTrace();
             log.info(e.getMessage());
-            redirect.addFlashAttribute("account", account);
             redirect.addFlashAttribute("message", "Will you contact us? Email us with the subject, support@amadeus.social. Our programmers missed something. Gracias!");
             return("redirect:/signup?uri=" + uri);
         }

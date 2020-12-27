@@ -53,7 +53,6 @@ public class AccountActionTest {
         authService.signin(Constants.ADMIN_USERNAME, Constants.PASSWORD);
         Map<String, Object> results = searchService.queryBasic("Sebastien");
         List<Account> accounts = (List) results.get("accounts");
-        log.info(results.get("status"));
         assertEquals(1, accounts.size());
     }
 
@@ -63,8 +62,6 @@ public class AccountActionTest {
         RedirectAttributes redirect = new RedirectAttributesModelMap();
         Account mockAccount = new MockAccount(1);
         accountService.register("", "", mockAccount, new MockHttpServletRequest(), redirect);
-        log.info(redirect.getAttribute("message"));
-        //should be authenticated already
         assertEquals(3, accountRepo.getCount());
     }
 
@@ -78,7 +75,6 @@ public class AccountActionTest {
         Account account = accountRepo.getByUsername(mockAccount.getUsername());
         Map<String, Object> results = searchService.queryBasic("marisa");
         List<Account> accounts = (List) results.get("accounts");
-        log.info(results.get("status"));
-        assertEquals(2, accounts.size());
+        assertEquals(3, accounts.size());
     }
 }
