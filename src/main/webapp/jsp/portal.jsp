@@ -982,6 +982,16 @@
         }
 
 
+        var motives = [
+            'Take these broken wings\n' +
+            'And learn to fly again\n' +
+            'And learn to live so free\n' +
+            'When we hear the voices sing\n' +
+            'The book of love will open up\n' +
+            'And let us in'
+        ]
+
+
 
 </script>
 </body>
