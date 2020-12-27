@@ -3,7 +3,7 @@
 <!doctype html><%--${pageContext.response.locale}--%>
 <html lang="en" dir="i18n">
 <head>
-    <title>Amadeus: physical*</title>
+    <title>Amadeus: astrophysical*</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 
@@ -121,23 +121,40 @@
 
 			<div id="top-inner-container">
 
-                <div ng-if="!$root.profilePage" id="search-container" class="float-left" style="z-index:100">
+                <div ng-if="!$root.profilePage" id="search-container">
                     <input ng-keyup="navigateSearch($event)" ng-focus="focusSearch($event)" ng-blur="unfocusSearch($event)" type="text" class="search-input" id="search-box" placeholder="..." autocomplete="off"/>
                 </div>
 
-                <div style="position:relative">
-                    <div id="navigation-container">
-                        <a ng-click="toggleProfile()" href="javascript:" id="profile-actions-href" class="profile-popup" style="margin-right:37px;">
-                            <img src="${sessionScope.imageUri}" id="profile-ref-image" style="z-index:1"/>
-                            <span ng-show="data.messagesCount" id="base-notifications-count">{{data.messagesCount}}</span>
+                <a ng-click="toggleProfile()" href="javascript:" id="profile-actions-href" class="profile-popup" style="margin-right:37px;">
+                    <img src="${sessionScope.imageUri}" id="profile-ref-image" style="z-index:1"/>
+                    <span ng-show="data.messagesCount" id="base-notifications-count">{{data.messagesCount}}</span>
+                </a>
+
+                <div ng-show="showProfile" id="profile-picture-actions-container" class="global-shadow">
+                    <a href="#!/profile/${sessionScope.account.id}" id="profile-href"  class="profile-popup-action"><span class="space"></span> <span data-i18n="profile.text">Profile</span></a>
+                    <a ng-click="openChat()" href="javascript:" id="messages-href" class="profile-popup-action" ng-click="renderMessages(${sessionScope.account.id})"><span id="latest-messages-total" class="space">{{data.messagesCount}}</span> <span data-i18n="unread.text">Unread</span></a>
+                    <a href="/o/signout" class="profile-popup-action"><span class="space"></span> <span data-i18n="logout.text">Logout</span></a>
+                </div>
+
+                <a href="javascript:" ng-click="toggleMobileNotifications()" id="mobile-notifications">{{data.notificationsCount}}</a>
+
+                <div ng-show="showMobileNotifications" id="notifications-outer-container" class="global-shadow">
+
+                    <a ng-click="clearNotifications()" ng-if="data.notifications.length > 0"  href="javascript:" id="clear-notifications" class="right-float href-dotted-light" style="margin-bottom:10px; margin-right:10px;" data-id="${sessionScope.account.id}" data-i18n="clear.text">Clear</a>
+
+                    <div class="notification" ng-controller="mixController" ng-repeat="notification in data.notifications">
+
+                        <a ng-if="!notification.invite" ng-click="navigatePost(notification.postId)" href="javascript:">
+                            <span ng-if="notification.liked">{{notification.name}} <span data-i18n="liked.post.text">liked your post.</span></span>
+                            <span ng-if="notification.shared">{{notification.name}} <span data-i18n="shared.post.text">shared your post.</span></span>
+                            <span ng-if="notification.commented">{{notification.name}} <span data-i18n="commented.post.text">commented your post.</span></span>
                         </a>
 
-                        <div ng-show="showProfile" id="profile-picture-actions-container" class="global-shadow">
-                            <a href="#!/profile/${sessionScope.account.id}" id="profile-href"  class="profile-popup-action"><span class="space"></span> <span data-i18n="profile.text">Profile</span></a>
-                            <a ng-click="openChat()" href="javascript:" id="messages-href" class="profile-popup-action" ng-click="renderMessages(${sessionScope.account.id})"><span id="latest-messages-total" class="space">{{data.messagesCount}}</span> <span data-i18n="unread.text">Unread</span></a>
-                            <a href="/o/signout" class="profile-popup-action"><span class="space"></span> <span data-i18n="logout.text">Logout</span></a>
-                        </div>
+                        <a ng-href="#!/invitations" ng-if="notification.invite" href="javascript:" class="invite-ref">{{notification.name}} <span data-i18n="invited.connect.text">invited you to connect.</span></a>
+
                     </div>
+
+                    <div class="notification"><a href="javascript:"><span ng-if="data.notifications.length == 0" data-i18n="no.notifications">No new notifications</span></a></div>
                 </div>
 
 			</div>
@@ -146,53 +163,30 @@
 
 	</div>
 
-    <div id="mobile-outer-container">
+<%--    <div id="mobile-outer-container">--%>
 
-        <div id="mobile-search-outer-container" style="position:relative;">
+<%--        <div id="mobile-search-outer-container" style="position:relative;">--%>
 
-            <div id="mobile-search-container" class="float-left">
-                <input ng-keyup="navigateSearch($event)" type="text" class="search-input" id="search-box" placeholder="Search:" autocomplete="off"/>
-                <br class="clear"/>
-            </div>
-        </div>
+<%--            <div id="mobile-search-container" class="float-left">--%>
+<%--                <input ng-keyup="navigateSearch($event)" type="text" class="search-input" id="search-box" placeholder="Search:" autocomplete="off"/>--%>
+<%--                <br class="clear"/>--%>
+<%--            </div>--%>
+<%--        </div>--%>
 
-        <div id="navigation-outer-container">
-            <a ng-click="toggleProfile()" href="javascript:" id="profile-actions-href" class="profile-popup" style="margin-right:37px;">
-                <img src="${sessionScope.imageUri}" id="profile-ref-image" style="z-index:1"/>
-                <span ng-show="data.messagesCount" id="base-notifications-count">{{data.messagesCount}}</span>
-            </a>
+<%--        <div id="navigation-outer-container">--%>
+<%--            <a ng-click="toggleProfile()" href="javascript:" id="profile-actions-href" class="profile-popup" style="margin-right:37px;">--%>
+<%--                <img src="${sessionScope.imageUri}" id="profile-ref-image" style="z-index:1"/>--%>
+<%--                <span ng-show="data.messagesCount" id="base-notifications-count">{{data.messagesCount}}</span>--%>
+<%--            </a>--%>
 
-            <div ng-show="showProfile" id="profile-picture-actions-container" class="global-shadow">
-                <a href="#!/profile/${sessionScope.account.id}" id="profile-href"  class="profile-popup-action"><span class="space"></span> <span data-i18n="profile.text">Profile</span></a>
-                <a ng-click="openChat()" href="javascript:" id="messages-href" class="profile-popup-action render-desktop" ng-click="renderMessages(${sessionScope.account.id})"><span id="latest-messages-total" class="space">{{data.messagesCount}}</span> <span data-i18n="unread.text">Profile</span></a>
-                <a href="/o/signout" class="profile-popup-action" ><span class="space"></span> <span data-i18n="logout.text">Logout</span></a>
-            </div>
-        </div>
-
-
-
-        <a href="javascript:" ng-click="toggleMobileNotifications()" id="mobile-notifications">{{data.notificationsCount}}</a>
-
-        <div ng-show="showMobileNotifications" id="notifications-outer-container" class="global-shadow">
-
-            <a ng-click="clearNotifications()" ng-if="data.notifications.length > 0"  href="javascript:" id="clear-notifications" class="right-float href-dotted-light" style="margin-bottom:10px; margin-right:10px;" data-id="${sessionScope.account.id}" data-i18n="clear.text">Clear</a>
-
-            <div class="notification" ng-controller="mixController" ng-repeat="notification in data.notifications">
-
-                <a ng-if="!notification.invite" ng-click="navigatePost(notification.postId)" href="javascript:">
-                    <span ng-if="notification.liked">{{notification.name}} <span data-i18n="liked.post.text">liked your post.</span></span>
-                    <span ng-if="notification.shared">{{notification.name}} <span data-i18n="shared.post.text">shared your post.</span></span>
-                    <span ng-if="notification.commented">{{notification.name}} <span data-i18n="commented.post.text">commented your post.</span></span>
-                </a>
-
-                <a ng-href="#!/invitations" ng-if="notification.invite" href="javascript:" class="invite-ref">{{notification.name}} <span data-i18n="invited.connect.text">invited you to connect.</span></a>
-
-            </div>
-
-            <div class="notification"><a href="javascript:"><span ng-if="data.notifications.length == 0" data-i18n="no.notifications">No new notifications</span></a></div>
-        </div>
-        <br class="clear"/>
-    </div>
+<%--            <div ng-show="showProfile" id="profile-picture-actions-container" class="global-shadow">--%>
+<%--                <a href="#!/profile/${sessionScope.account.id}" id="profile-href"  class="profile-popup-action"><span class="space"></span> <span data-i18n="profile.text">Profile</span></a>--%>
+<%--                <a ng-click="openChat()" href="javascript:" id="messages-href" class="profile-popup-action render-desktop" ng-click="renderMessages(${sessionScope.account.id})"><span id="latest-messages-total" class="space">{{data.messagesCount}}</span> <span data-i18n="unread.text">Profile</span></a>--%>
+<%--                <a href="/o/signout" class="profile-popup-action" ><span class="space"></span> <span data-i18n="logout.text">Logout</span></a>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <br class="clear"/>--%>
+<%--    </div>--%>
 
 
 
@@ -455,14 +449,19 @@
             if(!$scope.chatStarted)$interval.cancel($scope.chatInterval)
         }
 
+
+        var ids = [
+            'logo-logo',
+            'mobile-notifications',
+            'profile-ref-image',
+            'notifications-href',
+            'friends-launcher'
+        ]
+
         $scope.closeDialogs = function(event) {
             var $target = $(event.target)
             var id = $target.attr('id')
-            if (id != 'logo-logo' &&
-                id != 'mobile-notifications' &&
-                id != 'profile-ref-image' &&
-                    id != 'notifications-href' &&
-                        id != 'friends-launcher'){
+            if (!ids.includes(id)){
                 console.log('close dialogs');
                 $scope.chatOpened = false
                 $scope.showProfile = false
@@ -472,8 +471,6 @@
             }
         }
 
-        $('body').click($scope.closeDialogs)
-
         $scope.unfocusSearch = function($event){
             // $event.target.value = ''
             $($event.target).attr('placeholder', '...')
@@ -482,6 +479,24 @@
         $scope.focusSearch = function($event){
             $($event.target).attr('placeholder', 'Search:')
         }
+
+        $('body').click($scope.closeDialogs)
+
+        $(window).resize(function(event){
+            $scope.resizeFrames();
+        })
+
+        $scope.resizeFrames = function(){
+            var frames = $('.feed-content-container iframe')
+            var width = $(window).width()
+            if (width < 690){
+                $(frames).width(width - 30)
+            }else{
+                $(frames).width(465)
+            }
+        }
+
+        $scope.resizeFrames();
     });
 
 

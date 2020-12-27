@@ -26,7 +26,9 @@
     background: linear-gradient(180deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 7%, rgba(44,244,0,1) 7%, rgba(44,244,0,1) 25%, rgba(84,175,255,1) 25%, rgba(84,175,255,1) 62%, rgba(113,11,170,1) 62%, rgba(113,11,170,1) 91%, rgba(255,75,176,1) 92%);
 
     background: rgb(255,75,176);
-    background: linear-gradient(180deg, rgba(255,75,176,1) 5%, rgba(253,254,3,1) 5%, rgba(253,254,3,1) 14%, rgba(44,244,0,1) 15%, rgba(44,244,0,1) 34%, rgba(84,175,255,1) 34%, rgba(84,175,255,1) 69%, rgba(10,1,15,1) 69%);-webkit-box-shadow: 4px 3px 19px 0px rgba(0,0,0,.23) !important;
+    background: linear-gradient(180deg, rgba(255,75,176,1) 5%, rgba(253,254,3,1) 5%, rgba(253,254,3,1) 14%, rgba(44,244,0,1) 15%, rgba(44,244,0,1) 34%, rgba(84,175,255,1) 34%, rgba(84,175,255,1) 69%, rgba(10,1,15,1) 69%);
+
+    -webkit-box-shadow: 4px 3px 19px 0px rgba(0,0,0,.23) !important;
     -moz-box-shadow: 4px 3px 19px 0px rgba(0,0,0,.23) !important;
     box-shadow: 4px 3px 19px 0px rgba(0,0,0,.23) !important;
 }
@@ -85,8 +87,8 @@
 
 #latest-feed-total{
     font-size:15px;
-    top:8px;
-    right:4px;
+    top:2px;
+    right:2px;
     left:initial !important;
     bottom:initial !important;
     color: #fff;
@@ -108,7 +110,6 @@
 }
 
 #search-box{
-    top: 6px;
     left: 5px;
     z-index: 13;
     height: 52px;
@@ -196,11 +197,13 @@
     border:none !important;
     background: rgb(255,69,174);
     background: linear-gradient(180deg, rgba(255,69,174,1) 0%, rgba(249,255,34,1) 14%, rgba(45,245,0,1) 37%, rgba(84,175,255,1) 60%, rgba(113,11,170,1) 85%);
+    background: rgb(255,75,176);
+    background: linear-gradient(180deg, rgba(255,75,176,1) 5%, rgba(253,254,3,1) 5%, rgba(253,254,3,1) 14%, rgba(44,244,0,1) 15%, rgba(44,244,0,1) 34%, rgba(84,175,255,1) 34%, rgba(84,175,255,1) 69%, rgba(10,1,15,1) 69%);
 }
 
 #profile-picture-actions-container{
     right:14px;
-    margin-top:70px;
+    margin-top:0px;
     background: #ff45ae;
     box-shadow: none !important;
 }
@@ -339,6 +342,7 @@
     -mox-box-shadow: none !important;
     box-shadow: none !important;
     padding:3px;
+    background: rgb(255,75,176);
     border:solid 1px #eff2f3;
     /*-webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,.09) !important;*/
     /*-moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,.09) !important;*/
