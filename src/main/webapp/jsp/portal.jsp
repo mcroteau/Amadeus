@@ -41,7 +41,7 @@
 
 
 <%--    <iframe id="viz" src="<%=viz%>" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>--%>
-<%--        <iframe id="viz" src="/o/jsp/static/vis/space.jsp" style="overflow:hidden;z-index:1;position:absolute;bottom:0px;width:39%;height:330px"></iframe>--%>
+        <iframe id="viz" src="/o/jsp/static/vis/space.jsp" style="overflow:hidden;z-index:1;position:absolute;bottom:0px;width:39%;height:330px"></iframe>
 <%--    <canvas id="sugarcookie" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></canvas>--%>
 
     <div id="logo-mobile" style="display:none;">
@@ -63,8 +63,8 @@
 
     <div ng-if="$root.renderModal" id="amadeus-modal">
         <div id="amadeus-model-content">
-            <svg id="amadeus-logo-modal" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
-                <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>
+            <svg id="amadeus-logo-modal" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130">
+                <path id="amadeus-icon-path" d="M57.46 78.91L36.35 78.87L54.53 30.08L75.83 30.16L68.2 52.86L92 52.85L57.55 115L56.95 115L57.46 78.91ZM57.46 78.91L36.31 78.99L54.62 30.16L75.81 30.07L68.2 52.86L92 52.86L57.55 115L56.95 115L57.46 78.91Z"/>
             </svg>
 <%--            <span id="amadeus-symbol-color" style="margin-top:142px;color:#FFFF44;font-size:41px;display:block;font-family:Roboto-Medium !important;">&Delta;</span>--%>
             <span class="tiny" style="color:#fff">Processing</span>
