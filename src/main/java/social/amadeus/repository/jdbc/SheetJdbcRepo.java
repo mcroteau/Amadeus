@@ -50,10 +50,10 @@ public class SheetJdbcRepo implements SheetRepo {
 
     @Override
     public Sheet save(Sheet sheet) {
-        String sql = "insert into sheets (title, description, image_uri, endpoint, date_created) values (?, ?, ?, ?, ?)";
+        String sql = "insert into sheets (title, description, image_uri, endpoint, account_id, date_created) values (?, ?, ?, ?, ?, ?)";
         try {
             jdbcTemplate.update(sql, new Object[]{
-                    sheet.getTitle(), sheet.getDescription(), sheet.getImageUri(), sheet.getEndpoint(), sheet.getDateCreated()
+                    sheet.getTitle(), sheet.getDescription(), sheet.getImageUri(), sheet.getEndpoint(), sheet.getAccountId(), sheet.getDateCreated()
             });
         }catch(Exception e){
             e.printStackTrace();

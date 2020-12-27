@@ -59,7 +59,7 @@ public class Constants {
     public static final String DATE_SEARCH_FORMAT  = "yyyyMMddHHmmssSSS";
 	public static final String DATE_GRAPH_FORMAT  = "dd MMM";
 
-	public static final String TEST = "mock";
+	public static final String TEST = "Mock";
 
 	public static final String HTTPS = "https://";
 	public static final String DO_REGION = "sfo2";

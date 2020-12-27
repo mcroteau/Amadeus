@@ -45,6 +45,7 @@
 	<bean class="social.amadeus.service.PostService"/>
 	<bean class="social.amadeus.service.ReCaptchaService"/>
 	<bean class="social.amadeus.service.SearchService"/>
+	<bean class="social.amadeus.service.SheetService"/>
 	<bean class="social.amadeus.service.StaticService"/>
 	<bean class="social.amadeus.service.StripeService"/>
 	<bean class="social.amadeus.service.SyncService"/>
