@@ -223,3 +223,16 @@ create table flyers (
 	account_id bigint NOT NULL REFERENCES account(id),
     start_date bigint NOT NULL
 );
+
+
+
+create table sheets (
+	id bigint PRIMARY KEY AUTO_INCREMENT,
+	title character varying(255),
+	description text,
+	image_uri text,
+	endpoint character varying(255),
+    sheet_views bigint default 0,
+	account_id bigint NOT NULL REFERENCES account(id),
+    date_created bigint NOT NULL
+);

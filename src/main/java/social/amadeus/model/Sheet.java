@@ -6,7 +6,10 @@ public class Sheet {
     String title;
     String description;
     String imageUri;
-    String dest;
+    String endpoint;
+    long dateCreated;
+    long accountId;
+    String status;
 
     public long getId() {
         return id;
@@ -40,11 +43,36 @@ public class Sheet {
         this.imageUri = imageUri;
     }
 
-    public String getUrl() {
-        return url;
+    public String getEndpoint() {
+        return endpoint;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setEndpoint(String endpoint) {
+        this.endpoint = endpoint;
     }
+
+    public long getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(long dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public long getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(long accountId) {
+        this.accountId = accountId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
 }

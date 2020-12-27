@@ -10,6 +10,10 @@ public interface SheetRepo {
 
     public long getCount();
 
+    public Sheet getLast();
+
+    public Sheet get(long id);
+
     public Sheet save(Sheet sheet);
 
     public boolean update(Sheet sheet);
