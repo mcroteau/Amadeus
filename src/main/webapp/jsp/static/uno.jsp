@@ -77,7 +77,7 @@
 
         #amadeus-home-logo{
             text-decoration: none;
-            padding:25px 27px 19px 17px;
+            padding:21px 21px 19px 17px;
             display:inline-block;
             border-radius: 4px;
             -moz-border-radius: 4px;
@@ -87,9 +87,18 @@
 
             background: rgb(253,254,3);
             background: linear-gradient(180deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 7%, rgba(44,244,0,1) 7%, rgba(44,244,0,1) 25%, rgba(84,175,255,1) 25%, rgba(84,175,255,1) 62%, rgba(113,11,170,1) 62%, rgba(113,11,170,1) 91%, rgba(255,75,176,1) 92%);
+
+            background: rgb(255,75,176);
+            background: linear-gradient(180deg, rgba(255,75,176,1) 5%, rgba(253,254,3,1) 5%, rgba(253,254,3,1) 14%, rgba(44,244,0,1) 15%, rgba(44,244,0,1) 27%, rgba(84,175,255,1) 27%, rgba(84,175,255,1) 57%, rgba(113,11,170,1) 57%, rgba(113,11,170,1) 80%, rgba(10,1,15,1) 80%);
             -webkit-box-shadow: 0px 3px 49px 0px rgba(0,0,0,.29);
             -moz-box-shadow: 0px 3px 49px 0px rgba(0,0,0,.29);
             box-shadow: 0px 3px 49px 0px rgba(0,0,0,.29);
+        }
+
+        #amadeus-icon{
+            fill:#fff;
+            height:45px;
+            width:45px;
         }
 
         #amadeus-symbol{
@@ -124,8 +133,8 @@
     </parakeet:isAuthenticated>
 
     <a href="/o/uno" id="amadeus-home-logo">
-        <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
-            <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>
+        <svg id="amadeus-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130">
+            <path id="amadeus-icon-path" d="M57.46 78.91L36.35 78.87L54.53 30.08L75.83 30.16L68.2 52.86L92 52.85L57.55 115L56.95 115L57.46 78.91ZM57.46 78.91L36.31 78.99L54.62 30.16L75.81 30.07L68.2 52.86L92 52.86L57.55 115L56.95 115L57.46 78.91Z"/>
         </svg>
         <%--        <span class="medium" id="amadeus-symbol" style="display:block">&Delta;</span>--%>
     </a>
