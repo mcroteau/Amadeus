@@ -6,7 +6,7 @@ public class Sheet {
     String title;
     String description;
     String imageUri;
-    String url;
+    String dest;
 
     public long getId() {
         return id;

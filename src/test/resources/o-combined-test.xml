@@ -16,6 +16,7 @@
 	<bean class="social.amadeus.repository.jdbc.ActionJdbcRepo"/>
 	<bean class="social.amadeus.repository.jdbc.MessageJdbcDao"/>
 	<bean class="social.amadeus.repository.jdbc.FlyerJdbcRepo"/>
+	<bean class="social.amadeus.repository.jdbc.SheetJdbcRepo"/>
 
 	<bean class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSource" />
