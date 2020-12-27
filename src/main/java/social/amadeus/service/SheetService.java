@@ -1,6 +1,8 @@
 package social.amadeus.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import social.amadeus.common.Constants;
 import social.amadeus.model.Sheet;
 import social.amadeus.repository.SheetRepo;
@@ -13,13 +15,20 @@ public class SheetService {
     @Autowired
     AuthService authService;
 
-    public Sheet save(Sheet sheet) {
+    public String save(Sheet sheet, RedirectAttributes redirect) {
         if(!authService.isAuthenticated()){
-            sheet.setStatus(Constants.AUTHENTICATION_REQUIRED);
-            return sheet;
+            Constants.AUTHENTICATION_REQUIRED
         }
         Sheet savedSheet = sheetRepo.save(sheet);
-        savedSheet.setStatus(Constants.SUCCESS);
-        return savedSheet;
+
+        redirect.addFlashAttribute("message", "Successfully saved Sheet");
+        return "redirect:/sheet/list/" + savedSheet.getId();
+    }
+
+    public String edit(long id, ModelMap modelMap, RedirectAttributes redirect) {
+        if(!authService.isAuthenticated()){
+
+        }
+
     }
 }

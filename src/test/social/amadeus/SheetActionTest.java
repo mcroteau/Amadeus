@@ -36,4 +36,13 @@ public class SheetActionTest {
         sheetService.save(sheet);
         assertEquals(1, sheetRepo.getCount());
     }
+
+    @Test
+    public void testEdit(){
+        TestUtils.mockRequestCycle();
+        authService.signin(Constants.ADMIN_USERNAME, Constants.PASSWORD);
+        Sheet sheet = sheetService.edit(sheetRepo.getLast().getId());
+        sheetRepo.delete(sheetRepo.getLast().getId());
+    }
+
 }
