@@ -14,13 +14,13 @@
         top:10px;
         left:14px;
         position: fixed;
-        z-index: 301;
+        z-index: 401;
         display:inline-block !important;
     }
 
     #base-navigation-container{
         background: #710BAA;
-        z-index:302;
+        z-index:401;
         position:fixed;
         top:50px;
         left:30px;
