@@ -77,7 +77,7 @@
 
         #amadeus-home-logo{
             text-decoration: none;
-            padding:21px 21px 19px 17px;
+            padding:26px 26px 14px 12px;
             display:inline-block;
             border-radius: 4px;
             -moz-border-radius: 4px;
@@ -89,7 +89,8 @@
             background: linear-gradient(180deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 7%, rgba(44,244,0,1) 7%, rgba(44,244,0,1) 25%, rgba(84,175,255,1) 25%, rgba(84,175,255,1) 62%, rgba(113,11,170,1) 62%, rgba(113,11,170,1) 91%, rgba(255,75,176,1) 92%);
 
             background: rgb(255,75,176);
-            background: linear-gradient(180deg, rgba(255,75,176,1) 5%, rgba(253,254,3,1) 5%, rgba(253,254,3,1) 14%, rgba(44,244,0,1) 15%, rgba(44,244,0,1) 27%, rgba(84,175,255,1) 27%, rgba(84,175,255,1) 57%, rgba(113,11,170,1) 57%, rgba(113,11,170,1) 80%, rgba(10,1,15,1) 80%);
+            background: linear-gradient(180deg, rgba(255,75,176,1) 5%, rgba(253,254,3,1) 5%, rgba(253,254,3,1) 14%, rgba(44,244,0,1) 15%, rgba(44,244,0,1) 34%, rgba(84,175,255,1) 34%, rgba(84,175,255,1) 69%, rgba(10,1,15,1) 69%);-webkit-box-shadow: 4px 3px 19px 0px rgba(0,0,0,.23) !important;
+
             -webkit-box-shadow: 0px 3px 49px 0px rgba(0,0,0,.29);
             -moz-box-shadow: 0px 3px 49px 0px rgba(0,0,0,.29);
             box-shadow: 0px 3px 49px 0px rgba(0,0,0,.29);

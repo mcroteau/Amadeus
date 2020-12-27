@@ -15,6 +15,7 @@
         left:14px;
         position: fixed;
         z-index: 301;
+        display:inline-block !important;
     }
 
     #base-navigation-container{

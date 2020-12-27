@@ -7,8 +7,6 @@
         <pattern>*/account/confirm*</pattern>
         <pattern>*/issues/report*</pattern>
         <pattern>*/invite*</pattern>
-    </decorator>
-    <decorator name="app" page="app.jsp">
         <pattern>*/flyer*</pattern>
     </decorator>
     <decorator name="static" page="static.jsp">
