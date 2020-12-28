@@ -109,9 +109,6 @@
 
             <div id="logo-container" style="position:absolute;">
                 <a ng-class="{'active' : data.newestCount > 0}" ng-click="reloadActivities()" href="javascript:" id="logo-logo">
-<%--                    <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">--%>
-<%--                        <path d="M73 108L38 108L92 21L107 21L91 67L129 67L74 154L58 154L73 108Z"/>--%>
-<%--                    </svg>--%>
                     <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130">
                         <path id="amadeus-icon-path" d="M57.46 78.91L36.35 78.87L54.53 30.08L75.83 30.16L68.2 52.86L92 52.85L57.55 115L56.95 115L57.46 78.91ZM57.46 78.91L36.31 78.99L54.62 30.16L75.81 30.07L68.2 52.86L92 52.86L57.55 115L56.95 115L57.46 78.91Z"/>
                     </svg>
@@ -330,9 +327,9 @@
                 templateUrl: 'pages/invitations.html?v=' + t,
                 controller: 'invitationController'
             })
-            .when('/sheet', {
-                templateUrl: 'pages/sheet.html?v=' + t,
-                controller: 'sheetController'
+            .when('/folio/:id', {
+                templateUrl: 'pages/folio.html?v=' + t,
+                controller: 'folioController'
             })
             .otherwise({redirectTo:'/'});
     });
@@ -500,14 +497,19 @@
         $scope.resizeFrames();
     });
 
-    app.controller('sheetController', function($scope, $http, $window, dataService){
+    app.controller('folioController', function($scope, $http, $route, $window, dataService){
+
         $scope.getData = function(id){
-            $http.get('/o/sheet/data/' + id).then($scope.setData)
+            $http.get('/o/sheet/' + id).then($scope.setData)
         }
 
         $scope.setData = function(resp){
+            console.log(resp)
             $scope.data = resp.data
         }
+
+        $scope.getData($route.current.params.id)
+
     });
 
     app.controller('activityController', function($scope, $rootScope, $http, $route, $interval, $timeout, $location, $anchorScroll, $sce, $window, activityModel, dataService) {
@@ -645,15 +647,6 @@
                 $(evt.target).addClass('active')
                 $('.search-page').fadeOut(0, $.noop)
                 $('#' + id).fadeIn(200, $.noop)
-
-                $('.sheet-description').each(function(descDiv){
-                    console.log(descDiv)
-                    var description = $(descDiv).html()
-                    var short = $.trim(description).substring(0, 130)
-                        .split(" ").slice(0, -1).join(" ") + "...";
-                    $(descDiv).html(short);
-                })
-
             }
         }
 
@@ -903,7 +896,7 @@
             })
         }
 
-        var getData = function(id) {
+        $scope.getData = function(id) {
             self.id = id;
             dataService.getBaseProfile(id, setData)
         }
@@ -924,7 +917,7 @@
             })
         }
 
-        getData($route.current.params.id)
+        $scope.getData($route.current.params.id)
     });
 
     app.controller('getController', function($scope) {

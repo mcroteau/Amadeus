@@ -83,7 +83,7 @@
 #amadeus-logo{
     height:34px;
     width:34px;
-    transform: rotate(10deg);
+    /*transform: rotate(10deg);*/
 }
 
 #latest-feed-total{

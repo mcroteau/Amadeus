@@ -19,7 +19,7 @@ public class SheetController {
     SheetService sheetService;
 
     @RequestMapping(value="/sheet/{id}", method=RequestMethod.GET)
-    public String getData(@PathVariable Long id){
+    public @ResponseBody String getData(@PathVariable Long id){
         return gson.toJson(sheetService.getData(id));
     }
 
