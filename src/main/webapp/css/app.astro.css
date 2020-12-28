@@ -28,7 +28,9 @@
     background: rgb(255,75,176);
     background: linear-gradient(180deg, rgba(255,75,176,1) 5%, rgba(253,254,3,1) 5%, rgba(253,254,3,1) 14%, rgba(44,244,0,1) 15%, rgba(44,244,0,1) 34%, rgba(84,175,255,1) 34%, rgba(84,175,255,1) 69%, rgba(10,1,15,1) 69%);
     background: rgb(255,75,176);
-    background: linear-gradient(180deg, rgba(255,75,176,1) 5%, rgba(253,254,3,1) 5%, rgba(253,254,3,1) 14%, rgba(44,244,0,1) 15%, rgba(44,244,0,1) 24%, rgba(84,175,255,1) 24%, rgba(84,175,255,1) 49%, rgba(10,1,15,1) 49%);
+    background: linear-gradient(-123deg, rgba(255,75,176,1) 5%, rgba(253,254,3,1) 5%, rgba(253,254,3,1) 14%, rgba(44,244,0,1) 15%, rgba(44,244,0,1) 24%, rgba(84,175,255,1) 24%, rgba(84,175,255,1) 39%, rgba(10,1,15,1) 39%);
+    background: rgb(255,75,176);
+    background: linear-gradient(-90deg, rgba(255,75,176,1) 5%, rgba(253,254,3,1) 5%, rgba(253,254,3,1) 14%, rgba(44,244,0,1) 15%, rgba(44,244,0,1) 24%, rgba(84,175,255,1) 24%, rgba(84,175,255,1) 39%, rgba(10,1,15,1) 39%);
 
     -webkit-box-shadow: 0px 3px 19px 0px rgba(0,0,0,.29) !important;
     -moz-box-shadow: 0px 3px 19px 0px rgba(0,0,0,.29) !important;
@@ -50,7 +52,7 @@
     background: rgb(255,75,176);
     background: linear-gradient(180deg, rgba(255,75,176,1) 5%, rgba(253,254,3,1) 5%, rgba(253,254,3,1) 14%, rgba(44,244,0,1) 15%, rgba(44,244,0,1) 34%, rgba(84,175,255,1) 34%, rgba(84,175,255,1) 69%, rgba(10,1,15,1) 69%);
     background: rgb(255,75,176);
-    background: linear-gradient(180deg, rgba(255,75,176,1) 5%, rgba(253,254,3,1) 5%, rgba(253,254,3,1) 14%, rgba(44,244,0,1) 15%, rgba(44,244,0,1) 24%, rgba(84,175,255,1) 24%, rgba(84,175,255,1) 49%, rgba(10,1,15,1) 49%);
+    background: linear-gradient(-90deg, rgba(255,75,176,1) 5%, rgba(253,254,3,1) 5%, rgba(253,254,3,1) 14%, rgba(44,244,0,1) 15%, rgba(44,244,0,1) 24%, rgba(84,175,255,1) 24%, rgba(84,175,255,1) 39%, rgba(10,1,15,1) 39%);
 
 }
 
@@ -475,7 +477,6 @@ body{
 #latest-feed-total{
     top:initial;
     bottom:7px !important;
-    background:transparent;
 }
 
 #notifications-href-wrapper,
@@ -484,16 +485,12 @@ body{
     border:none !important;
 }
 
-/*if you are black and you are doing this... you are shooting yourself in the foot. */
-/*nope.. im someone hooked up to something, it will be lived, not short lived but it will */
-/*last ... a minute.*/
-
 #notifications-count{
     background: #000 !important;
 }
 
 #logo-logo{
-    padding:18px 18px 9px 9px;
+    padding:18px 19px 7px 8px;
 }
 
 #amadeus-logo {

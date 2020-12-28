@@ -24,8 +24,8 @@ public class SheetController {
     }
 
     @RequestMapping(value="/engage/{endpoint}", method=RequestMethod.GET)
-    public String view(ModelMap modelMap, @PathVariable String endpoint){
-        return sheetService.view(endpoint, modelMap);
+    public String engage(ModelMap modelMap, @PathVariable String endpoint){
+        return sheetService.engage(endpoint, modelMap);
     }
 
     @RequestMapping(value="/sheet/create", method=RequestMethod.GET)

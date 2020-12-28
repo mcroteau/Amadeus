@@ -69,12 +69,14 @@ public class SheetService {
         return sheet;
     }
 
-    public String view(String endpoint, ModelMap modelMap) {
+    public String engage(String endpoint, ModelMap modelMap) {
         Sheet sheet = sheetRepo.getByEndpoint(endpoint);
-        sheet.setSheetViews(sheet.getSheetViews() + 1);
-        sheetRepo.update(sheet);
-        modelMap.put("sheet", sheet);
-        return "sheet/gander";
+        if(sheet != null) {
+            sheet.setSheetViews(sheet.getSheetViews() + 1);
+            sheetRepo.update(sheet);
+            modelMap.put("sheet", sheet);
+        }
+        return "sheet/engage";
     }
 
     public String create() {
