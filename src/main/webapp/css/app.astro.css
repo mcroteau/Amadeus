@@ -27,6 +27,8 @@
 
     background: rgb(255,75,176);
     background: linear-gradient(180deg, rgba(255,75,176,1) 5%, rgba(253,254,3,1) 5%, rgba(253,254,3,1) 14%, rgba(44,244,0,1) 15%, rgba(44,244,0,1) 34%, rgba(84,175,255,1) 34%, rgba(84,175,255,1) 69%, rgba(10,1,15,1) 69%);
+    background: rgb(255,75,176);
+    background: linear-gradient(180deg, rgba(255,75,176,1) 5%, rgba(253,254,3,1) 5%, rgba(253,254,3,1) 14%, rgba(44,244,0,1) 15%, rgba(44,244,0,1) 24%, rgba(84,175,255,1) 24%, rgba(84,175,255,1) 49%, rgba(10,1,15,1) 49%);
 
     -webkit-box-shadow: 4px 3px 19px 0px rgba(0,0,0,.23) !important;
     -moz-box-shadow: 4px 3px 19px 0px rgba(0,0,0,.23) !important;
@@ -47,6 +49,9 @@
 
     background: rgb(255,75,176);
     background: linear-gradient(180deg, rgba(255,75,176,1) 5%, rgba(253,254,3,1) 5%, rgba(253,254,3,1) 14%, rgba(44,244,0,1) 15%, rgba(44,244,0,1) 34%, rgba(84,175,255,1) 34%, rgba(84,175,255,1) 69%, rgba(10,1,15,1) 69%);
+    background: rgb(255,75,176);
+    background: linear-gradient(180deg, rgba(255,75,176,1) 5%, rgba(253,254,3,1) 5%, rgba(253,254,3,1) 14%, rgba(44,244,0,1) 15%, rgba(44,244,0,1) 24%, rgba(84,175,255,1) 24%, rgba(84,175,255,1) 49%, rgba(10,1,15,1) 49%);
+
 }
 
 #logo-logo{
@@ -451,21 +456,30 @@
 /*}*/
 
 #logo-container{
-    background: rgb(214,200,137);
-    background: linear-gradient(149deg, rgba(214,200,137,1) 0, rgba(59,29,18,1) 50%) !important;
+    border-radius: 3px !important;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
     background: rgb(214,200,137);
     background: linear-gradient(149deg, rgb(171, 158, 99) 0, #1c190b 50%) !important;
+    /*background: rgb(214,200,137);*/
+    /*background: linear-gradient(149deg, #d6c889 0, #292511 90%) !important;*/
 }
+
 #latest-feed-total{
     background:transparent;
 }
+
+#notifications-count{
+    background: #000 !important;
+}
+
 #logo-logo{
-    padding:17px 16px 6px 7px;
+    padding:19px 18px 8px 9px;
 }
 
 #amadeus-logo{
-    height:21px;
-    width:21px;
+    height:17px;
+    width:17px;
 }
 
 .post-button{
