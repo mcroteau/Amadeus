@@ -20,8 +20,12 @@
         -webkit-box-shadow: 4px 3px 59px 0px rgba(0,0,0,.23) !important;
         -moz-box-shadow: 4px 3px 59px 0px rgba(0,0,0,.23) !important;
         box-shadow: 4px 3px 59px 0px rgba(0,0,0,.23) !important;
-        border-top-left-radius: 15px;
-        border-top-right-radius: 15px;
+        border-radius: 15px;
+        background: #fff;
+        text-decoration: none;
+    }
+    .sheet-wrapper:hover{
+        background:#EAF1F3;
     }
     .sheet-image{
         width:100%;
@@ -31,6 +35,7 @@
     }
     .sheet-content{
         padding:30px 30px 30px;
+        border-radius: 15px;
     }
     .sheet-content h2{
         font-size:32px;
@@ -51,7 +56,6 @@
 <div id="search-results-wrapper">
 
     <div id="sheet" class="search-page" style="display: none;">
-        <h1>Folios</h1>
         <div ng-if="sheets.length > 0">
             <a ng-href="#!/folio/{{sheet.id}}" ng-repeat="sheet in sheets" class="sheet-wrapper">
                 <img ng-src="{{sheet.imageUri}}" class="sheet-image"/>
@@ -67,8 +71,6 @@
     </div>
 
     <div id="people" class="search-page">
-
-        <h1>People</h1>
 
         <table ng-if="accounts.length > 0" id="accounts-results-table">
             <thead class="render-desktop">

@@ -1,11 +1,37 @@
 <style>
 
+    #sheet-wrapper{
+        width:670px;
+        margin:15px 0px 20px;
+        -webkit-box-shadow: 14px 13px 59px 0px rgba(0,0,0,.23) !important;
+        -moz-box-shadow: 14px 13px 59px 0px rgba(0,0,0,.23) !important;
+        box-shadow: 14px 13px 59px 0px rgba(0,0,0,.23) !important;
+        border-radius: 30px;
+        border-radius: 30px;
+        text-align: left;
+        background: #fff !important;
+        border: solid 1px #eff2f3;
+    }
+    #sheet-content{
+        padding:20px 40px 50px;
+        background: #fff !important;
+        border-radius: 30px;
+        border-radius: 30px;
+    }
+    #sheet-content h1{
+        font-size:32px;
+        font-family:Roboto-Bold !important;
+    }
+    #sheet-image{
+        border-top-left-radius: 30px;
+        border-top-right-radius: 30px;
+    }
 </style>
 
 <div id="sheet-wrapper">
     <img ng-src="{{sheet.imageUri}}" id="sheet-image"/>
     <div id="sheet-content">
-        <h2>{{sheet.title}}</h2>
+        <h1>{{sheet.title}}</h1>
         <div id="sheet-description">{{sheet.description}}</div>
     </div>
 </div>
