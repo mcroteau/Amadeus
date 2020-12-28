@@ -18,6 +18,8 @@ public interface SheetRepo {
 
     public boolean update(Sheet sheet);
 
+    public boolean getByEndpoint(String endpoint);
+
     public List<Sheet> getSheets(long id);
 
     public List<Sheet> getSheets();

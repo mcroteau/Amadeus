@@ -64,22 +64,58 @@ public class SheetJdbcRepo implements SheetRepo {
 
     @Override
     public boolean update(Sheet sheet) {
-        return false;
+        String sql = "update sheet set title = ?, description = ?, image_uri = ?, endpoint = ?, sheet_views = ? where id = ?";
+        try {
+            jdbcTemplate.update(sql, new Object[]{
+                sheet.getTitle(), sheet.getDescription(), sheet.getImageUri(), sheet.getEndpoint(), sheet.getSheetViews()
+            });
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return true;
     }
 
     @Override
-    public List<Sheet> getSheets(long id) {
-        return null;
+    public boolean getByEndpoint(String endpoint) {
+        String sql = "select * from sheets where endpoint = ?";
+
+        Sheet sheet = jdbcTemplate.queryForObject(sql, new Object[] { endpoint },
+                new BeanPropertyRowMapper<>(Sheet.class));
+
+        if(sheet == null) return false;
+
+        return true;
+    }
+
+    @Override
+    public List<Sheet> getSheets(long accountId) {
+        String sql = "select * from sheets where account_id = ?";
+
+        List<Sheet> sheets = jdbcTemplate.query(sql, new Object[] { accountId },
+                new BeanPropertyRowMapper<>(Sheet.class));
+
+        return sheets;
     }
 
     @Override
     public List<Sheet> getSheets() {
-        return null;
+        String sql = "select * from sheets";
+
+        List<Sheet> sheets = jdbcTemplate.query(sql, new Object[] { },
+                new BeanPropertyRowMapper<>(Sheet.class));
+
+        return sheets;
     }
 
     @Override
     public boolean updateViews(long views, long id) {
-        return false;
+        String sql = "update sheets set sheet_views = ? where id = ?";
+        try {
+            jdbcTemplate.update(sql, new Object[]{ views, id });
+        }catch(Exception e){
+            return false;
+        }
+        return true;
     }
 
     @Override

@@ -7,6 +7,7 @@ public class Sheet {
     String description;
     String imageUri;
     String endpoint;
+    long sheetViews;
     long dateCreated;
     long accountId;
     String status;
@@ -49,6 +50,14 @@ public class Sheet {
 
     public void setEndpoint(String endpoint) {
         this.endpoint = endpoint;
+    }
+
+    public long getSheetViews() {
+        return sheetViews;
+    }
+
+    public void setSheetViews(long sheetViews) {
+        this.sheetViews = sheetViews;
     }
 
     public long getDateCreated() {

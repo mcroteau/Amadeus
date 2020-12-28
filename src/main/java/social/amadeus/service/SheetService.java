@@ -1,5 +1,7 @@
 package social.amadeus.service;
 
+import org.apache.commons.text.StringEscapeUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.ui.ModelMap;
@@ -8,12 +10,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import social.amadeus.common.Constants;
 import social.amadeus.common.Utils;
 import social.amadeus.model.Account;
-import social.amadeus.model.Flyer;
 import social.amadeus.model.Sheet;
 import social.amadeus.repository.AccountRepo;
 import social.amadeus.repository.SheetRepo;
 
 public class SheetService {
+
+    private static final Logger log = Logger.getLogger(SheetService.class);
 
     @Autowired
     SheetRepo sheetRepo;
@@ -59,6 +62,16 @@ public class SheetService {
     public String save(Sheet sheet, CommonsMultipartFile sheetImage, RedirectAttributes redirect) {
         if(!authService.isAuthenticated()){
             return Constants.AUTHENTICATION_REQUIRED;
+        }
+
+        String endpoint = StringEscapeUtils.escapeJava(sheet.getEndpoint());
+        log.info(endpoint);
+
+        if(sheetRepo.getByEndpoint(endpoint)){
+            redirect.addFlashAttribute("message", "Endpoint exists, please try another without special characters");
+            redirect.addAttribute("endpoint", "make");
+            redirect.addFlashAttribute("sheet", sheet);
+            return "redirect:/sheet/create";
         }
 
         if(!Utils.isTestEnvironment(env) &&
@@ -118,11 +131,22 @@ public class SheetService {
             return Constants.UNAUTHORIZED_REDIRECT;
         }
 
+        String endpoint = StringEscapeUtils.escapeJava(sheet.getEndpoint());
+        log.info(endpoint);
+
+        if(sheetRepo.getByEndpoint(endpoint)){
+            redirect.addFlashAttribute("message", "Endpoint exists, please try another without special characters");
+            redirect.addAttribute("endpoint", "make");
+            redirect.addFlashAttribute("sheet", sheet);
+            return "redirect:/sheet/edit/" + sheet.getId();
+        }
+
         if(!Utils.isTestEnvironment(env) &&
                 sheetImage != null &&
                 sheetImage.getSize() > 0){
             syncSheetImage(sheet, sheetImage);
         }
+
         sheetRepo.update(sheet);
         return "redirect:/sheet/edit/" + sheet.getId();
     }

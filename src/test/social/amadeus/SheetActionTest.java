@@ -15,6 +15,8 @@ import social.amadeus.repository.SheetRepo;
 import social.amadeus.service.AuthService;
 import social.amadeus.service.SheetService;
 
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -34,17 +36,42 @@ public class SheetActionTest {
     public void testBasicSave(){
         TestUtils.mockRequestCycle();
         authService.signin(Constants.GUEST_USERNAME, Constants.GUEST_PASSWORD);
-        Sheet sheet = new MockSheet(authService.getAccount());
-        sheetService.save(sheet, null, new RedirectAttributesModelMap());
+        sheetService.save(new MockSheet(), null, new RedirectAttributesModelMap());
         assertEquals(1, sheetRepo.getCount());
     }
 
     @Test
-    public void testDelete(){
+    public void testBasicDelete(){
         TestUtils.mockRequestCycle();
         authService.signin(Constants.GUEST_USERNAME, Constants.GUEST_PASSWORD);
         sheetService.delete(sheetRepo.getLast().getId(), new RedirectAttributesModelMap());
         assertEquals(0, sheetRepo.getCount());
+    }
+
+    @Test
+    public void testBasicUpdate(){
+        TestUtils.mockRequestCycle();
+        authService.signin(Constants.GUEST_USERNAME, Constants.GUEST_PASSWORD);
+        sheetService.save(new MockSheet(), null, new RedirectAttributesModelMap());
+        Sheet sheet = sheetRepo.getLast();
+        sheet.setDescription("How now brown cow.");
+        sheetService.update(sheet, null, new RedirectAttributesModelMap());
+        Sheet updatedSheet = sheetRepo.getLast();
+        assertEquals("How now brown cow.", updatedSheet.getDescription());
+    }
+
+    @Test
+    public void testGetList(){
+        TestUtils.mockRequestCycle();
+        authService.signin(Constants.ADMIN_USERNAME, Constants.PASSWORD);
+        assertEquals(1, sheetRepo.getSheets());
+    }
+
+    @Test
+    public void testGetUserList(){
+        TestUtils.mockRequestCycle();
+        authService.signin(Constants.GUEST_USERNAME, Constants.GUEST_PASSWORD);
+        assertEquals(1, sheetRepo.getSheets(authService.getAccount().getId()));
     }
 
 }
