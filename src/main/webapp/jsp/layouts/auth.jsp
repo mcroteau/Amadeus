@@ -36,17 +36,18 @@
             background:#fff;
         }
 
-        #guest-content-right{
-            float:left;
-            margin-left:100px;
-            margin-top:24px;
-            width:300px;
+        #header{
+            text-align: center;
+            margin:0px auto 40px;
         }
 
-        #guest-content-container{
-            margin:0px auto 0px auto;
-            width:760px; 
-            border:solid 0px #ddd;
+        #auth-container{
+            width:490px;
+        }
+
+        #content-container{
+            width:490px;
+            margin:0px auto;
         }
 
         #amadeus-logo-container{
@@ -79,7 +80,8 @@
 
         h1{
             color:#000;
-            text-align:center;
+            font-size: 49px;
+            text-align: left;
         }
 
         h2{
@@ -89,6 +91,7 @@
         }
 
         p{
+            font-size: 19px;
             font-family:Roboto !important;
         }
         a{
@@ -106,6 +109,13 @@
         #amadeus-logo{
             fill:#fff;
         }
+        .form-row label{
+            display:block;
+            margin:0px;
+        }
+        .form-row{
+            margin:0px auto 10px;
+        }
     </style>
 
     <div id="top-outer-container">
@@ -118,38 +128,36 @@
         <br class="clear"/>
     </div>
 
-    <div id="guest-content-container">
+    <div id="content-container">
+        <div id="header">
 
-        <div id="guest-content-right">
+            <br class="clear"/>
 
-            <div id="guest-header">
+            <%if(Parakeet.isAuthenticated()){%>
 
-                <br class="clear"/>
+                Hello <strong>${sessionScope.account.nameUsername}</strong>!
+                &nbsp;|&nbsp;
+                <a href="${pageContext.request.contextPath}/signout" class="href-dotted">Signout</a>
+                <br/>
+                <br/>
+                <a href="${pageContext.request.contextPath}/account/edit/${sessionScope.account.id}" class="href-dotted">Profile</a>&nbsp;|&nbsp;
+            <a href="${pageContext.request.contextPath}/sheet/list/${sessionScope.account.id}" class="href-dotted">Handouts</a>&nbsp;|&nbsp;
+            <a href="${pageContext.request.contextPath}/flyer/list/${sessionScope.account.id}" class="href-dotted">Advertise</a>
 
-                <%if(Parakeet.isAuthenticated()){%>
+            <%}else{%>
+                <a href="${pageContext.request.contextPath}/?uri=${uri}" class="href-dotted">Signin</a>
+                &nbsp;
+                <a href="${pageContext.request.contextPath}/signup?uri=${uri}" class="href-dotted">Signup!</a>
+            <%}%>
 
-                    Hello <strong>${sessionScope.account.nameUsername}</strong>!
-                    &nbsp;|&nbsp;
-                    <a href="${pageContext.request.contextPath}/signout" class="href-dotted">Signout</a>
-                    <br/>
-                    <br/>
-                    <a href="${pageContext.request.contextPath}/" class="href-dotted">Home</a>&nbsp;|&nbsp;
-                    <a href="${pageContext.request.contextPath}/account/edit/${sessionScope.account.id}" class="href-dotted">Edit Profile</a>&nbsp;|&nbsp;
-                <a href="${pageContext.request.contextPath}/flyer/list/${sessionScope.account.id}" class="href-dotted">Advertise</a>
+        </div>
 
-                <%}else{%>
-                    <a href="${pageContext.request.contextPath}/?uri=${uri}" class="href-dotted">Signin</a>
-                    &nbsp;
-                    <a href="${pageContext.request.contextPath}/signup?uri=${uri}" class="href-dotted">Signup!</a>
-                <%}%>
-
-            </div>
-
+        <div id="auth-container">
             <decorator:body />
         </div>
 
-        <br class="clear"/>
     </div>
+
 
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-40862316-16"></script>

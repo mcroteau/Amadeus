@@ -3,42 +3,46 @@
     <p>${message}</p>
 </c:if>
 
-<h1>Start Ad</h1>
+<h1>New Handout</h1>
 
 <div id="form-container">
 
-    <form action="${pageContext.request.contextPath}/flyer/save" id="flyer-form" modelAttribute="flyer" method="post" enctype="multipart/form-data">
+    <form action="${pageContext.request.contextPath}/sheet/save" id="sheet-form" modelAttribute="sheet" method="post" enctype="multipart/form-data">
 
         <div class="form-row">
             <label>Pick Image</label>
-            <input type="file" name="flyerImage"/>
-            <p class="information">This will be the main entry point to your page, because there is no description your make your image really sing!</p>
+            <input type="file" name="sheetImage"/>
         </div>
 
         <div class="form-row">
-            <label>Page Url</label>
-            <input type="text" name="pageUri" placeholder="www.microsoft.com" value=""/>
-            <p class="information">No http:// or https:// just start it with www or subdomain</p>
+            <label>Title</label>
+            <input type="text" name="pageUri" placeholder="My Business Name" value="" style="width:100%;"/>
         </div>
 
-<%--        <div class="form-row">--%>
-<%--            <label>Description</label>--%>
-<%--            <textarea name="description" placeholder="Describe your web page in detail, leave an email and a phone number as well to help potential customers reach you"></textarea>--%>
-<%--        </div>--%>
+        <div class="form-row">
+            <label>Description</label>
+            <textarea name="description" placeholder="Describe what it is you are promoting. Accepts Html" style="width:100%;height:230px;"></textarea>
+        </div>
+
+        <div class="form-row">
+            <label>Endpoint</label>
+            <input type="text" name="endpoint" placeholder="mybusiness" value="" style="width:100%;"/>
+            <p class="information">*Optional : no special characters, all lowercase</p>
+        </div>
 
     </form>
 
 </div>
 
 <div id="form-action-container">
-    <input type="submit" id="save-button" value="Start Ad" class="button retro"/>
+    <input type="submit" id="save-button" value="Create Handout" class="button retro"/>
 </div>
 
 <script>
 
     var processing = false
 
-    var form = document.querySelector("#flyer-form")
+    var form = document.querySelector("#sheet-form")
     var saveButton = document.querySelector("#save-button")
 
     saveButton.addEventListener("click", function(evt){

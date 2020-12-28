@@ -418,26 +418,18 @@ p {
 }
 
 textarea {
-    color:#001a26 !important;
-    padding:30px 70px 30px 30px;
+    color:#221;
     font-family:Roboto-Light !important;
-    font-size:27px !important;
-    background:#fff;
-    border:solid 1px #fff !important;
-
-    -webkit-box-shadow: 1px 3px 4px 0px rgba(0,0,0,.19);
-    -moz-box-shadow: 1px 3px 4px 0px rgba(0,0,0,.18);
-    box-shadow: 1px 3px 4px 0px rgba(0,0,0,.17);
+    font-size:19px;
+    background:#f8f8f8;
+    line-height:1.0em !important;
+    padding:12px 12px !important;
+    border:solid 1px #ccc;
+    -webkit-border-radius: 3px !important;
+    -moz-border-radius: 3px !important;
+    border-radius: 3px !important;
 }
 
-
-textarea:focus,
-textarea.typing {
-    background:#fff;
-    outline:none;
-    border:solid 1px #fff !important;
-
-}
 
 textarea::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     font-family:Roboto-Thin !important;

@@ -93,7 +93,7 @@ public class SheetService {
         String endpoint = sheet.getEndpoint().replaceAll("[^\\w\\s]", "");
         log.info(endpoint);
 
-        if(sheetRepo.getByEndpoint(endpoint) == null){
+        if(sheetRepo.getByEndpoint(endpoint) != null){
             redirect.addFlashAttribute("message", "Endpoint exists, please try another without special characters");
             redirect.addAttribute("endpoint", "make");
             redirect.addFlashAttribute("sheet", sheet);
@@ -164,7 +164,7 @@ public class SheetService {
         String endpoint = sheet.getEndpoint().replaceAll("[^\\w\\s]", "");
         log.info(endpoint);
 
-        if(sheetRepo.getByEndpoint(endpoint) == null){
+        if(sheetRepo.getByEndpoint(endpoint) != null){
             redirect.addFlashAttribute("message", "Endpoint exists, please try another without special characters");
             redirect.addAttribute("endpoint", "make");
             redirect.addFlashAttribute("sheet", sheet);
