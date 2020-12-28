@@ -332,6 +332,10 @@
                 templateUrl: 'pages/invitations.html?v=' + t,
                 controller: 'invitationController'
             })
+            .when('/sheet', {
+                templateUrl: 'pages/sheet.html?v=' + t,
+                controller: 'sheetController'
+            })
             .otherwise({redirectTo:'/'});
     });
 
@@ -499,6 +503,9 @@
         $scope.resizeFrames();
     });
 
+    app.controller('sheetController', function($scope, $http, $window, dataService){
+        
+    });
 
     app.controller('activityController', function($scope, $rootScope, $http, $route, $interval, $timeout, $location, $anchorScroll, $sce, $window, activityModel, dataService) {
 
@@ -982,18 +989,22 @@
             var commentsArr = Array.from(comments)
 
             commentsArr.forEach(function(comment, index){
-                var data = {
-                    input: comment.innerHTML,
-                    options: {
-                        attributes: {
-                            target: "_blank",
-                            class: "href-dotted"
-                        },
-                    }
-                }
+                var data = getHrefData(comment)
                 var hyperlinked = anchorme(data)
                 comment.innerHTML = hyperlinked
             })
+        }
+
+        var getHrefData = function(comment){
+            return {
+                input: comment.innerHTML,
+                options: {
+                    attributes: {
+                        target: "_blank",
+                        class: "href-dotted"
+                    },
+                }
+            }
         }
 
 
