@@ -22,6 +22,7 @@
             box-shadow: 4px 3px 59px 0px rgba(0,0,0,.23) !important;
         }
         #sheet-content{
+            line-height: 1.3em;
             padding:20px 30px 30px;
         }
         #sheet-image{
@@ -30,6 +31,7 @@
             border-top-left-radius: 20px;
             border-top-right-radius: 20px;
         }
+
     </style>
 
 </head>

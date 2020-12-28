@@ -23,7 +23,7 @@ public class SheetController {
         return gson.toJson(sheetService.getData(id));
     }
 
-    @RequestMapping(value="/engagement/{endpoint}", method=RequestMethod.GET)
+    @RequestMapping(value="/engage/{endpoint}", method=RequestMethod.GET)
     public String view(ModelMap modelMap, @PathVariable String endpoint){
         return sheetService.view(endpoint, modelMap);
     }

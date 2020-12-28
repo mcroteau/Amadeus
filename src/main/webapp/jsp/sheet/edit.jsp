@@ -49,7 +49,7 @@
     </form>
 
     <div id="delete-form" style="margin:100px 0px 300px;">
-        <form action="/o/sheet/delete/${sheet.id}" method="delete">
+        <form action="/o/sheet/delete/${sheet.id}" method="post">
             <input type="submit" class="button beauty-light" value="Delete Handout"/>
         </form>
     </div>
