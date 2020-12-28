@@ -60,11 +60,19 @@ public class SheetService {
             return sheet;
         }
 
-        return sheetRepo.get(id);
+        Sheet sheet = sheetRepo.get(id);
+        String permission = getSheetPermission(id);
+        if(authService.hasPermission(permission)){
+            sheet.setPermitted(true);
+        }
+
+        return sheet;
     }
 
     public String view(String endpoint, ModelMap modelMap) {
         Sheet sheet = sheetRepo.getByEndpoint(endpoint);
+        sheet.setSheetViews(sheet.getSheetViews() + 1);
+        sheetRepo.update(sheet);
         modelMap.put("sheet", sheet);
         return "sheet/gander";
     }

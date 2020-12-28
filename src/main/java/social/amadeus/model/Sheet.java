@@ -10,6 +10,7 @@ public class Sheet {
     long sheetViews;
     long dateCreated;
     long accountId;
+    boolean permitted;
     String status;
 
     public long getId() {
@@ -74,6 +75,14 @@ public class Sheet {
 
     public void setAccountId(long accountId) {
         this.accountId = accountId;
+    }
+
+    public boolean isPermitted() {
+        return permitted;
+    }
+
+    public void setPermitted(boolean permitted) {
+        this.permitted = permitted;
     }
 
     public String getStatus() {
