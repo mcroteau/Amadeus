@@ -1,19 +1,16 @@
 package social.amadeus.service;
 
-import com.google.gson.Gson;
-import opennlp.tools.parser.Cons;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import social.amadeus.common.Constants;
 import social.amadeus.model.*;
+import social.amadeus.model.SearchOutput;
 import social.amadeus.repository.AccountRepo;
 import social.amadeus.repository.FriendRepo;
 import social.amadeus.repository.MusicRepo;
 import social.amadeus.repository.SheetRepo;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class SearchService {

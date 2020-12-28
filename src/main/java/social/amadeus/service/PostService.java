@@ -9,6 +9,8 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import social.amadeus.common.Constants;
 import social.amadeus.common.SessionManager;
 import social.amadeus.common.Utils;
+import social.amadeus.model.ActivityOutput;
+import social.amadeus.model.LikesOutput;
 import social.amadeus.repository.AccountRepo;
 import social.amadeus.repository.FlyerRepo;
 import social.amadeus.repository.NotificationRepo;

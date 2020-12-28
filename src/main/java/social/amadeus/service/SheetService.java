@@ -213,4 +213,13 @@ public class SheetService {
         return "sheet/list";
     }
 
+
+    public String toggleFollow(Long id){
+        if(!authService.isAuthenticated()){
+            return "redirect:/";
+        }
+        Account authdAccount = authService.getAccount();
+        return "";
+    }
+
 }

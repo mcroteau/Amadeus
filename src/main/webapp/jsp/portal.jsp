@@ -638,6 +638,7 @@
                 $scope.accounts = resp.data.accounts
                 $scope.sheets = resp.data.sheets
                 document.querySelector('#search-box').value = q
+
                 funkt.call()
             })
         }

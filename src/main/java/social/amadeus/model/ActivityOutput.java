@@ -1,5 +1,8 @@
 package social.amadeus.model;
 
+import social.amadeus.model.Account;
+import social.amadeus.model.Post;
+
 import java.util.List;
 
 public class ActivityOutput {

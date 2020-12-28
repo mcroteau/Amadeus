@@ -19,7 +19,6 @@ import social.amadeus.service.AuthService;
 import social.amadeus.service.SearchService;
 
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
