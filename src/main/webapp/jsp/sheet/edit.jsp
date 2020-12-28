@@ -44,16 +44,15 @@
 
         <br class="clear"/>
 
-        <input type="submit" value="Update Handout" class="button retro left-float"/>&nbsp;
-
-
-        <a href="/o/sheet/staging/${sheet.id}" class="button beauty-light right-float">Delete</a>
-
-
-        <br class="clear"/>
+        <input type="submit" value="Update Handout" class="button retro"/>&nbsp;
 
     </form>
 
+    <div id="delete-form" style="margin:100px 0px 300px;">
+        <form action="/o/sheet/delete/${sheet.id}" method="delete">
+            <input type="submit" class="button beauty-light" value="Delete Handout"/>
+        </form>
+    </div>
 </div>
 
 

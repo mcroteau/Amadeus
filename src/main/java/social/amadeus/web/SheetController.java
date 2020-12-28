@@ -52,6 +52,12 @@ public class SheetController {
         return sheetService.update(sheet, sheetImage, redirect);
     }
 
+    @RequestMapping(value="/sheet/delete/{id}", method=RequestMethod.POST)
+    public String edit(RedirectAttributes redirect,
+                       @PathVariable Long id){
+        return sheetService.delete(id, redirect);
+    }
+
     @RequestMapping(value="/admin/sheet/list", method=RequestMethod.GET)
     public String getSheets(ModelMap modelMap){
         return sheetService.getSheets(modelMap);

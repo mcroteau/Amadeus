@@ -26,6 +26,7 @@
         }
         #sheet-image{
             width:100%;
+            height:335px;
             border-top-left-radius: 20px;
             border-top-right-radius: 20px;
         }

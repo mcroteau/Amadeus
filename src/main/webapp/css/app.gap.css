@@ -1011,16 +1011,16 @@ input[type="submit"].button.small{
 	background:#c2175a;
 	background:#ca2062;
 	background:#cf2668;
-    background:#FF844C;
-    border:solid 1px #FF844C;
+    background:#ff45ae;
+    border:solid 1px #ff45ae;
 }
 
 .button.beauty-light{
 	background:#e24682;
     background:#D954A0;
 	border:solid 1px #D954A0;
-    background:#FF4F01;
-    border:solid 1px #FF4F01;
+    background:#ff45ae;
+    border:solid 1px #f540a6;
 }
 .button.beauty-light:hover{
     color:#fff !important;
@@ -1029,8 +1029,8 @@ input[type="submit"].button.small{
 input[type="button"].beauty-light,
 input[type="reset"].beauty-light,
 input[type="submit"].beauty-light{
-	background:#FF4F01;
-	border:solid 1px #FF4F01;
+	background:#ff45ae;
+	border:solid 1px #ff45ae;
 }
 
 .beauty-light,
@@ -1038,10 +1038,8 @@ input[type="button"].button.beauty-light,
 input[type="reset"].button.beauty-light,
 input[type="submit"].beauty-light{
     color:#fff;
-	background:#D954A0;
-	border:solid 1px #D954A0;
-    background:#FF4F01;
-    border:solid 1px #FF4F01;
+    background:#ff45ae;
+    border:solid 1px #ff45ae;
 }
 
 .button.yella{
@@ -1264,13 +1262,14 @@ input[type="submit"].button.black{
     -moz-box-shadow: 0px 4px 7px 0px rgba(0,0,0,.04);
     box-shadow: 0px 4px 7px 0px rgba(0,0,0,.04);
 
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
 
 	/*-webkit-box-shadow: 0px 4px 7px 0px rgba(0,0,0,.07);*/
 	/*-moz-box-shadow: 0px 4px 7px 0px rgba(0,0,0,.07);*/
 	/*box-shadow: 0px 4px 7px 0px rgba(0,0,0,.07);*/
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
 
 	border-bottom:solid 1px #898989;
 	border-bottom:solid 1px #a6b3b9;
@@ -3306,9 +3305,10 @@ a.information{
     background:#0ad5fc !important;
 
     /*background:#ff2401 !important;*/
-    -webkit-box-shadow: 0px 3px 19px 0px rgba(0,0,0,.29);
-    -moz-box-shadow: 0px 3px 19px 0px rgba(0,0,0,.29);
-    box-shadow: 0px 3px 19px 0px rgba(0,0,0,.29);
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
 }
 
 #amadeus-logo{
