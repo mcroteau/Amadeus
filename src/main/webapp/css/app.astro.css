@@ -449,3 +449,26 @@
 /*#search-box:focus::-moz-placeholder{*/
 /*    color:transparent !important*/
 /*}*/
+
+#logo-container{
+    background: rgb(214,200,137);
+    background: linear-gradient(149deg, rgba(214,200,137,1) 0, rgba(59,29,18,1) 50%) !important;
+    background: rgb(214,200,137);
+    background: linear-gradient(149deg, rgb(171, 158, 99) 0, #1c190b 50%) !important;
+}
+#latest-feed-total{
+    background:transparent;
+}
+#logo-logo{
+    padding:17px 16px 6px 7px;
+}
+
+#amadeus-logo{
+    height:21px;
+    width:21px;
+}
+
+.post-button{
+    background: #000 !important;
+    border:solid 1px #000 !important;
+}

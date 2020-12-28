@@ -47,8 +47,12 @@
     <div id="logo-mobile" style="display:none;">
         <div id="logo-container" style="position:absolute;">
             <a ng-click="toggleBaseNavigation()" ng-class="{'active' : data.newestCount > 0}" href="javascript:" id="logo-logo">
-                <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130">
-                    <path id="amadeus-icon-path" d="M57.46 78.91L36.35 78.87L54.53 30.08L75.83 30.16L68.2 52.86L92 52.85L57.55 115L56.95 115L57.46 78.91ZM57.46 78.91L36.31 78.99L54.62 30.16L75.81 30.07L68.2 52.86L92 52.86L57.55 115L56.95 115L57.46 78.91Z"/>
+<%--                <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130">--%>
+<%--                    <path id="amadeus-icon-path" d="M57.46 78.91L36.35 78.87L54.53 30.08L75.83 30.16L68.2 52.86L92 52.85L57.55 115L56.95 115L57.46 78.91ZM57.46 78.91L36.31 78.99L54.62 30.16L75.81 30.07L68.2 52.86L92 52.86L57.55 115L56.95 115L57.46 78.91Z"/>--%>
+<%--                </svg>--%>
+                <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
+                    <path d="M10.84 143.17L73.2 143.17L40.33 89.24L10 143.17L10.84 143.17Z" />
+                    <path d="M126.78 141.8L157 141.8L81.44 18.15L80.07 18.15L66.73 45.24L126.78 141.8Z" />
                 </svg>
                 <%--            <span class="medium" id="amadeus-symbol">&Delta;</span>--%>
             <span id="latest-feed-total" class="notifications-count" style="display:inline-block; position:absolute;bottom:3px;left:54px;">{{data.newestCount}}</span></a>
@@ -109,9 +113,13 @@
 
             <div id="logo-container" style="position:absolute;">
                 <a ng-class="{'active' : data.newestCount > 0}" ng-click="reloadActivities()" href="javascript:" id="logo-logo">
-                    <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130">
-                        <path id="amadeus-icon-path" d="M57.46 78.91L36.35 78.87L54.53 30.08L75.83 30.16L68.2 52.86L92 52.85L57.55 115L56.95 115L57.46 78.91ZM57.46 78.91L36.31 78.99L54.62 30.16L75.81 30.07L68.2 52.86L92 52.86L57.55 115L56.95 115L57.46 78.91Z"/>
+                    <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
+                        <path d="M10.84 143.17L73.2 143.17L40.33 89.24L10 143.17L10.84 143.17Z" />
+                        <path d="M126.78 141.8L157 141.8L81.44 18.15L80.07 18.15L66.73 45.24L126.78 141.8Z" />
                     </svg>
+                    <%--                    <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130">--%>
+<%--                        <path id="amadeus-icon-path" d="M57.46 78.91L36.35 78.87L54.53 30.08L75.83 30.16L68.2 52.86L92 52.85L57.55 115L56.95 115L57.46 78.91ZM57.46 78.91L36.31 78.99L54.62 30.16L75.81 30.07L68.2 52.86L92 52.86L57.55 115L56.95 115L57.46 78.91Z"/>--%>
+<%--                    </svg>--%>
 <%--                    <span class="medium" id="amadeus-symbol">&Delta;</span>--%>
                     <span id="latest-feed-total" class="notifications-count" style="display:inline-block; position:absolute;bottom:3px;left:54px;">{{data.newestCount}}</span></a>
             </div>
