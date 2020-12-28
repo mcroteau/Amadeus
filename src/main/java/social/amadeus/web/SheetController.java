@@ -48,8 +48,8 @@ public class SheetController {
     @RequestMapping(value="/sheet/update", method=RequestMethod.POST)
     public String update(@ModelAttribute("sheet") Sheet sheet,
                          final RedirectAttributes redirect,
-                         @RequestParam(value="flyerImage", required=true) CommonsMultipartFile flyerImage) {
-        return sheetService.update(sheet, flyerImage, redirect);
+                         @RequestParam(value="sheetImage", required=true) CommonsMultipartFile sheetImage) {
+        return sheetService.update(sheet, sheetImage, redirect);
     }
 
     @RequestMapping(value="/admin/sheet/list", method=RequestMethod.GET)

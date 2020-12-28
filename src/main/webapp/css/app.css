@@ -431,6 +431,11 @@ textarea {
 }
 
 
+textarea:focus,
+textarea.typing {
+    outline:none;
+}
+
 textarea::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     font-family:Roboto-Thin !important;
     color: #E34B86;

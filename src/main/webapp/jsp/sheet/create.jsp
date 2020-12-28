@@ -10,13 +10,14 @@
     <form action="${pageContext.request.contextPath}/sheet/save" id="sheet-form" modelAttribute="sheet" method="post" enctype="multipart/form-data">
 
         <div class="form-row">
-            <label>Pick Image</label>
+            <label>Pick Header Image</label>
             <input type="file" name="sheetImage"/>
+            <p class="information">Perfect size would be 670px x 335px. </p>
         </div>
 
         <div class="form-row">
             <label>Title</label>
-            <input type="text" name="pageUri" placeholder="My Business Name" value="" style="width:100%;"/>
+            <input type="text" name="title" placeholder="My Business, Place or Event" value="" style="width:100%;"/>
         </div>
 
         <div class="form-row">

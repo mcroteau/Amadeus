@@ -3,7 +3,7 @@
 <h1>Ads</h1>
 
 <c:if test="${not empty message}">
-    <div class="notify notify-info">{message}</div>
+    <div class="notify notify-info">${message}</div>
 </c:if>
 
 <a href="/o/flyer/create" class="href-dotted">New Ad</a>

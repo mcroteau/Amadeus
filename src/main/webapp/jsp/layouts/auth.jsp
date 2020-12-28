@@ -47,7 +47,7 @@
 
         #content-container{
             width:490px;
-            margin:0px auto;
+            margin:0px auto 101px auto;
         }
 
         #amadeus-logo-container{

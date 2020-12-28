@@ -7,7 +7,7 @@
 <p style="font-size:19px;line-height: 1.2em">What are handouts? Handouts are a representation of either a business, a place, an organization or an event.</p>
 
 <c:if test="${not empty message}">
-    <div class="notify notify-info">{message}</div>
+    <div class="notify notify-info">${message}</div>
 </c:if>
 
 

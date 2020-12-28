@@ -83,6 +83,7 @@
 #amadeus-logo{
     height:34px;
     width:34px;
+    transform: rotate(10deg);
 }
 
 #latest-feed-total{
@@ -235,7 +236,9 @@
 #whatsup:hover,
 #whatsup:focus{
     width:238px;
-    width:215px;
+    width:247px;
+    -webkit-border-radius:9px;
+    -moz-border-radius:9px;
     border-radius:9px;
     box-shadow: none !important;
     border:solid 1px #eaeeef !important;

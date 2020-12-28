@@ -113,8 +113,8 @@ public class SheetService {
         Sheet savedSheet = sheetRepo.save(sheet);
         accountRepo.savePermission(authdAccount.getId(), getSheetPermission(savedSheet.getId()));
 
-        redirect.addFlashAttribute("message", "Successfully saved Sheet");
-        return "redirect:/sheet/list/" + savedSheet.getId();
+        redirect.addFlashAttribute("message", "Successfully saved Handout");
+        return "redirect:/sheet/list/" + authdAccount.getId();
     }
 
     public String edit(Long id, ModelMap modelMap) {
@@ -145,7 +145,7 @@ public class SheetService {
 
         sheetRepo.delete(id);
 
-        redirect.addFlashAttribute("message", "Successfully deleted Sheet");
+        redirect.addFlashAttribute("message", "Successfully deleted Handout");
         Account authdAccount = authService.getAccount();
         return "redirect:/sheet/list/" + authdAccount.getId();
     }
@@ -164,7 +164,9 @@ public class SheetService {
         String endpoint = sheet.getEndpoint().replaceAll("[^\\w\\s]", "");
         log.info(endpoint);
 
-        if(sheetRepo.getByEndpoint(endpoint) != null){
+        Sheet existingSheet = sheetRepo.getByEndpoint(endpoint);
+        if(existingSheet != null &&
+                existingSheet.getId() != sheet.getId()){
             redirect.addFlashAttribute("message", "Endpoint exists, please try another without special characters");
             redirect.addAttribute("endpoint", "make");
             redirect.addFlashAttribute("sheet", sheet);
