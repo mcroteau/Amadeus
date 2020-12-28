@@ -47,7 +47,11 @@
         <input type="submit" value="Update Folio" class="button retro"/>&nbsp;
 
     </form>
+    <p class="information">We are working on getting all of your content indexed on Google, Bing &amp; Yahoo.
+        <br/>Your Folio property can be seen here:
+        <a href="/o/engage/${sheet.endpoint}">/o/engage/${sheet.endpoint}</a></p>
 
+    
     <div id="delete-form" style="margin:100px 0px 300px;">
         <form action="/o/sheet/delete/${sheet.id}" method="post">
             <input type="submit" class="button beauty-light" value="Delete Folio"/>
