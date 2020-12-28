@@ -84,6 +84,8 @@ public class SheetJdbcRepo implements SheetRepo {
 
     @Override
     public boolean delete(long id) {
-        return false;
+        String sql = "delete from sheets where id = ?";
+        jdbcTemplate.update(sql, new Object[] { id });
+        return true;
     }
 }

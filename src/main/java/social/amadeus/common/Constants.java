@@ -49,9 +49,10 @@ public class Constants {
 	public static final String ACCOUNT_MAINTENANCE            = "permission:accounts:";
 	public static final String POST_MAINTENANCE               = "permission:posts:";
 	public static final String POST_SHARE_MAINTENANCE         = "permission:posts_shared:";
-	public static final String POST_COMMENT_MAINTENANCE            = "permission:comments:";
+	public static final String POST_COMMENT_MAINTENANCE       = "permission:comments:";
 	public static final String POST_SHARE_COMMENT_MAINTENANCE = "permission:post_share:comments:";
 	public static final String FLYER_MAINTENANCE              = "permission:flyer:";
+	public static final String SHEET_MAINTENANCE              = "permission:sheet:";
 
 	public static final int RESULTS_PER_PAGE_MUSIC = 7;
 	public static final int MOCK_ACCOUNTS          = 7;

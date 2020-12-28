@@ -6,6 +6,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 import social.amadeus.common.Constants;
 import social.amadeus.mocks.MockSheet;
 import social.amadeus.model.Sheet;
@@ -31,18 +33,18 @@ public class SheetActionTest {
     @Test
     public void testBasicSave(){
         TestUtils.mockRequestCycle();
-        authService.signin(Constants.ADMIN_USERNAME, Constants.PASSWORD);
+        authService.signin(Constants.GUEST_USERNAME, Constants.GUEST_PASSWORD);
         Sheet sheet = new MockSheet(authService.getAccount());
-        sheetService.save(sheet);
+        sheetService.save(sheet, null, new RedirectAttributesModelMap());
         assertEquals(1, sheetRepo.getCount());
     }
 
     @Test
-    public void testEdit(){
+    public void testDelete(){
         TestUtils.mockRequestCycle();
-        authService.signin(Constants.ADMIN_USERNAME, Constants.PASSWORD);
-        Sheet sheet = sheetService.edit(sheetRepo.getLast().getId());
-        sheetRepo.delete(sheetRepo.getLast().getId());
+        authService.signin(Constants.GUEST_USERNAME, Constants.GUEST_PASSWORD);
+        sheetService.delete(sheetRepo.getLast().getId(), new RedirectAttributesModelMap());
+        assertEquals(0, sheetRepo.getCount());
     }
 
 }

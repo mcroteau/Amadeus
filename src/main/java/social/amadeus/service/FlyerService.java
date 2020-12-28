@@ -83,6 +83,10 @@ public class FlyerService {
     }
 
     public String staging(String id, ModelMap modelMap) {
+        if(!authService.isAuthenticated()){
+            return "redirect:/";
+        }
+
         String permission = Constants.FLYER_MAINTENANCE + id;
         if(!authService.hasPermission(permission)) {
             return "redirect:/unauthorized";
@@ -95,6 +99,10 @@ public class FlyerService {
     }
 
     public String edit(String id, ModelMap modelMap) {
+        if(!authService.isAuthenticated()){
+            return "redirect:/";
+        }
+
         String permission = Constants.FLYER_MAINTENANCE + id;
         if(!authService.hasPermission(permission)) {
             return "redirect:/unauthorized";
@@ -107,6 +115,9 @@ public class FlyerService {
     }
 
     public String start(String id, String stripeToken, ModelMap modelMap) {
+        if(!authService.isAuthenticated()){
+            return "redirect:/";
+        }
 
         String permission = Constants.FLYER_MAINTENANCE + id;
         if(!authService.hasPermission(permission)) {
@@ -129,6 +140,9 @@ public class FlyerService {
     }
 
     public String live(String id, ModelMap modelMap) {
+        if(!authService.isAuthenticated()){
+            return "redirect:/";
+        }
 
         String permission = Constants.FLYER_MAINTENANCE + id;
         if(!authService.hasPermission(permission)) {
@@ -141,6 +155,9 @@ public class FlyerService {
     }
 
     public String update(Flyer flyer, CommonsMultipartFile flyerImage, RedirectAttributes redirect) {
+        if(!authService.isAuthenticated()){
+            return "redirect:/";
+        }
 
         String permission = Constants.FLYER_MAINTENANCE + flyer.getId();
         if(!authService.hasPermission(permission)) {
