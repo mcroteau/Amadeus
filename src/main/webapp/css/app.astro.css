@@ -467,12 +467,14 @@ body{
     -moz-border-radius: 2px;
     /*background: rgb(214,200,137);*/
     /*background: linear-gradient(149deg, rgb(145, 146, 109) 0, #262516 0%) !important;*/
-    background: rgb(214,200,137);
-    background: linear-gradient(149deg, #d6c889 0, #292511 0%) !important;
+    /*background: rgb(214,200,137);*/
+    /*background: linear-gradient(149deg, #d6c889 0, #292511 0%) !important;*/
     /*background: #ff45ae;*/
 }
 
 #latest-feed-total{
+    top:initial;
+    bottom:7px !important;
     background:transparent;
 }
 
@@ -481,6 +483,10 @@ body{
     background:transparent;
     border:none !important;
 }
+
+/*if you are black and you are doing this... you are shooting yourself in the foot. */
+/*nope.. im someone hooked up to something, it will be lived, not short lived but it will */
+/*last ... a minute.*/
 
 #notifications-count{
     background: #000 !important;
@@ -514,14 +520,14 @@ body{
 
 .post-button,
 .post-button:hover{
-    background: #000 !important;
-    border:solid 1px #000 !important;
+    background: #54afff !important;
+    border:solid 1px #4ba5f3 !important;
 }
 
 #profile-profile-image{
-    background: #d6d6d6;
+    background: #000;
 }
 
-#profile-ref-image{
-    background: #d6d6d6;
-}
+/*#profile-ref-image{*/
+/*    background: #d6d6d6;*/
+/*}*/

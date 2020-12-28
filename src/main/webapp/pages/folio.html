@@ -22,10 +22,17 @@
         font-size:32px;
         font-family:Roboto-Bold !important;
     }
+    #sheet-description{
+        margin-bottom:30px;
+    }
     #sheet-image{
         border-top-left-radius: 30px;
         border-top-right-radius: 30px;
     }
+    #button-right{
+        text-align: right;
+    }
+
 </style>
 
 <div id="sheet-wrapper">
@@ -33,5 +40,8 @@
     <div id="sheet-content">
         <h1>{{sheet.title}}</h1>
         <div id="sheet-description">{{sheet.description}}</div>
+        <div id="button-right">
+            <button ng-click="toggleFollowSheet(sheet.id)" class="button retro">Follow</button>
+        </div>
     </div>
 </div>
