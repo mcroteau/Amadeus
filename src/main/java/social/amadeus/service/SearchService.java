@@ -5,12 +5,11 @@ import opennlp.tools.parser.Cons;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import social.amadeus.common.Constants;
-import social.amadeus.model.Account;
-import social.amadeus.model.AccountBlock;
-import social.amadeus.model.MusicFile;
+import social.amadeus.model.*;
 import social.amadeus.repository.AccountRepo;
 import social.amadeus.repository.FriendRepo;
 import social.amadeus.repository.MusicRepo;
+import social.amadeus.repository.SheetRepo;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,25 +19,28 @@ import java.util.Map;
 public class SearchService {
 
     @Autowired
-    private MusicRepo musicRepo;
+    MusicRepo musicRepo;
 
     @Autowired
-    private AccountRepo accountRepo;
+    AccountRepo accountRepo;
 
     @Autowired
-    private FriendRepo friendRepo;
+    FriendRepo friendRepo;
+
+    @Autowired
+    SheetRepo sheetRepo;
 
     @Autowired
     private AuthService authService;
 
 
-    public Map<String, Object> queryBasic(String q) {
+    public SearchOutput queryBasic(String q) {
 
-        Map<String, Object> respData = new HashMap<String, Object>();
+        SearchOutput searchOutput = new SearchOutput();
 
         if(!authService.isAuthenticated()){
-            respData.put("status", Constants.AUTHENTICATION_REQUIRED);
-            return respData;
+            searchOutput.setStatus(Constants.AUTHENTICATION_REQUIRED);
+            return searchOutput;
         }
 
         Account account = authService.getAccount();
@@ -72,12 +74,14 @@ public class SearchService {
                 }
             }
 
-            respData.put("status", Constants.SUCCESS);
-            respData.put("accounts", accounts);
-            respData.put("music", music);
+            List<Sheet> sheets = sheetRepo.query(q);
+
+            searchOutput.setAccounts(accounts);
+            searchOutput.setSheets(sheets);
+            searchOutput.setStatus(Constants.SUCCESS);
 
         }
 
-        return respData;
+        return searchOutput;
     }
 }

@@ -3,6 +3,9 @@ package social.amadeus.repository.jdbc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import social.amadeus.model.Account;
 import social.amadeus.model.Flyer;
 import social.amadeus.model.Sheet;
 import social.amadeus.repository.SheetRepo;
@@ -13,6 +16,9 @@ public class SheetJdbcRepo implements SheetRepo {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
     public long getId() {
@@ -88,6 +94,19 @@ public class SheetJdbcRepo implements SheetRepo {
             return null;
         }
         return sheet;
+    }
+
+    @Override
+    public List<Sheet> query(String unclean) {
+        String q = unclean.replaceAll("([-+.^:,])","");
+        String sql = "select distinct * from sheets where upper(title) like upper(:query) order by title asc";
+
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("query", "%" + q + "%");
+
+        List<Sheet> sheets = namedParameterJdbcTemplate.query(sql, params, new BeanPropertyRowMapper<>(Sheet.class));
+        return sheets;
+
     }
 
     @Override

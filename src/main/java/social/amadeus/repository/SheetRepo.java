@@ -20,6 +20,8 @@ public interface SheetRepo {
 
     public Sheet getByEndpoint(String endpoint);
 
+    public List<Sheet> query(String query);
+
     public List<Sheet> getSheets(long id);
 
     public List<Sheet> getSheets();

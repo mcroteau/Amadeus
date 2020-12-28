@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 import social.amadeus.common.Constants;
 import social.amadeus.mocks.MockAccount;
 import social.amadeus.model.Account;
+import social.amadeus.model.SearchOutput;
 import social.amadeus.repository.AccountRepo;
 import social.amadeus.service.AccountService;
 import social.amadeus.service.AuthService;
@@ -45,8 +46,8 @@ public class AccountActionTest {
     public void testBasicQuery(){
         TestUtils.mockRequestCycle();
         authService.signin(Constants.ADMIN_USERNAME, Constants.PASSWORD);
-        Map<String, Object> results = searchService.queryBasic("Sebastien");
-        List<Account> accounts = (List) results.get("accounts");
+        SearchOutput results = searchService.queryBasic("Sebastien");
+        List<Account> accounts = results.getAccounts();
         assertEquals(1, accounts.size());
     }
 
@@ -67,8 +68,8 @@ public class AccountActionTest {
         TestUtils.mockRequestCycle();
         authService.signin(Constants.ADMIN_USERNAME, Constants.PASSWORD);
         Account account = accountRepo.getByUsername(mockAccount.getUsername());
-        Map<String, Object> results = searchService.queryBasic("marisa");
-        List<Account> accounts = (List) results.get("accounts");
+        SearchOutput results = searchService.queryBasic("marisa");
+        List<Account> accounts = results.getAccounts();
         assertEquals(3, accounts.size());
     }
 }

@@ -1,9 +1,58 @@
+<style>
+    #search-navigation li{
+        display:inline-block;
+        cursor: pointer;
+        cursor:hand;
+        padding:3px 7px;
+        border-radius: 4px;
+    }
+    #search-navigation li.active{
+        color:#fff;
+        background: #545662;
+    }
+    .sheet-wrapper{
+        width:320px;
+        margin:15px;
+        float:left;
+        -webkit-box-shadow: 4px 3px 59px 0px rgba(0,0,0,.23) !important;
+        -moz-box-shadow: 4px 3px 59px 0px rgba(0,0,0,.23) !important;
+        box-shadow: 4px 3px 59px 0px rgba(0,0,0,.23) !important;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+    .sheet-image{
+        width:100%;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+</style>
 
-<div id="search-results-container">
+<ul id="search-navigation">
+    <li class="toggle-search active" data-id="people">Accounts</li>
+    <li class="toggle-search" data-id="sheet">Folios</li>
+</ul>
 
-    <div id="search-accounts-results-container">
+<div id="search-results-wrapper">
 
-        <h1 class="no-border" style="margin-bottom:20px;">Results</h1>
+    <div id="sheet" class="search-page" style="display: none;">
+        <h1>Folios</h1>
+        <div ng-if="sheets.length > 0">
+            <div ng-click="show" ng-repeat="sheet in sheets" class="sheet-wrapper">
+                <img ng-src="{{sheet.imageUri}}" class="sheet-image"/>
+                <div class="sheet-content">
+                    <h2>{{sheet.title}}</h2>
+                    <div class="sheet-description">{{sheet.description}}</div>
+                </div>
+            </div>
+        </div>
+        <p ng-if="!sheets || sheets.length == 0">No Folios found...
+            Wondering what a Folio is?<br/>
+            A Folio is a Business, Place or an Event</p>
+    </div>
+
+    <div id="people" class="search-page">
+
+        <h1>Accounts</h1>
 
         <table ng-if="accounts.length > 0" id="accounts-results-table">
             <thead class="render-desktop">
@@ -31,9 +80,9 @@
                 </tr>
             </tbody>
         </table>
+        <p ng-if="accounts.length == 0" class="notify" >No accounts found...</p>
     </div>
 
+
+
 </div>
-
-<p ng-if="accounts.length == 0" class="notify" >No results found... please try again!</p>
-

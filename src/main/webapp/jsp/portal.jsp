@@ -41,7 +41,7 @@
 
 
 <%--    <iframe id="viz" src="<%=viz%>" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>--%>
-        <iframe id="viz" src="/o/jsp/static/vis/space.jsp" style="overflow:hidden;z-index:1;position:absolute;bottom:0px;width:39%;height:330px"></iframe>
+<%--        <iframe id="viz" src="/o/jsp/static/vis/space.jsp" style="overflow:hidden;z-index:1;position:absolute;bottom:0px;width:39%;height:330px"></iframe>--%>
 <%--    <canvas id="sugarcookie" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></canvas>--%>
 
     <div id="logo-mobile" style="display:none;">
@@ -309,8 +309,6 @@
     })
 
     app.config(function($routeProvider) {
-
-
         $routeProvider
             .when('/', {
                 templateUrl: 'pages/activity.html?v=' + t,
@@ -466,7 +464,6 @@
             var $target = $(event.target)
             var id = $target.attr('id')
             if (!ids.includes(id)){
-                console.log('close dialogs');
                 $scope.chatOpened = false
                 $scope.showProfile = false
                 $scope.showNotifications = false
@@ -504,7 +501,13 @@
     });
 
     app.controller('sheetController', function($scope, $http, $window, dataService){
-        
+        $scope.getData = function(id){
+            $http.get('/o/sheet/data/' + id).then($scope.setData)
+        }
+
+        $scope.setData = function(resp){
+            $scope.data = resp.data
+        }
     });
 
     app.controller('activityController', function($scope, $rootScope, $http, $route, $interval, $timeout, $location, $anchorScroll, $sce, $window, activityModel, dataService) {
@@ -617,11 +620,13 @@
     })
 
     app.controller('searchController', function($scope, $rootScope, $http, $location, $route, $window) {
-        var searchData = function(){
+        $scope.searchData = function(funkt){
             var q = $route.current.params.q
 
-            $http.get('/o/search?q=' + q).then(function(response){
-                $scope.accounts = response.data.accounts
+            $http.get('/o/search?q=' + q).then(function(resp){
+                $scope.accounts = resp.data.accounts
+                $scope.sheets = resp.data.sheets
+                funkt.call()
             })
         }
 
@@ -629,7 +634,32 @@
             $http.post('/o/friend/invite/' + id).then($route.reload)
         }
 
-        searchData()
+        $scope.toggleSearch = function(evt) {
+            $scope.searchData($scope.transitionPage(evt));
+        }
+
+        $scope.transitionPage = function (evt) {
+            return function() {
+                var id = $(evt.target).attr('data-id')
+                $('.toggle-search').removeClass('active')
+                $(evt.target).addClass('active')
+                $('.search-page').fadeOut(0, $.noop)
+                $('#' + id).fadeIn(200, $.noop)
+
+                $('.sheet-description').each(function(descDiv){
+                    console.log(descDiv)
+                    var description = $(descDiv).html()
+                    var short = $.trim(description).substring(0, 130)
+                        .split(" ").slice(0, -1).join(" ") + "...";
+                    $(descDiv).html(short);
+                })
+
+            }
+        }
+
+        $('.toggle-search').click($scope.toggleSearch)
+
+        $scope.searchData($.noop)
     });
 
     app.controller('invitationController', function($scope, $rootScope, $http, $route, dataService) {

@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<h1>Handout #${sheet.id}</h1>
+<h1>Folio #${sheet.id}</h1>
 
 <c:if test="${not empty message}">
     <p>${message}</p>
@@ -44,13 +44,13 @@
 
         <br class="clear"/>
 
-        <input type="submit" value="Update Handout" class="button retro"/>&nbsp;
+        <input type="submit" value="Update Folio" class="button retro"/>&nbsp;
 
     </form>
 
     <div id="delete-form" style="margin:100px 0px 300px;">
         <form action="/o/sheet/delete/${sheet.id}" method="post">
-            <input type="submit" class="button beauty-light" value="Delete Handout"/>
+            <input type="submit" class="button beauty-light" value="Delete Folio"/>
         </form>
     </div>
 </div>

@@ -3,7 +3,7 @@
     <p>${message}</p>
 </c:if>
 
-<h1>New Handout</h1>
+<h1>New Folio</h1>
 
 <div id="form-container">
 
@@ -36,7 +36,7 @@
 </div>
 
 <div id="form-action-container">
-    <input type="submit" id="save-button" value="Create Handout" class="button retro"/>
+    <input type="submit" id="save-button" value="Create Folio" class="button retro"/>
 </div>
 
 <script>

@@ -141,7 +141,7 @@
                 <br/>
                 <br/>
                 <a href="${pageContext.request.contextPath}/account/edit/${sessionScope.account.id}" class="href-dotted">Profile</a>&nbsp;|&nbsp;
-            <a href="${pageContext.request.contextPath}/sheet/list/${sessionScope.account.id}" class="href-dotted">Handouts</a>&nbsp;|&nbsp;
+            <a href="${pageContext.request.contextPath}/sheet/list/${sessionScope.account.id}" class="href-dotted">Folios</a>&nbsp;|&nbsp;
             <a href="${pageContext.request.contextPath}/flyer/list/${sessionScope.account.id}" class="href-dotted">Advertise</a>
 
             <%}else{%>
