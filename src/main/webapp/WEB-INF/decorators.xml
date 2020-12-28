@@ -26,6 +26,5 @@
         <pattern>*/accounts</pattern>
         <pattern>*/posts/flagged*</pattern>
         <pattern>*/post/review*</pattern>
-        <pattern>*/unauthorized</pattern>
     </decorator>
 </decorators>
