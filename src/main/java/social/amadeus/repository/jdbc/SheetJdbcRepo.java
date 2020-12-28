@@ -76,7 +76,7 @@ public class SheetJdbcRepo implements SheetRepo {
     }
 
     @Override
-    public boolean getByEndpoint(String endpoint) {
+    public Sheet getByEndpoint(String endpoint) {
         Sheet sheet = null;
         try {
             String sql = "select * from sheets where endpoint = ?";
@@ -85,10 +85,9 @@ public class SheetJdbcRepo implements SheetRepo {
                     new BeanPropertyRowMapper<>(Sheet.class));
 
         }catch (Exception e){
-            return false;
+            return null;
         }
-        if(sheet == null) return false;
-        return true;
+        return sheet;
     }
 
     @Override

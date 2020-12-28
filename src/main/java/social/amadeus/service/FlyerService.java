@@ -195,6 +195,8 @@ public class FlyerService {
             return "redirect:/uno";
         }
 
+        if(Long.parseLong(id) != authService.getAccount().getId())return Constants.UNAUTHORIZED_REDIRECT;
+
         List<Flyer> flyers = flyerRepo.getFlyers(Long.parseLong(id));
         modelMap.put("flyers", flyers);
 

@@ -14,6 +14,8 @@ import social.amadeus.model.Sheet;
 import social.amadeus.repository.AccountRepo;
 import social.amadeus.repository.SheetRepo;
 
+import java.util.List;
+
 public class SheetService {
 
     private static final Logger log = Logger.getLogger(SheetService.class);
@@ -51,6 +53,22 @@ public class SheetService {
         return sheet;
     }
 
+    public Sheet getData(Long id) {
+        if(!authService.isAuthenticated()){
+            Sheet sheet = new Sheet();
+            sheet.setStatus(Constants.X_MESSAGE);
+            return sheet;
+        }
+
+        return sheetRepo.get(id);
+    }
+
+    public String view(String endpoint, ModelMap modelMap) {
+        Sheet sheet = sheetRepo.getByEndpoint(endpoint);
+        modelMap.put("sheet", sheet);
+        return "sheet/gander";
+    }
+
     public String create() {
         if(!authService.isAuthenticated()){
             return "redirect:/uno";
@@ -67,7 +85,7 @@ public class SheetService {
         String endpoint = sheet.getEndpoint().replaceAll("[^\\w\\s]", "");
         log.info(endpoint);
 
-        if(sheetRepo.getByEndpoint(endpoint)){
+        if(sheetRepo.getByEndpoint(endpoint) == null){
             redirect.addFlashAttribute("message", "Endpoint exists, please try another without special characters");
             redirect.addAttribute("endpoint", "make");
             redirect.addFlashAttribute("sheet", sheet);
@@ -126,6 +144,10 @@ public class SheetService {
 
     public String update(Sheet sheet, CommonsMultipartFile sheetImage, RedirectAttributes redirect){
 
+        if(!authService.isAuthenticated()){
+            return "redirect:/";
+        }
+
         String permission = getSheetPermission(sheet.getId());
         if(!authService.hasPermission(permission)) {
             return Constants.UNAUTHORIZED_REDIRECT;
@@ -134,7 +156,7 @@ public class SheetService {
         String endpoint = sheet.getEndpoint().replaceAll("[^\\w\\s]", "");
         log.info(endpoint);
 
-        if(sheetRepo.getByEndpoint(endpoint)){
+        if(sheetRepo.getByEndpoint(endpoint) == null){
             redirect.addFlashAttribute("message", "Endpoint exists, please try another without special characters");
             redirect.addAttribute("endpoint", "make");
             redirect.addFlashAttribute("sheet", sheet);
@@ -149,6 +171,36 @@ public class SheetService {
 
         sheetRepo.update(sheet);
         return "redirect:/sheet/edit/" + sheet.getId();
+    }
+
+    public String getSheets(ModelMap modelMap) {
+
+        if(!authService.isAuthenticated()){
+            return "redirect:/";
+        }
+
+        if(!authService.isAdministrator()){
+            return Constants.UNAUTHORIZED_REDIRECT;
+        }
+
+        List<Sheet> sheets = sheetRepo.getSheets();
+        modelMap.put("sheets", sheets);
+
+        return "sheet/list";
+    }
+
+    public String getUserSheets(Long id, ModelMap modelMap) {
+
+        if(!authService.isAuthenticated()){
+            return "redirect:/";
+        }
+
+        if(id != authService.getAccount().getId())return Constants.UNAUTHORIZED_REDIRECT;
+
+        List<Sheet> sheets = sheetRepo.getSheets(authService.getAccount().getId());
+        modelMap.put("sheets", sheets);
+
+        return "sheet/list";
     }
 
 }
