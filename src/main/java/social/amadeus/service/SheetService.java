@@ -64,7 +64,7 @@ public class SheetService {
             return Constants.AUTHENTICATION_REQUIRED;
         }
 
-        String endpoint = StringEscapeUtils.escapeJava(sheet.getEndpoint());
+        String endpoint = sheet.getEndpoint().replaceAll("[^\\w\\s]", "");
         log.info(endpoint);
 
         if(sheetRepo.getByEndpoint(endpoint)){
@@ -131,7 +131,7 @@ public class SheetService {
             return Constants.UNAUTHORIZED_REDIRECT;
         }
 
-        String endpoint = StringEscapeUtils.escapeJava(sheet.getEndpoint());
+        String endpoint = sheet.getEndpoint().replaceAll("[^\\w\\s]", "");
         log.info(endpoint);
 
         if(sheetRepo.getByEndpoint(endpoint)){

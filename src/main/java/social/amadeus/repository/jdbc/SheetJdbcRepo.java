@@ -64,10 +64,10 @@ public class SheetJdbcRepo implements SheetRepo {
 
     @Override
     public boolean update(Sheet sheet) {
-        String sql = "update sheet set title = ?, description = ?, image_uri = ?, endpoint = ?, sheet_views = ? where id = ?";
+        String sql = "update sheets set title = ?, description = ?, image_uri = ?, endpoint = ?, sheet_views = ? where id = ?";
         try {
             jdbcTemplate.update(sql, new Object[]{
-                sheet.getTitle(), sheet.getDescription(), sheet.getImageUri(), sheet.getEndpoint(), sheet.getSheetViews()
+                sheet.getTitle(), sheet.getDescription(), sheet.getImageUri(), sheet.getEndpoint(), sheet.getSheetViews(), sheet.getId()
             });
         }catch(Exception e){
             e.printStackTrace();
@@ -77,13 +77,17 @@ public class SheetJdbcRepo implements SheetRepo {
 
     @Override
     public boolean getByEndpoint(String endpoint) {
-        String sql = "select * from sheets where endpoint = ?";
+        Sheet sheet = null;
+        try {
+            String sql = "select * from sheets where endpoint = ?";
 
-        Sheet sheet = jdbcTemplate.queryForObject(sql, new Object[] { endpoint },
-                new BeanPropertyRowMapper<>(Sheet.class));
+            sheet = jdbcTemplate.queryForObject(sql, new Object[]{endpoint},
+                    new BeanPropertyRowMapper<>(Sheet.class));
 
+        }catch (Exception e){
+            return false;
+        }
         if(sheet == null) return false;
-
         return true;
     }
 

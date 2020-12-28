@@ -1,5 +1,6 @@
 package social.amadeus;
 
+import org.apache.log4j.Logger;
 import org.checkerframework.checker.units.qual.A;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,13 +16,13 @@ import social.amadeus.repository.SheetRepo;
 import social.amadeus.service.AuthService;
 import social.amadeus.service.SheetService;
 
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:o-combined-test.xml")
 public class SheetActionTest {
+
+    private static final Logger log = Logger.getLogger(SheetActionTest.class);
 
     @Autowired
     SheetRepo sheetRepo;
@@ -34,22 +35,27 @@ public class SheetActionTest {
 
     @Test
     public void testBasicSave(){
+        log.info("1");
         TestUtils.mockRequestCycle();
         authService.signin(Constants.GUEST_USERNAME, Constants.GUEST_PASSWORD);
-        sheetService.save(new MockSheet(), null, new RedirectAttributesModelMap());
+        String result = sheetService.save(new MockSheet(), null, new RedirectAttributesModelMap());
+        log.info("result: " + result);
         assertEquals(1, sheetRepo.getCount());
     }
 
     @Test
-    public void testBasicDelete(){
+    public void testDelete(){
+        log.info("2");
         TestUtils.mockRequestCycle();
         authService.signin(Constants.GUEST_USERNAME, Constants.GUEST_PASSWORD);
+        log.info(sheetRepo.getCount());
         sheetService.delete(sheetRepo.getLast().getId(), new RedirectAttributesModelMap());
         assertEquals(0, sheetRepo.getCount());
     }
 
     @Test
-    public void testBasicUpdate(){
+    public void testUpdate(){
+        log.info("3");
         TestUtils.mockRequestCycle();
         authService.signin(Constants.GUEST_USERNAME, Constants.GUEST_PASSWORD);
         sheetService.save(new MockSheet(), null, new RedirectAttributesModelMap());
@@ -64,14 +70,14 @@ public class SheetActionTest {
     public void testGetList(){
         TestUtils.mockRequestCycle();
         authService.signin(Constants.ADMIN_USERNAME, Constants.PASSWORD);
-        assertEquals(1, sheetRepo.getSheets());
+        assertEquals(1, sheetRepo.getSheets().size());
     }
 
     @Test
     public void testGetUserList(){
         TestUtils.mockRequestCycle();
         authService.signin(Constants.GUEST_USERNAME, Constants.GUEST_PASSWORD);
-        assertEquals(1, sheetRepo.getSheets(authService.getAccount().getId()));
+        assertEquals(1, sheetRepo.getSheets(authService.getAccount().getId()).size());
     }
 
 }
