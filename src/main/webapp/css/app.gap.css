@@ -942,9 +942,16 @@ input[type="submit"].button{
 }
 
 .button:hover{
+    color:#fff;
 	-webkit-box-shadow: 0px 3px 5px 0px rgba(179,179,179,0.43) !important;
     -moz-box-shadow: 0px 3px 5px 0px rgba(179,179,179,0.43) !important;
     box-shadow: 0px 3px 5px 0px rgba(179,179,179,0.43) !important;
+}
+
+.button.light:hover,
+.button.sky:hover,
+.button.yella:hover{
+    color:#000;
 }
 
 .light-shadow:hover{
