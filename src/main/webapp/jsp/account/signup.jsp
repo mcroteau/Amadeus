@@ -33,7 +33,7 @@
 
         #amadeus-home-logo{
             text-decoration: none;
-            padding:26px 26px 14px 12px;
+            padding:26px 19px 14px 26px;
             display:inline-block;
             border-radius: 4px;
             -moz-border-radius: 4px;
@@ -45,7 +45,8 @@
             background: linear-gradient(180deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 7%, rgba(44,244,0,1) 7%, rgba(44,244,0,1) 25%, rgba(84,175,255,1) 25%, rgba(84,175,255,1) 62%, rgba(113,11,170,1) 62%, rgba(113,11,170,1) 91%, rgba(255,75,176,1) 92%);
 
             background: rgb(255,75,176);
-            background: linear-gradient(-90deg, rgba(255,75,176,1) 5%, rgba(253,254,3,1) 5%, rgba(253,254,3,1) 14%, rgba(44,244,0,1) 15%, rgba(44,244,0,1) 24%, rgba(84,175,255,1) 24%, rgba(84,175,255,1) 39%, rgba(10,1,15,1) 39%);
+            background: linear-gradient(90deg, rgba(255,75,176,1) 0%, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 5%, rgba(44,244,0,1) 5%, rgba(44,244,0,1) 10%, rgba(84,175,255,1) 10%, rgba(84,175,255,1) 16%, rgba(10,1,15,1) 16%);
+
 
             -webkit-box-shadow: 0px 3px 49px 0px rgba(0,0,0,.29);
             -moz-box-shadow: 0px 3px 49px 0px rgba(0,0,0,.29);
@@ -80,9 +81,10 @@
     </c:if>
 
     <a href="/o/uno" id="amadeus-home-logo">
-        <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
-            <path d="M9.86 154.32L73.49 154.32L39.95 99.29L9 154.32L9.86 154.32Z" />
-            <path d="M128.16 152.92L159 152.92L81.9 26.75L80.5 26.75L65.86 53.27L128.16 152.92Z" />
+        <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 201 201" width="201" height="201">
+            <path id="Shape 11" class="shp0" d="M182.74 147.94C177.07 147.94 172.48 143.35 172.48 137.68C172.48 132.01 177.07 127.42 182.74 127.42C188.41 127.42 193 132.01 193 137.68C193 143.35 188.41 147.94 182.74 147.94Z" />
+            <path id="Shape 8 copy" class="shp0" d="M14 147.92L96.46 148.07L52.83 77.6L14.02 147.64L14 147.92Z" />
+            <path id="Shape 8" class="shp0" d="M119.21 147.82L146.82 147.82L77.79 34.86L76.54 34.86L64.36 59.61L119.21 147.82Z" />
         </svg>
 <%--        <svg id="amadeus-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130">--%>
 <%--            <path id="amadeus-icon-path" d="M57.46 78.91L36.35 78.87L54.53 30.08L75.83 30.16L68.2 52.86L92 52.85L57.55 115L56.95 115L57.46 78.91ZM57.46 78.91L36.31 78.99L54.62 30.16L75.81 30.07L68.2 52.86L92 52.86L57.55 115L56.95 115L57.46 78.91Z"/>--%>

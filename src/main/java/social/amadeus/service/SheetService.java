@@ -92,7 +92,7 @@ public class SheetService {
             return Constants.AUTHENTICATION_REQUIRED;
         }
 
-        String endpoint = sheet.getEndpoint().replaceAll("[^\\w\\s]", "");
+        String endpoint = sheet.getEndpoint().replaceAll("[^\\w\\s]", "").toLowerCase();
 
         if(sheetRepo.getByEndpoint(endpoint) != null){
             redirect.addFlashAttribute("message", "Endpoint exists, please try another without special characters");
@@ -162,7 +162,7 @@ public class SheetService {
             return Constants.UNAUTHORIZED_REDIRECT;
         }
 
-        String endpoint = sheet.getEndpoint().replaceAll("[^\\w\\s]", "");
+        String endpoint = sheet.getEndpoint().replaceAll("[^\\w\\s]", "").toLowerCase();
 
         Sheet existingSheet = sheetRepo.getByEndpoint(endpoint);
         if(existingSheet != null &&

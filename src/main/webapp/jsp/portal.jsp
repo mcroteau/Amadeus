@@ -50,9 +50,10 @@
 <%--                <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130">--%>
 <%--                    <path id="amadeus-icon-path" d="M57.46 78.91L36.35 78.87L54.53 30.08L75.83 30.16L68.2 52.86L92 52.85L57.55 115L56.95 115L57.46 78.91ZM57.46 78.91L36.31 78.99L54.62 30.16L75.81 30.07L68.2 52.86L92 52.86L57.55 115L56.95 115L57.46 78.91Z"/>--%>
 <%--                </svg>--%>
-                <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
-                    <path d="M10.84 143.17L73.2 143.17L40.33 89.24L10 143.17L10.84 143.17Z" />
-                    <path d="M126.78 141.8L157 141.8L81.44 18.15L80.07 18.15L66.73 45.24L126.78 141.8Z" />
+                <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 201 201" width="201" height="201">
+                    <path d="M182.74 147.94C177.07 147.94 172.48 143.35 172.48 137.68C172.48 132.01 177.07 127.42 182.74 127.42C188.41 127.42 193 132.01 193 137.68C193 143.35 188.41 147.94 182.74 147.94Z" />
+                    <path d="M14 147.92L96.46 148.07L52.83 77.6L14.02 147.64L14 147.92Z" />
+                    <path d="M119.21 147.82L146.82 147.82L77.79 34.86L76.54 34.86L64.36 59.61L119.21 147.82Z" />
                 </svg>
                 <%--            <span class="medium" id="amadeus-symbol">&Delta;</span>--%>
             <span id="latest-feed-total" class="notifications-count" style="display:inline-block; position:absolute;bottom:3px;left:54px;">{{data.newestCount}}</span></a>
@@ -67,8 +68,13 @@
 
     <div ng-if="$root.renderModal" id="amadeus-modal">
         <div id="amadeus-model-content">
-            <svg id="amadeus-logo-modal" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130">
-                <path id="amadeus-icon-path" d="M57.46 78.91L36.35 78.87L54.53 30.08L75.83 30.16L68.2 52.86L92 52.85L57.55 115L56.95 115L57.46 78.91ZM57.46 78.91L36.31 78.99L54.62 30.16L75.81 30.07L68.2 52.86L92 52.86L57.55 115L56.95 115L57.46 78.91Z"/>
+<%--            <svg id="amadeus-logo-modal" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130">--%>
+<%--                <path id="amadeus-icon-path" d="M57.46 78.91L36.35 78.87L54.53 30.08L75.83 30.16L68.2 52.86L92 52.85L57.55 115L56.95 115L57.46 78.91ZM57.46 78.91L36.31 78.99L54.62 30.16L75.81 30.07L68.2 52.86L92 52.86L57.55 115L56.95 115L57.46 78.91Z"/>--%>
+<%--            </svg>--%>
+            <svg id="amadeus-logo-modal" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 201 201" width="201" height="201">
+                <path d="M182.74 147.94C177.07 147.94 172.48 143.35 172.48 137.68C172.48 132.01 177.07 127.42 182.74 127.42C188.41 127.42 193 132.01 193 137.68C193 143.35 188.41 147.94 182.74 147.94Z" />
+                <path d="M14 147.92L96.46 148.07L52.83 77.6L14.02 147.64L14 147.92Z" />
+                <path d="M119.21 147.82L146.82 147.82L77.79 34.86L76.54 34.86L64.36 59.61L119.21 147.82Z" />
             </svg>
 <%--            <span id="amadeus-symbol-color" style="margin-top:142px;color:#FFFF44;font-size:41px;display:block;font-family:Roboto-Medium !important;">&Delta;</span>--%>
             <span class="tiny" style="color:#fff">Processing</span>
@@ -113,10 +119,37 @@
 
             <div id="logo-container" style="position:absolute;">
                 <a ng-class="{'active' : data.newestCount > 0}" ng-click="reloadActivities()" href="javascript:" id="logo-logo">
-                    <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">
-                        <path d="M9.86 154.32L73.49 154.32L39.95 99.29L9 154.32L9.86 154.32Z" />
-                        <path d="M128.16 152.92L159 152.92L81.9 26.75L80.5 26.75L65.86 53.27L128.16 152.92Z" />
-                    </svg>
+<%--                    <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">--%>
+<%--                        <path d="M9.86 154.32L73.49 154.32L39.95 99.29L9 154.32L9.86 154.32Z" />--%>
+<%--                        <path d="M128.16 152.92L159 152.92L81.9 26.75L80.5 26.75L65.86 53.27L128.16 152.92Z" />--%>
+<%--                    </svg>--%>
+
+
+<%--    <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">--%>
+<%--        <style>--%>
+<%--            .shp1 { fill: #54afff }--%>
+<%--            .shp2 { fill: #000000 }--%>
+<%--        </style>--%>
+<%--        <path id="Shape 8 copy 3" class="shp1" d="M10 146.17L101.29 146.35L52.98 68.34L10.03 145.87L10 146.17Z" />--%>
+<%--        <path id="Shape 8" class="shp2" d="M131.99 146.05L164 146.05L83.97 15.09L82.51 15.09L68.38 43.78L131.99 146.05Z" />--%>
+<%--    </svg>--%>
+<%--    <svg id="amadeus-logo" class="good" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171 171" width="171" height="171">--%>
+<%--        <style>--%>
+<%--            tspan { white-space:pre }--%>
+<%--            .shp0 { fill: #ff0000 }--%>
+<%--            .shp1 { fill: #ffffff }--%>
+<%--        </style>--%>
+    <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 201 201" width="201" height="201">
+        <path d="M182.74 147.94C177.07 147.94 172.48 143.35 172.48 137.68C172.48 132.01 177.07 127.42 182.74 127.42C188.41 127.42 193 132.01 193 137.68C193 143.35 188.41 147.94 182.74 147.94Z" />
+        <path d="M14 147.92L96.46 148.07L52.83 77.6L14.02 147.64L14 147.92Z" />
+        <path d="M119.21 147.82L146.82 147.82L77.79 34.86L76.54 34.86L64.36 59.61L119.21 147.82Z" />
+    </svg>
+<%--    <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 201 201" width="201" height="201">--%>
+<%--        <path id="Shape 11" class="shp0" d="M179.97 147.94C174.42 147.94 169.94 143.46 169.94 137.91C169.94 132.37 174.42 127.88 179.97 127.88C185.52 127.88 190 132.37 190 137.91C190 143.46 185.52 147.94 179.97 147.94Z" />--%>
+<%--        <path id="Shape 8 copy" class="shp0" d="M15 147.95L79.1 148.07L45.18 93.29L15.02 147.73L15 147.95Z" />--%>
+<%--        <path id="Shape 8" class="shp0" d="M117.86 147.82L144.86 147.82L77.37 37.39L76.14 37.39L64.23 61.59L117.86 147.82Z" />--%>
+<%--    </svg>--%>
+
 <%--                    <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130">--%>
 <%--                        <path id="amadeus-icon-path" d="M57.46 78.91L36.35 78.87L54.53 30.08L75.83 30.16L68.2 52.86L92 52.85L57.55 115L56.95 115L57.46 78.91ZM57.46 78.91L36.31 78.99L54.62 30.16L75.81 30.07L68.2 52.86L92 52.86L57.55 115L56.95 115L57.46 78.91Z"/>--%>
 <%--                    </svg>--%>
