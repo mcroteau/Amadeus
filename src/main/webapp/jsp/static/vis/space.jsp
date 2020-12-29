@@ -15,7 +15,7 @@
     // The amount of symbol we want to place;
     var count = 150;
 
-    var path = new Path.RegularPolygon(new Point(0, 0), 3, 5);
+    var path = new Path.RegularPolygon(new Point(0, 0), 3, 10);
 
     path.fillColor = '#FF4F01';
     path.fillColor = '#3b1d01';
