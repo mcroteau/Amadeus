@@ -2140,7 +2140,6 @@ input[type="submit"].button.small{
     background:inherit;
 }
 .share-comment-container textarea{
-    color:#fff;
     font-size:16px !important;
     font-family:Roboto-Thin !important;
     height:67px !important;
@@ -3797,6 +3796,8 @@ h1.gray span{
     fill:#000;
     border-radius: 20px;
 }
+
+
 
 #top-inner-container{
     margin-left:194px;

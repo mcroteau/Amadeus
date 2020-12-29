@@ -533,6 +533,7 @@
             }else{
                 $(frames).width(465)
             }
+            $(frames).css('margin-top', '-6px')
         }
 
         $scope.resizeFrames();
