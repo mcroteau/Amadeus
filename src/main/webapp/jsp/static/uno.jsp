@@ -34,9 +34,16 @@
 
     <h1 style="font-size:32px;font-family: Roboto-Bold !important;margin-top:20px;">Amadeus</h1>
 
-    <p id="amadeus-words">Social Networking <a href="${pageContext.request.contextPath}/signup" class="href-dotted">Signup!</a></p>
+    <p id="amadeus-words">Social Networking</p>
 
+    <p>Amadeus is a theophoric given name derived from the Latin words ama - the imperative of the word
+        <strong>amare</strong> (to love) - and <strong>deus</strong> (god).
+        <br/>As a linguistic compound in the form of a phereoikos...<br/>
+        in simple terms, it means... <strong>Love God</strong>.</p>
 
+    <p class="yellad">We launched on the <strong class="yella">28th of December.</strong>
+        <br/>
+        <a href="${pageContext.request.contextPath}/signup" class="href-dotted">Signup!</a></p>
 
     <h2 style="margin-bottom:20px;">Signin</h2>
 
@@ -69,5 +76,7 @@
     <div id="signup-container" style="text-align: center;margin-top:51px">
         <a href="${pageContext.request.contextPath}/signup" class="button modern large">Sign Up !</a>
     </div>
+
+
 
 </div>
