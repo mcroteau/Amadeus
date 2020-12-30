@@ -14,8 +14,6 @@
         <pattern>*/get_code</pattern>
         <pattern>*/privacy</pattern>
         <pattern>*/eula</pattern>
-    </decorator>
-    <decorator name="actions" page="actions.jsp">
         <pattern>*/action</pattern>
         <pattern>*/action/like</pattern>
         <pattern>*/action/share</pattern>

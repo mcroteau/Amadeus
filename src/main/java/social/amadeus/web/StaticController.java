@@ -39,7 +39,7 @@ public class StaticController {
 
 	@RequestMapping(value="/get_code", method=RequestMethod.GET)
 	public String getCode(){
-		return "static/get_code";
+		return "action/get_code";
 	}
 
 

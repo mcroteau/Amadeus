@@ -68,7 +68,6 @@
 
     </form>
 
-
     <div id="signup-container" style="text-align: center;margin-top:51px">
         <a href="${pageContext.request.contextPath}/signup" class="button modern large">Sign Up !</a>
     </div>
