@@ -41,7 +41,7 @@
         <br/>As a linguistic compound in the form of a phereoikos...<br/>
         in simple terms, it means... <strong>Love God</strong>.</p>
 
-    <p class="yellad">We launched on the <strong class="yella">28th of December.</strong>
+    <p class="yellad">We launched on the <strong class="yella">28th of December at 9pm</strong>
         <br/>
         <a href="${pageContext.request.contextPath}/signup" class="href-dotted">Signup!</a></p>
 
