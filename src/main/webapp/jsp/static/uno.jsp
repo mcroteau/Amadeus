@@ -4,9 +4,7 @@
 <div id="uno-content-container">
 
     <c:if test="${not empty message}">
-        <div class="span12">
-            <p>${message}</p>
-        </div>
+        <p>${message}</p>
     </c:if>
 
     <parakeet:isAuthenticated>

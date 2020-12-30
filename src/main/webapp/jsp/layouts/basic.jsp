@@ -133,7 +133,7 @@
 <body>
     <decorator:body/>
 
-    <p class="information" style="margin:30px auto 170px 140px">&copy 2021 Amadeus</p>
+    <p class="information" style="font-size:10px !important;margin:0px auto 170px 30px">&copy 2021 Amadeus</p>
 
 </body>
 </html>
