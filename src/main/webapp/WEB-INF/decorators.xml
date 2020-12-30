@@ -27,4 +27,8 @@
         <pattern>*/posts/flagged*</pattern>
         <pattern>*/post/review*</pattern>
     </decorator>
+    <decorator name="basic" page="basic.jsp">
+        <pattern>*/uno</pattern>
+        <pattern>*/signup</pattern>
+    </decorator>
 </decorators>
