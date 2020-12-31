@@ -1426,20 +1426,28 @@ h3#share-something span{
 
 }
 
-#whatsup::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+#whatsup::-webkit-input-placeholder {
+    font-size:17px !important;/* Chrome/Opera/Safari */
     color:#000 !important;
+    line-height: 1.2em;
     font-family:Roboto-Thin !important;
 }
-#whatsup::-moz-placeholder { /* Firefox 19+ */
+#whatsup::-moz-placeholder {
+    font-size:17px !important;/* Firefox 19+ */
     color:#000 !important;
+    line-height: 1.2em;
     font-family:Roboto-Thin !important;
 }
-#whatsup:-ms-input-placeholder { /* IE 10+ */
+#whatsup:-ms-input-placeholder {
+    font-size:17px !important; /* IE 10+ */
     color:#000 !important;
+    line-height: 1.2em;
     font-family:Roboto-Thin !important;
 }
-#whatsup:placeholder { /* Firefox 18- */
+#whatsup:placeholder {
+    font-size:17px !important; /* Firefox 18- */
     color:#000 !important;
+    line-height: 1.2em;
     font-family:Roboto-Thin !important;
 }
 

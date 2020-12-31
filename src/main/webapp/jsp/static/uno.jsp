@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
 <%@ taglib prefix="parakeet" uri="/META-INF/tags/parakeet.tld"%>
 
@@ -39,10 +40,9 @@
     <p>Amadeus is a theophoric given name derived from the Latin words ama - the imperative of the word
         <strong>amare</strong> (to love) - and <strong>deus</strong> (god).
         <br/>As a linguistic compound in the form of a phereoikos...<br/>
-        in simple terms, it means... <strong>Love God</strong>.</p>
+        in simple terms, it means... <strong>Love of God</strong>.</p>
 
-    <p class="yellad">We launched on the <strong class="yella">28th of December at 9pm</strong>
-        <br/>
+    <p>We just launched Beta on Monday, thank you
         <a href="${pageContext.request.contextPath}/signup" class="href-dotted">Signup!</a></p>
 
     <h2 style="margin-bottom:20px;">Signin</h2>

@@ -33,6 +33,10 @@
 
     <p id="amadeus-words">Social Networking</p>
 
+    <p style="text-align: left; margin-top:30px;">Are you already one of our delicate flowers?
+        <a href="${pageContext.request.contextPath}/" class="href-dotted">Signin!</a>
+    </p>
+
 
     <form action="${pageContext.request.contextPath}/register" modelAttribute="account" method="post" enctype="multipart/form-data" autocomplete="false" class="pure-form pure-form-stacked" id="registration-form">
         <fieldset>
@@ -64,11 +68,6 @@
 
     <div style="width:100%;margin-top:41px;text-align:center;margin-bottom:30px; ">
         <input type="submit" class="button retro" id="signup-button" value="Signup!" style="width:100%;"/>
-
-        <p style="text-align: left; margin-top:30px;">Are you already one of our delicate flowers?</p>
-
-        <a href="${pageContext.request.contextPath}/" class="button modern" id="signin-button" style="width:80%;">Signin!</a>
-
     </div>
 
     <br class="clear"/>
