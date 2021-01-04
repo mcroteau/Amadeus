@@ -28,5 +28,6 @@
     <decorator name="basic" page="basic.jsp">
         <pattern>*/uno</pattern>
         <pattern>*/signup</pattern>
+        <pattern>*/signin</pattern>
     </decorator>
 </decorators>

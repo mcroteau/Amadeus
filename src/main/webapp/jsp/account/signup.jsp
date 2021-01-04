@@ -34,7 +34,7 @@
     <p id="amadeus-words">Social Networking</p>
 
     <p style="text-align: left; margin-top:30px;">Are you already one of our delicate flowers?
-        <a href="${pageContext.request.contextPath}/" class="href-dotted">Signin!</a>
+        <a href="${pageContext.request.contextPath}/signin" class="href-dotted">Signin!</a>
     </p>
 
 

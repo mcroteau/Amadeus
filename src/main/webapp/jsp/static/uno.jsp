@@ -19,6 +19,8 @@
         </div>
     </parakeet:isAuthenticated>
 
+    <a href="/o/signup" class="href-dotted" style="float:right;">Signup</a>
+    
     <a href="/o/uno" id="amadeus-home-logo">
 <%--        <svg id="amadeus-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130">--%>
 <%--            <path id="amadeus-icon-path" d="M57.46 78.91L36.35 78.87L54.53 30.08L75.83 30.16L68.2 52.86L92 52.85L57.55 115L56.95 115L57.46 78.91ZM57.46 78.91L36.31 78.99L54.62 30.16L75.81 30.07L68.2 52.86L92 52.86L57.55 115L56.95 115L57.46 78.91Z"/>--%>
@@ -34,49 +36,45 @@
     </a>
 
     <h1 style="font-size:32px;font-family: Roboto-Bold !important;margin-top:20px;">Amadeus</h1>
-
     <p id="amadeus-words">Social Networking</p>
 
-    <p>Amadeus is a theophoric given name derived from the Latin words ama - the imperative of the word
+
+
+    <p style="font-size:23px !important;">Amadeus is a theophoric given name
+        derived from the Latin words ama - the imperative of the word
         <strong>amare</strong> (to love) - and <strong>deus</strong> (god).
         <br/>As a linguistic compound in the form of a phereoikos...<br/>
-        in simple terms, it means... <strong>Love of God</strong>.</p>
+        in simple terms, it means... <strong>Love God</strong>.</p>
 
-    <p>We just launched Beta on Monday, thank you
-        <a href="${pageContext.request.contextPath}/signup" class="href-dotted">Signup!</a></p>
+    <p style="font-size:23px !important;">My name is
+        <input type="text" name="name" placeholder="Mitch" style="width:170px;">
+        I fear God!<br/>I want to be one of Amadeus's children
+        <input type="text" name="email" placeholder="cira@gmail.com"> is my email.
+        <button class="button yella signmeup" style="width:auto !important;">Sign me up!</button>
+    </p>
 
-    <h2 style="margin-bottom:20px;">Signin</h2>
+    <style>
+        input[type="text"],
+        input[type="text"]:hover,
+        input[type="text"]:focus{
+            background: #fff;
+            border:none !important;
+            outline: none;
+            font-size:23px;
+            padding:0 !important;
+            border-bottom:solid 1px #ddd !important;
+        }
+        input[type="text"]::placeholder{
+            font-size: 23px;
+        }
 
-    <form action="${pageContext.request.contextPath}/authenticate" modelAttribute="signon" method="post" >
+        .signmeup,
+        .signmeup:hover{
+            -webkit-box-shadow: 0px 1px 7px 0px rgba(179,179,179,0.23) !important;
+            -moz-box-shadow: 0px 1px 7px 0px rgba(179,179,179,0.23) !important;
+            box-shadow: 0px 1px 7px 0px rgba(179,179,179,0.23) !important;
+        }
 
-        <input type="hidden" name="uri" value="${uri}"/>
-
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" name="username" class="form-control" id="username" placeholder=""  value=""  style="width:100%;">
-        </div>
-
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" name="password" class="form-control" id="password" style="width:100%;" value=""  placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;">
-        </div>
-
-        <div style="text-align:right; margin-top:30px;">
-            <input type="hidden" name="targetUri" value="${targetUri}" />
-            <input type="submit" class="button retro" value="Signin" style="width:100%;">
-        </div>
-
-        <br/>
-
-        <br/>
-        <a href="${pageContext.request.contextPath}/account/reset" class="href-dotted">Forgot Password</a>&nbsp;&nbsp;
-
-    </form>
-
-    <div id="signup-container" style="text-align: center;margin-top:51px">
-        <a href="${pageContext.request.contextPath}/signup" class="button modern large">Sign Up !</a>
-    </div>
-
-
+    </style>
 
 </div>

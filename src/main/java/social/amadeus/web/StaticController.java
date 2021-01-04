@@ -27,6 +27,11 @@ public class StaticController {
 		return staticService.uno(uri, request);
 	}
 
+	@RequestMapping(value="/signin", method=RequestMethod.GET)
+	public String signin(){
+		return staticService.signin();
+	}
+
 	@RequestMapping(value="/eula", method=RequestMethod.GET)
 	public String eula(){
 		return "static/eula";

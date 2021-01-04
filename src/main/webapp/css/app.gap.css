@@ -243,7 +243,12 @@ h1{
 	font-size:49px;
 	margin-top:11px;
 	line-height:1.3em;
-	font-family:"Roboto-Bold" !important;
+	font-family:Roboto-Bold !important;
+}
+
+h2{
+    font-size:29px;
+    font-family:Roboto-Bold !important;
 }
 
 h3{

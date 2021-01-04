@@ -28,6 +28,13 @@ public class StaticService {
         return "static/uno";
     }
 
+    public String signin(){
+        if(authService.isAuthenticated()){
+            return "redirect:/";
+        }
+        return "static/signin";
+    }
+
     public String beginReport() {
         phoneService.support("Amadeus:issue");
         return "static/report";
