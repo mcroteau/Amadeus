@@ -43,18 +43,21 @@
 
 
 
-    <p style="font-size:23px !important;">Amadeus is a theophoric given name
+    <p>Amadeus is a theophoric given name
         derived from the Latin words ama - the imperative of the word
         <strong>amare</strong> (to love) - and <strong>deus</strong> (god).
         <br/>As a linguistic compound in the form of a phereoikos...<br/>
         in simple terms, it means... <strong>Love God</strong>.</p>
 
-    <p style="font-size:23px !important;">My name is
-        <input type="text" name="name" placeholder="Mitch" style="width:170px;">
-        I fear God!<br/>I want to be one of Amadeus's children
-        <input type="text" name="email" placeholder="cira@gmail.com"> is my email.
-        <button class="button yella signmeup" style="width:auto !important;">Sign me up!</button>
-    </p>
+    <p><a href="/o/signup" class="button yella">Signup!</a></p>
+
+<%--    <p style="font-size:23px !important;">My name is--%>
+<%--        <input type="text" name="name" placeholder="Mitch" style="width:170px;">--%>
+<%--        I want to try something new and contribute to something other than the pipeline--%>
+<%--        of success that exists!--%>
+<%--        <input type="text" name="email" placeholder="cira@gmail.com"> is my email.--%>
+<%--        <button class="button yella signmeup" style="width:auto !important;">Sign me up!</button>--%>
+<%--    </p>--%>
 
     <style>
         input[type="text"],
