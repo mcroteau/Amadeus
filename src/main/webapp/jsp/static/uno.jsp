@@ -19,8 +19,11 @@
         </div>
     </parakeet:isAuthenticated>
 
-    <a href="/o/signup" class="href-dotted" style="float:right;">Signup</a>
-    
+    <div style="float:right;text-align: right">
+        <a href="/o/signup" class="href-dotted">Signup</a>&nbsp;
+        <a href="/o/signin" class="href-dotted">Signin</a>
+    </div>
+
     <a href="/o/uno" id="amadeus-home-logo">
 <%--        <svg id="amadeus-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 130">--%>
 <%--            <path id="amadeus-icon-path" d="M57.46 78.91L36.35 78.87L54.53 30.08L75.83 30.16L68.2 52.86L92 52.85L57.55 115L56.95 115L57.46 78.91ZM57.46 78.91L36.31 78.99L54.62 30.16L75.81 30.07L68.2 52.86L92 52.86L57.55 115L56.95 115L57.46 78.91Z"/>--%>
