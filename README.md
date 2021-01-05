@@ -1,4 +1,4 @@
-﻿<img src="http://amadeus.social/o/images/amadeus-screen.png" width=450/>
+﻿<img src="https://amadeus.social/o/images/icon.png"/>
 
 # Amadeus
 
