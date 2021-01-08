@@ -65,7 +65,7 @@
     </div>
 
     <div ng-if="$root.renderModal" id="amadeus-modal">
-        <div id="amadeus-model-content">
+        <div id="amadeus-modal-content">
             <svg id="amadeus-logo-modal" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70" width="70" height="70">
                 <g>
                     <path d="M46 31L46 36L57.01 36L57.06 40.91L62 41L62 31L46 31Z" />
@@ -118,7 +118,7 @@
 		<div id="top-outer-container" ng-init="init()">
 
             <div id="logo-container" style="position:absolute;">
-                <a ng-class="{'active' : data.newestCount > 0}" ng-click="reloadActivities()" href="javascript:" id="logo-logo">
+                <a ng-click="reloadActivities()" href="javascript:" id="logo-logo">
                     <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70" width="70" height="70">
                         <g>
                             <path d="M46 31L46 36L57.01 36L57.06 40.91L62 41L62 31L46 31Z" />
@@ -126,7 +126,8 @@
                         </g>
                         <path fill-rule="evenodd" d="M38.5 23C36.01 23 34 20.99 34 18.5C34 16.01 36.01 14 38.5 14C40.99 14 43 16.01 43 18.5C43 20.99 40.99 23 38.5 23ZM40.6 18.5C40.6 17.34 39.66 16.4 38.5 16.4C37.34 16.4 36.4 17.34 36.4 18.5C36.4 19.66 37.34 20.6 38.5 20.6C39.66 20.6 40.6 19.66 40.6 18.5Z" />
                     </svg>
-                    <span id="latest-feed-total" class="notifications-count" style="display:inline-block; position:absolute;bottom:3px;left:54px;">{{data.newestCount}}</span></a>
+                    <span id="latest-feed-total" class="notifications-count" style="display:inline-block; position:absolute;bottom:3px;left:54px;">{{data.newestCount}}</span>
+                </a>
             </div>
 
 			<div id="top-inner-container">
@@ -450,6 +451,16 @@
             if(!$scope.chatStarted)$interval.cancel($scope.chatInterval)
         }
 
+        $scope.clearNotifications = function(){
+            $rootScope.renderModal = true
+            $http.delete('/o/notifications/clear').then(function(response){
+                $rootScope.renderModal = false
+                $route.reload()
+            }).catch(function(error){
+                $rootScope.renderModal = false
+                console.log(error)
+            })
+        }
 
         var ids = [
             'logo-logo',
@@ -460,6 +471,7 @@
         ]
 
         $scope.closeDialogs = function(event) {
+            console.log('close dialogs');
             var $target = $(event.target)
             var id = $target.attr('id')
             if (!ids.includes(id)){
@@ -608,18 +620,6 @@
                 if(activity.accountId == id){
                     $scope.activities.push(activity)
                 }
-            })
-        }
-
-        $scope.clearNotifications = function(){
-            console.log('clear');
-            $rootScope.renderModal = true
-            $http.delete('/o/notifications/clear').then(function(response){
-                $rootScope.renderModal = false
-                $route.reload()
-            }).catch(function(error){
-                $rootScope.renderModal = false
-                console.log(error)
             })
         }
 

@@ -173,7 +173,7 @@ h3{
     background:rgba(10, 213,252, 0.9);
 }
 
-#amadeus-model-content{
+#amadeus-modal-content{
     top:0px;
     bottom:0px;
     left:0px;
@@ -184,7 +184,7 @@ h3{
     text-align: center;
 }
 
-#amadeus-model-content p{
+#amadeus-modal-content p{
     color:#54afff;
 }
 
@@ -3719,6 +3719,11 @@ h1.gray span{
 
 .file-upload-container{
     float:right;
+}
+
+#amadeus-icon{
+    height:0px;
+    width:0px;
 }
 
 .feed-content-container:hover .edit-click,
