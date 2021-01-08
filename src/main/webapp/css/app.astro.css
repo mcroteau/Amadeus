@@ -174,23 +174,23 @@
 
 #search-box::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     color: #000 !important;
-    font-size:17px !important;
+    font-size:29px !important;
     font-family:Roboto-Light !important;
 }
 
 #search-box::-moz-placeholder { /* Firefox 19+ */
     color: #000 !important;
-    font-size:17px !important;
+    font-size:29px !important;
     font-family:Roboto-Light !important;
 }
 #search-box:-ms-input-placeholder { /* IE 10+ */
     color: #000 !important;
-    font-size:17px !important;
+    font-size:29px !important;
     font-family:Roboto-Light !important;
 }
 #search-box:-moz-placeholder { /* Firefox 18- */
     color: #000 !important;
-    font-size:17px !important;
+    font-size:29px !important;
     font-family:Roboto-Light !important;
 }
 
@@ -412,11 +412,23 @@
     width:85%;
 }
 .post-sep-dos{
-    background:#000;
-    width:10%;
+    background:#54AFFF;
+    width:5%;
 }
 .post-sep-tres{
     background: #710baa;
+    width:0%;
+}
+.post-sep-quatro{
+    background: #2cf400;
+    width:5%;
+}
+.post-sep-cinco{
+    background: #FDFE03;
+    width:5%;
+}
+.post-sep-sens{
+    background: #ff45ae;
     width:5%;
 }
 

@@ -1,7 +1,7 @@
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
 <html>
 <head>
-    <title>Amadeus : astrophysical*</title>
+    <title>Amadeus : Social Networking*</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -92,7 +92,7 @@
 
         #amadeus-home-logo{
             text-decoration: none;
-            padding:26px 19px 14px 26px;
+            padding:25px 19px 14px 26px;
             display:inline-block;
             border-radius: 4px;
             -moz-border-radius: 4px;

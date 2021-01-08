@@ -3,7 +3,7 @@
 <!doctype html><%--${pageContext.response.locale}--%>
 <html lang="en" dir="i18n">
 <head>
-    <title>Amadeus: astrophysical*</title>
+    <title>Amadeus: Social Elite*</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 
@@ -383,6 +383,7 @@
         $scope.reloadActivities = function(){
             if($route.current.loadedTemplateUrl != "pages/activity.html?v=" + t){
                 $location.path("/")
+                $rootScope.navigatingFromProfile = true;
             }else{
                 $window.location.reload()
                 $rootScope.navigatingFromProfile = false;

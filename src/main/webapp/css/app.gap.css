@@ -452,7 +452,7 @@ input[type="password"]::placeholder {
 
 #search-box::placeholder{
     color:#fff !important;
-    font-size:13px !important;
+    font-size:23px !important;
     font-family:Roboto !important;
 }
 
@@ -514,23 +514,23 @@ input[type="password"]::placeholder {
 
 #search-box::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     color: #a5b7b7 !important;
-    font-size:24px;
+    font-size:34px;
     font-family:Roboto-Light !important;
     line-height:0.9em !important;
 }
 #search-box::-moz-placeholder { /* Firefox 19+ */
     color:#A5B7B7 !important;
-    font-size:13px;
+    font-size:34px;
     font-family:Roboto-Light !important;
 }
 #search-box:-ms-input-placeholder { /* IE 10+ */
     color:#A5B7B7 !important;
-    font-size:13px;
+    font-size:34px;
     font-family:Roboto-Light !important;
 }
 #search-box:-moz-placeholder { /* Firefox 18- */
     color:#A5B7B7 !important;
-    font-size:13px;
+    font-size:34px;
     font-family:Roboto-Light !important;
 }
 
@@ -3720,12 +3720,6 @@ h1.gray span{
 .file-upload-container{
     float:right;
 }
-
-#amadeus-icon{
-    height:0px;
-    width:0px;
-}
-
 
 .feed-content-container:hover .edit-click,
 .feed-content-container:hover .image-edit,
