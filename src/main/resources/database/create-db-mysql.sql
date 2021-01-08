@@ -33,6 +33,7 @@ CREATE TABLE posts (
 	image_file_uri text,
 	music_file_uri text,
 	video_file_uri text,
+	video_file_name varchar(154)
 	hidden boolean,
 	flagged boolean,
 	published boolean,
@@ -223,8 +224,6 @@ create table flyers (
 	account_id bigint NOT NULL REFERENCES account(id),
     start_date bigint NOT NULL
 );
-
-
 
 create table sheets (
 	id bigint PRIMARY KEY AUTO_INCREMENT,
