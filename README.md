@@ -1,4 +1,4 @@
-﻿<img src="https://amadeus.social/o/images/icon.png"/>
+﻿<img src="https://astrophysical.love/o/images/icon.png"/>
 
 # Amadeus
 

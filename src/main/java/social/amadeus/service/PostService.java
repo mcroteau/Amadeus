@@ -374,7 +374,7 @@ public class PostService {
         if(notify) {
             String body = "<h1>Amadeus</h1>"+
                     "<p>" + post.getContent() + "</p>" +
-                    "<p><a href=\"amadeus.social\">Signin</a></p>";
+                    "<p><a href=\"astrophysical.love\">Signin</a></p>";
             emailService.send(Constants.ADMIN_USERNAME, "It ain't good...", body);
         }
 

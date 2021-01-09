@@ -78,7 +78,7 @@ public class StaticService {
 
         String body = "<h1>Amadeus</h1>" +
                 "<p>" + account.getName() + " invited you to join Amadeus! " +
-                "<a href=\"https://amadeus.social\">https://amadeus.social</a>";
+                "<a href=\"https://astrophysical.love\">https://astrophysical.love</a>";
 
         emailService.send(emails, "You have been invited to join!", body);
 

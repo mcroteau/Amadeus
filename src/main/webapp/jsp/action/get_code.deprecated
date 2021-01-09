@@ -61,12 +61,12 @@
 <div id="amadeus-actions-wrapper" data-uri="{{uri}}">
     <div id="amadeus-inner-wrapper">
         <a href="javascript:" id="launch-amadeus">
-            <img src="https://amadeus.social/o/images/icon.png" style="width:45px"/></a>
+            <img src="https://astrophysical.love/o/images/icon.png" style="width:45px"/></a>
         <span id="amadeus-likes"><span id="likes-span"></span> likes</span>
         <span id="amadeus-shares"><span id="shares-span"></span> shares</span>
     </div>
 </div>
-<script type="text/javascript" src="https://amadeus.social/o/js/Actions.js"></script>
+<script type="text/javascript" src="https://astrophysical.love/o/js/Actions.js"></script>
     </textarea>
 
     <div style="text-align: right">

@@ -220,7 +220,7 @@
 <%--                <a href="${pageContext.request.contextPath}/get_code" class="page-ref href-dotted" >Get Code</a>--%>
 <%--            </div>--%>
 
-<%--            <p style="text-align:center;"><a href="mailto:support@amadeus.social" style="color:#17161b" class="href-dotted">support@amadeus.social</a>--%>
+<%--            <p style="text-align:center;"><a href="mailto:mail@astrophysical.love" style="color:#17161b" class="href-dotted">support@amadeus.social</a>--%>
 <%--                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 134 134" id="amadeus-icon">--%>
 <%--                    <path d="M49 1L21 88L57 88L42 134L84 134L113 47L92 47L79 47L75 47L91 1L49 1Z" />--%>
 <%--                </svg>--%>

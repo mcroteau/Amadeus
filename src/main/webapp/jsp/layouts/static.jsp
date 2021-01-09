@@ -89,7 +89,7 @@
 
     <div id="top-outer-container">
         <div id="logo-container">
-            <a href="https://amadeus.social" id="logo-logo">
+            <a href="https://astrophysical.love" id="logo-logo">
                 <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70" width="70" height="70">
                     <g id="amadeus">
                         <path id="Shape 13" class="shp0" d="M46 31L46 36L57.01 36L57.06 40.91L62 41L62 31L46 31Z" />
