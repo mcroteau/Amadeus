@@ -42,8 +42,8 @@ addActionStyles()
 var req = new ResourceRequest()
 var uri = actionsWrapper.getAttribute("data-uri")
 
-var likesUri = "https://www.amadeus.social/o/action/likes?uri=" + encodeURIComponent(uri);
-var sharesUri = "https://www.amadeus.social/o/action/shares?uri=" + encodeURIComponent(uri);
+var likesUri = "https://www.astrophysical.love/o/action/likes?uri=" + encodeURIComponent(uri);
+var sharesUri = "https://www.astrophysical.love/o/action/shares?uri=" + encodeURIComponent(uri);
 
 var likesUriDev = "/o/action/likes?uri=" + encodeURIComponent(uri);
 var sharesUriDev = "/o/action/shares?uri=" + encodeURIComponent(uri);
@@ -57,7 +57,7 @@ launcher.addEventListener("click", function(){
 
     var uri = actionsWrapper.getAttribute("data-uri")
 
-    var src = "https://www.amadeus.social/o/action?uri=" + encodeURIComponent(uri)
+    var src = "https://www.astrophysical.love/o/action?uri=" + encodeURIComponent(uri)
     var srcDev = "http://localhost:8080/o/action?uri=" + encodeURIComponent(uri)
 
     var mainHeight = 391;

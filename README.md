@@ -50,9 +50,11 @@ SVGs
                 
 mvn install:install-file -Dfile=output/parakeet-0.5-SNAPSHOT.jar -DgroupId=io.github.mcroteau -DartifactId=parakeet -Dversion=0.5-SNAPSHOT -Dpackaging=jar
 
-
+blogspot qxro
 
 GASTC775
 Q84RSG8Q
 ELM5F1J1
 83MXL4MV - important
+72FV9WZJ - important
+5AN9GUQC

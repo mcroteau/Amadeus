@@ -76,6 +76,7 @@
         right:0px !important;
     }
 
+    #search-toggle-container,
     #navigation-container,
     #profile-actions-href{
         display:none;

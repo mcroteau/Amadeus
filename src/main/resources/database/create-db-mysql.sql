@@ -33,7 +33,7 @@ CREATE TABLE posts (
 	image_file_uri text,
 	music_file_uri text,
 	video_file_uri text,
-	video_file_name varchar(154)
+	video_file_name varchar(154),
 	hidden boolean,
 	flagged boolean,
 	published boolean,

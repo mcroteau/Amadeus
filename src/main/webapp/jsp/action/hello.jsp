@@ -135,8 +135,8 @@ on Amadeus.</p>
     var uri = document.querySelector("#uri").value
     var likesSpan = document.querySelector("#likes-span")
 
-    var likesUriProd = "https://www.amadeus.social/o/action/likes?uri=" + encodeURIComponent(uri);
-    var sharesUriProd = "https://www.amadeus.social/o/action/shares?uri=" + encodeURIComponent(uri);
+    var likesUriProd = "https://www.astrophysical.love/o/action/likes?uri=" + encodeURIComponent(uri);
+    var sharesUriProd = "https://www.astrophysical.love/o/action/shares?uri=" + encodeURIComponent(uri);
 
     var likesUri = "/o/action/likes?uri=" + encodeURIComponent(uri);
     var sharesUri = "/o/action/shares?uri=" + encodeURIComponent(uri);
