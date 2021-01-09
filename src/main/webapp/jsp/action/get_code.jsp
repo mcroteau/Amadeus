@@ -33,8 +33,8 @@
     <p class="yella" id="copy-message">Copy &amp; paste href to your website</p>
 
     <textarea id="code-wrapper">
-<a href="https://amadeus.social/o/action?uri={{uri}}" id="launch-amadeus" target="_blank">
-    <img src="https://amadeus.social/o/images/icon.png" style="width:45px"/>
+<a href="https://astrophysical.love/o/action?uri={{uri}}" id="launch-amadeus" target="_blank">
+    <img src="https://astrophysical.love/o/images/icon.png" style="width:45px"/>
 </a>
     </textarea>
 
@@ -45,8 +45,8 @@
     <div id="example-wrapper" style="display:none">
         <span class="information">Generates</span>
 
-        <a href="https://amadeus.social/o/action?uri={{uri}}" id="example-ref" target="_blank">
-            <img src="https://amadeus.social/o/images/icon.png" style="width:45px"/>
+        <a href="https://astrophysical.love/o/action?uri={{uri}}" id="example-ref" target="_blank">
+            <img src="https://astrophysical.love/o/images/icon.png" style="width:45px"/>
         </a>
     </div>
 
