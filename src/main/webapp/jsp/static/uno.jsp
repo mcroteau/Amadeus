@@ -42,7 +42,7 @@
         derived from the Latin words ama - the imperative of the word
         <strong>amare</strong> (to love) - and <strong>deus</strong> (god).
         <br/>As a linguistic compound in the form of a phereoikos...<br/>
-        in simple terms, it means... <strong>Love God</strong>.</p>
+        in simple terms, it means... <strong>Love of God</strong>.</p>
 
     <p><a href="/o/signup" class="button yella">Signup!</a></p>
 
