@@ -20,7 +20,6 @@
     </parakeet:isAuthenticated>
 
     <div style="float:right;text-align: right">
-        <a href="/o/signup" class="href-dotted">Signup</a>&nbsp;
         <a href="/o/signin" class="href-dotted">Signin</a>
     </div>
 

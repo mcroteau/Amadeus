@@ -77,7 +77,6 @@
             line-height:1.4em;
             font-family:Roboto !important;
         }
-
         a{
             font-family:Roboto !important;
         }
@@ -123,9 +122,9 @@
             font-size:42px;
             text-shadow: -2px 0px #710baa;
         }
-        .href-dotted,
-        .href-dotted-amadeus{
-            font-family: Roboto-Bold !important;
+        .href-dotted{
+            font-size:16px;
+            font-family: Roboto !important;
         }
 
     </style>

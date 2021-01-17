@@ -41,7 +41,7 @@
 
 
 <%--    <iframe id="viz" src="<%=viz%>" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></iframe>--%>
-        <iframe id="viz" src="/o/jsp/static/vis/space.jsp" style="overflow:hidden;z-index:1;position:fixed;bottom:0px;width:100%;height:300px"></iframe>
+<%--        <iframe id="viz" src="/o/jsp/static/vis/space.jsp" style="overflow:hidden;z-index:1;position:fixed;bottom:0px;width:100%;height:300px"></iframe>--%>
 <%--    <canvas id="sugarcookie" style="z-index:1;position:fixed;bottom:0px;width:100%;height:79%;"></canvas>--%>
 
     <div id="logo-mobile" style="display:none;">
@@ -109,42 +109,39 @@
         </div>
     </div>
 
-    <div id="search-toggle-container">
-        <a ng-click="toggleSearch()" href="javascript:" class="navigation-href" id="search-toggle">S<span class="denominator">e</span></a>
+    <div id="logo-container">
+        <a ng-click="reloadActivities()" href="javascript:" id="logo-logo">
+            <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70" width="70" height="70">
+                <g>
+                    <path d="M46 31L46 36L57.01 36L57.06 40.91L62 41L62 31L46 31Z" />
+                    <path fill-rule="evenodd" d="M16 20L21 20L32 48L4 48L16 20ZM11 44L25 44L19 26L18 26L11 44Z" />
+                </g>
+                <path fill-rule="evenodd" d="M38.5 23C36.01 23 34 20.99 34 18.5C34 16.01 36.01 14 38.5 14C40.99 14 43 16.01 43 18.5C43 20.99 40.99 23 38.5 23ZM40.6 18.5C40.6 17.34 39.66 16.4 38.5 16.4C37.34 16.4 36.4 17.34 36.4 18.5C36.4 19.66 37.34 20.6 38.5 20.6C39.66 20.6 40.6 19.66 40.6 18.5Z" />
+            </svg>
+            <span id="latest-feed-total" class="notifications-count" style="display:inline-block; position:absolute;bottom:3px;left:54px;">{{data.newestCount}}</span>
+        </a>
+    </div>
+
+    <a ng-click="toggleProfile()" href="javascript:" id="profile-actions-href" class="profile-popup">
+        <img src="${sessionScope.imageUri}" id="profile-ref-image"/>
+        <span ng-show="data.messagesCount" id="base-notifications-count">{{data.messagesCount}}</span>
+    </a>
+
+    <div ng-show="showProfile" id="profile-picture-actions-container" class="global-shadow">
+        <a href="#!/profile/${sessionScope.account.id}" id="profile-href"  class="profile-popup-action"><span class="space"></span> <span data-i18n="profile.text">Profile</span></a>
+        <a ng-click="openChat()" href="javascript:" id="messages-href" class="profile-popup-action" ng-click="renderMessages(${sessionScope.account.id})"><span id="latest-messages-total" class="space">{{data.messagesCount}}</span> <span data-i18n="unread.text">Unread</span></a>
+        <a href="/o/signout" class="profile-popup-action"><span class="space"></span> <span data-i18n="logout.text">Logout</span></a>
     </div>
 
 	<div id="layout-container" style="position:relative;">
 
 		<div id="top-outer-container" ng-init="init()">
 
-            <div id="logo-container" style="position:absolute;">
-                <a ng-click="reloadActivities()" href="javascript:" id="logo-logo">
-                    <svg id="amadeus-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70" width="70" height="70">
-                        <g>
-                            <path d="M46 31L46 36L57.01 36L57.06 40.91L62 41L62 31L46 31Z" />
-                            <path fill-rule="evenodd" d="M16 20L21 20L32 48L4 48L16 20ZM11 44L25 44L19 26L18 26L11 44Z" />
-                        </g>
-                        <path fill-rule="evenodd" d="M38.5 23C36.01 23 34 20.99 34 18.5C34 16.01 36.01 14 38.5 14C40.99 14 43 16.01 43 18.5C43 20.99 40.99 23 38.5 23ZM40.6 18.5C40.6 17.34 39.66 16.4 38.5 16.4C37.34 16.4 36.4 17.34 36.4 18.5C36.4 19.66 37.34 20.6 38.5 20.6C39.66 20.6 40.6 19.66 40.6 18.5Z" />
-                    </svg>
-                    <span id="latest-feed-total" class="notifications-count" style="display:inline-block; position:absolute;bottom:3px;left:54px;">{{data.newestCount}}</span>
-                </a>
-            </div>
-
 			<div id="top-inner-container">
 
-                <div id="search-container" style="display:none">
+                <div id="search-container">
+                    <span class="expressed information left-float" data-i18n="express.text">Search.</span>
                     <input ng-keyup="navigateSearch($event)" ng-focus="focusSearch($event)" ng-blur="unfocusSearch($event)" type="text" class="search-input" id="search-box" placeholder="Search:" autocomplete="off"/>
-                </div>
-
-                <a ng-click="toggleProfile()" href="javascript:" id="profile-actions-href" class="profile-popup" style="margin-right:37px;">
-                    <img src="${sessionScope.imageUri}" id="profile-ref-image" style="z-index:1"/>
-                    <span ng-show="data.messagesCount" id="base-notifications-count">{{data.messagesCount}}</span>
-                </a>
-
-                <div ng-show="showProfile" id="profile-picture-actions-container" class="global-shadow">
-                    <a href="#!/profile/${sessionScope.account.id}" id="profile-href"  class="profile-popup-action"><span class="space"></span> <span data-i18n="profile.text">Profile</span></a>
-                    <a ng-click="openChat()" href="javascript:" id="messages-href" class="profile-popup-action" ng-click="renderMessages(${sessionScope.account.id})"><span id="latest-messages-total" class="space">{{data.messagesCount}}</span> <span data-i18n="unread.text">Unread</span></a>
-                    <a href="/o/signout" class="profile-popup-action"><span class="space"></span> <span data-i18n="logout.text">Logout</span></a>
                 </div>
 
                 <a href="javascript:" ng-click="toggleMobileNotifications()" id="mobile-notifications">{{data.notificationsCount}}</a>
@@ -275,21 +272,21 @@
                 $rootScope.renderFooter = true;
             }
 
-            if($location.path().includes('/') &&
-                    $rootScope.navigatingFromProfile){
-                $rootScope.renderSearch();
-            }
+            // if($location.path().includes('/') &&
+            //         $rootScope.navigatingFromProfile){
+            //     $rootScope.renderSearch();
+            // }
         });
 
-        $rootScope.renderSearch = function(){
-            $('#search-container').toggleClass('rendered').toggle(10, function(){
-                if($('#search-container').hasClass('rendered')){
-                    $('#activity-feed').css("margin-top", "0px");
-                }else{
-                    $('#activity-feed').css("margin-top", "-62px");
-                }
-            });
-        }
+        // $rootScope.renderSearch = function(){
+        //     $('#search-container').toggleClass('rendered').toggle(10, function(){
+        //         if($('#search-container').hasClass('rendered')){
+        //             $('#activity-feed').css("margin-top", "0px");
+        //         }else{
+        //             $('#activity-feed').css("margin-top", "-62px");
+        //         }
+        //     });
+        // }
 
         $rootScope.internationalize = function(){
             // $.i18n.debug = true;
@@ -508,10 +505,10 @@
             var width = $(window).width()
             if (width < 690){
                 $(frames).width(width - 30)
-                $('#search-container').show()
+                // $('#search-container').show()
             }else{
                 $(frames).width(465)
-                $('#search-container').hide()
+                // $('#search-container').hide()
             }
             $(frames).css('margin-top', '-6px')
         }
