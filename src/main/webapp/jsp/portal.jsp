@@ -127,7 +127,7 @@
         <span ng-show="data.messagesCount" id="base-notifications-count">{{data.messagesCount}}</span>
     </a>
 
-    <div ng-show="showProfile" id="profile-picture-actions-container" class="global-shadow">
+    <div ng-show="showProfile" id="profile-picture-actions-container" class="main-shadow">
         <a href="#!/profile/${sessionScope.account.id}" id="profile-href"  class="profile-popup-action"><span class="space"></span> <span data-i18n="profile.text">Profile</span></a>
         <a ng-click="openChat()" href="javascript:" id="messages-href" class="profile-popup-action" ng-click="renderMessages(${sessionScope.account.id})"><span id="latest-messages-total" class="space">{{data.messagesCount}}</span> <span data-i18n="unread.text">Unread</span></a>
         <a href="/o/signout" class="profile-popup-action"><span class="space"></span> <span data-i18n="logout.text">Logout</span></a>

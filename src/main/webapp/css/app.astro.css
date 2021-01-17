@@ -4,8 +4,8 @@
 /*}*/
 
 #logo-container{
-    top:49px;
-    left:54px;
+    top: 47px;
+    left: 51px;
     position:fixed !important;
     padding:3px;
     z-index: 100;
@@ -237,11 +237,13 @@
 }
 
 #profile-picture-actions-container{
-    top:67px;
-    right:14px;
+    top:184px;
+    left:65px;
+    position:fixed;
     margin-top:0px;
     background: #ff45ae;
     box-shadow: none !important;
+    z-index: 301 !important;
 }
 
 #profile-picture-actions-container a:hover span,
@@ -357,14 +359,13 @@
 
 
 #notifications-count{
-    bottom: 0px !important;
-    left: 43px !important;
-    position: absolute;
-    font-family: Roboto-Bold !important;
-    background: inherit;
+    font-size: 16px;
     color: #000;
-    font-size: 25px;
-    background: #fff !important;
+    bottom: 0px !important;
+    left: 37px !important;
+    position: absolute;
+    background: #FDFE03;
+    font-family: Roboto !important;
 }
 
 #base-notifications-count{
@@ -375,18 +376,18 @@
 
 #profile-actions-href{
     position:fixed;
-    left: 37px;
-    top:132px;
+    left: 39px;
+    top:135px;
     margin-right:10px !important;
 }
 
 #profile-ref-image{
-    height: 47px;
-    width: 47px;
+    height: 45px;
+    width: 45px;
     margin-top: -3px;
-    border-radius: 34px;
-    -moz-border-radius: 34px;
-    -webkit-border-radius: 34px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
     -webkit-box-shadow: none !important;
     -mox-box-shadow: none !important;
     box-shadow: none !important;
@@ -504,8 +505,8 @@
 }
 
 #amadeus-logo {
-    height: 25px;
-    width: 25px;
+    height: 29px;
+    width: 29px;
 }
 
 .post-button,
