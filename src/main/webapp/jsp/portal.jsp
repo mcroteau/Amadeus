@@ -141,7 +141,7 @@
 
                 <div id="search-container">
                     <span class="expressed information left-float" data-i18n="express.text">Search.</span>
-                    <input ng-keyup="navigateSearch($event)" ng-focus="focusSearch($event)" ng-blur="unfocusSearch($event)" type="text" class="search-input" id="search-box" placeholder="Search:" autocomplete="off"/>
+                    <input ng-keyup="navigateSearch($event)" ng-focus="focusSearch($event)" type="text" class="search-input" id="search-box" placeholder="Search:" autocomplete="off"/>
                 </div>
 
                 <a href="javascript:" ng-click="toggleMobileNotifications()" id="mobile-notifications">{{data.notificationsCount}}</a>
