@@ -26,8 +26,8 @@
     }
 
     #logo-mobile{
-        top:13px;
-        left:14px;
+        top:8px;
+        left:10px;
         position: fixed;
         z-index: 401;
         display:inline-block !important;
@@ -37,8 +37,8 @@
         background: #710BAA;
         z-index:401;
         position:fixed;
-        top:50px;
-        left:30px;
+        top: 71px;
+        left: 17px;
         border-radius: 4px;
         -moz-border-radius: 4px;
         -webkit-border-radius: 4px;
@@ -92,11 +92,12 @@
 
     #search-container{
         left:82px;
-        top:2px;
+        top:4px;
         height: auto;
         padding:3px;
         position:absolute;
-        width: calc(100% - 112px);
+        border: solid 1px #eff2f3;
+        width: calc(100% - 104px) !important;
     }
 
     #search-box{
@@ -105,10 +106,16 @@
         display:block;
         box-sizing: border-box;
         margin:0px;
-        position: relative;
-        width: calc(100% - 91px);
+        height:51px;
+        position: relative !important;
+        width: calc(100% - 0px) !important;
         width:100%;
+        border-radius: 4px !important;
         position: relative;
+    }
+
+    #search-express{
+        display:none
     }
 
     #profile-ref-image{
@@ -156,7 +163,7 @@
         margin:0px auto 10px auto;
     }
     #notifications-outer-container{
-        top:14px;
+        top:37px;
         right:5px;
         width:200px;
         left: initial;

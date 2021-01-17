@@ -118,10 +118,10 @@
 
 #search-container{
     top:4px;
-    right: 16px;
+    right: 23px;
     z-index: 13;
     /*padding:3px;*/
-    width:279px !important;
+    width:272px !important;
     position:absolute;
     /*border: solid 1px #eff2f3;*/
     -webkit-border-radius: 10px !important;
@@ -147,11 +147,16 @@
     -moz-box-shadow: none;
     box-shadow: none;
     position: relative;
+    float:none;
     -webkit-border-radius: 89px !important;
     -moz-border-radius: 89px !important;
     border-radius: 89px !important;
+    /*transition: width 0.3s;*/
 }
 
+/*#search-box:focus{*/
+/*    width: calc(100% - 42px) !important;*/
+/*}*/
 
 #search-box:hover,
 #search-box:focus,
@@ -159,11 +164,6 @@
     color:#fff !important;
     background: #658c94 !important;
     border:solid 1px #5d828a !important;
-}
-
-#activity-feed{
-    margin-top:-62px;
-    z-index:70;
 }
 
 #search-box,
@@ -198,6 +198,11 @@
     font-family:Roboto-Light !important;
 }
 
+#search-express{
+    display:block;
+    margin-top:3px;
+}
+
 #top-outer-container{
     height:73px;
 }
@@ -213,6 +218,11 @@
     margin-top: 0px;
     margin-left:auto;
     margin-right:auto;
+}
+
+#activity-feed{
+    margin-top:-62px;
+    z-index:70;
 }
 
 #navigation-container{
@@ -359,7 +369,7 @@
 
 
 #notifications-count{
-    font-size: 16px;
+    font-size: 15px;
     color: #000;
     bottom: 0px !important;
     left: 37px !important;
@@ -377,7 +387,8 @@
 #profile-actions-href{
     position:fixed;
     left: 39px;
-    top:135px;
+    top:136px;
+    right:auto;
     margin-right:10px !important;
 }
 
@@ -385,12 +396,15 @@
     height: 45px;
     width: 45px;
     margin-top: -3px;
-    border-radius: 4px;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
+    border-radius: 34px;
+    -moz-border-radius: 34px;
+    -webkit-border-radius: 34px;
     -webkit-box-shadow: none !important;
     -mox-box-shadow: none !important;
     box-shadow: none !important;
+    -webkit-box-shadow: 0px 3px 19px 0px rgba(0,0,0,.19) !important;
+    -moz-box-shadow: 0px 3px 19px 0px rgba(0,0,0,.19) !important;
+    box-shadow: 0px 3px 19px 0px rgba(0,0,0,.19) !important;
     padding:2px;
     background: rgb(255,75,176);
     background: rgb(255,75,176);
