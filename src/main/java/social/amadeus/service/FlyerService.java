@@ -51,7 +51,7 @@ public class FlyerService {
 
     public String create() {
         if(!authService.isAuthenticated()){
-            return "redirect:/uno";
+            return "redirect:/home";
         }
 
         return "flyer/create";
@@ -59,7 +59,7 @@ public class FlyerService {
 
     public String save(Flyer flyer, CommonsMultipartFile flyerImage, RedirectAttributes redirect) {
         if(!authService.isAuthenticated()){
-            return "redirect:/uno";
+            return "redirect:/home";
         }
 
         if(flyer.getPageUri().contains("http://") ||
@@ -192,7 +192,7 @@ public class FlyerService {
 
     public String userFlyers(String id, ModelMap modelMap) {
         if(!authService.isAuthenticated()){
-            return "redirect:/uno";
+            return "redirect:/home";
         }
 
         if(Long.parseLong(id) != authService.getAccount().getId())return Constants.UNAUTHORIZED_REDIRECT;

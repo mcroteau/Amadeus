@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<decorators defaultdir="/jsp/layouts">
+<decorators defaultdir="/layouts">
     <decorator name="auth" page="auth.jsp">
         <pattern>*/account/edit*</pattern>
         <pattern>*/account/reset*</pattern>
@@ -26,7 +26,7 @@
         <pattern>*/post/review*</pattern>
     </decorator>
     <decorator name="basic" page="basic.jsp">
-        <pattern>*/uno</pattern>
+        <pattern>*/home</pattern>
         <pattern>*/signup</pattern>
         <pattern>*/signin</pattern>
     </decorator>

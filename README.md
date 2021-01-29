@@ -1,6 +1,4 @@
-﻿<img src="https://astrophysical.love/o/images/icon.png"/>
-
-# Amadeus
+﻿# Amadeus beta
 
 interstellar
 astral, star, starry, stellar

@@ -7,32 +7,32 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 
-    <link rel="icon" type="image/png" href="/o/images/icon.png?v=<%=System.currentTimeMillis()%>">
+    <link rel="icon" type="image/png" href="/o/assets/images/icon.png?v=<%=System.currentTimeMillis()%>">
 
-    <script type="text/javascript" src="/o/js/packages/angular.min.js"></script>
-    <script type="text/javascript" src="/o/js/packages/angular-sanitize.js"></script>
-    <script type="text/javascript" src="/o/js/packages/angular-animate.js"></script>
-    <script type="text/javascript" src="/o/js/packages/angular-route.js"></script>
-    <script type="text/javascript" src="/o/js/packages/anchorme.js"></script>
-    <script type="text/javascript" src="/o/js/packages/jquery.js"></script>
-    <script type="text/javascript" src="/o/js/packages/jquery.i18n.js"></script>
-    <script type="text/javascript" src="/o/js/packages/jquery.i18n.messagestore.js"></script>
+    <script type="text/javascript" src="/o/assets/js/packages/angular.min.js"></script>
+    <script type="text/javascript" src="/o/assets/js/packages/angular-sanitize.js"></script>
+    <script type="text/javascript" src="/o/assets/js/packages/angular-animate.js"></script>
+    <script type="text/javascript" src="/o/assets/js/packages/angular-route.js"></script>
+    <script type="text/javascript" src="/o/assets/js/packages/anchorme.js"></script>
+    <script type="text/javascript" src="/o/assets/js/packages/jquery.js"></script>
+    <script type="text/javascript" src="/o/assets/js/packages/jquery.i18n.js"></script>
+    <script type="text/javascript" src="/o/assets/js/packages/jquery.i18n.messagestore.js"></script>
 
-    <link rel="stylesheet" href="/o/css/app.gap.css?v=<%=System.currentTimeMillis()%>"/>
-    <link rel="stylesheet" href="/o/css/app.astro.css?v=<%=System.currentTimeMillis()%>"/>
-    <link rel="stylesheet" href="/o/css/app.gap.mobile.css?v=<%=System.currentTimeMillis()%>"/>
+    <link rel="stylesheet" href="/o/assets/css/app.gap.css?v=<%=System.currentTimeMillis()%>"/>
+    <link rel="stylesheet" href="/o/assets/css/app.astro.css?v=<%=System.currentTimeMillis()%>"/>
+    <link rel="stylesheet" href="/o/assets/css/app.gap.mobile.css?v=<%=System.currentTimeMillis()%>"/>
 
 </head>
 
 <body ng-app="app" ng-controller="baseController">
 
 <%
-    String[] vizs = {"/o/jsp/static/vis/candy.jsp",
-                     "/o/jsp/static/vis/graph.jsp",
-//                     "/o/jsp/static/vis/pond.jsp",
-                     "/o/jsp/static/vis/rah.jsp",
-                     "/o/jsp/static/vis/correct.jsp",
-                     "/o/jsp/static/vis/space.jsp"};
+    String[] vizs = {"/o/pages/static/vis/candy.jsp",
+                     "/o/pages/static/vis/graph.jsp",
+//                     "/o/pages/static/vis/pond.jsp",
+                     "/o/pages/static/vis/rah.jsp",
+                     "/o/pages/static/vis/correct.jsp",
+                     "/o/pages/static/vis/space.jsp"};
 
     Random ran = new Random();
     int inx = ran.nextInt(vizs.length);
@@ -305,27 +305,27 @@
     app.config(function($routeProvider) {
         $routeProvider
             .when('/', {
-                templateUrl: 'pages/activity.html?v=' + t,
+                templateUrl: 'pages/leafs/activity.html?v=' + t,
                 controller: 'activityController'
             })
             .when('/profile/:id', {
-                templateUrl: 'pages/profile.html?v=' + t,
+                templateUrl: 'pages/leafs/profile.html?v=' + t,
                 controller: 'profileController'
             })
             .when('/search/:q', {
-                templateUrl: 'pages/search.html?v=' + t,
+                templateUrl: 'pages/leafs/search.html?v=' + t,
                 controller: 'searchController'
             })
             .when('/search', {
-                templateUrl: 'pages/search.html?v=' + t,
+                templateUrl: 'pages/leafs/search.html?v=' + t,
                 controller: 'searchController'
             })
             .when('/invitations', {
-                templateUrl: 'pages/invitations.html?v=' + t,
+                templateUrl: 'pages/leafs/invitations.html?v=' + t,
                 controller: 'invitationController'
             })
             .when('/folio/:id', {
-                templateUrl: 'pages/folio.html?v=' + t,
+                templateUrl: 'pages/leafs/folio.html?v=' + t,
                 controller: 'folioController'
             })
             .otherwise({redirectTo:'/'});

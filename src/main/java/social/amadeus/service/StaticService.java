@@ -20,12 +20,12 @@ public class StaticService {
     @Autowired
     private AuthService authService;
 
-    public String uno(String uri, HttpServletRequest req) {
+    public String home(String uri, HttpServletRequest req) {
         if(uri != null &&
                 !uri.equals("")){
             req.setAttribute("uri", uri);
         }
-        return "static/uno";
+        return "static/home";
     }
 
     public String signin(){

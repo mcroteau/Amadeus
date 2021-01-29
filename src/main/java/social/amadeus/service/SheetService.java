@@ -81,7 +81,7 @@ public class SheetService {
 
     public String create() {
         if(!authService.isAuthenticated()){
-            return "redirect:/uno";
+            return "redirect:/home";
         }
 
         return "sheet/create";

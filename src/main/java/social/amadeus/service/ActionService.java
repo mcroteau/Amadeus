@@ -31,7 +31,7 @@ public class ActionService {
 
     public String getAction(String uri, ModelMap modelMap) {
         if(!authService.isAuthenticated())
-            return "redirect:/uno?uri=" + uri;
+            return "redirect:/home?uri=" + uri;
 
         modelMap.addAttribute("uri", uri);
         return "action/hello";

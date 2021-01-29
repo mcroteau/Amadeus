@@ -1,5 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
 <%@ taglib prefix="parakeet" uri="/META-INF/tags/parakeet.tld"%>
 
 <div id="uno-content-container">
@@ -23,7 +22,7 @@
         <a href="/o/signin" class="href-dotted">Signin</a>
     </div>
 
-    <a href="/o/uno" id="amadeus-home-logo">
+    <a href="/o/home" id="amadeus-home-logo">
         <svg id="amadeus-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70" width="70" height="70">
             <g id="amadeus">
                 <path d="M46 31L46 36L57.01 36L57.06 40.91L62 41L62 31L46 31Z" />
@@ -36,15 +35,13 @@
     <h1 style="font-size:32px;font-family: Roboto-Bold !important;margin-top:20px;">Amadeus</h1>
     <p id="amadeus-words">Social Networking</p>
 
-
-
     <p>Amadeus is a theophoric given name
         derived from the Latin words ama - the imperative of the word
         <strong>amare</strong> (to love) - and <strong>deus</strong> (god).
         <br/>As a linguistic compound in the form of a phereoikos...<br/>
         in simple terms, it means... <strong>Love of God</strong>.</p>
 
-    <p><a href="/o/signup" class="button yella">Signup!</a></p>
+    <p><a href="/o/signup" class="button retro">Signup!</a></p>
 
 <%--    <p style="font-size:23px !important;">My name is--%>
 <%--        <input type="text" name="name" placeholder="Mitch" style="width:170px;">--%>

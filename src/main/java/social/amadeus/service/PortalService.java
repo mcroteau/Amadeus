@@ -11,7 +11,7 @@ public class PortalService {
     public String z(){
 
         if(!authService.isAuthenticated()){
-            return "redirect:/uno";
+            return "redirect:/home";
         }
 
         Account account = authService.getAccount();

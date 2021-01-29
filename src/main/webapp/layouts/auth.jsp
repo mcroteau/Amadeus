@@ -8,9 +8,9 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/images/icon.png?v=<%=System.currentTimeMillis()%>">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/app.gap.css?v=<%=System.currentTimeMillis()%>">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/app.astro.css?v=<%=System.currentTimeMillis()%>">
+    <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/assets/images/icon.png?v=<%=System.currentTimeMillis()%>">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/app.gap.css?v=<%=System.currentTimeMillis()%>">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/app.astro.css?v=<%=System.currentTimeMillis()%>">
 </head>
 <body>
 

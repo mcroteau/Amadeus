@@ -5,8 +5,8 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/images/icon.png?v=<%=System.currentTimeMillis()%>">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/app.gap.css?v=<%=System.currentTimeMillis()%>">
+    <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/assets/images/icon.png?v=<%=System.currentTimeMillis()%>">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/app.gap.css?v=<%=System.currentTimeMillis()%>">
 
     <style type="text/css">
 
@@ -91,11 +91,11 @@
 
         #amadeus-home-logo{
             text-decoration: none;
-            padding:25px 19px 14px 26px;
+            padding:25px 18px 14px 27px;
             display:inline-block;
-            border-radius: 4px;
-            -moz-border-radius: 4px;
-            -webkit-border-radius: 4px;
+            border-radius: 22px;
+            -moz-border-radius: 22px;
+            -webkit-border-radius: 22px;
             background: rgb(255,69,174);
             background: linear-gradient(180deg, rgba(255,69,174,1) 0%, rgba(249,255,34,1) 14%, rgba(45,245,0,1) 37%, rgba(84,175,255,1) 59%, rgba(113,11,170,1) 100%);
 
@@ -106,9 +106,9 @@
             background: linear-gradient(90deg, rgba(255,75,176,1) 0%, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 5%, rgba(44,244,0,1) 5%, rgba(44,244,0,1) 10%, rgba(84,175,255,1) 10%, rgba(84,175,255,1) 16%, rgba(10,1,15,1) 16%);
 
 
-            -webkit-box-shadow: 0px 3px 49px 0px rgba(0,0,0,.29);
-            -moz-box-shadow: 0px 3px 49px 0px rgba(0,0,0,.29);
-            box-shadow: 0px 3px 49px 0px rgba(0,0,0,.29);
+            /*-webkit-box-shadow: 0px 3px 49px 0px rgba(0,0,0,.29);*/
+            /*-moz-box-shadow: 0px 3px 49px 0px rgba(0,0,0,.29);*/
+            /*box-shadow: 0px 3px 49px 0px rgba(0,0,0,.29);*/
         }
 
         #amadeus-icon{

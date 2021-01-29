@@ -66,7 +66,7 @@ public class AuthService {
 
             if(!signin(account.getUsername(), account.getPassword())){
                 redirect.addFlashAttribute("message", "Wrong username and password");
-                return "redirect:/";
+                return "redirect:/signin";
             }
 
             Account sessionAccount = accountRepo.getByUsername(account.getUsername());
@@ -82,10 +82,10 @@ public class AuthService {
         } catch ( Exception e ) {
             e.printStackTrace();
             redirect.addFlashAttribute("message", "Please yell at one of us, something is a little off.");
-            return "redirect:/";
+            return "redirect:/signin";
         }
 
-        return "redirect:/";
+        return "redirect:/signin";
     }
 
     public String unAuthenticateUser(RedirectAttributes redirect, HttpServletRequest request) {

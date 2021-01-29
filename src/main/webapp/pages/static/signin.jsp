@@ -6,7 +6,7 @@
 
 <div id="signup-form-container">
 
-    <a href="/o/uno" id="amadeus-home-logo">
+    <a href="/o/home" id="amadeus-home-logo">
         <svg id="amadeus-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70" width="70" height="70">
             <g id="amadeus">
                 <path id="Shape 13" class="shp0" d="M46 31L46 36L57.01 36L57.06 40.91L62 41L62 31L46 31Z" />

@@ -21,10 +21,10 @@ public class StaticController {
 	@Autowired
 	StaticService staticService;
 
-	@RequestMapping(value="/uno", method=RequestMethod.GET)
-	public String uno(HttpServletRequest request,
+	@RequestMapping(value="/home", method=RequestMethod.GET)
+	public String home(HttpServletRequest request,
 					  @RequestParam(value="uri", required=false) String uri){
-		return staticService.uno(uri, request);
+		return staticService.home(uri, request);
 	}
 
 	@RequestMapping(value="/signin", method=RequestMethod.GET)

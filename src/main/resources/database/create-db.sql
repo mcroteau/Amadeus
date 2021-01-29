@@ -224,8 +224,6 @@ create table flyers (
     start_date bigint NOT NULL
 );
 
-
-
 create table sheets (
 	id bigint PRIMARY KEY AUTO_INCREMENT,
 	title character varying(255),

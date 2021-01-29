@@ -6,11 +6,11 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="icon" type="image/png" href="/o/images/icon.png?v=<%=System.currentTimeMillis()%>">
-	<link rel="stylesheet" href="/o/css/app.gap.css?v=<%=System.currentTimeMillis()%>">
-    <link rel="stylesheet" href="/o/css/app.astro.css?v=<%=System.currentTimeMillis()%>">
+    <link rel="icon" type="image/png" href="/o/assets/images/icon.png?v=<%=System.currentTimeMillis()%>">
+	<link rel="stylesheet" href="/o/assets/css/app.gap.css?v=<%=System.currentTimeMillis()%>">
+    <link rel="stylesheet" href="/o/assets/css/app.astro.css?v=<%=System.currentTimeMillis()%>">
 
-    <script type="text/javascript" src="/o/js/Req.js"></script>
+    <script type="text/javascript" src="/o/assets/js/Req.js"></script>
 
     <style>
         #logo-logo,
