@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import org.springframework.stereotype.Repository;
 import social.amadeus.repository.FriendRepo;
 import social.amadeus.model.Account;
 import social.amadeus.model.Friend;
 import social.amadeus.model.FriendInvite;
 
+@Repository
 public class FriendJdbcRepo implements FriendRepo {
 
 	@Autowired

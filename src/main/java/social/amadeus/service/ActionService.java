@@ -1,6 +1,7 @@
 package social.amadeus.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 import social.amadeus.common.Constants;
 import social.amadeus.common.Utils;
@@ -15,6 +16,7 @@ import social.amadeus.repository.PostRepo;
 import java.util.HashMap;
 import java.util.Map;
 
+@Service
 public class ActionService {
 
     @Autowired

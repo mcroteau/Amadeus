@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 import social.amadeus.repository.ActionRepo;
 import social.amadeus.model.Resource;
 import social.amadeus.model.ActionLike;
 import social.amadeus.model.ActionShare;
 
+@Repository
 public class ActionJdbcRepo implements ActionRepo {
 
     @Autowired

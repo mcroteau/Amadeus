@@ -1,111 +1,136 @@
+#mobile-notifications{
+    color: #fff;
+    right:10px;
+    top:0px;
+    z-index:100;
+    position:absolute;
+    display:none;
+    padding:3px 7px;
+    background: #d953a0;
+    text-decoration: none;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+}
 
 @media screen and (max-width: 690px) {
 
     #body{
-        background:#f9f9f9;
+        background:#fff;
     }
 
     #top-inner-container{
-        margin-left:81px;
+        margin:0px;
+        top: 3px;
+        width:100% !important;
     }
 
-    #top-outer-container  #navigation-container{
-        left:0px;
-        right:0px !important;
-        display:none;
+    #logo-mobile{
+        top:8px;
+        left:10px;
+        position: fixed;
+        z-index: 401;
+        display:inline-block !important;
     }
 
-    #navigation-outer-container{
-        position: absolute;
-        right: 0px !important;
-        top: 63px;
+    #base-navigation-container{
+        background: #710BAA;
+        z-index:401;
+        position:fixed;
+        top: 71px;
+        left: 17px;
+        border-radius: 4px;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+    }
+
+    #base-navigation-container a{
+        display:block;
+        padding:20px;
+        text-align: left;
+        text-decoration: none;
+        color:#fff;
+        font-size: 17px;
+    }
+
+    #base-navigation-container a:hover{
+        background:#d953a0;
+    }
+
+    #mobile-notifications{
+        display:block !important;
     }
 
     #logo-container{
-        width:100%;
-        margin:auto;
+        display:none;
     }
 
-    #logo-logo{
-        padding-left:23px;
-        text-align:center;
-        background: rgb(253,254,3) !important;
-        background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 60%, rgba(106,185,255,1) 100%) !important;
-    }
-
-    #logo-logo:hover{
-        background: rgb(253,254,3) !important;
-        background: linear-gradient(36deg, rgba(253,254,3,1) 0%, rgba(253,254,3,1) 60%, rgba(106,185,255,1) 100%) !important;
-    }
-
-    #amadeus-logo{
-        margin: auto;
+    #logo-mobile #logo-container{
+        display:block;
+        top:initial;
+        left:initial;
     }
 
     #latest-feed-total{
-        display:none !important;
-        left:0px !important;
-        position:relative !important;
+        bottom:20px;
+        right:0px !important;
     }
 
+    #search-toggle-container,
+    #navigation-container,
     #profile-actions-href{
-        margin-right:0px !important;
+        display:none;
     }
 
     .render-desktop{
         display:none !important;
     }
 
-    #mobile-outer-container {
-        background:#f1f1f1;
-        height:63px;
-        display: block !important;
-    }
-
-    #mobile-search-container {
-        right:64px;
-        left:3px;
-        z-index:100;
-        height:72px;
-        display:block;
-        margin:auto;
-        z-index:1;
-        position:absolute;
-    }
-    #profile-ref-image{
-        margin-top:-2px;
-    }
-    #mobile-search-container #search-box{
-        top:6px;
-        height:51px;
-        display:block;
-        box-sizing: border-box;
-        min-width: 100%;
-        max-width: 100%;
-        width: calc(100% - 80px);
-        box-shadow: none;
-        -moz-box-shadow: none;
-        -webkit-box-shadow: none;
-    }
-
-    #mobile-search-container #search-label{
-        top:6px;
-    }
-
-    #mobile-outer-container #navigation-outer-container{
-        right:0px;
-        top:59px;
-        position:absolute;
+    #notifications-wrapper{
+        display: none;
     }
 
     #search-container{
-        display:none;
+        left:82px;
+        top:4px;
+        height: auto;
+        padding:3px;
+        position:absolute;
+        border: solid 1px #eff2f3;
+        width: calc(100% - 104px) !important;
+    }
+
+    #search-box{
+        top:initial;
+        left:initial;
+        display:block;
+        box-sizing: border-box;
+        margin:0px;
+        height:51px;
+        position: relative !important;
+        width: calc(100% - 0px) !important;
+        width:100%;
+        border-radius: 4px !important;
+        position: relative;
+    }
+
+    #search-express{
+        display:none
+    }
+
+    #profile-ref-image{
+        padding:6px;
     }
 
     #content-container{
-        width:96%;
+        width:95%;
         margin: 5px auto 119px auto;
     }
+
+    #activity-feed{
+        margin-top:0px;
+    }
+
     #activities-wrapper{
         width:100%;
         float:none;
@@ -122,13 +147,13 @@
         width:100%;
     }
     #whatsup{
-        height:15px !important;
+        height:81px !important;
         /*padding:0px;*/
-        width: calc(100% - 59px) !important;
-        border:solid 1px #84c5ff !important;
+        width: calc(100% - 26px) !important;
+        /*border:solid 1px #84c5ff !important;*/
     }
     #whatsup:focus{
-        border:solid 1px #84c5ff !important;
+        border:solid 1px #F0F4F5 !important;
     }
     #actions-container{
         margin-top:2px;
@@ -138,10 +163,16 @@
         margin:0px auto 10px auto;
     }
     #notifications-outer-container{
-        top:34px;
+        top:37px;
+        right:5px;
+        width:200px;
+        left: initial;
+        position: absolute;
+        z-index: 400;
     }
     #profile-picture-actions-container{
-        right:3px;
+        left:-63px;
+        z-index: 400;
     }
     #posts-fellows-fems-outer-container{
         display:none;
@@ -164,4 +195,9 @@
     #chat-launcher-popup{
         display: none;
     }
+
+    #viz{
+        display:none
+    }
+
 }

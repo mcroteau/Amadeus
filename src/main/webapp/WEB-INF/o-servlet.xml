@@ -18,8 +18,7 @@
 	<mvc:resources mapping="/layouts/**" location="/layouts/" />
 	<mvc:resources mapping="/sitemap/**" location="/sitemap/" />
 
-	<context:component-scan base-package="social.amadeus.web"/>
-
+	<context:component-scan base-package="social.amadeus.*"/>
 
 	<mvc:interceptors>
 		<bean id="appSessionInterceptor" class="social.amadeus.interceptors.AppInterceptor"/>

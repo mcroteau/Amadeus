@@ -928,13 +928,13 @@ input[type="submit"].button{
     background:#0AD5FC;
     border:solid 1px #01badd;
 	text-decoration:none;
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
+	border-radius: 19px;
+	-moz-border-radius: 19px;
+	-webkit-border-radius: 19px;
     font-family:Roboto !important;
-	-webkit-box-shadow: 0px 1px 7px 0px rgba(179,179,179,0.23);
-    -moz-box-shadow: 0px 1px 7px 0px rgba(179,179,179,0.23);
-    box-shadow: 0px 1px 7px 0px rgba(179,179,179,0.23);
+	/*-webkit-box-shadow: 0px 1px 7px 0px rgba(179,179,179,0.23);*/
+    /*-moz-box-shadow: 0px 1px 7px 0px rgba(179,179,179,0.23);*/
+    /*box-shadow: 0px 1px 7px 0px rgba(179,179,179,0.23);*/
 	outline:none !important;
 	-webkit-appearance: none;
 	-moz-appearance:none;
@@ -971,9 +971,9 @@ input[type="submit"].button{
     left:116px;
     display: none;
     position:absolute;
-    -webkit-box-shadow: 0px 3px 5px 0px rgba(179,179,179,0.23) !important;
-    -moz-box-shadow: 0px 3px 5px 0px rgba(179,179,179,0.23) !important;
-    box-shadow: 0px 3px 5px 0px rgba(179,179,179,0.23) !important;
+    /*-webkit-box-shadow: 0px 3px 5px 0px rgba(179,179,179,0.23) !important;*/
+    /*-moz-box-shadow: 0px 3px 5px 0px rgba(179,179,179,0.23) !important;*/
+    /*box-shadow: 0px 3px 5px 0px rgba(179,179,179,0.23) !important;*/
 }
 
 .unshadow{
@@ -1055,18 +1055,12 @@ input[type="submit"].beauty-light{
 	background:#FDFE00;
 	background:#FDFE03;
 	border:solid 1px #FDFE03;
-	-webkit-box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.23);
-    -moz-box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.23);
-    box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.23);
 }
 
 .yella{
 	color:#2b2b34;
 	background:#FDFE03;
 	border:solid 1px #FDFE03;
-	-webkit-box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.23);
-    -moz-box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.23);
-    box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.23);
 }
 
 input[type="button"].yella,
@@ -1076,9 +1070,6 @@ input[type="button"].yella{
 	color:#2b2b34;
 	background:#fff553;
 	border:solid 1px #fff553;
-	-webkit-box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.43);
-    -moz-box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.43);
-    box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.43);
 }
 
 
@@ -1090,9 +1081,6 @@ input[type="button"].sky{
 	color:#2b2b34;
 	background:#F3F3F7;
 	border:solid 1px #F3F3F7;
-	-webkit-box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.43);
-    -moz-box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.43);
-    box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.43);
 }
 
 
@@ -1114,10 +1102,7 @@ input[type="button"].button.light{
 	background:#fff;
 	color:#2b2b34;
 	background:#fff;
-	-webkit-box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.43);
-    -moz-box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.43);
-    box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.43);
-    border:solid 0px #FFFFFF;
+    border:solid 1px #eff2f3;
 }
 
 .button.yella:active,
@@ -1134,17 +1119,6 @@ input[type="reset"].button.retro,
 input[type="submit"].button.retro,
 input[type="button"].button.retro{
 	color:#fff;
-	background:#2cafed;
-	background:#13B1FF;
-	background:#54afff !imoprtant;
-	border:solid 1px #1f9bc4;
-	border:solid 1px #1792b7;
-	border:solid 1px #54afff;
-    border:solid 1px #4198e4;
-    background:#0AD5FC;
-    border:solid 1px #01badd;
-    background: #710baa;
-    border:solid 1px #69089f;
     background: #54afff;
     border:solid 1px #54afff;
 }
@@ -1170,9 +1144,6 @@ input[type="submit"].button.modern{
     color:#fff;
     background:#000;
     border:solid 1px #000;
-    -webkit-box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.43);
-    -moz-box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.43);
-    box-shadow: 0px 1px 3px 0px rgba(179,179,179,0.43);
 }
 
 

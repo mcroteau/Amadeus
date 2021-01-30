@@ -2,6 +2,7 @@ package social.amadeus.service;
 
 import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import social.amadeus.common.Constants;
 import social.amadeus.common.Utils;
 import social.amadeus.model.Account;
@@ -16,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Service
 public class MessageService {
 
     @Autowired

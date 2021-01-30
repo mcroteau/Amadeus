@@ -1,6 +1,7 @@
 package social.amadeus.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -13,8 +14,8 @@ import social.amadeus.repository.FlyerRepo;
 
 import java.util.List;
 
+@Service
 public class FlyerService {
-
 
     @Autowired
     private FlyerRepo flyerRepo;

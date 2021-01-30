@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
 import social.amadeus.model.Account;
 import social.amadeus.model.Flyer;
 import social.amadeus.model.Sheet;
@@ -12,6 +13,7 @@ import social.amadeus.repository.SheetRepo;
 
 import java.util.List;
 
+@Repository
 public class SheetJdbcRepo implements SheetRepo {
 
     @Autowired

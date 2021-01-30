@@ -10,13 +10,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
+import org.springframework.stereotype.Repository;
 import social.amadeus.common.Constants;
 import social.amadeus.repository.RoleRepo;
 import social.amadeus.model.*;
 
 import social.amadeus.repository.AccountRepo;
 
-
+@Repository
 public class AccountJdbcRepo implements AccountRepo {
 
 	private static final Logger log = Logger.getLogger(AccountJdbcRepo.class);

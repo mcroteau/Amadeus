@@ -4,12 +4,14 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 import social.amadeus.repository.NotificationRepo;
 import social.amadeus.model.Account;
 import social.amadeus.model.Notification;
 
 import java.util.List;
 
+@Repository
 public class NotificationJdbcRepo implements NotificationRepo {
 
     private static final Logger log = Logger.getLogger(NotificationJdbcRepo.class);

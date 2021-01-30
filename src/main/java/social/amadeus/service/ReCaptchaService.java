@@ -3,9 +3,11 @@ package social.amadeus.service;
 import com.google.gson.Gson;
 import okhttp3.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import social.amadeus.model.ReCaptchaInput;
 import social.amadeus.model.ReCaptchaOutput;
 
+@Service
 public class ReCaptchaService {
 
     private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");

@@ -8,12 +8,14 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import social.amadeus.common.Constants;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
+@Service
 public class SyncService {
 
     private static final Logger log = Logger.getLogger(SyncService.class);

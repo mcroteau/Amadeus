@@ -13,10 +13,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
+import org.springframework.stereotype.Repository;
 import social.amadeus.repository.FriendRepo;
 import social.amadeus.repository.PostRepo;
 import social.amadeus.model.*;
 
+@Repository
 public class PostJdbcRepo implements PostRepo {
 
 	private static final Logger log = Logger.getLogger(PostJdbcRepo.class);

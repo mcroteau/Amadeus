@@ -4,6 +4,7 @@ import org.apache.commons.text.StringEscapeUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -16,6 +17,7 @@ import social.amadeus.repository.SheetRepo;
 
 import java.util.List;
 
+@Service
 public class SheetService {
 
     private static final Logger log = Logger.getLogger(SheetService.class);

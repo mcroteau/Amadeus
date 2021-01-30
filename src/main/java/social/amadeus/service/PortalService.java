@@ -1,8 +1,10 @@
 package social.amadeus.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import social.amadeus.model.Account;
 
+@Service
 public class PortalService {
 
     @Autowired

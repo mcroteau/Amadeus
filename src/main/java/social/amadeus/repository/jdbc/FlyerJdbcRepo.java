@@ -3,10 +3,12 @@ package social.amadeus.repository.jdbc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 import social.amadeus.repository.FlyerRepo;
 import social.amadeus.model.Flyer;
 import java.util.List;
 
+@Repository
 public class FlyerJdbcRepo implements FlyerRepo {
 
     @Autowired

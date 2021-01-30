@@ -13,7 +13,9 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.Authenticator;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
+@Service
 public class EmailService extends Thread {
 
     @Value("${mail.smtp.host}")

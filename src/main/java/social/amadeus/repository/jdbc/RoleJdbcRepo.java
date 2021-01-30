@@ -7,10 +7,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
 import social.amadeus.repository.RoleRepo;
 import social.amadeus.model.Role;
 
-
+@Repository
 public class RoleJdbcRepo implements RoleRepo {
 	
 	

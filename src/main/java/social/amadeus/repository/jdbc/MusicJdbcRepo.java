@@ -9,11 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import org.springframework.stereotype.Repository;
 import social.amadeus.repository.MusicRepo;
 import social.amadeus.model.AccountMusic;
 import social.amadeus.model.MusicFile;
 
-
+@Repository
 public class MusicJdbcRepo implements MusicRepo {
 	
 	@Autowired

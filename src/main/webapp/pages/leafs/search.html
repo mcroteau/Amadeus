@@ -75,14 +75,6 @@
     <div id="people" class="search-page">
 
         <table ng-if="accounts.length > 0" id="accounts-results-table">
-            <thead class="render-desktop">
-            <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Location</th>
-                <th></th>
-            </tr>
-            </thead>
             <tbody id="accounts-search-results-container">
                 <tr ng-repeat="account in accounts" ng-if="!account.blocked">
                     <td><a ng-href="#!/profile/{{account.id}}" href="javascript:"><img ng-src="{{account.imageUri}}" class="profile-href search-profile-image"/></a></td>

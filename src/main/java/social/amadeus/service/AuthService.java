@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import social.amadeus.common.Constants;
@@ -14,6 +15,7 @@ import xyz.strongperched.Parakeet;
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 
+@Service
 public class AuthService {
 
     private static final Logger log = Logger.getLogger(AuthService.class);

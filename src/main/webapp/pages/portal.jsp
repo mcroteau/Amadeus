@@ -461,6 +461,7 @@
 
         var ids = [
             'logo-logo',
+            'amadeus-logo',
             'mobile-notifications',
             'profile-ref-image',
             'notifications-href',
@@ -472,6 +473,7 @@
             var $target = $(event.target)
             var id = $target.attr('id')
             if (!ids.includes(id)){
+                console.log(id, '!=', id)
                 $scope.chatOpened = false
                 $scope.showProfile = false
                 $scope.showNotifications = false
