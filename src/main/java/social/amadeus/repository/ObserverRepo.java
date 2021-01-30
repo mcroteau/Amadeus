@@ -1,6 +1,6 @@
 package social.amadeus.repository;
 
-import social.amadeus.model.Observe;
+import social.amadeus.model.Observed;
 
 import java.util.List;
 
@@ -8,16 +8,16 @@ public interface ObserverRepo {
 
     public long getCount();
 
-    public Observe getLast();
+    public Observed getLast();
 
-    public Observe get(long id);
+    public Observed get(long id);
 
-    public Observe get(long observerId, long observedId);
+    public Observed get(long observerId, long observedId);
 
-    public Observe observe(Observe observe);
+    public boolean observe(Observed observed);
 
-    public boolean unobserve(long observerId, long observedId);
+    public boolean unobserve(Observed observed);
 
-    public List<Observe> getObserved(long observedId);
+    public List<Observed> getObserved(long observedId);
 
 }

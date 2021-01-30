@@ -1,10 +1,11 @@
 package social.amadeus.model;
 
-public class Observe {
+public class Observed {
 
     long id;
     long observerId;
     long observedId;
+    long dateCreated;
 
     public long getId() {
         return id;
@@ -29,4 +30,13 @@ public class Observe {
     public void setObservedId(long observedId) {
         this.observedId = observedId;
     }
+
+    public long getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(long dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
 }

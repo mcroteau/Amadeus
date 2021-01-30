@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import social.amadeus.model.Observe;
+import social.amadeus.model.Observed;
 import social.amadeus.repository.ObserverRepo;
 
 import java.util.List;
@@ -22,71 +22,70 @@ public class ObserverJdbcRepo implements ObserverRepo {
     }
 
     @Override
-    public Observe getLast() {
+    public Observed getLast() {
         String sql = "select max(id) from observers";
         long id = jdbcTemplate.queryForObject(sql, new Object[]{}, Long.class);
 
         String selectSql = "select * from observers where id = ?";
-        Observe persistedObserve = jdbcTemplate.queryForObject(selectSql, new Object[]{id},
-                new BeanPropertyRowMapper<>(Observe.class));
+        Observed persistedObserved = jdbcTemplate.queryForObject(selectSql, new Object[]{id},
+                new BeanPropertyRowMapper<>(Observed.class));
 
-        return persistedObserve;
+        return persistedObserved;
     }
 
-    public Observe get(long id) {
+    public Observed get(long id) {
         String sql = "select * from observers where id = ?";
 
-        Observe observer = jdbcTemplate.queryForObject(sql, new Object[] { id },
-                new BeanPropertyRowMapper<>(Observe.class));
+        Observed observed = jdbcTemplate.queryForObject(sql, new Object[] { id },
+                new BeanPropertyRowMapper<>(Observed.class));
 
-        return observer;
+        return observed;
     }
 
 
-    public Observe get(long observerId, long observedId) {
+    public Observed get(long observerId, long observedId) {
         String sql = "select * from observers where observer_id = ? and observed_id = ?";
 
-        Observe observer = jdbcTemplate.queryForObject(sql, new Object[] { observerId, observedId },
-                new BeanPropertyRowMapper<>(Observe.class));
+        Observed observed = jdbcTemplate.queryForObject(sql, new Object[] { observerId, observedId },
+                new BeanPropertyRowMapper<>(Observed.class));
 
-        return observer;
+        return observed;
     }
 
-    public Observe observe(Observe observer) {
-
-        String sql = "insert into observers (observer_id, observed_id) values (?, ?)";
+    public boolean observe(Observed observed) {
+        String sql = "insert into observers (observer_id, observed_id, date_created) values (?, ?, ?)";
         try {
             jdbcTemplate.update(sql, new Object[]{
-                observer.getObserverId(), observer.getObserverId()
+                observed.getObserverId(), observed.getObserverId(), observed.getDateCreated()
             });
         }catch(Exception e){
             e.printStackTrace();
-        }
-
-        Observe persistedObserve = getLast();
-
-        return persistedObserve;
-    }
-
-
-    @Override
-    public boolean unobserve(long observerId, long observedId) {
-        String sql = "delete from observers where id = ?";
-        try {
-            jdbcTemplate.update(sql, new Object[]{ observedId, observedId });
-        }catch(Exception e){
             return false;
         }
         return true;
     }
 
     @Override
-    public List<Observe> getObserved(long observedId) {
+    public boolean unobserve(Observed observed) {
+        String sql = "delete from observers where observed_id = ? and observer_id = ?";
+        try {
+            jdbcTemplate.update(sql, new Object[]{
+                    observed.getObservedId(), observed.getObserverId()
+            });
+        }catch(Exception e){
+            return false;
+        }
+        return true;
+    }
+
+
+    @Override
+    public List<Observed> getObserved(long observedId) {
         String sql = "select * from observers where observed_id = ?";
 
-        List<Observe> observers = jdbcTemplate.query(sql, new Object[] { observedId },
-                new BeanPropertyRowMapper<>(Observe.class));
+        List<Observed> observeds = jdbcTemplate.query(sql, new Object[] { observedId },
+                new BeanPropertyRowMapper<>(Observed.class));
 
-        return observers;
+        return observeds;
     }
 }

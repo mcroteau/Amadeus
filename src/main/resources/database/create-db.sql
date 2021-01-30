@@ -234,3 +234,12 @@ create table sheets (
 	account_id bigint NOT NULL REFERENCES account(id),
     date_created bigint NOT NULL
 );
+
+
+create table observeds (
+	id bigint PRIMARY KEY AUTO_INCREMENT,
+	observer_id bigint NOT NULL REFERENCES account(id),
+	observed_id bigint NOT NULL REFERENCES account(id),
+	date_created bigint NOT NULL,
+	constraint unique_observed unique(observer_id, observed_id)
+);
