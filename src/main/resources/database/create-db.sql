@@ -236,7 +236,7 @@ create table sheets (
 );
 
 
-create table observeds (
+create table observers (
 	id bigint PRIMARY KEY AUTO_INCREMENT,
 	observer_id bigint NOT NULL REFERENCES account(id),
 	observed_id bigint NOT NULL REFERENCES account(id),

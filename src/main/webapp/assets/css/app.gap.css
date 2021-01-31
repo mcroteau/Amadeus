@@ -247,7 +247,7 @@ h2{
 
 h3{
     color:#324044;
-	font-size:26px;
+	font-size:17px;
 	font-family:"Roboto-Bold" !important;
 	line-height:1.17;
 }
@@ -928,9 +928,9 @@ input[type="submit"].button{
     background:#0AD5FC;
     border:solid 1px #01badd;
 	text-decoration:none;
-	border-radius: 19px;
-	-moz-border-radius: 19px;
-	-webkit-border-radius: 19px;
+	border-radius: 11px;
+	-moz-border-radius: 11px;
+	-webkit-border-radius: 11px;
     font-family:Roboto !important;
 	/*-webkit-box-shadow: 0px 1px 7px 0px rgba(179,179,179,0.23);*/
     /*-moz-box-shadow: 0px 1px 7px 0px rgba(179,179,179,0.23);*/
@@ -938,6 +938,10 @@ input[type="submit"].button{
 	outline:none !important;
 	-webkit-appearance: none;
 	-moz-appearance:none;
+}
+
+.button.rollo{
+    border-radius: 19px;
 }
 
 .button:hover{
@@ -968,7 +972,7 @@ input[type="submit"].button{
 
 .edit-update-button{
     z-index: 23;
-    left:116px;
+    left:20px;
     display: none;
     position:absolute;
     /*-webkit-box-shadow: 0px 3px 5px 0px rgba(179,179,179,0.23) !important;*/
@@ -2126,7 +2130,7 @@ input[type="submit"].button.small{
 }
 .share-comment-container textarea{
     font-size:16px !important;
-    font-family:Roboto-Thin !important;
+    font-family:Roboto !important;
     height:67px !important;
     width:300px !important;
     width: 87% !important;

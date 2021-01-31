@@ -3,10 +3,8 @@
 
         <div id="profile-container">
             <div ng-if="!profile.isOwnersAccount" id="profile-actions-container">
-
-                <a ng-click="unfriend(profile.id)" ng-if="profile.isFriend" href="javascript:" class="button light small" data-id="{{id}}" data-action="remove" id="profile-friend-button">Unfriend</a>
-                <a ng-click="sendFriendRequest(profile.id)" ng-if="!profile.isFriend" href="javascript:" class="button retro small" data-action="invite" id="profile-friend-button">Send Friend Request</a>
-
+                <button ng-click="observe(profile.id)" ng-if="!profile.isOwnersAccount && !profile.observing" class="button retro rollo">Follow</button>
+                <button ng-click="unobserve(profile.id)" ng-if="!profile.isOwnersAccount && profile.observing" class="button beauty rollo">Unfollow</button>
                 <br class="clear"/>
             </div>
 
@@ -19,6 +17,7 @@
                 <p class="light" style="font-family:Roboto-Light !important;font-size:25px;">{{profile.age}} {{profile.location}}</p>
 
                 <span ng-if="profile.isOwnersAccount" class="tiny" >Only you can see profile views data</span>
+
 
     <!--            <div ng-if="!profile.isOwnersAccount && !profile.liked">-->
     <!--                <a href="javascript:" class="button yella small profile-like" id="profile-like-button" data-id="{{id}}" data-liked="false">-->
@@ -163,10 +162,10 @@
 
                             <div ng-if="!post.shared && post.postEditable">
                                 <a ng-click="updatePost(post.id)" href="javascript:" class="button small retro edit-update-button edit-fade-in" data-i18n="update.button">Update</a>
-                                <div class="image-edit edit-fade-in">
-                                    <a href="javascript:" class="button small sky" id="edit-image-button-{{post.id}}" data-i18n="images.button">+ Images</a>
-                                    <input ng-upload-change="uploadImages(post.id, $event)" type="file" name="imageFiles" id="edit-image-select-{{post.id}}" class="edit-image-input" multiple="multiple" data-id="{{post.id}}"/>
-                                </div>
+                                <!--                        <div class="image-edit edit-fade-in">-->
+                                <!--                            <a href="javascript:" class="button small sky" id="edit-image-button-{{post.id}}" data-i18n="images.button">+ Images</a>-->
+                                <!--                            <input ng-upload-change="uploadImages(post.id, $event)" type="file" name="imageFiles" id="edit-image-select-{{post.id}}" class="edit-image-input" multiple="multiple" data-id="{{post.id}}"/>-->
+                                <!--                        </div>-->
                             </div>
 
                             <div class="like-container float-right">
@@ -184,7 +183,7 @@
                                     <div class="share-actions-count-container">
                                         <span class="actions-count">{{post.shares}} </span>
                                     </div>
-                                    <a ng-click="toggleShare($index)" href="javascript:" class="share-button" data-id="{{id}}"><img ng-src="/o/images/share.png" style="width:32px;" data-id="{{id}}"/></a>
+                                    <a ng-click="toggleShare($index)" href="javascript:" class="share-button" data-id="{{id}}"><img ng-src="/o/assets/images/share.png" style="width:32px;" data-id="{{id}}"/></a>
                                 </div>
                             </div>
                             <div ng-if="!post.shared && !post.postEditable" class="share-container float-left">
@@ -192,7 +191,7 @@
                                     <div class="share-actions-count-container">
                                         <span class="actions-count">{{post.shares}} </span>
                                     </div>
-                                    <a ng-click="toggleShare($index)" href="javascript:" class="share-button" data-id="{{id}}"><img ng-src="/o/images/share.png" style="width:32px;" data-id="{{id}}"/></a>
+                                    <a ng-click="toggleShare($index)" href="javascript:" class="share-button" data-id="{{id}}"><img ng-src="/o/assets/images/share.png" style="width:32px;" data-id="{{id}}"/></a>
                                 </div>
                             </div>
 
@@ -308,12 +307,12 @@
 
         <div id="profile-left-container">
             <div id="profile-friends-outer-container">
-                <h2 class="gray no-border yella">Friends</h2>
+                <h3 class="gray" ng-if="following">Following</h3>
                 <div id="profile-friends-container">
-                    <a ng-href="#!/profile/{{friend.friendId}}" ng-repeat="friend in friends" href="javascript:" class="profile-friend-ref">
+                    <a ng-href="#!/profile/{{following.observedId}}" ng-repeat="following in observing" href="javascript:" class="profile-friend-ref">
                         <div class="profile-friend-container">
-                            <img ng-src="{{friend.imageUri}}" class="global-shadow"/>
-                            <span class="profile-friend-name">{{friend.name}}</span>
+                            <img ng-src="{{following.imageUri}}" class="global-shadow"/>
+                            <span class="profile-friend-name">{{following.name}}</span>
                         </div>
                     </a>
                 </div>

@@ -5,10 +5,7 @@ import org.springframework.stereotype.Service;
 import social.amadeus.common.Constants;
 import social.amadeus.model.*;
 import social.amadeus.model.SearchOutput;
-import social.amadeus.repository.AccountRepo;
-import social.amadeus.repository.FriendRepo;
-import social.amadeus.repository.MusicRepo;
-import social.amadeus.repository.SheetRepo;
+import social.amadeus.repository.*;
 
 import java.util.List;
 
@@ -22,7 +19,7 @@ public class SearchService {
     AccountRepo accountRepo;
 
     @Autowired
-    FriendRepo friendRepo;
+    ObserverRepo observerRepo;
 
     @Autowired
     SheetRepo sheetRepo;
@@ -47,8 +44,11 @@ public class SearchService {
             List<Account> accounts = accountRepo.search(q, 0);
 
             for(Account a : accounts){
-                a.setIsFriend(friendRepo.isFriend(account.getId(), a.getId()));
-                a.setInvited(friendRepo.isInvited(account.getId(), a.getId()));
+                Observed observed = new Observed();
+                observed.setObservedId(a.getId());
+                observed.setObserverId(account.getId());
+                if(observerRepo.isObserved(observed))
+                    a.setObserving(true);
 
                 AccountBlock accountBlock = new AccountBlock();
                 accountBlock.setPersonId(account.getId());

@@ -25,6 +25,7 @@ public class Account {
 	boolean blocked;
 	String status;
 	String failMessage;
+	boolean observing;
 
 	public long getId(){
 		return id;
@@ -96,9 +97,13 @@ public class Account {
 		this.location = location;
 	}
 
-	public void setIsFriend(boolean isFriend){ this.isFriend = isFriend; }
+	public boolean isObserving() {
+		return observing;
+	}
 
-	public boolean getIsFriend(){ return isFriend; }
+	public void setObserving(boolean observing) {
+		this.observing = observing;
+	}
 
 	public boolean isOwnersAccount() {
 		return isOwnersAccount;

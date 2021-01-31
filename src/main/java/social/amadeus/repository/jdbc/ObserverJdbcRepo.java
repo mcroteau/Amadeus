@@ -53,10 +53,10 @@ public class ObserverJdbcRepo implements ObserverRepo {
     }
 
     public boolean observe(Observed observed) {
-        String sql = "insert into observers (observer_id, observed_id, date_created) values (?, ?, ?)";
+        String sql = "insert into observers (observed_id, observer_id, date_created) values (?, ?, ?)";
         try {
             jdbcTemplate.update(sql, new Object[]{
-                observed.getObserverId(), observed.getObserverId(), observed.getDateCreated()
+                observed.getObservedId(), observed.getObserverId(), observed.getDateCreated()
             });
         }catch(Exception e){
             e.printStackTrace();
@@ -72,7 +72,8 @@ public class ObserverJdbcRepo implements ObserverRepo {
             jdbcTemplate.update(sql, new Object[]{
                     observed.getObservedId(), observed.getObserverId()
             });
-        }catch(Exception e){
+        }catch(Exception ex){
+            ex.printStackTrace();
             return false;
         }
         return true;
@@ -80,12 +81,27 @@ public class ObserverJdbcRepo implements ObserverRepo {
 
 
     @Override
-    public List<Observed> getObserved(long observedId) {
-        String sql = "select * from observers where observed_id = ?";
+    public List<Observed> getObserving(long observerId) {
+        String sql = "select * from observers where observer_id = ?";
 
-        List<Observed> observeds = jdbcTemplate.query(sql, new Object[] { observedId },
+        List<Observed> observed = jdbcTemplate.query(sql, new Object[] { observerId },
                 new BeanPropertyRowMapper<>(Observed.class));
 
-        return observeds;
+        return observed;
+    }
+
+    @Override
+    public boolean isObserved(Observed observed) {
+        String sql = "select * from observers where observed_id = ? and observer_id = ?";
+        Observed savedObserved = null;
+        try {
+            savedObserved = jdbcTemplate.queryForObject(sql, new Object[]{
+                        observed.getObservedId(), observed.getObserverId()
+                    },new BeanPropertyRowMapper<>(Observed.class));
+        }catch(Exception ex){
+            return false;
+        }
+        if(savedObserved == null) return false;
+        return true;
     }
 }

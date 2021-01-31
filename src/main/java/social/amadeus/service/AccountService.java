@@ -38,7 +38,7 @@ public class AccountService {
     private RoleRepo roleRepo;
 
     @Autowired
-    private FriendRepo friendRepo;
+    private ObserverRepo observerRepo;
 
     @Autowired
     private PostRepo postRepo;
@@ -78,10 +78,6 @@ public class AccountService {
         return null;
     }
 
-    private void preloadConnections(Account authenticatedAccount){
-        Account adminAccount = accountRepo.getByUsername(Constants.ADMIN_USERNAME);
-        friendRepo.saveConnection(adminAccount.getId(), authenticatedAccount.getId(), Utils.getDate());
-    }
 
     private Account synchronizeImage(CommonsMultipartFile imageFile, Account account){
         try {
@@ -111,16 +107,6 @@ public class AccountService {
                 return p2.compareTo(p1);
             }
         };
-
-        List<FriendInvite> invites = friendRepo.getInvites(account.getId());
-        for(FriendInvite invite : invites){
-            Notification notification = new Notification();
-            notification.setInvite(true);
-            Account invitee = accountRepo.get(invite.getInviteeId());
-            notification.setName(invitee.getName());
-            notification.setDateCreated(invite.getDateCreated());
-            notifications.add(notification);
-        }
 
         Collections.sort(notifications, comparator);
 
@@ -327,8 +313,6 @@ public class AccountService {
             accountRepo.save(account);
 
             Account savedAccount = accountRepo.getByUsername(account.getUsername());
-            preloadConnections(savedAccount);
-
             Role defaultRole = roleRepo.find(Constants.ROLE_ACCOUNT);
 
             accountRepo.saveAccountRole(savedAccount.getId(), defaultRole.getId());
@@ -374,29 +358,34 @@ public class AccountService {
         }
 
         Account account = accountRepo.get(Long.parseLong(id));
-        Account authenticatedAccount = authService.getAccount();
+        Account authdAccount = authService.getAccount();
 
-        if(account.getId() == authenticatedAccount.getId()){
+        if(account.getId() == authdAccount.getId()){
             account.setOwnersAccount(true);
         }
 
-        boolean ifFriend = friendRepo.isFriend(authenticatedAccount.getId(), account.getId());
-        if(ifFriend){
-            account.setIsFriend(true);
+        Observed observed = new Observed();
+        observed.setObservedId(Long.parseLong(id));
+        observed.setObserverId(authdAccount.getId());
+        if(observerRepo.isObserved(observed))
+            account.setObserving(true);
+
+        List<Observed> observingList = observerRepo.getObserving(Long.parseLong(id));
+        List<Observed> observing = new ArrayList<>();
+        for(Observed o: observingList){
+            Account a = accountRepo.get(o.getObservedId());
+            o.setName(a.getName());
+            o.setImageUri(a.getImageUri());
+            observing.add(o);
         }
 
         AccountBlock accountBlock = new AccountBlock();
-        accountBlock.setPersonId(authenticatedAccount.getId());
+        accountBlock.setPersonId(authdAccount.getId());
         accountBlock.setBlockerId(account.getId());
 
         boolean blocked = accountRepo.blocked(accountBlock);
         account.setBlocked(blocked);
 
-        List<Friend> friends = friendRepo.getFriends(Long.parseLong(id));
-        for(Friend friend : friends){
-            if(messageRepo.hasMessages(friend.getFriendId(), authService.getAccount().getId()))
-                friend.setHasMessages(true);
-        }
 
         long likes = accountRepo.likes(account.getId());
         if(likes > 0){
@@ -404,10 +393,10 @@ public class AccountService {
         }
         account.setLikes(likes);
 
-        if(authenticatedAccount.getId() != Long.parseLong(id)) {
+        if(authdAccount.getId() != Long.parseLong(id)) {
             ProfileView view = new ProfileView.Builder()
                     .profile(account.getId())
-                    .viewer(authenticatedAccount.getId())
+                    .viewer(authdAccount.getId())
                     .date(Utils.getDate())
                     .build();
 
@@ -416,7 +405,8 @@ public class AccountService {
 
         profileOutput.setStatus(Constants.SUCCESS);
         profileOutput.setProfile(account);
-        profileOutput.setFriends(friends);
+        profileOutput.setObserving(observing);
+
 
         return profileOutput;
 
@@ -572,16 +562,11 @@ public class AccountService {
         List<Notification> notifications = getNotifications(account);
         long messagesCount = messageRepo.countByAccount(account);
         long notificationsCount = notificationRepo.countByAccount(account);
-        long invitationsCount = friendRepo.getCountInvitesByAccount(account);
-
-        List<FriendInvite> invites = friendRepo.getInvites(account.getId());
-        notificationsCount = notificationsCount + invites.size();
 
         respData.put("newestCount", newestCount);
         respData.put("messagesCount", messagesCount);
         respData.put("notifications", notifications);
         respData.put("notificationsCount", notificationsCount);
-        respData.put("invitationsCount", invitationsCount);
 
         return respData;
     }

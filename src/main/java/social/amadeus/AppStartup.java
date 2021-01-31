@@ -33,9 +33,6 @@ public class AppStartup {
 
 	@Autowired
 	public PostRepo postRepo;
-	
-	@Autowired
-	public FriendRepo friendRepo;
 
 	@Autowired
 	public MessageRepo messageRepo;
@@ -58,8 +55,7 @@ public class AppStartup {
 		Parakeet.configure(accessor);
 		createApplicationRoles();
 		createApplicationAdministrator();
-		createApplicationGuest();
-		connectEm();
+		createMarisa();
 
 		if(!Utils.isTestEnvironment(env)) {
 			startupBackgroundJobs();
@@ -108,14 +104,14 @@ public class AppStartup {
 	}
 
 
-	private void createApplicationGuest(){
-		Account existing = accountRepo.getByUsername(Constants.GUEST_USERNAME);
-		String password = utils.hash(Constants.GUEST_PASSWORD);
+	private void createMarisa(){
+		Account existing = accountRepo.getByUsername(Constants.MARISA_USERNAME);
+		String password = Parakeet.dirty(Constants.MARISA_PASSWORD);
 
 		if(existing == null){
 			Account account = new Account();
 			account.setName("Marisa");
-			account.setUsername(Constants.GUEST_USERNAME);
+			account.setUsername(Constants.MARISA_USERNAME);
 			account.setPassword(password);
 			account.setImageUri(Utils.getProfileImageUri());
 			accountRepo.save(account);
@@ -181,8 +177,6 @@ public class AppStartup {
 
 	private void generateAppData(){
 		generateMockAccounts();
-		generateMockFriendInvites();
-		generateMockConnections();
 		generateMockPosts();
 		generateMockMessages();
 		generateAds();
@@ -208,73 +202,6 @@ public class AppStartup {
 		}
 
 		log.info("Accounts : " + accountRepo.getCount());
-	}
-
-
-
-
-	private void generateMockFriendInvites(){
-		try{
-
-			List<Account> accounts = accountRepo.findAll();
-
-			int possibilities = accounts.size() * accounts.size();
-			long currentDate = utils.getCurrentDate();
-
-			for (int n = 0; n < possibilities; n++) {
-				for (Account account : accounts) {
-					List<Account> possibleInvites = accountRepo.findAll();
-					Account invited = possibleInvites.get(n);
-					friendRepo.sendInvite(account.getId(), invited.getId(), currentDate);
-				}
-			}
-
-		}catch(Exception e){
-			log.info("duplicate invite");
-		}
-
-		log.info("Friend Invites : " + friendRepo.getCountInvites());
-	}
-
-	private void generateMockConnections() {
-		try {
-			long count = friendRepo.getCount();
-
-			if (count == 0) {
-				List<Account> accounts = accountRepo.findAll();
-
-				int possibilities = accounts.size() * accounts.size();
-				long currentDate = utils.getCurrentDate();
-
-				for (int n = 0; n < possibilities; n++) {
-
-					for (Account account : accounts) {
-
-						List<Account> possibleFriends = accountRepo.findAll();
-						Random r1 = new Random();
-
-						if (n < possibleFriends.size()) {
-
-							Random doOrDontRandom = new Random();
-							int r2 = doOrDontRandom.nextInt(21);
-
-							if (r2 % 13 == 0 && r2 != 0) {
-								Account friend = possibleFriends.get(n);
-
-								if (account.getId() != friend.getId()) {
-									System.out.print(".");
-									friendRepo.saveConnection(account.getId(), friend.getId(), currentDate);
-								}
-							}
-						}
-					}
-				}
-			}
-		}catch(Exception e){
-			log.error("duplicate friend connection");
-		}
-
-		log.info("Connections : " + friendRepo.getCount()/2);
 	}
 
 	
@@ -381,11 +308,4 @@ public class AppStartup {
 		log.info("Ads : " + flyerRepo.getCount());
 	}
 
-	private void connectEm(){
-		Account admin = accountRepo.getByUsername(Constants.ADMIN_USERNAME);
-		Account guest = accountRepo.getByUsername(Constants.GUEST_USERNAME);
-		if(!friendRepo.isFriend(admin.getId(), guest.getId())) {
-			friendRepo.saveConnection(admin.getId(), guest.getId(), utils.getCurrentDate());
-		}
-	}
 }

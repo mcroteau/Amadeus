@@ -46,8 +46,8 @@ public class ObserverService {
 
         Account authdAccount = authService.getAccount();
         Observed observed = new Observed();
-        observed.setObservedId(authdAccount.getId());
         observed.setObservedId(id);
+        observed.setObserverId(authdAccount.getId());
 
         if(!observerRepo.unobserve(observed)){
             return "fix";
@@ -59,7 +59,7 @@ public class ObserverService {
         if(!authService.isAuthenticated()){
             return new ArrayList<>();
         }
-        List<Observed> observed = observerRepo.getObserved(id);
+        List<Observed> observed = observerRepo.getObserving(id);
         return observed;
     }
 }

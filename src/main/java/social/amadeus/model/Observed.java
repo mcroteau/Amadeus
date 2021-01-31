@@ -7,6 +7,9 @@ public class Observed {
     long observedId;
     long dateCreated;
 
+    String name;
+    String imageUri;
+
     public long getId() {
         return id;
     }
@@ -39,4 +42,19 @@ public class Observed {
         this.dateCreated = dateCreated;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getImageUri() {
+        return imageUri;
+    }
+
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
+    }
 }

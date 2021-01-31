@@ -5,7 +5,7 @@ import java.util.List;
 public class ProfileOutput {
     String status;
     Account profile;
-    List<Friend> friends;
+    List<Observed> observing;
 
     public String getStatus() {
         return status;
@@ -23,11 +23,11 @@ public class ProfileOutput {
         this.profile = profile;
     }
 
-    public List<Friend> getFriends() {
-        return friends;
+    public List<Observed> getObserving() {
+        return observing;
     }
 
-    public void setFriends(List<Friend> friends) {
-        this.friends = friends;
+    public void setObserving(List<Observed> observing) {
+        this.observing = observing;
     }
 }

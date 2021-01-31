@@ -79,20 +79,17 @@
                 <tr ng-repeat="account in accounts" ng-if="!account.blocked">
                     <td><a ng-href="#!/profile/{{account.id}}" href="javascript:"><img ng-src="{{account.imageUri}}" class="profile-href search-profile-image"/></a></td>
                     <td>
-                        <a ng-href="#!/profile/{{account.id}}" href="javascript:" class="href-dotted" data-id="{{id}}">{{account.name}}
-                            <span ng-if="!account.isFriend && account.invited" class="invite-sent-span">(Invite sent)</span>
-                        </a>
+                        <a ng-href="#!/profile/{{account.id}}" href="javascript:" class="href-dotted" data-id="{{id}}">{{account.name}}</a>
                     </td>
                     <td class="render-desktop">{{account.location}}</td>
                     <td class="align-right">
-                        <span ng-if="!account.isOwnersAccount && account.isFriend" class="is-friend information">Connected</span>
-                        <button ng-click="sendInvite(account.id)" ng-if="!account.isOwnersAccount && !account.isFriend && account.invited" class="button beauty-light small friend-invite">+ Resend Invite</button>
-                        <button ng-click="sendInvite(account.id)" ng-if="!account.isOwnersAccount && !account.isFriend && !account.invited" class="button retro small friend-invite">+ Friend</button>
+                        <button ng-click="observe(account.id)" ng-if="!account.isOwnersAccount && !account.observing" class="button retro rollo">Follow</button>
+                        <button ng-click="unobserve(account.id)" ng-if="!account.isOwnersAccount && account.observing" class="button beauty rollo">Unfollow</button>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <p ng-if="accounts.length == 0" class="notify" >No people found...</p>
+        <p ng-if="accounts.length == 0" class="notify">No people found...</p>
     </div>
 
 

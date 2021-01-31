@@ -14,7 +14,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import org.springframework.stereotype.Repository;
-import social.amadeus.repository.FriendRepo;
+import social.amadeus.repository.ObserverRepo;
 import social.amadeus.repository.PostRepo;
 import social.amadeus.model.*;
 
@@ -30,7 +30,7 @@ public class PostJdbcRepo implements PostRepo {
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	
 	@Autowired
-	private FriendRepo friendRepo;
+	private ObserverRepo observerRepo;
 
 
 	public Long getPostId() {
@@ -124,14 +124,12 @@ public class PostJdbcRepo implements PostRepo {
 
 	public List<Post> getActivity(long start, long end, Account authdAccount){
 		
-		List<Friend> friends = friendRepo.getFriends(authdAccount.getId());
-		Set<Long> ids = new HashSet<Long>();
-
-		for(Friend connection : friends) {
-			ids.add(connection.getFriendId());
-		}
-
+		List<Observed> observed = observerRepo.getObserving(authdAccount.getId());
+		Set<Long> ids = new HashSet<>();
 		ids.add(authdAccount.getId());
+		for(Observed observing : observed) {
+			ids.add(observing.getObservedId());
+		}
 
 		String idsString = StringUtils.join(ids, ",");
 
@@ -149,11 +147,12 @@ public class PostJdbcRepo implements PostRepo {
 
 
 	public long getNewestCount(long start, long end, long authdAccountId){
-		List<Friend> friends = friendRepo.getFriends(authdAccountId);
-		Set<Long> ids = new HashSet<Long>();
+		List<Observed> observed = observerRepo.getObserving(authdAccountId);
+		Set<Long> ids = new HashSet<>();
 		ids.add(authdAccountId);
-
-		friends.stream().forEach(connection -> ids.add(connection.getFriendId()));
+		for(Observed observing : observed) {
+			ids.add(observing.getObservedId());
+		}
 
 		String idsString = StringUtils.join(ids, ",");
 
@@ -297,13 +296,13 @@ public class PostJdbcRepo implements PostRepo {
 
 		String sql = "select * from post_shares where account_id in (:ids) and date_shared between " + start + " and " + end + " order by date_shared desc";
 
-		List<Friend> friends = friendRepo.getFriends(accountId);
-		Set<Long> ids = new HashSet<Long>();
-		for(Friend connection : friends) {
-			ids.add(connection.getFriendId());
+		List<Observed> observed = observerRepo.getObserving(accountId);
+		Set<Long> ids = new HashSet<>();
+		ids.add(accountId);
+		for(Observed observing : observed) {
+			ids.add(observing.getObservedId());
 		}
 
-		ids.add(accountId);
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("ids", ids);
 

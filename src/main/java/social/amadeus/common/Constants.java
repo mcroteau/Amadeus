@@ -29,8 +29,8 @@ public class Constants {
 	public static final String PASSWORD = "password";
 	public static final String ADMIN_USERNAME = "croteau.mike@gmail.com";
 
-	public static final String GUEST_USERNAME = "mjackson.guest@outlook.com";
-	public static final String GUEST_PASSWORD = "guest123";
+	public static final String MARISA_USERNAME = "marisa@gmail.com";
+	public static final String MARISA_PASSWORD = "marisa";
 
 	public static final String ROLE_ADMIN   = "ROLE_ADMIN";
 	public static final String ROLE_ACCOUNT = "ROLE_ACCOUNT";

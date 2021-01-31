@@ -94,15 +94,11 @@
             <a ng-click="clearNotifications()" ng-if="data.notifications.length > 0"  href="javascript:" id="clear-notifications" class="right-float href-dotted-light" style="margin-bottom:10px; margin-right:10px;" data-id="${sessionScope.account.id}" data-i18n="clear.text">Clear</a>
 
             <div class="notification" ng-controller="mixController" ng-repeat="notification in data.notifications">
-
                 <a ng-if="!notification.invite" ng-click="navigatePost(notification.postId)" href="javascript:">
                     <span ng-if="notification.liked">{{notification.name}} <span data-i18n="liked.post.text">liked your post.</span></span>
                     <span ng-if="notification.shared">{{notification.name}} <span data-i18n="shared.post.text">shared your post.</span></span>
                     <span ng-if="notification.commented">{{notification.name}} <span data-i18n="commented.post.text">commented your post.</span></span>
                 </a>
-
-                <a ng-href="#!/invitations" ng-if="notification.invite" href="javascript:" class="invite-ref">{{notification.name}} <span data-i18n="invited.connect.text">invited you to connect.</span></a>
-
             </div>
 
             <div class="notification"><a href="javascript:"><span ng-if="data.notifications.length == 0" data-i18n="no.notifications">No new notifications</span></a></div>
@@ -262,31 +258,16 @@
 
         $rootScope.$on("$routeChangeSuccess", function () {
             $rootScope.indicator.style.display = 'none'
-            console.log($location.path());
 
             if($location.path().includes('/profile')){
-                console.log("profile page")
                 $rootScope.profilePage = true;
             }else{
                 $rootScope.profilePage = false;
                 $rootScope.renderFooter = true;
             }
 
-            // if($location.path().includes('/') &&
-            //         $rootScope.navigatingFromProfile){
-            //     $rootScope.renderSearch();
-            // }
         });
 
-        // $rootScope.renderSearch = function(){
-        //     $('#search-container').toggleClass('rendered').toggle(10, function(){
-        //         if($('#search-container').hasClass('rendered')){
-        //             $('#activity-feed').css("margin-top", "0px");
-        //         }else{
-        //             $('#activity-feed').css("margin-top", "-62px");
-        //         }
-        //     });
-        // }
 
         $rootScope.internationalize = function(){
             // $.i18n.debug = true;
@@ -319,10 +300,6 @@
             .when('/search', {
                 templateUrl: 'pages/leafs/search.html?v=' + t,
                 controller: 'searchController'
-            })
-            .when('/invitations', {
-                templateUrl: 'pages/leafs/invitations.html?v=' + t,
-                controller: 'invitationController'
             })
             .when('/folio/:id', {
                 templateUrl: 'pages/leafs/folio.html?v=' + t,
@@ -637,6 +614,7 @@
             var q = $route.current.params.q
 
             $http.get('/o/search?q=' + q).then(function(resp){
+                console.log(resp.data.accounts)
                 $scope.accounts = resp.data.accounts
                 $scope.sheets = resp.data.sheets
                 document.querySelector('#search-box').value = q
@@ -645,8 +623,12 @@
             })
         }
 
-        $scope.sendInvite = function(id){
-            $http.post('/o/friend/invite/' + id).then($route.reload)
+        $scope.observe = function(id){
+            $http.post('/o/observe/' + id).then($route.reload)
+        }
+
+        $scope.unobserve = function(id){
+            $http.post('/o/unobserve/' + id).then($route.reload)
         }
 
         $scope.toggleSearch = function(evt) {
@@ -668,32 +650,11 @@
         $scope.searchData($.noop)
     });
 
-    app.controller('invitationController', function($scope, $rootScope, $http, $route, dataService) {
-
-        var getData = function() {
-            dataService.getInvitations(setData)
-        }
-
-        var setData = function(response){
-            $scope.invitations = response.data.invites
-        }
-
-        $scope.ignoreInvitation = function(id){
-            $http.post('/o/friend/ignore/' + id).then($route.reload)
-        }
-
-        $scope.acceptInvitation = function(id){
-            $http.post('/o/friend/accept/' + id).then($route.reload)
-        }
-
-        getData()
-    });
-
     app.controller('getController', function($scope) {
         $scope.pageClass = 'page-contact';
     });
 
-    app.controller('mixController', function($scope, $rootScope, $sce, $route, $http, $location, $window, $anchorScroll, activityModel, dataService){
+    app.controller('mixController', function($scope, $rootScope, $sce, $route, $http, $location, $timeout, $window, $anchorScroll, activityModel, dataService){
 
         $scope.makeLive = function(id){
             $rootScope.renderModal = true
@@ -863,22 +824,24 @@
 
         $scope.updatePost = function(id){
             $rootScope.renderModal = true
+            $timeout(function(){
+                var fd = new FormData();
+                var content = document.querySelector("#post-content-" + id).innerHTML
 
-            var fd = new FormData();
-            var content = document.querySelector("#post-content-" + id).innerHTML
+                fd.append('content', content);
+                $http({
+                    method: 'post',
+                    url: '/o/post/update/' + id,
+                    data: fd,
+                    headers: {'Content-Type': undefined},
+                }).then(function (response) {
+                    $rootScope.renderModal = false
+                    $scope.maintainView($scope.memory, response.data.id)
+                    $scope.maintainView($scope.activities, response.data.id)
+                    alert("Successfully updated post!")
+                })
+            }, 201)
 
-            fd.append('content', content);
-
-            $http({
-                method: 'post',
-                url: '/o/post/update/' + id,
-                data: fd,
-                headers: {'Content-Type': undefined},
-            }).then(function (response) {
-                $scope.maintainView($scope.memory, response.data.id)
-                $scope.maintainView($scope.activities, response.data.id)
-                $rootScope.renderModal = false
-            })
         }
 
         $scope.maintainView = function(list, id){
@@ -895,12 +858,14 @@
     app.controller('profileController', function($scope, $rootScope, $http, $route, $timeout, dataService) {
         var self = this
 
-        $scope.unfriend = function(id){
-            $http.post('/o/friend/remove/' + id).then($route.reload)
+        $scope.observe = function(id){
+            console.log('observe');
+            $http.post('/o/observe/' + id).then($route.reload)
         }
 
-        $scope.sendFriendRequest = function(id){
-            $http.post('/o/friend/invite/' + id).then($route.reload)
+        $scope.unobserve = function(id){
+            console.log('unobserve');
+            $http.post('/o/unobserve/' + id).then($route.reload)
         }
 
         $scope.toggleBlock = function(id){
@@ -917,7 +882,7 @@
         var setData = function(response){
             $scope.personBlocked = response.data.profile.blocked
             $scope.profile = response.data.profile
-            $scope.friends = response.data.friends
+            $scope.observing = response.data.observing
 
             $http.get("/o/post/account/" + self.id).then(function(response){
                 $scope.activities = response.data.posts

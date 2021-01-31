@@ -18,6 +18,7 @@ public interface ObserverRepo {
 
     public boolean unobserve(Observed observed);
 
-    public List<Observed> getObserved(long observedId);
+    public List<Observed> getObserving(long observedId);
 
+    boolean isObserved(Observed observed);
 }
