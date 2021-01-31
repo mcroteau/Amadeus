@@ -136,6 +136,7 @@
         float:none;
     }
     #posts-right-container{
+        display: none;
         float:none;
         width:100% !important;
     }
@@ -192,12 +193,22 @@
     #chat-session-outer-wrapper{
         display:none;
     }
+
     #chat-launcher-popup{
         display: none;
+    }
+
+    .mobile-post{
+        display:block !important;
+    }
+
+    .poster{
+        display: inline-block;
     }
 
     #viz{
         display:none
     }
+
 
 }

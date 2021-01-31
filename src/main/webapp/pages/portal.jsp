@@ -167,8 +167,52 @@
 
 	</div>
 
-
     <div id="content-container" ng-view autoscroll="true"></div>
+
+
+    <button ng-click class="button retro poster global-shadow">+</button>
+
+    <div id="mobile-post-modal" class="mobile-post"></div>
+
+    <div id="mobile-post-container" class="mobile-post global-shadow">
+
+        <span id="expressed" class="expressed information left-float" data-i18n="express.text">Express.</span>
+
+        <br class="clear"/>
+
+        <div id="whatsup-container">
+            <textarea placeholder="The Lazy Cow jumped over the Moon." id="whatsup" name="content"></textarea>
+
+            <p ng-if="mediaSelected" id="media-selected" class="tiny" data-i18n="media.selected">Media selected!</p>
+
+            <div id="actions-container" class="float-right" style="margin-top:8px;">
+
+                <div id="image-upload-post-container" class="file-upload-container">
+                    <a href="javascript:" class="button yella small upload-button" id="image-button" data-i18n="images.button">Images</a>
+                    <input type="hidden" name="content" id="image-upload-content" class="file-upload-content"/>
+                    <input ng-upload-change="onMediaSelected($event)" type="file" name="imageFiles" id="post-upload-image-files" class="file-upload-input" data-upload="image" multiple="multiple" data-message="Image must be Gif, PNG, or JPG"/>
+                </div>
+
+                <div id="video-upload-post-container" class="file-upload-container">
+                    <a href="javascript:" class="button light small upload-button" id="video-button" data-i18n="video.button">Video</a>
+                    <input type="hidden" name="content" id="video-upload-content" class="file-upload-content"/>
+                    <input ng-upload-change="onMediaSelected($event)" type="file" name="videoFile" id="post-upload-video-files" class="file-upload-input" data-upload="video" data-message="Video must be MP4"/>
+                </div>
+
+            </div>
+
+            <br class="clear"/>
+
+            <a ng-click="shareWhatsup()" ng-class="{'beautiful' : beautiful }" href="javascript:" class="button retro" id="share-button" data-i18n="share.button" style="text-align:center;float:right;width:calc(100% - 40px) !important">Share!</a>
+
+            <br class="clear"/>
+
+        </div>
+
+
+        <br class="clear"/>
+
+    </div>
 
 
 <%--    <div ng-show="chatStarted" id="chat-session-outer-wrapper" class="global-shadow">--%>
