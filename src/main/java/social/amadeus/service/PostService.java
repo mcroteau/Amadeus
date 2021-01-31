@@ -66,7 +66,7 @@ public class PostService {
     private NotificationService notificationService;
 
     @Autowired
-    private SyncService syncService;
+    private S3Service s3Service;
 
     @Autowired
     private EmailService emailService;
@@ -111,7 +111,7 @@ public class PostService {
                     post.setStatusMessage("Video file must be mp4.");
                     return post;
                 }else{
-                    syncService.send(videoFileName, videoFile.getInputStream());
+                    s3Service.send(videoFileName, videoFile.getInputStream());
                     post.setVideoFileUri(Constants.HTTPS + Constants.DO_ENDPOINT + "/" + videoFileName);
                     post.setVideoFileName(videoFileName);
                 }
@@ -496,7 +496,7 @@ public class PostService {
             return Constants.REQUIRES_PERMISSION;
         }
         PostImage postImage = postRepo.getImage(Long.parseLong(id), imageUri);
-        syncService.delete(postImage.getFileName());
+//        s3Service.delete(postImage.getFileName());
         postRepo.deletePostImage(Long.parseLong(id), imageUri);
         return Constants.SUCCESS;
     }
@@ -657,7 +657,7 @@ public class PostService {
                 String fileName = utils.generateFileName(imageFile);
                 String imageUri = Constants.HTTPS + Constants.DO_ENDPOINT + "/" + fileName;
 
-                syncService.send(fileName, imageFile.getInputStream());
+                s3Service.send(fileName, imageFile.getInputStream());
                 imageLookup.put(fileName, imageUri);
             }catch(IOException ex){
                 ex.printStackTrace();

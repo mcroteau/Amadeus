@@ -30,10 +30,10 @@ public class FlyerService {
     private AuthService authService;
 
     @Autowired
-    private SyncService syncService;
+    private PhoneService phoneService;
 
     @Autowired
-    private PhoneService phoneService;
+    S3Service s3Service;
 
 
     private Flyer synchronizeFlyerImage(Flyer flyer, CommonsMultipartFile flyerImage){
@@ -41,7 +41,7 @@ public class FlyerService {
             String fileName = Utils.getGenericFileName(flyerImage);
             String imageUri = Constants.HTTPS + Constants.DO_ENDPOINT + "/" + fileName;
 
-            syncService.send(fileName, flyerImage.getInputStream());
+            s3Service.send(fileName, flyerImage.getInputStream());
             flyer.setImageUri(imageUri);
         }catch (Exception ex){
             ex.printStackTrace();

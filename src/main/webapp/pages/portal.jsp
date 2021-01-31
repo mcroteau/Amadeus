@@ -171,40 +171,40 @@
     <div id="content-container" ng-view autoscroll="true"></div>
 
 
-    <div ng-show="chatStarted" id="chat-session-outer-wrapper" class="global-shadow">
-        <div id="chat-inner-wrapper">
-            <div id="chat-session-header-wrapper">
-                <a ng-href="#!/profile/{{recipientId}}"><img ng-src="{{imageUri}}" id="chat-header-img"/></a>
-                <span ng-click="toggleChat()" id="close-chat-session" class="yella">x</span>
-            </div>
-            <div id="chat-session">
-                <div class="chat-content-container" ng-repeat="message in messages">
-                    <p class="chat-who"><span class="from">{{message.sender}}</span><span class="time-ago">{{message.timeAgo}}</span></p>
-                    <p class="chat-content">{{message.content}}</p>
-                </div>
-            </div>
-            <form id="chat-session-frm">
-                <textarea ng-keyup="sendChat(recipientId, $event)" id="chat-input" placeholder="Begin chat..." name="content" style="width:186px;"></textarea>
-            </form>
-        </div>
-    </div>
+<%--    <div ng-show="chatStarted" id="chat-session-outer-wrapper" class="global-shadow">--%>
+<%--        <div id="chat-inner-wrapper">--%>
+<%--            <div id="chat-session-header-wrapper">--%>
+<%--                <a ng-href="#!/profile/{{recipientId}}"><img ng-src="{{imageUri}}" id="chat-header-img"/></a>--%>
+<%--                <span ng-click="toggleChat()" id="close-chat-session" class="yella">x</span>--%>
+<%--            </div>--%>
+<%--            <div id="chat-session">--%>
+<%--                <div class="chat-content-container" ng-repeat="message in messages">--%>
+<%--                    <p class="chat-who"><span class="from">{{message.sender}}</span><span class="time-ago">{{message.timeAgo}}</span></p>--%>
+<%--                    <p class="chat-content">{{message.content}}</p>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--            <form id="chat-session-frm">--%>
+<%--                <textarea ng-keyup="sendChat(recipientId, $event)" id="chat-input" placeholder="Begin chat..." name="content" style="width:186px;"></textarea>--%>
+<%--            </form>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
-    <div ng-class="{'opened': chatOpened}" ng-click="openChat()" id="chat-launcher-popup" class="global-shadow chat-launcher chat-session-popup" >
-        <div id="chat-header">
-            <h2 id="friends-launcher" data-launched="false" class="chat-launcher">Messages</h2>
-        </div>
-        <div id="friends-wrapper-container">
-            <table id="friends-wrapper">
-                <tr ng-click="startChat(friend.friendId)"  ng-repeat="friend in friends" class="friend-wrapper">
-                    <td><a href="javascript:" ng-class="" class="lightf chat-session-launcher">{{friend.name}}</a></td>
-                    <td>
-                        <img ng-src="{{friend.imageUri}}" class="chat-session-launcher" data-id="{{friend.friendId}}"/>
-                        <span class="online-indicator" ng-class="{'online' : friend.isOnline}"></span>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
+<%--    <div ng-class="{'opened': chatOpened}" ng-click="openChat()" id="chat-launcher-popup" class="global-shadow chat-launcher chat-session-popup" >--%>
+<%--        <div id="chat-header">--%>
+<%--            <h2 id="friends-launcher" data-launched="false" class="chat-launcher">Messages</h2>--%>
+<%--        </div>--%>
+<%--        <div id="friends-wrapper-container">--%>
+<%--            <table id="friends-wrapper">--%>
+<%--                <tr ng-click="startChat(friend.friendId)"  ng-repeat="friend in friends" class="friend-wrapper">--%>
+<%--                    <td><a href="javascript:" ng-class="" class="lightf chat-session-launcher">{{friend.name}}</a></td>--%>
+<%--                    <td>--%>
+<%--                        <img ng-src="{{friend.imageUri}}" class="chat-session-launcher" data-id="{{friend.friendId}}"/>--%>
+<%--                        <span class="online-indicator" ng-class="{'online' : friend.isOnline}"></span>--%>
+<%--                    </td>--%>
+<%--                </tr>--%>
+<%--            </table>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
 
 <%--    <div ng-if="$root.renderFooter" id="footer">--%>
@@ -408,7 +408,6 @@
                     })
                 })
             }
-
         }
 
         var getChatMessages = function(){
@@ -849,7 +848,6 @@
                 if(activity.id == id) activity.published = true
             })
         }
-
     });
 
 

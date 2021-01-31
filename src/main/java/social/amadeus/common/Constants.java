@@ -40,9 +40,9 @@ public class Constants {
 
     public static final String PROFILE_IMAGE_DIRECTORY = "media/profiles/";
 
-    public static final String FRESCO                  = "2Wxt8sKms.jpg";
-	public static final String DEFAULT_IMAGE_URI       = "tHMLqV9TU.png";
-	public static final String DEFAULT_FLYER_IMAGE_URI = "k0nIVNObX.png";
+    public static final String FRESCO                  = "N94jibMlV.jpg";
+	public static final String DEFAULT_IMAGE_URI       = "aYApqPeD9.png";
+	public static final String DEFAULT_FLYER_IMAGE_URI = "JxCbDfwee.png";
 
 	public static final String DELIMITER = ":";
 
@@ -62,7 +62,9 @@ public class Constants {
 
 	public static final String TEST = "Mock";
 
+//	public static final String DO_REGION = "sfo2";
+//	public static final String DO_ENDPOINT = "rad.sfo2.digitaloceanspaces.com";
+
 	public static final String HTTPS = "https://";
-	public static final String DO_REGION = "sfo2";
-	public static final String DO_ENDPOINT = "rad.sfo2.digitaloceanspaces.com";
+	public static final String DO_ENDPOINT = "goamadeus.s3.amazonaws.com";
 }

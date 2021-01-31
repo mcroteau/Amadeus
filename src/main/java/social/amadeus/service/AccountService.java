@@ -29,9 +29,6 @@ public class AccountService {
     Gson gson = new Gson();
 
     @Autowired
-    private SyncService syncService;
-
-    @Autowired
     private AccountRepo accountRepo;
 
     @Autowired
@@ -62,6 +59,9 @@ public class AccountService {
     private ReCaptchaService reCaptchaService;
 
     @Autowired
+    S3Service s3Service;
+
+    @Autowired
     private Environment env;
 
     private String getAccountPermission(String id){
@@ -84,7 +84,7 @@ public class AccountService {
             String fileName = Utils.getGenericFileName(imageFile);
             String imageUri = Constants.HTTPS + Constants.DO_ENDPOINT + "/" + fileName;
 
-            syncService.send(fileName, imageFile.getInputStream());
+            s3Service.send(fileName, imageFile.getInputStream());
             account.setImageUri(imageUri);
         }catch(Exception ex){
             ex.printStackTrace();

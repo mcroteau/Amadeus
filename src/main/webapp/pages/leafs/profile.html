@@ -307,11 +307,11 @@
 
         <div id="profile-left-container">
             <div id="profile-friends-outer-container">
-                <h3 class="gray" ng-if="following">Following</h3>
+                <h3 ng-if="observing">Following</h3>
                 <div id="profile-friends-container">
                     <a ng-href="#!/profile/{{following.observedId}}" ng-repeat="following in observing" href="javascript:" class="profile-friend-ref">
                         <div class="profile-friend-container">
-                            <img ng-src="{{following.imageUri}}" class="global-shadow"/>
+                            <img ng-src="{{following.imageUri}}"/>
                             <span class="profile-friend-name">{{following.name}}</span>
                         </div>
                     </a>

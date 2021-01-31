@@ -32,10 +32,10 @@ public class SheetService {
     AuthService authService;
 
     @Autowired
-    SyncService syncService;
+    Environment env;
 
     @Autowired
-    Environment env;
+    S3Service s3Service;
 
     private String getSheetPermission(Long id) {
         return Constants.SHEET_MAINTENANCE + id;
@@ -47,7 +47,7 @@ public class SheetService {
             String fileName = Utils.getGenericFileName(sheetImage);
             String imageUri = Constants.HTTPS + Constants.DO_ENDPOINT + "/" + fileName;
 
-            syncService.send(fileName, sheetImage.getInputStream());
+            s3Service.send(fileName, sheetImage.getInputStream());
             sheet.setImageUri(imageUri);
         }catch (Exception ex){
             ex.printStackTrace();
