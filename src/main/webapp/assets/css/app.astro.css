@@ -144,6 +144,7 @@
     box-shadow: none;
     position: relative;
     float:none;
+    margin-left:5px;
     -webkit-border-radius: 89px !important;
     -moz-border-radius: 89px !important;
     border-radius: 89px !important;

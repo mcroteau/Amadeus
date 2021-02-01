@@ -176,7 +176,7 @@
 
     <div id="mobile-post-container" class="mobile-post global-shadow">
 
-        <span id="expressed" class="expressed information left-float" data-i18n="express.text">Express.</span>
+        <span id="expressed" class="expressed information left-float" data-i18n="express.text" style="margin-top:0px;">New Post.</span>
 
         <br class="clear"/>
 
