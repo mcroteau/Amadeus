@@ -99,7 +99,7 @@ public class PostStreamTest {
     @After
     public void after(){
         Account adminAcc = accountRepo.getByUsername(Constants.ADMIN_USERNAME);
-        Account guestAcc = accountRepo.getByUsername(Constants.GUEST_USERNAME);
+        Account guestAcc = accountRepo.getByUsername(Constants.MARISA_USERNAME);
 
         notificationRepo.clearNotifications(adminAcc.getId());
 

@@ -165,7 +165,7 @@ public class PostActionTest {
         postService.publishPost(Long.toString(savedPost.getId()));
         postService.likePost(Long.toString(savedPost.getId()));
         TestUtils.mockRequestCycle();
-        authService.signin(Constants.GUEST_USERNAME, Constants.GUEST_PASSWORD);
+        authService.signin(Constants.MARISA_USERNAME, Constants.MARISA_PASSWORD);
         postService.likePost(Long.toString(savedPost.getId()));
         assertEquals(2, postRepo.likes(savedPost.getId()));
     }
@@ -173,7 +173,7 @@ public class PostActionTest {
     @After
     public void after(){
         Account adminAcc = accountRepo.getByUsername(Constants.ADMIN_USERNAME);
-        Account guestAcc = accountRepo.getByUsername(Constants.GUEST_USERNAME);
+        Account guestAcc = accountRepo.getByUsername(Constants.MARISA_USERNAME);
         notificationRepo.clearNotifications(adminAcc.getId());
         if(postRepo.getPostShareId() != null)
             postRepo.deletePostShare(postRepo.getPostShareId());

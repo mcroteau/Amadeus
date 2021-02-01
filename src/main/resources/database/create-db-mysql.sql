@@ -123,6 +123,7 @@ create table post_images(
 	id bigint PRIMARY KEY AUTO_INCREMENT,
 	post_id bigint NOT NULL REFERENCES posts(id),
 	uri text,
+	file_name varchar(154),
     date_uploaded bigint NOT NULL
 );
 
@@ -234,4 +235,12 @@ create table sheets (
     sheet_views bigint default 0,
 	account_id bigint NOT NULL REFERENCES account(id),
     date_created bigint NOT NULL
+);
+
+create table observers (
+	id bigint PRIMARY KEY AUTO_INCREMENT,
+	observer_id bigint NOT NULL REFERENCES account(id),
+	observed_id bigint NOT NULL REFERENCES account(id),
+	date_created bigint NOT NULL,
+	constraint unique_observed unique(observer_id, observed_id)
 );

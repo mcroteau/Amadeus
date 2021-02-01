@@ -60,7 +60,7 @@ public class PostPermissionsTest {
         savedPost = postService.savePost(post, null, null);
 
         TestUtils.mockRequestCycle();
-        authService.signin(Constants.GUEST_USERNAME, Constants.GUEST_PASSWORD);
+        authService.signin(Constants.MARISA_USERNAME, Constants.MARISA_PASSWORD);
     }
 
 
@@ -114,7 +114,7 @@ public class PostPermissionsTest {
 
     @Test
     public void testUnshareWithWrongUser(){
-        Account guestAcc = accountRepo.getByUsername(Constants.GUEST_USERNAME);
+        Account guestAcc = accountRepo.getByUsername(Constants.MARISA_USERNAME);
         PostShare postShare = new MockPostShare(guestAcc, savedPost, Utils.getDate());
         postService.sharePost(Long.toString(savedPost.getId()), postShare);
 
@@ -126,7 +126,7 @@ public class PostPermissionsTest {
 
     @Test
     public void testDeleteShareCommentWithWrongUser(){
-        Account guestAcc = accountRepo.getByUsername(Constants.GUEST_USERNAME);
+        Account guestAcc = accountRepo.getByUsername(Constants.MARISA_USERNAME);
         PostShare postShare = new MockPostShare(guestAcc, savedPost, Utils.getDate());
         postService.sharePost(Long.toString(savedPost.getId()), postShare);
 
@@ -142,7 +142,7 @@ public class PostPermissionsTest {
         log.info(postRepo.getPostShareCommentId());
 
         TestUtils.mockRequestCycle();
-        authService.signin(Constants.GUEST_USERNAME, Constants.GUEST_PASSWORD);
+        authService.signin(Constants.MARISA_USERNAME, Constants.MARISA_PASSWORD);
 
         String result = postService.deletePostShareComment(Long.toString(postRepo.getPostShareCommentId()));
         log.info(result);
@@ -155,7 +155,7 @@ public class PostPermissionsTest {
     @After
     public void after(){
         Account adminAcc = accountRepo.getByUsername(Constants.ADMIN_USERNAME);
-        Account guestAcc = accountRepo.getByUsername(Constants.GUEST_USERNAME);
+        Account guestAcc = accountRepo.getByUsername(Constants.MARISA_USERNAME);
 
         notificationRepo.clearNotifications(guestAcc.getId());
         notificationRepo.clearNotifications(adminAcc.getId());

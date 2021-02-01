@@ -1,22 +1,17 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-	xsi:schemaLocation="
-        http://www.springframework.org/schema/beans     
-        http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
-        http://www.springframework.org/schema/jdbc     
-        http://www.springframework.org/schema/jdbc/spring-jdbc-4.1.xsd">
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:jdbc="http://www.springframework.org/schema/jdbc"
 
-	<bean class="social.amadeus.repository.jdbc.RoleJdbcRepo"/>
-	<bean class="social.amadeus.repository.jdbc.AccountJdbcRepo"/>
-	<bean class="social.amadeus.repository.jdbc.PostJdbcRepo"/>
-	<bean class="social.amadeus.repository.jdbc.FriendJdbcRepo"/>
-	<bean class="social.amadeus.repository.jdbc.MusicJdbcRepo"/>
-	<bean class="social.amadeus.repository.jdbc.NotificationJdbcRepo"/>
-	<bean class="social.amadeus.repository.jdbc.ActionJdbcRepo"/>
-	<bean class="social.amadeus.repository.jdbc.MessageJdbcDao"/>
-	<bean class="social.amadeus.repository.jdbc.FlyerJdbcRepo"/>
-	<bean class="social.amadeus.repository.jdbc.SheetJdbcRepo"/>
+	   xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+        http://www.springframework.org/schema/jdbc
+        http://www.springframework.org/schema/jdbc/spring-jdbc-4.1.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+
+	<context:component-scan base-package="social.amadeus.*"/>
 
 	<bean class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSource" />
@@ -31,24 +26,6 @@
 	</jdbc:embedded-database>
 
 	<bean class="social.amadeus.common.Utils"/>
-
-	<bean class="social.amadeus.service.AccountService"/>
-	<bean class="social.amadeus.service.ActionService"/>
-	<bean class="social.amadeus.service.AuthService"/>
-	<bean class="social.amadeus.service.EmailService"/>
-	<bean class="social.amadeus.service.FlyerService"/>
-	<bean class="social.amadeus.service.FriendService"/>
-	<bean class="social.amadeus.service.MessageService"/>
-	<bean class="social.amadeus.service.NotificationService"/>
-	<bean class="social.amadeus.service.PhoneService"/>
-	<bean class="social.amadeus.service.PortalService"/>
-	<bean class="social.amadeus.service.PostService"/>
-	<bean class="social.amadeus.service.ReCaptchaService"/>
-	<bean class="social.amadeus.service.SearchService"/>
-	<bean class="social.amadeus.service.SheetService"/>
-	<bean class="social.amadeus.service.StaticService"/>
-	<bean class="social.amadeus.service.StripeService"/>
-	<bean class="social.amadeus.service.SyncService"/>
 
 	<bean id="appStartup" class="social.amadeus.AppStartup" scope="singleton"/>
 

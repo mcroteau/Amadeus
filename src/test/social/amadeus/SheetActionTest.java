@@ -37,7 +37,7 @@ public class SheetActionTest {
     public void testBasicSave(){
         log.info("1");
         TestUtils.mockRequestCycle();
-        authService.signin(Constants.GUEST_USERNAME, Constants.GUEST_PASSWORD);
+        authService.signin(Constants.MARISA_USERNAME, Constants.MARISA_PASSWORD);
         String result = sheetService.save(new MockSheet(), null, new RedirectAttributesModelMap());
         log.info("result: " + result);
         assertEquals(1, sheetRepo.getCount());
@@ -47,7 +47,7 @@ public class SheetActionTest {
     public void testDelete(){
         log.info("2");
         TestUtils.mockRequestCycle();
-        authService.signin(Constants.GUEST_USERNAME, Constants.GUEST_PASSWORD);
+        authService.signin(Constants.MARISA_USERNAME, Constants.MARISA_PASSWORD);
         log.info(sheetRepo.getCount());
         sheetService.delete(sheetRepo.getLast().getId(), new RedirectAttributesModelMap());
         assertEquals(0, sheetRepo.getCount());
@@ -57,7 +57,7 @@ public class SheetActionTest {
     public void testUpdate(){
         log.info("3");
         TestUtils.mockRequestCycle();
-        authService.signin(Constants.GUEST_USERNAME, Constants.GUEST_PASSWORD);
+        authService.signin(Constants.MARISA_USERNAME, Constants.MARISA_PASSWORD);
         sheetService.save(new MockSheet(), null, new RedirectAttributesModelMap());
         Sheet sheet = sheetRepo.getLast();
         sheet.setDescription("How now brown cow.");
@@ -76,7 +76,7 @@ public class SheetActionTest {
     @Test
     public void testGetUserList(){
         TestUtils.mockRequestCycle();
-        authService.signin(Constants.GUEST_USERNAME, Constants.GUEST_PASSWORD);
+        authService.signin(Constants.MARISA_USERNAME, Constants.MARISA_PASSWORD);
         assertEquals(1, sheetRepo.getSheets(authService.getAccount().getId()).size());
     }
 
