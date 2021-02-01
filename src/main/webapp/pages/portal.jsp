@@ -54,12 +54,12 @@
                     </g>
                     <path fill-rule="evenodd" d="M38.5 23C36.01 23 34 20.99 34 18.5C34 16.01 36.01 14 38.5 14C40.99 14 43 16.01 43 18.5C43 20.99 40.99 23 38.5 23ZM40.6 18.5C40.6 17.34 39.66 16.4 38.5 16.4C37.34 16.4 36.4 17.34 36.4 18.5C36.4 19.66 37.34 20.6 38.5 20.6C39.66 20.6 40.6 19.66 40.6 18.5Z" />
                 </svg>
-                <span id="latest-feed-total" class="notifications-count" style="display:inline-block; position:absolute;bottom:3px;left:54px;">{{data.newestCount}}</span></a>
+                <span ng-show="data.newestCount > 0" id="latest-feed-total" class="notifications-count" style="display:inline-block; position:absolute;bottom:3px;left:54px;">{{data.newestCount}}</span></a>
         </div>
     </div>
 
     <div ng-show="showBaseNavigation" id="base-navigation-container" class="global-shadow">
-        <a ng-click="reloadActivities()" href="javascript:" data-i18n="post.feed">Post Feed</a>
+        <a ng-click="reloadActivities()" href="javascript:" data-i18n="post.feed">Post Feed ({{data.newestCount}})</a>
         <a href="#!/profile/${sessionScope.account.id}" id="profile-href"  class="profile-popup-action" data-i18n="profile.text">Profile</a>
         <a href="/o/signout" class="profile-popup-action" data-i18n="logout.text">Logout</a>
     </div>
@@ -114,7 +114,7 @@
                 </g>
                 <path fill-rule="evenodd" d="M38.5 23C36.01 23 34 20.99 34 18.5C34 16.01 36.01 14 38.5 14C40.99 14 43 16.01 43 18.5C43 20.99 40.99 23 38.5 23ZM40.6 18.5C40.6 17.34 39.66 16.4 38.5 16.4C37.34 16.4 36.4 17.34 36.4 18.5C36.4 19.66 37.34 20.6 38.5 20.6C39.66 20.6 40.6 19.66 40.6 18.5Z" />
             </svg>
-            <span id="latest-feed-total" class="notifications-count" style="display:inline-block; position:absolute;bottom:3px;left:54px;">{{data.newestCount}}</span>
+            <span ng-show="data.newestCount > 0" id="latest-feed-total" class="notifications-count" style="display:inline-block; position:absolute;bottom:3px;left:54px;">{{data.newestCount}}</span>
         </a>
     </div>
 
@@ -170,9 +170,9 @@
     <div id="content-container" ng-view autoscroll="true"></div>
 
 
-    <button ng-click class="button retro poster global-shadow">+</button>
+    <button ng-click="openMobilePost($event)" ng-show="renderMobilePoster" class="button retro poster global-shadow">+</button>
 
-    <div id="mobile-post-modal" class="mobile-post"></div>
+    <div ng-click="hideMobilePost($event)" id="mobile-post-modal" class="mobile-post"></div>
 
     <div id="mobile-post-container" class="mobile-post global-shadow">
 
@@ -181,7 +181,7 @@
         <br class="clear"/>
 
         <div id="whatsup-container">
-            <textarea placeholder="The Lazy Cow jumped over the Moon." id="whatsup" name="content"></textarea>
+            <textarea placeholder="The Lazy Cow jumped over the Moon." id="whatsup"></textarea>
 
             <p ng-if="mediaSelected" id="media-selected" class="tiny" data-i18n="media.selected">Media selected!</p>
 
@@ -203,7 +203,7 @@
 
             <br class="clear"/>
 
-            <a ng-click="shareWhatsup()" ng-class="{'beautiful' : beautiful }" href="javascript:" class="button retro" id="share-button" data-i18n="share.button" style="text-align:center;float:right;width:calc(100% - 40px) !important">Share!</a>
+            <a ng-click="shareWhatsupMobile()" ng-class="{'beautiful' : beautiful }" href="javascript:" class="button retro" id="share-button" data-i18n="share.button" style="text-align:center;float:right;width:calc(100% - 40px) !important">Share!</a>
 
             <br class="clear"/>
 
@@ -294,6 +294,7 @@
     app.run(function ($rootScope, $location) {
         $rootScope.gettingData = false;
         $rootScope.indicator = document.querySelector("#linear-indicator")
+        $rootScope.renderMobilePoster = false
 
         $rootScope.$on("$routeChangeStart", function () {
             $rootScope.indicator.style.display = 'block'
@@ -310,8 +311,19 @@
                 $rootScope.renderFooter = true;
             }
 
+            $rootScope.checkRenderPoster()
+
         });
 
+        $rootScope.checkRenderPoster = function(){
+            if($location.path().includes('/profile') ||
+                    $location.path().includes('/search') ||
+                        $location.path().includes('/folio')){
+                $rootScope.renderMobilePoster = false
+            }else{
+                $rootScope.renderMobilePoster = true
+            }
+        }
 
         $rootScope.internationalize = function(){
             // $.i18n.debug = true;
@@ -325,6 +337,7 @@
             })
         }
 
+        $rootScope.checkRenderPoster()
     })
 
     app.config(function($routeProvider) {
@@ -352,7 +365,7 @@
             .otherwise({redirectTo:'/'});
     });
 
-    app.controller('baseController', function($http, $rootScope, $route, $scope, $interval, $timeout, $location, $anchorScroll, $window, dataService) {
+    app.controller('baseController', function($http, $rootScope, $route, $scope, $interval, $timeout, $location, $anchorScroll, $window, activityModel, dataService) {
 
         $scope.showProfile = false
         $scope.showNotifications = false
@@ -370,10 +383,10 @@
         }
 
         $scope.init = function(){
-            $scope.headerPoll = $interval(getData, 2300)
+            $scope.headerPoll = $interval(getBaseData, 2300)
         }
 
-        var getData = function(){
+        var getBaseData = function(){
             $rootScope.gettingData = true
             $http.get("/o/profile/data").then(function(data){
                 if(data.error)$window.location.href= "/"
@@ -400,12 +413,12 @@
         }
 
         $scope.reloadActivities = function(){
-            if($route.current.loadedTemplateUrl != "pages/activity.html?v=" + t){
+            if($location.path().includes('/search') ||
+                $location.path().includes('profile') ||
+                    $location.path().includes('folio')) {
                 $location.path("/")
-                $rootScope.navigatingFromProfile = true;
             }else{
                 $window.location.reload()
-                $rootScope.navigatingFromProfile = false;
             }
         }
 
@@ -475,7 +488,6 @@
                 $route.reload()
             }).catch(function(error){
                 $rootScope.renderModal = false
-                console.log(error)
             })
         }
 
@@ -489,11 +501,9 @@
         ]
 
         $scope.closeDialogs = function(event) {
-            console.log('close dialogs');
             var $target = $(event.target)
             var id = $target.attr('id')
             if (!ids.includes(id)){
-                console.log(id, '!=', id)
                 $scope.chatOpened = false
                 $scope.showProfile = false
                 $scope.showNotifications = false
@@ -527,34 +537,15 @@
             var width = $(window).width()
             if (width < 690){
                 $(frames).width(width - 30)
-                // $('#search-container').show()
             }else{
                 $(frames).width(465)
-                // $('#search-container').hide()
+                $('#mobile-post-container').css('bottom', '-401px')
+                $('#mobile-post-modal').hide()
             }
             $(frames).css('margin-top', '-6px')
         }
 
         $scope.resizeFrames();
-
-    });
-
-    app.controller('folioController', function($scope, $http, $route, $window, dataService){
-
-        $scope.getData = function(id){
-            $http.get('/o/sheet/' + id).then($scope.setData)
-        }
-
-        $scope.setData = function(resp){
-            console.log(resp)
-            $scope.sheet = resp.data
-        }
-
-        $scope.getData($route.current.params.id)
-
-    });
-
-    app.controller('activityController', function($scope, $rootScope, $http, $route, $interval, $timeout, $location, $anchorScroll, $sce, $window, activityModel, dataService) {
 
         $scope.whatsup = document.querySelector("#whatsup")
         $scope.postButton = document.querySelector("#share-button")
@@ -580,15 +571,13 @@
         }
 
         $scope.shareWhatsup = function(){
-            var whatsup = document.querySelector('#whatsup')
-            $scope.postButton.innerHtml = "Amadeus!"
-            var content = $scope.whatsup.value
-            var images = document.querySelector("#post-upload-image-files").files
-            var videos = document.querySelector("#post-upload-video-files").files
+            var whatsup = document.querySelectorAll('#whatsup')[0]
+            var images = document.querySelectorAll("#post-upload-image-files")[0].files
+            var videos = document.querySelectorAll("#post-upload-video-files")[0].files
 
             if(whatsup.value == '' &&
                 images.length == 0 &&
-                    videos.length == 0){
+                videos.length == 0){
                 alert('Express yourself!')
                 return false;
             }
@@ -604,7 +593,7 @@
                 fd.append('videoFile',file);
             });
 
-            fd.append('content', content)
+            fd.append('content', whatsup.value)
 
             if(!$rootScope.gettingData) {
                 $http({
@@ -613,16 +602,77 @@
                     data: fd,
                     headers: {'Content-Type': undefined},
                 }).then(function (response) {
-                    document.querySelector('#whatsup').value = ''
                     response.data.published = false
                     $scope.activities.unshift(response.data)
                     $rootScope.renderModal = false
                     $scope.mediaSelected = false
-                    document.querySelector("#post-upload-image-files").value = ''
-                    document.querySelector("#post-upload-video-files").value = ''
+                    document.querySelectorAll('#whatsup')[0].value = ''
+                    document.querySelectorAll("#post-upload-image-files")[0].value = ''
+                    document.querySelectorAll("#post-upload-video-files")[0].value = ''
                 })
             }
         }
+
+        $scope.shareWhatsupMobile = function(){
+            var whatsup = document.querySelectorAll('#whatsup')[1]
+            var images = document.querySelectorAll("#post-upload-image-files")[1].files
+            var videos = document.querySelectorAll("#post-upload-video-files")[1].files
+
+            if(whatsup.value == '' &&
+                images.length == 0 &&
+                videos.length == 0){
+                alert('Express yourself!')
+                return false;
+            }
+
+            $rootScope.renderModal = true
+
+            var fd = new FormData();
+            angular.forEach(images, function(file){
+                fd.append('imageFiles',file);
+            });
+
+            angular.forEach(videos, function(file){
+                fd.append('videoFile',file);
+            });
+
+            fd.append('content', whatsup.value)
+
+            if(!$rootScope.gettingData) {
+                $http({
+                    method: 'post',
+                    url: '/o/post/save',
+                    data: fd,
+                    headers: {'Content-Type': undefined},
+                }).then(function (response) {
+                    <%--$location.path("/profile/${sessionScope.account.id}")--%>
+                    response.data.published = false
+                    $rootScope.renderModal = false
+                    $scope.mediaSelected = false
+                    $scope.activities.unshift(response.data)
+                    document.querySelectorAll('#whatsup')[1].value = ''
+                    document.querySelectorAll("#post-upload-image-files")[1].value = ''
+                    document.querySelectorAll("#post-upload-video-files")[1].value = ''
+                    $scope.hideMobilePost()
+                })
+            }
+        }
+
+
+        $scope.openMobilePost = function(){
+            $('#mobile-post-container').animate({
+                bottom:"-40px"
+            }, 100)
+            $('#mobile-post-modal').show()
+        }
+
+        $scope.hideMobilePost = function(){
+            $('#mobile-post-container').animate({
+                bottom:"-400px"
+            }, 200)
+            $('#mobile-post-modal').hide()
+        }
+
 
         $scope.maintainView = function(list, id){
             angular.forEach(list, function(activity){
@@ -650,6 +700,26 @@
 
         getData()
 
+    });
+
+    app.controller('folioController', function($scope, $http, $route, $window, dataService){
+
+        $scope.getData = function(id){
+            $http.get('/o/sheet/' + id).then($scope.setData)
+        }
+
+        $scope.setData = function(resp){
+            $scope.sheet = resp.data
+        }
+
+        $scope.getData($route.current.params.id)
+
+    });
+
+    app.controller('activityController', function($scope, $rootScope, $http, $route, $interval, $timeout, $location, $anchorScroll, $sce, $window, activityModel, dataService) {
+
+
+
     })
 
     app.controller('searchController', function($scope, $rootScope, $http, $location, $route, $window) {
@@ -657,7 +727,6 @@
             var q = $route.current.params.q
 
             $http.get('/o/search?q=' + q).then(function(resp){
-                console.log(resp.data.accounts)
                 $scope.accounts = resp.data.accounts
                 $scope.sheets = resp.data.sheets
                 document.querySelector('#search-box').value = q
@@ -730,7 +799,6 @@
 
         $scope.showActions = []
         $scope.toggleActions = function(idx){
-            console.log('toggle actions')
             $scope.showActions[idx] = $scope.showActions[idx] ? false : true;
         }
 
@@ -901,12 +969,10 @@
         var self = this
 
         $scope.observe = function(id){
-            console.log('observe');
             $http.post('/o/observe/' + id).then($route.reload)
         }
 
         $scope.unobserve = function(id){
-            console.log('unobserve');
             $http.post('/o/unobserve/' + id).then($route.reload)
         }
 

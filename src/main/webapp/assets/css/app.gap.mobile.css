@@ -13,6 +13,7 @@
     -webkit-border-radius: 20px;
 }
 
+
 @media screen and (max-width: 690px) {
 
     #body{
@@ -69,11 +70,6 @@
         display:block;
         top:initial;
         left:initial;
-    }
-
-    #latest-feed-total{
-        bottom:20px;
-        right:0px !important;
     }
 
     #search-toggle-container,
@@ -198,8 +194,13 @@
         display: none;
     }
 
+    #profile-profile-image{
+        height:75px;
+        width:75px;
+    }
+
     .mobile-post{
-        display:block !important;
+        display:block;
     }
 
     .poster{

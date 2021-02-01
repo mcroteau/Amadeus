@@ -73,10 +73,6 @@
     background: transparent !important;
 }
 
-#logo-logo.active{
-    background: #000 !important;
-}
-
 #amadeus-modal{
     background: rbga(84, 175, 255, 0.8);
 }
@@ -569,14 +565,13 @@
 }
 
 #mobile-post-container{
-    display:none;
     z-index:302;
     background:#fff;
     border:solid 1px #eff2f3;
     border-radius: 30px;
     z-index:304;
     position:fixed;
-    bottom:-40px;
+    bottom:-401px;
     left:0px;
     right:0px;
     padding:20px 20px 100px 20px;
@@ -584,12 +579,13 @@
 
 .poster{
     width:60px;
-    font-size:32px;
+    font-size:27px;
     bottom:30px;
     left:calc(50% - 30px);
     z-index:301;
     position:fixed;
     text-align: center;
-    display:none !important;
-    font-family: Roboto-Black !important;
+    display:none;
+    font-family: Roboto !important;
+    border-radius: 100px;
 }
