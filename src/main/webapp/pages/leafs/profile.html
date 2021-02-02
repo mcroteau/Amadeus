@@ -46,9 +46,21 @@
                 <br class="clear"/>
             </div>
 
-            <a ng-if="profile.isOwnersAccount" href="/o/account/edit/{{profile.id}}" class="href-dotted right-float" id="edit-button">Edit</a>
-            <a ng-if="profile.isOwnersAccount" href="/o/sheet/list/{{profile.id}}" class="href-dotted right-float" id="edit-button">Folios</a>
-            <a ng-if="profile.isOwnersAccount" href="/o/flyer/list/{{profile.id}}" class="href-dotted right-float" id="edit-button">Ads</a>
+            <style>
+                .profile-admin-actions{
+                    float:right;
+                }
+                .profile-admin-actions a{
+                    margin:3px 0px;
+                    display: inline-block;
+                    text-align: right;
+                }
+            </style>
+            <div ng-if="profile.isOwnersAccount"  class="profile-admin-actions">
+                <a href="/o/account/edit/{{profile.id}}" class="href-dotted">Edit</a><br/>
+                <a href="/o/sheet/list/{{profile.id}}" class="href-dotted">Folios</a><br/>
+                <a href="/o/flyer/list/{{profile.id}}" class="href-dotted">Ads</a>
+            </div>
 
             <br class="clear"/>
         </div>

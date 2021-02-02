@@ -180,6 +180,9 @@
         left:-63px;
         z-index: 400;
     }
+    #profile-stats-container{
+        margin-bottom:0px;
+    }
     #posts-fellows-fems-outer-container{
         display:none;
     }

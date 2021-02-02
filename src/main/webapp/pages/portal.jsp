@@ -634,9 +634,9 @@
         }
 
         $scope.shareWhatsup = function(){
-            var whatsup = document.querySelectorAll('#whatsup')
-            var images = document.querySelectorAll("#post-upload-image-files").files
-            var videos = document.querySelectorAll("#post-upload-video-files").files
+            var whatsup = document.querySelector('#whatsup')
+            var images = document.querySelector("#post-upload-image-files").files
+            var videos = document.querySelector("#post-upload-video-files").files
 
             if(whatsup.value == '' &&
                 images.length == 0 &&
@@ -669,9 +669,9 @@
                     $scope.activities.unshift(response.data)
                     $rootScope.renderModal = false
                     $scope.mediaSelected = false
-                    document.querySelectorAll('#whatsup').value = ''
-                    document.querySelectorAll("#post-upload-image-files").value = ''
-                    document.querySelectorAll("#post-upload-video-files").value = ''
+                    document.querySelector('#whatsup').value = ''
+                    document.querySelector("#post-upload-image-files").value = ''
+                    document.querySelector("#post-upload-video-files").value = ''
                 })
             }
         }
