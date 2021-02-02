@@ -37,7 +37,6 @@ public class Post {
 	boolean flagged;
 	boolean postShareEditable;
 	boolean postEditable;
-	boolean published;
 	long updateDate;
 	boolean advertisement;
 	String advertisementUri;
@@ -287,14 +286,6 @@ public class Post {
 
 	public void setPostEditable(boolean postEditable) {
 		this.postEditable = postEditable;
-	}
-
-	public boolean isPublished() {
-		return published;
-	}
-
-	public void setPublished(boolean published) {
-		this.published = published;
 	}
 
 	public long getUpdateDate() {

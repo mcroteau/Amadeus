@@ -125,7 +125,6 @@
 
     <div ng-show="showProfile" id="profile-picture-actions-container" class="main-shadow">
         <a href="#!/profile/${sessionScope.account.id}" id="profile-href"  class="profile-popup-action"><span class="space"></span> <span data-i18n="profile.text">Profile</span></a>
-        <a ng-click="openChat()" href="javascript:" id="messages-href" class="profile-popup-action" ng-click="renderMessages(${sessionScope.account.id})"><span id="latest-messages-total" class="space">{{data.messagesCount}}</span> <span data-i18n="unread.text">Unread</span></a>
         <a href="/o/signout" class="profile-popup-action"><span class="space"></span> <span data-i18n="logout.text">Logout</span></a>
     </div>
 
@@ -170,7 +169,7 @@
     <div id="content-container" ng-view autoscroll="true"></div>
 
 
-    <button ng-click="openMobilePost($event)" ng-show="renderMobilePoster" class="button retro poster global-shadow">+</button>
+    <button ng-click="openMobilePost($event)" class="button retro poster global-shadow">+</button>
 
     <div ng-click="hideMobilePost($event)" id="mobile-post-modal" class="mobile-post"></div>
 
@@ -181,33 +180,33 @@
         <br class="clear"/>
 
         <div id="whatsup-container">
-            <textarea placeholder="The Lazy Cow jumped over the Moon." id="whatsup"></textarea>
-
+            <textarea placeholder="The Lazy Cow jumped over the Moon." id="mobile-whatsup"></textarea>
             <p ng-if="mediaSelected" id="media-selected" class="tiny" data-i18n="media.selected">Media selected!</p>
+        </div>
 
-            <div id="actions-container" class="float-right" style="margin-top:8px;">
+        <div id="actions-container" class="float-right" style="margin-top:8px;">
 
-                <div id="image-upload-post-container" class="file-upload-container">
-                    <a href="javascript:" class="button yella small upload-button" id="image-button" data-i18n="images.button">Images</a>
-                    <input type="hidden" name="content" id="image-upload-content" class="file-upload-content"/>
-                    <input ng-upload-change="onMediaSelected($event)" type="file" name="imageFiles" id="post-upload-image-files" class="file-upload-input" data-upload="image" multiple="multiple" data-message="Image must be Gif, PNG, or JPG"/>
-                </div>
-
-                <div id="video-upload-post-container" class="file-upload-container">
-                    <a href="javascript:" class="button light small upload-button" id="video-button" data-i18n="video.button">Video</a>
-                    <input type="hidden" name="content" id="video-upload-content" class="file-upload-content"/>
-                    <input ng-upload-change="onMediaSelected($event)" type="file" name="videoFile" id="post-upload-video-files" class="file-upload-input" data-upload="video" data-message="Video must be MP4"/>
-                </div>
-
+            <div id="image-upload-post-container" class="file-upload-container">
+                <a href="javascript:" class="button yella small upload-button" id="image-button" data-i18n="images.button">Images</a>
+                <input type="hidden" name="content" id="image-upload-content" class="file-upload-content"/>
+                <input ng-upload-change="onMediaSelected($event)" type="file" name="imageFiles" id="mobile-post-upload-image-files" class="file-upload-input" data-upload="image" multiple="multiple" data-message="Image must be Gif, PNG, or JPG"/>
             </div>
 
-            <br class="clear"/>
-
-            <a ng-click="shareWhatsupMobile()" ng-class="{'beautiful' : beautiful }" href="javascript:" class="button retro" id="share-button" data-i18n="share.button" style="text-align:center;float:right;width:calc(100% - 40px) !important">Share!</a>
-
-            <br class="clear"/>
+            <div id="video-upload-post-container" class="file-upload-container">
+                <a href="javascript:" class="button light small upload-button" id="video-button" data-i18n="video.button">Video</a>
+                <input type="hidden" name="content" id="video-upload-content" class="file-upload-content"/>
+                <input ng-upload-change="onMediaSelected($event)" type="file" name="videoFile" id="mobile-post-upload-video-files" class="file-upload-input" data-upload="video" data-message="Video must be MP4"/>
+            </div>
 
         </div>
+
+        <br class="clear"/>
+
+        <a ng-click="shareWhatsupMobile()" href="javascript:" class="button retro" id="share-button" data-i18n="share.button" style="text-align:center;width:calc(100% - 40px) !important">Share!</a>
+
+        <br class="clear"/>
+
+        <a ng-click="hideMobilePost($event)" href="javascript:" class="button sky" data-i18n="cancel.button" style="text-align:center;width:calc(100% - 40px) !important;margin-top:10px; display:block">Cancel</a>
 
 
         <br class="clear"/>
@@ -294,7 +293,6 @@
     app.run(function ($rootScope, $location) {
         $rootScope.gettingData = false;
         $rootScope.indicator = document.querySelector("#linear-indicator")
-        $rootScope.renderMobilePoster = false
 
         $rootScope.$on("$routeChangeStart", function () {
             $rootScope.indicator.style.display = 'block'
@@ -310,20 +308,7 @@
                 $rootScope.profilePage = false;
                 $rootScope.renderFooter = true;
             }
-
-            $rootScope.checkRenderPoster()
-
         });
-
-        $rootScope.checkRenderPoster = function(){
-            if($location.path().includes('/profile') ||
-                    $location.path().includes('/search') ||
-                        $location.path().includes('/folio')){
-                $rootScope.renderMobilePoster = false
-            }else{
-                $rootScope.renderMobilePoster = true
-            }
-        }
 
         $rootScope.internationalize = function(){
             // $.i18n.debug = true;
@@ -336,8 +321,6 @@
                 })
             })
         }
-
-        $rootScope.checkRenderPoster()
     })
 
     app.config(function($routeProvider) {
@@ -539,13 +522,93 @@
                 $(frames).width(width - 30)
             }else{
                 $(frames).width(465)
-                $('#mobile-post-container').css('bottom', '-401px')
+                $('#mobile-post-container').css('bottom', '-471px')
                 $('#mobile-post-modal').hide()
             }
             $(frames).css('margin-top', '-6px')
         }
 
+
+        $scope.shareWhatsupMobile = function(){
+            $rootScope.renderModal = true
+
+            var whatsup = document.querySelector('#mobile-whatsup')
+            var images = document.querySelector("#mobile-post-upload-image-files").files
+            var videos = document.querySelector("#mobile-post-upload-video-files").files
+
+            if(whatsup.value == '' &&
+                images.length == 0 &&
+                videos.length == 0){
+                alert('Express yourself!')
+                return false;
+            }
+
+
+            var fd = new FormData();
+            angular.forEach(images, function(file){
+                fd.append('imageFiles',file);
+            });
+
+            angular.forEach(videos, function(file){
+                fd.append('videoFile',file);
+            });
+
+            fd.append('content', whatsup.value)
+
+            if(!$rootScope.gettingData) {
+                $http({
+                    method: 'post',
+                    url: '/o/post/save',
+                    data: fd,
+                    headers: {'Content-Type': undefined},
+                }).then(function (response) {
+                    response.data.published = false
+                    $rootScope.renderModal = false
+                    $scope.mediaSelected = false
+                    document.querySelector('#mobile-whatsup').value = ''
+                    document.querySelector("#mobile-post-upload-image-files").value = ''
+                    document.querySelector("#mobile-post-upload-video-files").value = ''
+                    $scope.hideMobilePost()
+                    alert("Successfully submitted new post.")
+                    $route.reload()
+                })
+            }
+        }
+
+        $scope.openMobilePost = function(){
+            $('#mobile-post-container').animate({
+                bottom:"-40px"
+            }, 100)
+            $('#mobile-post-modal').show()
+        }
+
+        $scope.hideMobilePost = function(){
+            $('#mobile-post-container').animate({
+                bottom:"-503px"
+            }, 200)
+            $('#mobile-post-modal').hide()
+        }
+
         $scope.resizeFrames();
+
+    });
+
+    app.controller('folioController', function($scope, $http, $route, $window, dataService){
+
+        $scope.getData = function(id){
+            $http.get('/o/sheet/' + id).then($scope.setData)
+        }
+
+        $scope.setData = function(resp){
+            $scope.sheet = resp.data
+        }
+
+        $scope.getData($route.current.params.id)
+
+    });
+
+    app.controller('activityController', function($scope, $rootScope, $http, $route, $interval, $timeout, $location, $anchorScroll, $sce, $window, activityModel, dataService) {
+
 
         $scope.whatsup = document.querySelector("#whatsup")
         $scope.postButton = document.querySelector("#share-button")
@@ -571,9 +634,9 @@
         }
 
         $scope.shareWhatsup = function(){
-            var whatsup = document.querySelectorAll('#whatsup')[0]
-            var images = document.querySelectorAll("#post-upload-image-files")[0].files
-            var videos = document.querySelectorAll("#post-upload-video-files")[0].files
+            var whatsup = document.querySelectorAll('#whatsup')
+            var images = document.querySelectorAll("#post-upload-image-files").files
+            var videos = document.querySelectorAll("#post-upload-video-files").files
 
             if(whatsup.value == '' &&
                 images.length == 0 &&
@@ -606,73 +669,12 @@
                     $scope.activities.unshift(response.data)
                     $rootScope.renderModal = false
                     $scope.mediaSelected = false
-                    document.querySelectorAll('#whatsup')[0].value = ''
-                    document.querySelectorAll("#post-upload-image-files")[0].value = ''
-                    document.querySelectorAll("#post-upload-video-files")[0].value = ''
+                    document.querySelectorAll('#whatsup').value = ''
+                    document.querySelectorAll("#post-upload-image-files").value = ''
+                    document.querySelectorAll("#post-upload-video-files").value = ''
                 })
             }
         }
-
-        $scope.shareWhatsupMobile = function(){
-            var whatsup = document.querySelectorAll('#whatsup')[1]
-            var images = document.querySelectorAll("#post-upload-image-files")[1].files
-            var videos = document.querySelectorAll("#post-upload-video-files")[1].files
-
-            if(whatsup.value == '' &&
-                images.length == 0 &&
-                videos.length == 0){
-                alert('Express yourself!')
-                return false;
-            }
-
-            $rootScope.renderModal = true
-
-            var fd = new FormData();
-            angular.forEach(images, function(file){
-                fd.append('imageFiles',file);
-            });
-
-            angular.forEach(videos, function(file){
-                fd.append('videoFile',file);
-            });
-
-            fd.append('content', whatsup.value)
-
-            if(!$rootScope.gettingData) {
-                $http({
-                    method: 'post',
-                    url: '/o/post/save',
-                    data: fd,
-                    headers: {'Content-Type': undefined},
-                }).then(function (response) {
-                    <%--$location.path("/profile/${sessionScope.account.id}")--%>
-                    response.data.published = false
-                    $rootScope.renderModal = false
-                    $scope.mediaSelected = false
-                    $scope.activities.unshift(response.data)
-                    document.querySelectorAll('#whatsup')[1].value = ''
-                    document.querySelectorAll("#post-upload-image-files")[1].value = ''
-                    document.querySelectorAll("#post-upload-video-files")[1].value = ''
-                    $scope.hideMobilePost()
-                })
-            }
-        }
-
-
-        $scope.openMobilePost = function(){
-            $('#mobile-post-container').animate({
-                bottom:"-40px"
-            }, 100)
-            $('#mobile-post-modal').show()
-        }
-
-        $scope.hideMobilePost = function(){
-            $('#mobile-post-container').animate({
-                bottom:"-400px"
-            }, 200)
-            $('#mobile-post-modal').hide()
-        }
-
 
         $scope.maintainView = function(list, id){
             angular.forEach(list, function(activity){
@@ -696,29 +698,9 @@
             $scope.mediaSelected = $scope.mediaSelected ? false : true
         }
 
-        document.querySelector("#whatsup").focus()
-
         getData()
 
-    });
-
-    app.controller('folioController', function($scope, $http, $route, $window, dataService){
-
-        $scope.getData = function(id){
-            $http.get('/o/sheet/' + id).then($scope.setData)
-        }
-
-        $scope.setData = function(resp){
-            $scope.sheet = resp.data
-        }
-
-        $scope.getData($route.current.params.id)
-
-    });
-
-    app.controller('activityController', function($scope, $rootScope, $http, $route, $interval, $timeout, $location, $anchorScroll, $sce, $window, activityModel, dataService) {
-
-
+        document.querySelector("#whatsup").focus()
 
     })
 

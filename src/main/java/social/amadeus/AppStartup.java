@@ -122,32 +122,6 @@ public class AppStartup {
 
 	private void startupBackgroundJobs() {
 		try {
-			JobDetail publishJob = JobBuilder.newJob(PublishJob.class)
-				.withIdentity(Constants.PUBLISHING_JOB, Constants.AMADEUS_GROUP).build();
-
-			publishJob.getJobDataMap().put(Constants.POSTS_DAO_KEY, postRepo);
-
-			Trigger publishTrigger = TriggerBuilder
-					.newTrigger()
-					.withIdentity(Constants.PUBLISHING_JOB_TRIGGER, Constants.AMADEUS_GROUP)
-					.withSchedule(
-							SimpleScheduleBuilder.simpleSchedule()
-									.withIntervalInSeconds(Constants.PUBLISH_JOB_DURATION).repeatForever())
-					.build();
-
-			Scheduler publishScheduler = new StdSchedulerFactory().getScheduler();
-
-			JobKey pubKey = new JobKey(Constants.PUBLISHING_JOB, Constants.AMADEUS_GROUP);
-			if(!publishScheduler.checkExists(pubKey)) {
-				publishScheduler.start();
-				publishScheduler.scheduleJob(publishJob, publishTrigger);
-				log.info("publish job repeated " + Constants.PUBLISH_JOB_DURATION + " seconds");
-			}
-
-
-
-
-
 			JobDetail adJob = JobBuilder.newJob(AdJob.class)
 				.withIdentity(Constants.AD_JOB, Constants.AMADEUS_GROUP).build();
 

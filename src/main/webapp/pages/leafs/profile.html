@@ -12,43 +12,12 @@
 
             <img ng-src="{{profile.imageUri}}" id="profile-profile-image"/>
 
-            <div id="profile-profile-details">
-                <h1 id="profile-profile-name" style="word-break: break-all;">{{profile.name}}</h1>
-                <p class="light" style="font-family:Roboto-Light !important;font-size:25px;">{{profile.age}} {{profile.location}}</p>
+            <div id="profile-profile-details" class="desktop">
+                <h1 id="profile-profile-name" class="desktop" style="word-break: break-all;">{{profile.name}}</h1>
+                <span class="light" class="desktop" style="font-family:Roboto-Light !important;font-size:25px;">{{profile.age}} {{profile.location}}</span>
+                <span ng-if="profile.isOwnersAccount" class="desktop tiny" >Only you can see profile views data</span>
 
-                <span ng-if="profile.isOwnersAccount" class="tiny" >Only you can see profile views data</span>
-
-
-    <!--            <div ng-if="!profile.isOwnersAccount && !profile.liked">-->
-    <!--                <a href="javascript:" class="button yella small profile-like" id="profile-like-button" data-id="{{id}}" data-liked="false">-->
-    <!--                    Like &nbsp;-->
-    <!--                    <svg class="amadeus-like">-->
-    <!--                        <use xlink:href="#amadeus" />-->
-    <!--                    </svg>-->
-    <!--                </a>-->
-    <!--                <span id="love-it" style="display:none">-->
-    <!--                <svg class="amadeus-like">-->
-    <!--                    <use xlink:href="#amadeus" />-->
-    <!--                </svg>-->
-    <!--                <span>Love you!</span>-->
-    <!--            </span>-->
-    <!--            </div>-->
-
-    <!--            <div ng-if="profile.liked">-->
-    <!--                <a href="javascript:" class="button light small profile-like" id="profile-like-button" data-id="{{id}}" data-liked="true">-->
-    <!--                    Liked!-->
-    <!--                </a>-->
-    <!--                <span id="love-it">-->
-    <!--                <svg class="amadeus-like">-->
-    <!--                    <use xlink:href="#amadeus" />-->
-    <!--                </svg>-->
-    <!--                <span>Love you!</span>-->
-    <!--            </span>-->
-    <!--            </div>-->
-
-<!--                <span ng-if="profile.isOwnersAccount" style="font-size:21px; display:inline-block;"><span style="font-size:21px;" id="num-likes">{{profile.likes}}</span> Likes</span>-->
-
-                <div ng-if="profile.isOwnersAccount" id="profile-stats-container" style="width:100%">
+                <div class="desktop" ng-if="profile.isOwnersAccount" id="profile-stats-container" style="width:100%">
 
                     <br class="clear"/>
 
@@ -78,11 +47,45 @@
             </div>
 
             <a ng-if="profile.isOwnersAccount" href="/o/account/edit/{{profile.id}}" class="href-dotted right-float" id="edit-button">Edit</a>
+            <a ng-if="profile.isOwnersAccount" href="/o/sheet/list/{{profile.id}}" class="href-dotted right-float" id="edit-button">Folios</a>
+            <a ng-if="profile.isOwnersAccount" href="/o/flyer/list/{{profile.id}}" class="href-dotted right-float" id="edit-button">Ads</a>
 
             <br class="clear"/>
         </div>
 
-        <br class="clear"/>
+        <div class="clear"/>
+
+        <div class="mobile">
+            <h1 id="profile-profile-name" style="word-break: break-all;">{{profile.name}}</h1>
+            <span class="light" style="font-family:Roboto-Light !important;font-size:25px;">{{profile.age}} {{profile.location}}</span>
+            <span ng-if="profile.isOwnersAccount" class="tiny" >Only you can see profile views data</span>
+            <div ng-if="profile.isOwnersAccount" id="profile-stats-container" style="width:100%">
+
+                <br class="clear"/>
+
+                <div class="profile-stat">
+                    <h2 id="profile-stat-tres">{{week}}</h2>
+                    <span class="information">Previous Week</span>
+                    <span class="information">Visits</span>
+                </div>
+
+                <div class="profile-stat">
+                    <h2 id="profile-stat-dos">{{month}}</h2>
+                    <span class="information">Previous Month</span>
+                    <span class="information">Visits</span>
+                </div>
+
+                <div class="profile-stat">
+                    <h2 id="profile-stat-uno">{{all}}</h2>
+                    <span class="information">All Time</span>
+                    <span class="information">Visits</span>
+                </div>
+
+                <br class="clear"/>
+
+            </div>
+
+        </div>
 
         <div id="profile-posts-container">
             <div id="profile-posts" ng-controller="mixController">
@@ -121,9 +124,6 @@
                             </a>
                             <a ng-href="#!/profile/{{post.accountId}}" class="posted-by" data-id="{{post.accountId}}">{{post.name}}</a><br/>
                             <span class="post-date">{{post.timeAgo}}</span>
-
-                            <span ng-if="!post.published" class="tiny modern" data-i18n="not.live.text">Not Live</span>
-                            <a ng-click="makeLive(post.id)" ng-if="!post.published"  href="javascript:" class="button retro tiny" style="text-decoration: none;" data-i18n="publish.button">Publish</a>
 
                             <br class="clear"/>
                         </div>

@@ -55,20 +55,11 @@ public class PostController {
         return gson.toJson(postService.savePost(post, imageFiles, videoFile));
 	}
 
-
-	@RequestMapping(value="/post/publish/{id}", method=RequestMethod.POST)
-	public @ResponseBody String publish(ModelMap model,
-										@PathVariable String id) {
-		return gson.toJson(postService.publishPost(id));
-	}
-
-
 	@RequestMapping(value="/post/update/{id}", method=RequestMethod.POST)
 	public @ResponseBody String update(@ModelAttribute("post") Post post,
 									   @PathVariable String id){
 		return gson.toJson(postService.updatePost(id, post));
 	}
-
 
 	@RequestMapping(value="/post/like/{id}", method=RequestMethod.POST,  produces="application/json")
 	public @ResponseBody String like(@PathVariable String id){

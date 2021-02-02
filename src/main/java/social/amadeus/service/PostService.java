@@ -883,7 +883,6 @@ public class PostService {
                 adPost.setImageFileUris(imageUris);
                 adPost.setAdvertisementUri(flyer.getPageUri());
                 adPost.setAdvertisement(true);
-                adPost.setPublished(true);
 
                 if (activityFeed.size() > 0) {
                     int feedIdx = rand.nextInt(activityFeed.size());

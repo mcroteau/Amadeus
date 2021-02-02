@@ -133,10 +133,10 @@ public class PostJdbcRepo implements PostRepo {
 
 		String idsString = StringUtils.join(ids, ",");
 
-		String sql = "select p.id, p.account_id, p.content, p.date_posted, p.music_file_uri, p.video_file_uri, p.hidden, p.flagged, p.published," +
+		String sql = "select p.id, p.account_id, p.content, p.date_posted, p.music_file_uri, p.video_file_uri, p.hidden, p.flagged," +
 					"a.image_uri, a.name, a.username from " +
 						"posts p inner join account a on p.account_id = a.id " +
-							"where p.flagged = false and p.hidden = false and published = true and account_id in (" + idsString + ") " +
+							"where p.flagged = false and p.hidden = false and account_id in (" + idsString + ") " +
 								"and p.date_posted between " + start + " and " + end + " order by p.date_posted desc";
 
 		List<Post> activity = jdbcTemplate.query(sql, new BeanPropertyRowMapper<Post>(Post.class));
@@ -159,7 +159,7 @@ public class PostJdbcRepo implements PostRepo {
 		String sql = "select count(*) as c from " +
 				"posts p left join account a on p.account_id = a.id " +
 				"where p.account_id in (" + idsString + ") " +
-				"and p.published = true and p.date_posted between " + start + " and " + end;
+				"and p.date_posted between " + start + " and " + end;
 
 		return jdbcTemplate.queryForObject(sql, new Object[] { }, Long.class);
 	}
@@ -167,7 +167,7 @@ public class PostJdbcRepo implements PostRepo {
 
 	@Override
 	public List<Post> getUserPosts(long accountId) {
-		String sql = "select p.id, p.account_id, p.content, p.date_posted, p.image_file_uri, p.music_file_uri, p.video_file_uri, p.hidden, p.flagged, p.published, " +
+		String sql = "select p.id, p.account_id, p.content, p.date_posted, p.image_file_uri, p.music_file_uri, p.video_file_uri, p.hidden, p.flagged, " +
 				"a.image_uri, a.name, a.username from " +
 				"posts p inner join account a on p.account_id = a.id " +
 				"where p.flagged = false and p.hidden = false and account_id = ? order by p.date_posted desc";
@@ -179,9 +179,9 @@ public class PostJdbcRepo implements PostRepo {
 
 
 	public Post save(Post post){
-		String sql = "insert into posts (account_id, content, video_file_uri, video_file_name, date_posted, update_date, hidden, flagged, published ) values ( ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+		String sql = "insert into posts (account_id, content, video_file_uri, video_file_name, date_posted, update_date, hidden, flagged ) values ( ?, ?, ?, ?, ?, ?, ?, ? )";
 		jdbcTemplate.update(sql, new Object[] { 
-			post.getAccountId(), post.getContent(), post.getVideoFileUri(), post.getVideoFileName(), post.getDatePosted(), post.getUpdateDate(), false, false, false
+			post.getAccountId(), post.getContent(), post.getVideoFileUri(), post.getVideoFileName(), post.getDatePosted(), post.getUpdateDate(), false, false
 		});
 		Long id = getPostId();
 		Post savedPost = get(id);

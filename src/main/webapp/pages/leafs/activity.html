@@ -110,9 +110,6 @@
                     <a ng-href="#!/profile/{{post.accountId}}" class="posted-by" data-id="{{post.accountId}}">{{post.name}}</a><br/>
                     <span class="post-date">{{post.timeAgo}}</span>
 
-                    <span ng-if="!post.published" class="tiny modern" data-i18n="not.live.text">Not Live</span>
-                    <a ng-click="makeLive(post.id)" ng-if="!post.published"  href="javascript:" class="button retro tiny" style="text-decoration: none;" data-i18n="publish.button">Publish</a>
-
                     <br class="clear"/>
                 </div>
 

@@ -1400,25 +1400,29 @@ h3#share-something span{
 
 }
 
-#whatsup::-webkit-input-placeholder {
+#whatsup::-webkit-input-placeholder,
+#mobile-whatsup::-webkit-input-placeholder{
     font-size:17px !important;/* Chrome/Opera/Safari */
     color:#000 !important;
     line-height: 1.2em;
     font-family:Roboto-Thin !important;
 }
-#whatsup::-moz-placeholder {
+#whatsup::-moz-placeholder,
+#mobile-whatsup::-moz-placeholder {
     font-size:17px !important;/* Firefox 19+ */
     color:#000 !important;
     line-height: 1.2em;
     font-family:Roboto-Thin !important;
 }
-#whatsup:-ms-input-placeholder {
+#whatsup:-ms-input-placeholder,
+#mobile-whatsup:-ms-input-placeholder {
     font-size:17px !important; /* IE 10+ */
     color:#000 !important;
     line-height: 1.2em;
     font-family:Roboto-Thin !important;
 }
-#whatsup:placeholder {
+#whatsup:placeholder,
+#mobile-whatsup:placeholder {
     font-size:17px !important; /* Firefox 18- */
     color:#000 !important;
     line-height: 1.2em;
