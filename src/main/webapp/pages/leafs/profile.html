@@ -3,8 +3,8 @@
 
         <div id="profile-container">
             <div ng-if="!profile.isOwnersAccount" id="profile-actions-container">
-                <button ng-click="observe(profile.id)" ng-if="!profile.isOwnersAccount && !profile.observing" class="button retro rollo">Follow</button>
-                <button ng-click="unobserve(profile.id)" ng-if="!profile.isOwnersAccount && profile.observing" class="button beauty rollo">Unfollow</button>
+                <button ng-click="observe(profile.id)" ng-if="!profile.observing" class="button retro rollo">Follow</button>
+                <button ng-click="unobserve(profile.id)" ng-if="profile.observing" class="button beauty rollo">Unfollow</button>
                 <br class="clear"/>
             </div>
 
