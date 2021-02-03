@@ -35,6 +35,12 @@ public class StaticService {
         return "static/signin";
     }
 
+    public String signup(String uri, ModelMap modelMap) {
+        authService.signout();
+        modelMap.addAttribute("uri", uri);
+        return "account/signup";
+    }
+
     public String beginReport() {
         phoneService.support("Amadeus:issue");
         return "static/report";

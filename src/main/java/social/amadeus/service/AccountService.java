@@ -254,14 +254,6 @@ public class AccountService {
         return "redirect:/admin/accounts";
     }
 
-
-    public String signup(String uri, ModelMap modelMap) {
-        authService.signout();
-        modelMap.addAttribute("uri", uri);
-        return "account/signup";
-    }
-
-
     public String register(String uri, String reCaptchaResponse, Account account, HttpServletRequest req, RedirectAttributes redirect) {
 
         if(account == null)hydrateAccount(req);

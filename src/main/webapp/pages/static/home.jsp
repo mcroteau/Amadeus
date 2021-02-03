@@ -39,9 +39,7 @@
         derived from the Latin words ama - the imperative of the word
         <strong>amare</strong> (to love) - and <strong>deus</strong> (god).
         <br/>As a linguistic compound in the form of a phereoikos...<br/>
-        in simple terms, it means... <strong>Love of God</strong>.</p>
-
-    <p><a href="/o/signup" class="button retro">Signup!</a></p>
+        in simple terms, it means... <strong>Love of God</strong>. <a href="/o/signup" class="href-dotted">Signup!</a></p>
 
 <%--    <p style="font-size:23px !important;">My name is--%>
 <%--        <input type="text" name="name" placeholder="Mitch" style="width:170px;">--%>

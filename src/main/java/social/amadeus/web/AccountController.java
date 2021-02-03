@@ -82,13 +82,6 @@ public class AccountController {
 		return accountService.disableAccount(id, modelMap, redirect);
 	}
 	
-	@GetMapping(value="/signup")
-	public String signup(ModelMap modelMap,
-						 @RequestParam(value="uri", required = false ) String uri){
-		return accountService.signup(uri, modelMap);
-	}
-	
-
 	@PostMapping(value="/register")
 	protected String register(@ModelAttribute("account") Account account,
 							  @RequestParam(value="g-recaptcha-response", required = true ) String reCaptchaResponse,
