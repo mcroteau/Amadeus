@@ -47,14 +47,11 @@ public class ReCaptchaService {
 
             Response response = client.newCall(request).execute();
             String body = response.body().string();
-            log.info(body);
             reCaptchaOutput = gson.fromJson(body, ReCaptchaOutput.class);
 
         }catch(Exception e){
             e.printStackTrace();
         }
-        log.info("secret" + secret);
-        log.info(reCaptcha + " : " + reCaptchaOutput.getErrorCodes());
 
         return reCaptchaOutput.isSuccess();
     }
