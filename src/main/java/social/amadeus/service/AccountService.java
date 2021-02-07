@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import social.amadeus.AppStartup;
 import social.amadeus.common.Constants;
 import social.amadeus.common.Utils;
 import social.amadeus.model.*;
@@ -263,8 +262,7 @@ public class AccountService {
             return "redirect:/signup?uri=" + uri;
         }
 
-        if(!reCaptchaService.validates(reCaptchaResponse) &&
-                !Utils.isTestEnvironment(env)){
+        if(!reCaptchaService.validates(reCaptchaResponse)){
             redirect.addFlashAttribute("message", "Did you forget to check the box thing?");
             return "redirect:/signup?uri=" + uri;
         }
@@ -311,6 +309,18 @@ public class AccountService {
             String permission = Constants.ACCOUNT_MAINTENANCE + savedAccount.getId();
             accountRepo.savePermission(savedAccount.getId(), permission);
 
+            Account superAccount = accountRepo.getByUsername(Constants.ADMIN_USERNAME);
+            Observed superObserved = new Observed();
+            superObserved.setObserverId(savedAccount.getId());
+            superObserved.setObservedId(superAccount.getId());
+            superObserved.setDateCreated(Utils.getDate());
+            observerRepo.observe(superObserved);
+
+            Observed observed = new Observed();
+            observed.setObserverId(superAccount.getId());
+            observed.setObservedId(savedAccount.getId());
+            observed.setDateCreated(Utils.getDate());
+            observerRepo.observe(observed);
 
             String body = "<h1>Amadeus</h1>"+
                     "<p>Thank you for registering! Enjoy!</p>";

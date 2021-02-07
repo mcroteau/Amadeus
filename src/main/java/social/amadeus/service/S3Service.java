@@ -11,11 +11,13 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 
 @Service
+@PropertySource("classpath:application.properties")
 public class S3Service {
 
     private static final String BUCKET = "goamadeus";

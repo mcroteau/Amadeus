@@ -13,9 +13,11 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.Authenticator;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 @Service
+@PropertySource("classpath:application.properties")
 public class EmailService extends Thread {
 
     @Value("${mail.smtp.host}")

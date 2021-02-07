@@ -2,7 +2,7 @@
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
 <%@ taglib prefix="parakeet" uri="/META-INF/tags/parakeet.tld"%>
 
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="https://www.google.com/recaptcha/api.js"></script>
 
 <div id="signup-form-container">
 
@@ -29,7 +29,7 @@
     </p>
 
 
-    <form action="${pageContext.request.contextPath}/register" modelAttribute="account" method="post" enctype="multipart/form-data" autocomplete="false" class="pure-form pure-form-stacked" id="registration-form">
+    <form action="${pageContext.request.contextPath}/register" modelAttribute="account" method="post" enctype="multipart/form-data" autocomplete="false" id="registration-form">
         <fieldset>
 
             <h2 style="margin-bottom:20px;">Signup</h2>
@@ -40,7 +40,7 @@
 
             <input id="username" type="email" placeholder="Email Address" name="username" style="width:100%;">
 
-            <input id="password" type="password" placeholder="Password &#9679;&#9679;&#9679;" name="password" style="width:100%;">
+            <input id="password" type="password" placeholder="&#9679;&#9679;&#9679;" name="password" style="width:100%;">
 
 <!--
             <p style="text-align: center;">
@@ -51,8 +51,8 @@
             <p class="notify" id="verdict" style="display:none"></p>
 -->
 
-            <div class="g-recaptcha" data-sitekey="6Lfr1OMZAAAAADF6n5E_Z58iu-qyqAb0AnrElSGk" style="margin-top:30px;"></div>
-
+            <div class="g-recaptcha" data-sitekey="6LfG0E0aAAAAAPaHmCSauREIjFvwNFtYwxlTOfiw" style="margin-top:30px;"></div>
+<%--            <input type="hidden" name="g-recaptcha-response" id="reCaptchaToken"/>--%>
         </fieldset>
     </form>
 
@@ -77,6 +77,7 @@
     var password = document.getElementById("password")
     var form = document.getElementById("registration-form")
     var signupButton = document.getElementById("signup-button")
+    var reCaptcha = document.getElementById("reCaptchaToken")
 
     /**
     var summationP = document.getElementById("summation")
@@ -105,11 +106,11 @@
     })
     **/
 
-    signupButton.addEventListener("click", function(event){
-        event.preventDefault();
-        if(!processing){
-            processing = true;
-            form.submit();
+    signupButton.addEventListener("click", function(evt){
+        evt.preventDefault();
+        if(!processing) {
+            processing = true
+            form.submit()
         }
     })
 
@@ -117,7 +118,6 @@
         password.value = ""
         email.value = ""
     }, 1000)
-
 
     function getRandom(){
         return Math.ceil(Math.random()* 20);

@@ -22,9 +22,6 @@ public class AuthService {
 
     Gson gson = new Gson();
 
-//    @Autowired
-//    private Parakeet parakeet;
-
     @Autowired
     private AccountRepo accountRepo;
 

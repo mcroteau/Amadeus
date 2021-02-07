@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.stripe.Stripe;
 import com.stripe.model.Charge;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import java.util.Map;
 
 
 @Service
+@PropertySource("classpath:application.properties")
 public class StripeService {
 
     @Value("${stripe.api.key}")
